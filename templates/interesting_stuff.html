@@ -1,0 +1,20 @@
+{% extend layout %}
+{% begin block %}
+<p> Here are some links to websites I consider <code>Quite Interesting</code>.
+If you have stumbled upon my page and navigated your way here, it is the
+least I can do to give you an easy way out.
+</p>
+
+<p>
+The pages below are of passing, current, and permanent interest 
+and in no particular order. Some of them pertain to code documentation 
+I find myself checking frequently. Others cover fields relevant to electronic structure theory, 
+computer programming, inference, english literature, the mystical world of 
+financial shamanism, and horse racing. Selections may be updated periodically. 
+<ul>
+{% for site in interesting_websites %}
+<li> <a href={{site.value}}> {{site.key}} </a> </li>
+{% endfor}
+</ul>
+</p>
+{% end block %}
