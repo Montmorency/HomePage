@@ -1,13 +1,17 @@
-{% extends layout %}
-{% begin block %}
+{% extends "layout.html" %}
+{% block body %}
 <p> Below are a list of publications of which I am an author or co-author.
 The bulk of this work comes from research and software development I did under the direction of
 <a href="http://giustino.materials.ox.ac.uk"> Felician Giustino. </a> in the Materials Modelling 
 Laboratory at Oxford.</p>
-{% for pub in publications %}
-<a href="{{pub.value}}"> {{pub.key}}</a>
+
+<ul>
+{% for k,v in publications.iteritems() %}
+<li> <a href="{{v}}"> {{k}}</a> </li>
 {% endfor %}
+</ul>
+
 <p> I am currently working at King's College in London
 under the direction of Alessandro De Vita with a focus on
 <a href="http://www.hems.ox.ac.uk"> Hydrogen Embrittlement Processes in Steels </a>.</p>
-{% end block %}
+{% endblock body %}

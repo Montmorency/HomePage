@@ -1,4 +1,4 @@
-{% extends layout.html %}
+{% extends "layout.html" %}
 {% block body %}
 <p>
 I am a Post-Doctoral Research Assistant at King's College London. 
@@ -11,10 +11,18 @@ Formerly I worked on the optical properties of materials in <a href="http://gius
 
 <p>
 In my spare time I fool around with software. Mainly in the domain of 
-python applications based on Flask/Peewee, using Haskell to solve problems
-succinctly, and building Neural Networks for a range of applications. 
+python applications based on Flask/Peewee, some Haskell, 
+and building Neural Networks for a range of applications. 
+
 Some of my programming interests include the properties of materials, pricing goods and market forecasting.
 If you are interested in collaborating on a project in one or all of these (very) disparate fields, 
 or would like to outsource some development please don't hesitate to <a href="email">contact me</a>.
 </p>
+
+<ul>
+<li><a href="{{url_for('publications')}}"> Publications </a></li>
+<li><a href="{{url_for('notes')}}"> Notes and Teaching </a></li>
+<li><a href="{{url_for('interesting_stuff')}}">Interesting Stuff </a></li>
+</ul>
+
 {% endblock body %}

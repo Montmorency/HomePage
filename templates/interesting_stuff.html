@@ -1,5 +1,5 @@
-{% extend layout %}
-{% begin block %}
+{% extends "layout.html" %}
+{% block body %}
 <p> Here are some links to websites I consider <code>Quite Interesting</code>.
 If you have stumbled upon my page and navigated your way here, it is the
 least I can do to give you an easy way out.
@@ -12,9 +12,9 @@ I find myself checking frequently. Others cover fields relevant to electronic st
 computer programming, inference, english literature, the mystical world of 
 financial shamanism, and horse racing. Selections may be updated periodically. 
 <ul>
-{% for site in interesting_websites %}
-<li> <a href={{site.value}}> {{site.key}} </a> </li>
-{% endfor}
+{% for k,v in interesting_websites.iteritems() %}
+<li> <a href={{v}}> {{k}} </a> </li>
+{% endfor %}
 </ul>
 </p>
-{% end block %}
+{% endblock body %}

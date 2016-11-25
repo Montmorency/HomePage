@@ -1,9 +1,11 @@
 import os
-from Flask
+from flask import Flask, render_template, request, url_for, flash, g, session
+
+app = Flask(__name__)
 
 @app.route("/")
 def homepage():
-  contacts_dict={'Github':, 'https://github.com/Montmorency',
+  contacts={'Github':'https://github.com/Montmorency',
                  'email':'henry.lambert[cat.remove(c)]kcl.ac.uk',
                  '@condensedhank':'https://twitter.com/condensedhank'}
   cv_file = os.path.join(app.config['DOWNLOAD_FOLDER'], 'henry_lambert_cv.pdf')
@@ -35,6 +37,7 @@ def notes():
   return render_template("notes.html", notes=notes)
 
 @app.route('/interesting_stuff/')
+def interesting_stuff():
   """
   View of links to alternative pages.
   """
@@ -49,15 +52,15 @@ def notes():
                           'Racing Post': 'http://www.racingpost.com',
                           "Sir David Mackay FRS":'http://www.inference.phy.cam.ac.uk/mackay/',
                           'Wolfson DVD Library':"https://www.wolfson.ox.ac.uk/dvd-library",
-                          "Total Perspective Clarity":"Total Perspective Clarity",
+                          #"Total Perspective Clarity":"Total Perspective Clarity",
                           'Money Is The Way':'http://moneyistheway.blogspot.co.uk'}
 
-  return render_template("interesting_stuff.html")
+  return render_template("interesting_stuff.html", interesting_websites=interesting_websites)
 
 if __name__ == "__main__":
   SECRET_KEY = 'development key'
   DEBUG      = True
-  DOWNLOAD_FOLDER = './download'
+  DOWNLOAD_FOLDER = './download_folder'
   ALLOWED_EXTENSIONS = set(['pdf'])
   app.config.from_object(__name__)    
   app.run()
