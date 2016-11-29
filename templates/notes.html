@@ -1,16 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
-Here is a collection of notes, notebooks, and my undergraduate and D. Phil theses. 
-They are in varying states of completion and correctness. Please contact 
-me if you find any glaring errors. These notes are mainly relevant to electronic
-structure calculations but there should also be some relevant stuff for an undergraduate semester
-on Fourier Transforms and Partial Differential Equations, and some quarter to half baked ideas and
-notes I have had regarding the dielectric properties of materials. I include them
-here in the partly altruistic hope that they might spark somebody's interest, and the 
-selfish desire that crowd sourcing corrections and feed back will move the ideas along.
+Here is a small collection of notes on superconductivity and my D. Phil thesis. These are in varying
+states of completion and correctness. Please contact me if you find any glaring errors. This
+page is updated periodically with new notes and modifications to old ones. Ultimately I would
+like some of these notes to morph into an actual subdomain of the site where the text becomes
+interactive although this might be a little bit ambitious.
 
+<ul>
 {% for note in notes %}
-<a href="{{url_for('download_folder', note)}}"> note </a>
+  <li> <a href="{{url_for('download_file', filename=note)}}"> {{note}} </a> </li>
 {% endfor %}
+</ul>
 
 {% endblock body %}

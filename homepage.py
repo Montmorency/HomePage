@@ -1,15 +1,14 @@
 import os
-from flask import Flask, render_template, request, url_for, flash, g, session
+from flask import Flask, render_template, request, url_for, flash, g, session, send_file
 
 app = Flask(__name__)
 
 @app.route("/")
 def homepage():
   contacts={'Github':'https://github.com/Montmorency',
-                 'email':'henry.lambert[cat.remove(c)]kcl.ac.uk',
-                 '@condensedhank':'https://twitter.com/condensedhank'}
-  cv_file = os.path.join(app.config['DOWNLOAD_FOLDER'], 'henry_lambert_cv.pdf')
-  return render_template("homepage.html", contacts=contacts, cv_file=cv_file)
+            'email':'lamberh@tcd.ie',
+            'twitter':'https://twitter.com/condensedhank'}
+  return render_template("homepage.html", contacts=contacts)
 
 @app.route("/_download/<path:filename>")
 def download_file(filename):
@@ -52,15 +51,13 @@ def interesting_stuff():
                           'Racing Post': 'http://www.racingpost.com',
                           "Sir David Mackay FRS":'http://www.inference.phy.cam.ac.uk/mackay/',
                           'Wolfson DVD Library':"https://www.wolfson.ox.ac.uk/dvd-library",
-                          #"Total Perspective Clarity":"Total Perspective Clarity",
                           'Money Is The Way':'http://moneyistheway.blogspot.co.uk'}
-
   return render_template("interesting_stuff.html", interesting_websites=interesting_websites)
 
+app.config['DEBUG']              = False
+app.config['SECRET_KEY']         = 'development key'
+app.config['DOWNLOAD_FOLDER']    = os.environ['DOWNLOAD_FOLDER']
+app.config['ALLOWED_EXTENSIONS'] = set(['pdf'])
+
 if __name__ == "__main__":
-  ALLOWED_EXTENSIONS = set(['pdf'])
-  app.config.from_object(__name__)    
-  app.config['SECRET_KEY']      = 'sosoverysecretkey898'
-  app.config['DOWNLOAD_FOLDER'] = './download_folder'
-  app.config['DEBUG']=False
   app.run()

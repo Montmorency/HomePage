@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>Environments</h2>
+<p> In order to liberate neurons that would be better served soaking in malted hops then being
+used to remember things I include useful links to configuring different environments 
+and some useful patterns for computing in UNIX environment. This page constitutes
+a personalized cheat sheet. </p>
+
+<h3>Step Number Uno (if you are on a Mac)</h3>
+<p> Install <a href="http://brew.sh"> Homebrew </a>. Fantastic package manager for Mac systems.</p>
+
+<h3> Text Editors </h3>
+<p>
+For editing text files, and doing developement I like to use  
+<a href="http://www.vim.org">VIM</a>. I typically use the plainest vanilla
+configuration of vi available typically only reconfiguring the default tab
+style to two white spaces. Here is a useful article for getting your environment set up with more bells and whistles:
+<a href="https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/">VIM Environment Configuration</a>.
+Here are the core lines I like to add to <code> ~/.vimrc </code> whenever I'm on a new computer.
+<code>
+syntax on
+au BufNewFile, BufRead *.py
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set textwidth=140
+set expandtab
+set autoindent
+set fileformat=unix
+set ruler
+</code>
+</p>
+
+<h3> SSH </h3>
+<p> In your <code>~/.ssh/config</code> file it is a good idea to set up Host aliases. 
+This makes using rsync and scp between machines a lot simpler. The typical pattern is below. </p>
+<code>
+Host *
+ServerAliveInterval 240
+
+Host nameofcomputer
+Hostname comp.at.another.location.uk
+User myusername
+Port 22
+</code>
+
+<p>
+General Configurations can use pattern matching i.e. <code> Host *</code> to set
+configurations across every server we plan on connecting to. Here we 
+are specifying how often to ping the remote server <code> ServerAliveInterval 240 </code>.
+so that the connection stays alive (every 4 minutes in this case). Subsequent specific
+aliases detail. By default ssh processes listen on port 22.
+</p>
+
+{% endblock body %}
