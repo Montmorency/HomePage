@@ -58,9 +58,9 @@ def interesting_stuff():
   return render_template("interesting_stuff.html", interesting_websites=interesting_websites)
 
 if __name__ == "__main__":
-  SECRET_KEY = 'development key'
-  DEBUG      = True
-  DOWNLOAD_FOLDER = './download_folder'
   ALLOWED_EXTENSIONS = set(['pdf'])
   app.config.from_object(__name__)    
+  app.config['SECRET_KEY']      = 'sosoverysecretkey898'
+  app.config['DOWNLOAD_FOLDER'] = './download_folder'
+  app.config['DEBUG']=False
   app.run()
