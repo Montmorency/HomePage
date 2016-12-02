@@ -55,7 +55,7 @@ def interesting_stuff():
   return render_template("interesting_stuff.html", interesting_websites=interesting_websites)
 
 app.config['DEBUG']              = False
-app.config['SECRET_KEY']         = 'development key'
+app.config['SECRET_KEY']         = '123412sdfalkjasflksqejvnoryyclzpiej'
 app.config['DOWNLOAD_FOLDER']    = os.environ['DOWNLOAD_FOLDER']
 app.config['ALLOWED_EXTENSIONS'] = set(['pdf'])
 

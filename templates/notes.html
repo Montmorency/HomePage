@@ -1,15 +1,21 @@
 {% extends "layout.html" %}
 {% block body %}
-Here is a small collection of notes on superconductivity and my D. Phil thesis. These are in varying
+<h2> Notes </h2>
+<p>
+Here is a small collection of notes on a variety of topics. These are in varying
 states of completion and correctness. Please contact me if you find any glaring errors. This
 page is updated periodically with new notes and modifications to old ones. Ultimately I would
 like some of these notes to morph into an actual subdomain of the site where the text becomes
 interactive although this might be a little bit ambitious.
+</p>
 
 <ul>
 {% for note in notes %}
   <li> <a href="{{url_for('download_file', filename=note)}}"> {{note}} </a> </li>
 {% endfor %}
 </ul>
+
+<h2>Essays</h2>
+<p> Romulus Magazine: <a href="https://www.wolfson.ox.ac.uk/sites/wolfson.ox.ac.uk/files/romulus_magazine_2015_web.pdf"> Thermodynamics and Arcadia. </a></p>
 
 {% endblock body %}
