@@ -9,6 +9,11 @@ ul              { list-style-type: none;
 								  margin: 15;
 								  padding: 0;
 								}
+code { background: hsl(220, 80%, 90%); }
+
+pre { white-space: pre-wrap;
+      background: hsl(30,80%,90%);}
+
 /* id modifiers */
 #listorder ul li   { display: inline; width: 15}
 #listorder ul li a { padding: .2em 1em;
