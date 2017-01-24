@@ -39,6 +39,13 @@ def notes():
   notes = os.listdir(app.config['DOWNLOAD_FOLDER'])
   return render_template("notes.html", notes=notes)
 
+@app.route("/quaternions")
+def quaternions():
+  """
+  View for handling quaternion notes.
+  """
+  return render_template("quaternions.html")
+
 @app.route('/interesting_stuff/')
 def interesting_stuff():
   """

@@ -5,16 +5,18 @@
 I am collecting some useful links and notes for configuring your environment on UNIX and MacOS systems.
 </p>
 <h3>Step Number Uno (if you are on a Mac)</h3>
-<p> Install <a href="http://brew.sh"> Homebrew </a>. Fantastic package manager for Mac systems with a huge variety of
-modules and packages, including C and Fortran compilers.</p>
+<p> Install <a href="http://brew.sh"> Homebrew </a>. Fantastic package manager 
+for Mac systems with a huge variety of modules and packages, including C and 
+Fortran compilers.</p>
 <h3> Text Editors </h3>
 <p>
 For editing text files and developement in general I like to use  
 <a href="http://www.vim.org">VIM</a>. I typically use the plainest vanilla
 configuration of vi available; typically only reconfiguring the default tab
-style to two white spaces. Here is a useful article for getting your environment set up with more bells and whistles:
+style to two white spaces. Here is a useful article for getting your 
+environment set up with more bells and whistles:
 <a href="https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/">VIM Environment Configuration</a>.
-Here are the core lines I like to add to <code> ~/.vimrc </code> whenever I'm on a new computer.
+Here are the core lines I like to add to <samp> ~/.vimrc </samp> whenever I'm on a new computer.
 <pre><code>
 syntax on
 au BufNewFile, BufRead *.py
@@ -64,13 +66,12 @@ StrictHostKeyChecking no
 There are a couple key patterns I repeat with Git and are useful to 
 remember. The <a href="https://help.github.com"> git documentation </a> is very good. 
 Through the web interface for your git profile under <samp> settings </samp> you can add 
-ssh keys to all the machines you would like to work
-on different repos from. You can clone a git repo using https or ssh. 
-After cloning you may want to set some general configurations like your email
-and username.
+ssh keys to all the machines where you would like to work
+on different repos. You can clone a git repo using <samp>https</samp> or <samp>ssh</samp>. 
+After cloning you may want to set some general configurations like your email and username.
 <pre><code>
-git config --user.email myemail@emailserver.com
-git config --user.name  GitHubName
+$git config --user.email myemail@emailserver.com
+$git config --user.name  GitHubName
 </pre></code>
 
 If you use ssh initially and later wish
@@ -113,28 +114,28 @@ make the changes, add them, commit them, and push them. If this is your first ti
 the NewBranch when you commit you will be prompted to set a new place on your repo
 for the NewBranch to be stored.
 <pre><code>
-git push --set-upstream origin NewBranch
+$git push --set-upstream origin NewBranch
 </pre></code>
 After doing that we may decide NewBranch has no future. It is a dead end. 
 Let's get rid of it.
 <pre><code>
 $git branch -d NewBranch
 </pre></code>
-... And it's gone.
+... and it's gone.
 </p>
 
 <h3> Amazon web services </h3>
 If you have an EC2 instance with <a href="https://aws.amazon.com"> amazon web services </a> you can ssh into
 your node using the private key issued when you launch the node:
 <pre><code>
-ssh -i "myprivatekey.pem" ubuntu@ec2-00-00-00-00.eu-west-1.compute.amazonaws.com
+$ssh -i "myprivatekey.pem" ubuntu@ec2-00-00-00-00.eu-west-1.compute.amazonaws.com
 </pre></code>
 
 This website is deployed using Flask with an Apache web server.
 
-If I modify any of the pages or reconfigure the back end I relaunch the service with:
+If I modify any of the pages or reconfigure the back end the service can be relaunched with:
 <pre><code>
-sudo service apache2 restart
+$sudo service apache2 restart
 </pre></code>
 <h4> wsgi Configuration </h4>
 On an ubuntu server the default welcome page
@@ -161,7 +162,7 @@ from website import app as application
 Further configuration of the server takes place in /etc/apache2/.
 Placing a <tt>website.conf</tt> file in /etc/apache2/sites-available/
 should be sufficient to get things up and running. The configuration should 
-include your domain name and directives to run the WSGI Daemon in the <tt>.conf</tt>.
+include your domain name and directives to run the WSGI Daemon in the <tt>.conf</tt> file.
 
 <pre><code>
 <VirtualHost *:80>
@@ -182,4 +183,22 @@ include your domain name and directives to run the WSGI Daemon in the <tt>.conf<
 
 To track requests being issued check <tt> /var/log/apache2/ </tt>.
 
+<h3> VPN and Networking </h3>
+<p> To login to the local network via a portal I am using BIG-IP Edge Client. 
+Generally to check the ip address assigned to your laptop ifconfig and nslookup are
+your friends:
+<pre><code>
+$ifconfig
+  ...
+  ppp0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1500
+  inet 123.00.000.000 --> 137.00.000.0 netmask 0xffffffff 
+$nslookup 123.00.000.000
+  Server:   000.00.000.00
+  Address:  000.00.000.00#00
+
+  000.00.000.000.in-addr.arpa name = name.firepass.inst.ac.uk.
+</code></pre>
+If you enable remote login in System Preferences/Sharing (on a mac) you can now access
+your device with <samp> ssh username@name.firepass.inst.ac.uk</samp>.
+</p>
 {% endblock body %}
