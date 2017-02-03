@@ -1,10 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
-Here is a small collection of notes on superconductivity and my D. Phil thesis. These are in varying
+<h2> Notes </h2>
+<p>
+Here is a small collection of notes on a variety of topics. These are in varying
 states of completion and correctness. Please contact me if you find any glaring errors. This
 page is updated periodically with new notes and modifications to old ones. Ultimately I would
 like some of these notes to morph into an actual subdomain of the site where the text becomes
-interactive although this might be a little bit ambitious.
+interactive although this might be a little bit ambitious. Any <samp>.svg</samp> file is probably
+not going to be rendered properly by your browser so probably better to download the linked file
+and open with a program like <a href="https://inkscape.org/en/"> Inkscape </a>.
+</p>
 
 <ul>
 {% for note in notes %}
@@ -12,4 +17,21 @@ interactive although this might be a little bit ambitious.
 {% endfor %}
 </ul>
 
+<h2> Web Notes </h2>
+This page, which perhaps should be split into multiple pages, collects some useful tips
+on configuring ssh servers, apache2 servers for hosting flask applications, configuring vimrc
+files, and common patterns in Git.
+<ul>
+<li><a href="{{url_for('environment')}}"> Configuring Mac/Linux Environments </a></li>
+</ul>
+
+This page is under construction but will be a condensed treatment of quaternions with 
+some visualizations and web based tools to explore their application in rotations and special
+relativity. (currently consists of a poem written by William Rowan Hamilton).
+<ul>
+<li><a href="{{url_for('quaternions')}}"> Quaternions </a></li>
+</ul>
+
+<h2>Essays</h2>
+<p> Romulus Magazine: <a href="https://www.wolfson.ox.ac.uk/sites/wolfson.ox.ac.uk/files/romulus_magazine_2015_web.pdf"> Thermodynamics and Arcadia. </a></p>
 {% endblock body %}

@@ -1,0 +1,80 @@
+<h2> Developing in the TensorFlow Package </h2>
+<p>
+To update latest changes in your TensorFlow git repo:
+<code>
+  git pull 
+</code>
+
+then... rerun configure (make sure your copy of bazel is up to date).
+Then run:
+<code>
+  bazel build -c opt //tensorflow/tools/pip_package:build_pip_package
+  bazel build -c opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
+</code>
+
+To install a development friendly version:
+<code>
+  mkdir _python_build
+  cd _python_build
+  ln -s ../bazel-bin/tensorflow/tools/pip_package/build_pip_package.runfiles/org_tensorflow/* .
+  ln -s ../tensorflow/tools/pip_package/* .
+  python setup.py develop
+  sudo pip install /tmp/tensorflow_pkg/tensorflow-0.10.0-py2-none-any.whl
+</code>
+
+The latter development configuration still requires one to 
+rebuild the build_pip_package every time a C++ file is changed, 
+or when one adds, deletes, or moves any python files:
+<code>
+  bazel build -c opt //tensorflow/tools/pip_package:build_pip_package
+  bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+  sudo pip install --upgrade /tmp/tensorflow_pkg/tensorflow-0.11.0...
+</code>
+The actual name of the <code> .whl </code> file in /tmp/tensorflow_pkg/ is platform dependent.
+</p>
+
+<h2>Easy Way to Add Batch Normalization to Learn?</h2>
+<p>
+A useful technique for training neural networks is detailed in 
+this paper on <a href="https://arxiv.org/abs/1502.03167">Batch Normalization</a>.
+The tensorflow package provides an easy to use function to perform batch normalization
+but there are some subtleties involved in deploying it. The main barrier is understanding
+how to use tensorflow.
+
+There are already some very good discussions here:
+<a href="http://r2rt.com/implementing-batch-normalization-in-tensorflow.html">r2rt</a>,
+here:
+<a href="https://github.com/tensorflow/tensorflow/issues/1122">TensorFlow issues </a>,
+and here:
+<a href="http://stackoverflow.com/questions/33949786/how-could-i-use-batch-normalization-in-tensorflow"> Stack Overflow </a>.
+
+Here are some notes on incorporating the batch normalization for training a deep neural network
+within the contrib framework. 
+</p>
+
+<p>
+Most of what we need can be found in contrib/layers and contrib/learn. In contrib/layers
+the classes defining the feature columns, and fully connected layers are defined
+in layers.py. The Deep Neural Network learning model is defined in the contrib/learn/estimators/
+dnn.py which inherits the Estimator object defined in contrib/learn/estimators/estimators.py.
+
+Originally I just wanted to attach a batch_norm function to every layer in the network.
+However this may not be such a good idea. Really what I would like is to use the batch
+normalization for the scalar input features, and for the output from each hidden layer
+which is being fed into the next layer of neurons in the graph.
+
+The batch normalization requires computing some running statistics; namely the mean
+and variance of the input. Before tackling batch normalization on the hidden layers,
+in layers we have been provided with a batch_norm routine. It might be useful to go
+through this line by line to understand what is going on.
+
+<ul>
+<li> data_format: NCHW (Num. Samples, Channels, Height, Width) vs. 
+NHWC (Num. Samples, Height, Width, Channels), if the data is entered 
+in the first format the normalization occurs across all but 
+the 2nd column, in the latter case, the normalization takes place across
+all but the final column.
+</li>
+<li> </li>
+</ul>
+<p>

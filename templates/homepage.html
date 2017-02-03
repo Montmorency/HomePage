@@ -1,10 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
 <p>
-I am a Post-Doctoral Research Assistant at King's College London working for Alessandro De Vita. 
+I am a Post-Doctoral Research Assistant at King's College London working for 
+<a href="http://www.kcl.ac.uk/nms/depts/physics/people/academicstaff/devita.aspx"> Alessandro De Vita </a>. 
 My current research focuses on fracture processes in <a href="https://www.hems.ox.ac.uk"> hydrogen embrittled steels </a>.
 In particular we are focusing on hydrogen occlusion and the effects of strain
-on <a href="https://en.wikipedia.org/wiki/Grain_boundary"> grain  boundaries </a> in Iron and Steel.
+on <a href="https://en.wikipedia.org/wiki/Grain_boundary">grain  boundaries </a> in iron and steel.
 
 Formerly I worked on the optical properties of materials in <a href="http://giustino.materials.ox.ac.uk"> Feliciano Giustino's group </a>.
 </p>
@@ -27,10 +28,9 @@ or would like to outsource some development please don't hesitate to <a href="ma
 </ul>
 
 <ul>
-<li><a href="{{url_for('publications')}}"> Publications </a></li>
-<li><a href="{{url_for('notes')}}"> Notes and Teaching </a></li>
-<li><a href="{{url_for('comp_env')}}"> Computing Environments </a></li>
-<li><a href="{{url_for('interesting_stuff')}}">Interesting Stuff </a></li>
+<li><a href="{{url_for('publications')}}">Publications</a></li>
+<li><a href="{{url_for('notes')}}">Notes and Teaching</a></li>
+<li><a href="{{url_for('interesting_stuff')}}">Interesting Stuff</a></li>
 </ul>
 
 {% endblock body %}

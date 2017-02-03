@@ -27,6 +27,10 @@ def publications():
                  }
   return render_template("publications.html", publications=publications)
 
+@app.route("/environment/")
+def environment():
+  return render_template("environment.html")
+
 @app.route("/notes/")
 def notes():
   """
@@ -35,9 +39,12 @@ def notes():
   notes = os.listdir(app.config['DOWNLOAD_FOLDER'])
   return render_template("notes.html", notes=notes)
 
-@app.route("/comp_env/")
-def comp_env():
-  return render_template("environment.html")
+@app.route("/quaternions")
+def quaternions():
+  """
+  View for handling quaternion notes.
+  """
+  return render_template("quaternions.html")
 
 @app.route('/interesting_stuff/')
 def interesting_stuff():
@@ -59,7 +66,7 @@ def interesting_stuff():
   return render_template("interesting_stuff.html", interesting_websites=interesting_websites)
 
 app.config['DEBUG']              = False
-app.config['SECRET_KEY']         = 'development key'
+app.config['SECRET_KEY']         = '123412sdfalkjasflksqejvnoryyclzpiej'
 app.config['DOWNLOAD_FOLDER']    = os.environ['DOWNLOAD_FOLDER']
 app.config['ALLOWED_EXTENSIONS'] = set(['pdf'])
 

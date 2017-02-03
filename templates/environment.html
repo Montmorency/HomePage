@@ -1,40 +1,39 @@
 {% extends "layout.html" %}
 {% block body %}
 <h2>Environments</h2>
-<p> In order to liberate neurons that would be better served soaking in malted hops then being
-used to remember things I include useful links to configuring different environments 
-and some useful patterns for computing in UNIX environment. This page constitutes
-a personalized cheat sheet. </p>
-
+<p> In order to liberate neurons that would be better served soaking in malted hops 
+I am collecting some useful links and notes for configuring your environment on UNIX and MacOS systems.
+</p>
 <h3>Step Number Uno (if you are on a Mac)</h3>
-<p> Install <a href="http://brew.sh"> Homebrew </a>. Fantastic package manager for Mac systems.</p>
-
+<p> Install <a href="http://brew.sh"> Homebrew </a>. Fantastic package manager 
+for Mac systems with a huge variety of modules and packages, including C and 
+Fortran compilers.</p>
 <h3> Text Editors </h3>
 <p>
-For editing text files, and doing developement I like to use  
+For editing text files and developement in general I like to use  
 <a href="http://www.vim.org">VIM</a>. I typically use the plainest vanilla
-configuration of vi available typically only reconfiguring the default tab
-style to two white spaces. Here is a useful article for getting your environment set up with more bells and whistles:
+configuration of vi available; typically only reconfiguring the default tab
+style to two white spaces. Here is a useful article for getting your 
+environment set up with more bells and whistles:
 <a href="https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/">VIM Environment Configuration</a>.
-Here are the core lines I like to add to <code> ~/.vimrc </code> whenever I'm on a new computer.
-<code>
+Here are the core lines I like to add to <samp> ~/.vimrc </samp> whenever I'm on a new computer.
+<pre><code>
 syntax on
 au BufNewFile, BufRead *.py
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set textwidth=140
-set expandtab
-set autoindent
-set fileformat=unix
-set ruler
-</code>
+  set tabstop=2
+  set softtabstop=2
+  set shiftwidth=2
+  set textwidth=140
+  set expandtab
+  set autoindent
+  set fileformat=unix
+  set ruler
+</code></pre>
 </p>
-
 <h3> SSH </h3>
 <p> In your <code>~/.ssh/config</code> file it is a good idea to set up Host aliases. 
 This makes using rsync and scp between machines a lot simpler. The typical pattern is below. </p>
-<code>
+<pre><code>
 Host *
 ServerAliveInterval 240
 
@@ -42,14 +41,164 @@ Host nameofcomputer
 Hostname comp.at.another.location.uk
 User myusername
 Port 22
-</code>
-
+</code></pre>
 <p>
-General Configurations can use pattern matching i.e. <code> Host *</code> to set
+General configurations can use pattern matching i.e. <code>Host *</code> to set
 configurations across every server we plan on connecting to. Here we 
-are specifying how often to ping the remote server <code> ServerAliveInterval 240 </code>.
-so that the connection stays alive (every 4 minutes in this case). Subsequent specific
-aliases detail. By default ssh processes listen on port 22.
+are specifying how often to ping the remote server, <code> ServerAliveInterval 240 </code>,
+so that the connection stays alive (every 4 minutes in this case).
+By default ssh processes listen on port 22. On OS X El Capitan (v 10.11.6) 
+my ssh_config is located in <samp>/etc/ssh/ssh_config</samp>. If you want to change the default port that
+ssh listens on the best way is probably to edit the <samp>/System/Library/LaunchDaemons/ssh.plist</samp> 
+file as described <a href="https://davidroessli.com/logs/2012/10/how_to_change_the_default_sshd/"> here </a>. Make sure 
+you then unload and load the plist with <samp>launchctl</samp> or restart the machine.
+</p>
+<p>
+Should you be consistently accessing a server and getting a message like "WARNING: REMOTE HOSE IDENTIFICATION HAS CHANGED!",
+and you are growing weary of that message, you can append the line:
+<pre><code>
+StrictHostKeyChecking no
+</pre></code> to the relevant Host configuration block in your ~/.ssh/config file.
 </p>
 
+<h3> Git </h3>
+<p> I didn't come out here tonight to knock svn. It will suffice to say now I use Git always for everything.
+There are a couple key patterns I repeat with Git and are useful to 
+remember. The <a href="https://help.github.com"> git documentation </a> is very good. 
+Through the web interface for your git profile under <samp> settings </samp> you can add 
+ssh keys to all the machines where you would like to work
+on different repos. You can clone a git repo using <samp>https</samp> or <samp>ssh</samp>. 
+After cloning you may want to set some general configurations like your email and username.
+<pre><code>
+$git config --user.email myemail@emailserver.com
+$git config --user.name  GitHubName
+</pre></code>
+
+If you use ssh initially and later wish
+to switch to https you can check the URL of the repository with:
+<pre><code>
+$git remote -v
+  origin https://github.com/MyGitProfile/MyRepo.git (fetch)
+  origin https://github.com/MyGitProfile/MyRepo.git (push)
+</code></pre>
+You can then tell git to use ssh instead with:
+<pre><code>
+$git set-url origin git@github.com:MyUserName/MyRepo.git 
+</code></pre>
+If you've set your public-key (id_rsa.pub) in github settings 
+correctly we can fetch and push with impunity.
+</p>
+
+<p>
+Starting a new local branch is as easy as:
+<pre><code>
+$git branch NewBranch
+</pre></code>
+
+To list available local branches.
+<pre><code>
+$git branch
+  NewBranch
+* master
+</pre></code>
+To switch so that future work will be done on NewBranch. 
+<pre><code>
+$git checkout NewBranch
+  On branch NewBranch
+$git branch
+* NewBranch
+  master
+</pre></code>
+You can now work away at whatever it is you want to do in your new branch:
+make the changes, add them, commit them, and push them. If this is your first time on
+the NewBranch when you commit you will be prompted to set a new place on your repo
+for the NewBranch to be stored.
+<pre><code>
+$git push --set-upstream origin NewBranch
+</pre></code>
+After doing that we may decide NewBranch has no future. It is a dead end. 
+Let's get rid of it.
+<pre><code>
+$git branch -d NewBranch
+</pre></code>
+... and it's gone.
+</p>
+
+<h3> Amazon web services </h3>
+If you have an EC2 instance with <a href="https://aws.amazon.com"> amazon web services </a> you can ssh into
+your node using the private key issued when you launch the node:
+<pre><code>
+$ssh -i "myprivatekey.pem" ubuntu@ec2-00-00-00-00.eu-west-1.compute.amazonaws.com
+</pre></code>
+
+This website is deployed using Flask with an Apache web server.
+
+If I modify any of the pages or reconfigure the back end the service can be relaunched with:
+<pre><code>
+$sudo service apache2 restart
+</pre></code>
+<h4> wsgi Configuration </h4>
+On an ubuntu server the default welcome page
+for Apache (<tt>/var/www/html/index.html</tt>) gives details on
+the default configuration for the Apache2 server on Ubuntu.
+
+The wsgi configuration file is named (<samp>website.wsgi</samp>), and is
+located in <samp>/var/www/website/</samp>. 
+
+I needed to add the python modules, and the website module 
+explicitly to the system path in this small wsgi script. This
+layout should be somewhat typical for most wsgi scripts:
+<pre><code>
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+
+sys.path.append("/home/ubuntu/locationof/pythonX.X/site-packages")
+sys.path.append("/home/ubuntu/pymodules/website")
+
+from website import app as application
+</pre></code>
+
+Further configuration of the server takes place in /etc/apache2/.
+Placing a <tt>website.conf</tt> file in /etc/apache2/sites-available/
+should be sufficient to get things up and running. The configuration should 
+include your domain name and directives to run the WSGI Daemon in the <tt>.conf</tt> file.
+
+<pre><code>
+<VirtualHost *:80>
+    ServerName website_name.co.uk
+
+    WSGIDaemonProcess website threads=5
+    WSGIScriptAlias / /var/www/website/website.wsgi
+
+    <Directory /var/www/website>
+        WSGIProcessGroup website
+        WSGIApplicationGroup %{GLOBAL}
+        WSGIScriptReloading On
+        Order deny,allow
+        Allow from all
+    </Directory>
+</VirtualHost>
+</pre></code>
+
+To track requests being issued check <tt> /var/log/apache2/ </tt>.
+
+<h3> VPN and Networking </h3>
+<p> To login to the local network via a portal I am using BIG-IP Edge Client. 
+Generally to check the ip address assigned to your laptop ifconfig and nslookup are
+your friends:
+<pre><code>
+$ifconfig
+  ...
+  ppp0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1500
+  inet 123.00.000.000 --> 137.00.000.0 netmask 0xffffffff 
+$nslookup 123.00.000.000
+  Server:   000.00.000.00
+  Address:  000.00.000.00#00
+
+  000.00.000.000.in-addr.arpa name = name.firepass.inst.ac.uk.
+</code></pre>
+If you enable remote login in System Preferences/Sharing (on a mac) you can now access
+your device with <samp> ssh username@name.firepass.inst.ac.uk</samp>.
+</p>
 {% endblock body %}
