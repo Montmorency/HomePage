@@ -35,6 +35,10 @@ def notes():
   notes = os.listdir(app.config['DOWNLOAD_FOLDER'])
   return render_template("notes.html", notes=notes)
 
+@app.route("/comp_env/")
+def comp_env():
+  return render_template("environment.html")
+
 @app.route('/interesting_stuff/')
 def interesting_stuff():
   """
