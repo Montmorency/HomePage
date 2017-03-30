@@ -1,35 +1,321 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>TensorFlow Installation on a Cluster with an Older Kernel</h2>
+<p>
+Trying to get TensorFlow up and running on a cluster where you don't
+have root access. Here is the linux environment:
+<code>
+<pre>
+$cat /etc/issue
+  Scientific Linux release 6.6 (Carbon)
+  Kernel \r on an \m
+$uname -r
+  2.6.32-431.17.1.el6.x86_64
+$uname -i
+  x86_64
+$ldd --version
+  ldd (GNU libc) 2.12
+  Copyright (C) 2010 Free Software Foundation, Inc.
+  This is free software; see the source for copying conditions.  There is NO
+  warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  Written by Roland McGrath and Ulrich Drepper.
+</pre>
+</code>
+
+I started by checking out the <a href=https://github.com/yyuu/pyenv> pyenv git repo</a>
+and followed the instructions on the page to get pyenv up and running.
+
+Make sure the gcc (i.e. C compiler/libraries) you want to use are loaded
+before install python distribution with pyenv.
+<code>
+<pre>
+$module load compilers/gcc/6.2.0. 
+$gcc --version
+  gcc (GCC) 6.2.0
+  Copyright (C) 2013 Free Software Foundation, Inc.
+  This is free software; see the source for copying conditions.  There is NO
+  warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</pre>
+</code>
+
+I then installed a later version of python 2.7:
+<code>
+<pre>
+$pyenv install 2.7.13
+</pre>
+</code>
+Now checkout the <a href="https://github.com/yyuu/pyenv-virtualenv"> pyenv-virtualenv </a> 
+repo to extend pyenv functionality. This post gives a 
+quick <a href="https://amaral.northwestern.edu/resources/guides/pyenv-tutorial"> walkthrough on pyenv with
+virtualenv</a>.
+
+At this point these lines should all be in your <samp>.bashrc</samp> and sourced to make sure all is working properly:
+<code>
+<pre>
+export PYENV_ROOT=$HOME/.pyenv
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+</pre>
+</code>
+
+Now create your blank canvas directory to paint your tensorflow masterpiece:
+<code>
+<pre>
+$mkdir tensorflow_env
+$cd tensorflow_env
+$pyenv local 2.7.13
+$pyenv virtualenv 2.7.13 tensenv
+</pre>
+</code>
+If you can't setup the virtualenv and you are getting an error message like:
+<code>
+<pre>
+pyenv: pip: command not found
+</pre>
+</code>
+you can do the following:
+<code>
+<pre>
+$wget https://bootstrap.pypa.io/get-pip.py ./
+$python get-pip.py
+</pre>
+</code>
+Make sure you don't have any cluster provided python module scripts loaded in your environment, 
+these can create a file like .pydistutils.cfg that points to pip packages in strange places and confuses
+pyenv. Some older versions of python will struggle with <samp>get-pip.py</samp>
+script but 2.7.13 seems to work fine (I had trouble with python 2.7.8).
+
+Load your virtualenv with <samp>pyenv activate tensenv</samp>.
+</p>
+
+<p>
+Now you can follow the 
+<a href=https://www.tensorflow.org/get_started/os_setup#virtualenv_installation>TensorFlow</a> 
+instructions for VirtualEnv installation. This path will end in either success of failure.
+If it is the former congratulations! If it is the latter it is probably because
+the system has an out of date <samp>GLIBC_X.X.X</samp> or a similar issue in which case
+we must try a different path to the summit: building from source.
+</p>
+
+<h3>Build TensorFlow From Source on a Cluster</h3>
+<p>
+In this path we need to build everything from scratch i.e. jdk, bazel, protobuf, and tensorflow. 
+First we need to build bazel. This requires a relatively recent version of gcc.  
+On our cluster I use: 
+
+Building bazel requires the 
+<a href=http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>
+java development kit </a> which you can install locally. Set the <samp>$JAVA_HOME</samp> shell 
+variable along with adding <samp>$JAVA_HOME/bin</samp> to your PATH.
+
+Now change into the tensorflow directory and run the configure script. During configure make sure 
+the correct <samp>~/.pyenv/versions/tensenv/</samp> python binary and site packages are pointed to.
+
+Also make sure your pyenv environment is activated: <code>$pyenv global tensenv </code>.
+otherwise you may get an <samp>ImportError</samp> for <samp>argparse</samp> 
+because the script is loading the cluster default python which 
+doesn't have the correct modules installed.
+
+There appears to be some known issues with bazel building on 
+NFS <a href="https://github.com/bazelbuild/bazel/issues/1970">Bazel on NFS</a>.
+Modifying this line in <samp>~/tensorflow/configure</samp>: 
+<code>
+<pre>
+function bazel_clean_and_fetch() {
+if ! is_windows; then
+  #replace this: bazel clean
+  bazel clean --expunge_async
+</pre>
+</code>
+allowed the configuration to proceed in my case. Although the warnings about 
+NFS and bazel are still haunting:
+<code>
+<pre>
+WARNING: Output base '/users/k1511981/.cache/bazel/_bazel_k1511981/e924d9c3ba75314415252c6f4f93bb86' 
+is on NFS. This may lead to surprising failures and undetermined behavior.
+</pre>
+</code>
+
+<samp>./configure</samp> will ask for some default values. 
+
+The <samp>jemalloc</samp> option caused some issues in compilation: 
+<code>
+<pre>
+ERROR: ~/.cache/bazel/_bazel_k1511981/e924d9c3ba75314415252c6f4f93bb86/external/jemalloc/BUILD:10:1: C++ compilation of rule
+'@jemalloc//:jemalloc' failed: gcc failed: error executing command /opt/apps/compilers/gcc/4.8.2/bin/gcc -U_FORTIFY_SOURCE -fstack-protector
+-Wall -B/opt/apps/compilers/gcc/4.8.2/bin -B/usr/bin -Wunused-but-set-parameter -Wno-free-nonheap-object ... (remaining 38 argument(s)
+skipped): com.google.devtools.build.lib.shell.BadExitStatusException: Process exited with status 1.
+external/jemalloc/src/pages.c: In function 'je_pages_huge':
+external/jemalloc/src/pages.c:203:30: error: 'MADV_HUGEPAGE' undeclared (first use in this function)
+  return (madvise(addr, size, MADV_HUGEPAGE) != 0);
+</pre>
+</code>
+This looks like <a href="https://doc.rust-lang.org/regex/libc/constant.MADV_HUGEPAGE.html">some const</a>:
+<code>
+<pre>
+pub const MADV_HUGEPAGE: c_int = 14
+</pre>
+</code>
+In the jemalloc/INSTALL readme it notes the madv is not supported in older linux kernels (I also had a problem
+later on in compilation with secure_getenv() not being defined). The easiest way around 
+this is to undefine the <samp>JEMALLOC_THP</samp> and the have 
+<samp> JEMALLOC_HAVE_SECURE_GETENV </samp> header in 
+<samp>bazel-tensorflow/external/jemalloc/BUILD </samp> by deleting these lines:
+<code>
+<pre>
+"#undef JEMALLOC_THP": "#define JEMALLOC_THP",
+"#undef JEMALLOC_HAVE_SECURE_GETENV": "#define JEMALLOC_HAVE_SECURE_GETENV",
+</pre>
+</code>
+There is some discussion of this here <a href="https://github.com/tensorflow/tensorflow/issues/7268"> jemalloc issue 7268 </a>.
+</p>
+
+<p>
+If you want to manually remove the build cache at any point configure stores your 
+build profile by default in <samp>~/.cache/bazel/</samp>. 
+To remove this you need to kill any process that is tying it up:
+<code>
+<pre>
+$lsof +D ~/.cache/bazel/
+$kill PID_ON_BAZEL
+</pre>
+</code>
+</p>
+
+After building <a href="https://developers.google.com/protocol-buffers/">protobuf</a> from source,
+which should be relatively straightforward from source following 
+instructions on the <A href="https://www.tensorflow.org/get_started/os_setup">tensorflow website </a>:
+<code>
+<pre>
+$ git clone https://github.com/google/protobuf.git
+$ cd protobuf
+$ ./autogen.sh
+$ CXXFLAGS="-fPIC -g -O2" ./configure
+$ make -j12
+$ export PROTOC=$PWD/src/protoc
+$ cd python
+$ python setup.py bdist_wheel --cpp_implementation --compile_static_extension
+$ pip uninstall protobuf
+$ pip install dist/<wheel file name>
+</pre>
+</code>
+
+you may be tempted to build the actual tensorflow package:
+<code>
+<pre>
+bazel build -s -c opt //tensorflow/tools/pip_package:build_pip_package
+</pre>
+</code>
+The <samp> -s </samp> flag increases the verbosity of the bazel build tool.
+If the build fails while making protobuf with <samp>GLIB_X.X.X</samp> 
+errors again while compiling you are not alone:
+<a href="https://github.com/bazelbuild/bazel/issues/1358">GLIBCXX_3.4.18 #1358</a>. The instruction
+from July 12 from gbkedar to add:
+<code>
+<pre>
+  if args:
+    ctx.action(
+        inputs=inputs,
+        outputs=ctx.outputs.outs,
+        arguments=args + import_flags + [s.path for s in srcs],
+        executable=ctx.executable.protoc,
+        mnemonic="ProtoCompile",
+#ADD THE FOLLOWING LINE:
+        env=ctx.configuration.default_shell_env,
+    )
+</code>
+</pre>
+to the <samp>ctx.action</samp> call in
+<samp>bazel-tensorflow/external/protobuf/protobuf.bzl</samp> seems to solve the problem. 
+This is elaborated on in
+<a href=http://thelazylog.com/install-tensorflow-with-gpu-support-on-sandbox-redhat/>Install TensorFlow with GPU support on a RedHat (supercluster)</a> and
+<a href=https://gist.github.com/taylorpaul/3e4e405ffad1be8355bf742fa24b41f0>Installing Tensorflow on CENTOS 6.8 without Root</a>.
+</p>
+<p>
+To create the pip wheel and install 
+<code>
+<pre>
+bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+pip install /tmp/tensorflow_pkg/your_tensorflow.whl
+</pre>
+</code>
+
+At this stage I got an import error when I tried to import tensorflow to a python script:
+<code>
+<pre>
+$import tensorflow as tf
+  ImportError: /home/name/.local/lib/python2.7/site-packages/tensorflow/python/_pywrap_tensorflow.so: 
+  undefined symbol: clock_gettime
+</pre>
+</code>
+The solution to this is described here <a href="https://github.com/tensorflow/tensorflow/issues/121">Import Error</a>.
+Rebuild tensorflow with modification to tensorflow.bzl:
+<code>
+<pre>
+def tf_extension_linkopts():
+-  return []  # No extension link opts
++  return ["-lrt"]
+</pre>
+</code>
+
+Make this modification to the tensorflow.bzl file, rebuild the pip wheel and 
+reinstall with pip. This was the final step required for me to install tensorflow
+on our cluster. Note after a little usage, training worked fine, but I started running 
+into glibc errors when running Estimator.predict_proba(). At this point our server admin
+loaded a new module with an even more recent version of gcc and glibc. I rebuilt the entire
+installation in much the same way except with the recent gcc module loaded.
+<code>
+<pre>
+$module load compilers/gcc/4.8.2.
+$gcc --version
+  gcc (GCC) 4.8.2
+  Copyright (C) 2013 Free Software Foundation, Inc.
+  This is free software; see the source for copying conditions.  There is NO
+  warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</pre>
+</code>
+
+
 <h2> Developing in the TensorFlow Package </h2>
 <p>
 To update latest changes in your TensorFlow git repo:
 <code>
+<pre>
   git pull 
+</pre>
 </code>
-
-then... rerun configure (make sure your copy of bazel is up to date).
-Then run:
+Then rerun configure (make sure your copy of bazel is up to date).
 <code>
+<pre>
   bazel build -c opt //tensorflow/tools/pip_package:build_pip_package
   bazel build -c opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
+</pre>
 </code>
 
 To install a development friendly version:
 <code>
+<pre>
   mkdir _python_build
   cd _python_build
   ln -s ../bazel-bin/tensorflow/tools/pip_package/build_pip_package.runfiles/org_tensorflow/* .
   ln -s ../tensorflow/tools/pip_package/* .
   python setup.py develop
   sudo pip install /tmp/tensorflow_pkg/tensorflow-0.10.0-py2-none-any.whl
+</pre>
 </code>
 
 The latter development configuration still requires one to 
 rebuild the build_pip_package every time a C++ file is changed, 
 or when one adds, deletes, or moves any python files:
 <code>
+<pre>
   bazel build -c opt //tensorflow/tools/pip_package:build_pip_package
   bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
   sudo pip install --upgrade /tmp/tensorflow_pkg/tensorflow-0.11.0...
+</pre>
 </code>
+
 The actual name of the <code> .whl </code> file in /tmp/tensorflow_pkg/ is platform dependent.
 </p>
 
@@ -41,32 +327,24 @@ The tensorflow package provides an easy to use function to perform batch normali
 but there are some subtleties involved in deploying it. The main barrier is understanding
 how to use tensorflow.
 
-There are already some very good discussions here:
+There are already some very good discussions for incorporating batch_normalization:
 <a href="http://r2rt.com/implementing-batch-normalization-in-tensorflow.html">r2rt</a>,
-here:
 <a href="https://github.com/tensorflow/tensorflow/issues/1122">TensorFlow issues </a>,
-and here:
 <a href="http://stackoverflow.com/questions/33949786/how-could-i-use-batch-normalization-in-tensorflow"> Stack Overflow </a>.
-
-Here are some notes on incorporating the batch normalization for training a deep neural network
-within the contrib framework. 
 </p>
 
+<h2>"Current" Package Layout</h2>
+<p><a href="https://www.tensorflow.org/versions/master/api_docs/python/">Master API Reference</a>.</p> 
 <p>
-Most of what we need can be found in contrib/layers and contrib/learn. In contrib/layers
+Most of what I need can be found in contrib/layers and contrib/learn. In contrib/layers
 the classes defining the feature columns, and fully connected layers are defined
-in layers.py. The Deep Neural Network learning model is defined in the contrib/learn/estimators/
-dnn.py which inherits the Estimator object defined in contrib/learn/estimators/estimators.py.
-
-Originally I just wanted to attach a batch_norm function to every layer in the network.
-However this may not be such a good idea. Really what I would like is to use the batch
-normalization for the scalar input features, and for the output from each hidden layer
-which is being fed into the next layer of neurons in the graph.
+in layers.py. The Deep Neural Network learning model is defined in  
+<samp>contrib/learn/estimators/dnn.py</samp>. DNN inherits the 
+<samp>Estimator</samp> object defined in <samp>contrib/learn/estimators/estimators.py</samp>.
 
 The batch normalization requires computing some running statistics; namely the mean
 and variance of the input. Before tackling batch normalization on the hidden layers,
-in layers we have been provided with a batch_norm routine. It might be useful to go
-through this line by line to understand what is going on.
+in <samp>layers.py</samp> we have been provided with a batch_norm routine. 
 
 <ul>
 <li> data_format: NCHW (Num. Samples, Channels, Height, Width) vs. 
@@ -75,6 +353,61 @@ in the first format the normalization occurs across all but
 the 2nd column, in the latter case, the normalization takes place across
 all but the final column.
 </li>
-<li> </li>
 </ul>
-<p>
+</p>
+
+<h2>Moving from a contrib/learn model, to explicit tensorflow </h2>
+When getting started the contrib/learn packages are useful to quickly build and execute a model.
+Once you've trained your model however you may wish to have a little more control over what exactly
+goes on under the hood. The action mainly happens in estimators.py _train_model(). All the 
+layers definitions and FeatureColumns get defined and are used to initiate the model, but the training
+steps as called by model.fit() are to be found _train_models. Making these explicit in your model
+training will give you the control you desire.
+
+<h2> February 11, 2017 </h2>
+Another crack at batch normalization. In tensorflow/contrib there is a <a
+href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/layers/python/layers/layers.py#L433-L435"> batch_norm</a> function provided, for keeping track of the exponential moving averages. 
+
+<h2>February 10, 2017 </h2>
+  Today trying out the moving average functionality in tensorflow. This can be found in
+<samp>/contrib/opt/python/training/moving_average_optimizer.py</samp>. The idea is that
+empirically a model performs better if the moving averages of the weights are used
+rather than the final trained weights. The moving_average method should just wrap the
+optimizer and change the saver so that the moving averages overwrite the final weights,
+at the evaluation stage you can just load from the regular saver. To try this out
+I made a <a href="https://github.com/Montmorency/tensorflow/tree/moving_avg"> moving average branch </a>
+on a fork of tensorflow.
+
+So to jimmy this into tensorflow learn we need to do a bit of work. The easy step is just
+wrapping your optimizer in the MovingAverage object.
+<code>
+<pre>
+opt = moving_average_optimizer.MovingAverageOptimizer(tf.train.AdamOptimizer(learning_rate=learning_rate, beta1=beta1,
+                                                      beta2=beta2, epsilon=adam_eps, use_locking=False), average_decay=0.8)
+
+</pre>
+</code>
+
+The tricky part is finding out where dnn is doing the saving of the model and changing the saver during training
+to the appropriate MovingAverageOptimizer.swapping_saver(). The BaseEstimator class in estimator.py is a good place
+to look. 
+
+<code>
+<pre>
+      if not (scaffold.saver or ops.get_collection(ops.GraphKeys.SAVERS)):
+        saver_dict = {'sharded':True, 'max_to_keep':self._config.keep_checkpoint_max, 'defer_build':False}
+        logging.info("HL:create moving average saver.")
+        ops.add_to_collection(
+            ops.GraphKeys.SAVERS,
+            self.params["optimizer"].swapping_saver(**saver_dict))
+						#Comment the saver and 	
+            #   saver.Saver(sharded=True,
+            #   			  		max_to_keep=self._config.keep_checkpoint_max,
+            #     					defer_build=True))
+</pre>
+</code>
+
+The swapping saver returns an instance of the
+<a href="https://www.tensorflow.org/api_docs/python/state_ops/saving_and_restoring_variables#Saver"> Saver </a> class.
+To get the swapping_saver working set <samp> defer_build=False </samp>. 
+{% endblock body %}

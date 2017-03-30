@@ -5,9 +5,14 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <div class=page>
-<h2> Henry Lambert's Homepage </h2>
   {% for message in get_flashed_messages() %}
    <div class=flash>{{ message }} </div>
   {% endfor %}
+  <div class=navigation>
+    <li> <a href="{{url_for('homepage')}}">Home</a>|
+    <a href="{{url_for('publications')}}">Publications</a>|
+    <a href="{{url_for('notes')}}">Notes and Teaching</a>|
+    <a href="{{url_for('interesting_stuff')}}">Interesting Stuff</a></li>
+  </div>
   {% block body %}{% endblock %}
 </div>

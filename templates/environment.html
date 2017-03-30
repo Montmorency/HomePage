@@ -4,6 +4,21 @@
 <p> In order to liberate neurons that would be better served soaking in malted hops 
 I am collecting some useful links and notes for configuring your environment on UNIX and MacOS systems.
 </p>
+<h3>Determining Your Version of Linux </h3>
+<p> To determine what version of linux and the kernel is in use:
+<code>
+<pre>
+$cat /etc/issue
+  Scientific Linux release 6.6 (Carbon)
+  Kernel \r on an \m
+$uname -r
+  2.6.32-431.17.1.el6.x86_64
+$uname -i
+  x86_64
+</pre>
+</code>
+</p>
+
 <h3>Step Number Uno (if you are on a Mac)</h3>
 <p> Install <a href="http://brew.sh"> Homebrew </a>. Fantastic package manager 
 for Mac systems with a huge variety of modules and packages, including C and 
@@ -61,6 +76,34 @@ StrictHostKeyChecking no
 </pre></code> to the relevant Host configuration block in your ~/.ssh/config file.
 </p>
 
+<p>
+If you install Xquartz via Homebrew on Mac Os Sierra the plist file is located here:
+<code>
+<pre>
+/Library/LaunchAgents/org.macosforge.xquartz.startx.plist
+/Library/LaunchDaemons/org.macosforge.xquartz.startx.plist
+</pre>
+</code>
+The ssh config files are stored in <samp>/etc/ssh</etc> and the X11 files are stored in <samp>/opt/local/X11/</samp> with
+a symlink to that location made in <samp>/usr/X11</samp>. Homebrew also creates two plist files in <samp>/Library/LaunchAgents/</samp>
+and <samp>/Library/LaunchDaemons</samp>. You may need to modify the ssh config files to allow X11 forwarding. Also note that if you
+used to have macports installed and have since switched to homebrew there maybe some old macport plist files causing problems so it is best
+to remove these.
+</p>
+
+<h3> System Integrity Protection </h3>
+If something ends up in /usr/ directory that shouldn't be there you may encounter
+a <samp>Operation Not Permitted</samp> error when trying to remove it. This is
+due to the system integrity protection feature on recent versions of macos.
+To disable this you can reboot in safe mode: by holding &#8984+R after the mac reboot
+chime. Open a terminal from the Utilities menu and disable system protection with
+<code>
+<pre>
+$crsutil disable
+$reboot
+</pre>
+</code>
+
 <h3> Git </h3>
 <p> I didn't come out here tonight to knock svn. It will suffice to say now I use Git always for everything.
 There are a couple key patterns I repeat with Git and are useful to 
@@ -83,19 +126,19 @@ $git remote -v
 </code></pre>
 You can then tell git to use ssh instead with:
 <pre><code>
-$git set-url origin git@github.com:MyUserName/MyRepo.git 
+$git remote set-url origin git@github.com:MyUserName/MyRepo.git 
 </code></pre>
 If you've set your public-key (id_rsa.pub) in github settings 
-correctly we can fetch and push with impunity.
+correctly you can fetch and push with impunity.
 </p>
 
 <p>
-Starting a new local branch is as easy as:
+To create a new local branch:
 <pre><code>
 $git branch NewBranch
 </pre></code>
 
-To list available local branches.
+To list available local branches:
 <pre><code>
 $git branch
   NewBranch
@@ -124,6 +167,9 @@ $git branch -d NewBranch
 ... and it's gone.
 </p>
 
+<p> If you have forked a branch from another repository you can set upstream and rebase your fork following
+the instructions <a href="https://help.github.com/articles/syncing-a-fork/"> here </a>.</p>
+
 <h3> Amazon web services </h3>
 If you have an EC2 instance with <a href="https://aws.amazon.com"> amazon web services </a> you can ssh into
 your node using the private key issued when you launch the node:
@@ -132,6 +178,12 @@ $ssh -i "myprivatekey.pem" ubuntu@ec2-00-00-00-00.eu-west-1.compute.amazonaws.co
 </pre></code>
 
 This website is deployed using Flask with an Apache web server.
+To start the apache server:
+<code>
+<pre>
+$sudo systemctl start apache2
+</pre>
+</code>
 
 If I modify any of the pages or reconfigure the back end the service can be relaunched with:
 <pre><code>
@@ -141,6 +193,8 @@ $sudo service apache2 restart
 On an ubuntu server the default welcome page
 for Apache (<tt>/var/www/html/index.html</tt>) gives details on
 the default configuration for the Apache2 server on Ubuntu.
+For details on configuring the permissions of the /var/www/ directory
+see the <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateWebServer.html">amazon documentation</a>.
 
 The wsgi configuration file is named (<samp>website.wsgi</samp>), and is
 located in <samp>/var/www/website/</samp>. 
@@ -165,22 +219,24 @@ should be sufficient to get things up and running. The configuration should
 include your domain name and directives to run the WSGI Daemon in the <tt>.conf</tt> file.
 
 <pre><code>
-<VirtualHost *:80>
+&lt VirtualHost *:80 &gt
     ServerName website_name.co.uk
 
     WSGIDaemonProcess website threads=5
     WSGIScriptAlias / /var/www/website/website.wsgi
 
-    <Directory /var/www/website>
+    &lt Directory /var/www/website &gt
         WSGIProcessGroup website
         WSGIApplicationGroup %{GLOBAL}
         WSGIScriptReloading On
         Order deny,allow
         Allow from all
-    </Directory>
-</VirtualHost>
+    &lt/Directory&gt
+&lt/VirtualHost&gt
 </pre></code>
 
+Make sure you have the wsgi module loaded. <samp> sudo apt-get install libapache2-mod-wsgi </samp>.
+Run <samp>sudo a2ensite website.conf </samp> to register the conf file with the apache server.
 To track requests being issued check <tt> /var/log/apache2/ </tt>.
 
 <h3> VPN and Networking </h3>

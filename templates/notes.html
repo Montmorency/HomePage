@@ -5,32 +5,38 @@
 Here is a small collection of notes on a variety of topics. These are in varying
 states of completion and correctness. Please contact me if you find any glaring errors. This
 page is updated periodically with new notes and modifications to old ones. Ultimately I would
-like some of these notes to morph into an actual subdomain of the site where the text becomes
-interactive although this might be a little bit ambitious. Any <samp>.svg</samp> file is probably
-not going to be rendered properly by your browser so probably better to download the linked file
-and open with a program like <a href="https://inkscape.org/en/"> Inkscape </a>.
+like some of these notes to become interactive although this might be a little bit ambitious. 
+Any <samp>.svg</samp> file is probably not going to be rendered properly by your browser 
+so probably better to download the linked file and 
+open with a program like <a href="https://inkscape.org/en/">Inkscape</a>.
 </p>
 
 <ul>
 {% for note in notes %}
-  <li> <a href="{{url_for('download_file', filename=note)}}"> {{note}} </a> </li>
+  <li> <a href="{{url_for('download_file', filename=note)}}">{{note}}</a> </li>
 {% endfor %}
 </ul>
 
 <h2> Web Notes </h2>
-This page, which perhaps should be split into multiple pages, collects some useful tips
-on configuring ssh servers, apache2 servers for hosting flask applications, configuring vimrc
+<p>
+Configuring Mac/Linux Environments collects some useful tips on configuring ssh servers, 
+apache2 servers for hosting flask applications, configuring vimrc
 files, and common patterns in Git.
+The TensorFlow notes mainly deal with installation instructions and ways to build models
+with <samp>tf.contrib.learn</samp>, I'm trying to incorporate batch_normalization in a 
+straightforward way at the moment without having to rebuild my models from scratch.
 <ul>
 <li><a href="{{url_for('environment')}}"> Configuring Mac/Linux Environments </a></li>
+<li><a href="{{url_for('tensorflow_notes')}}"> Tensorflow Notes </a></li>
 </ul>
 
-This page is under construction but will be a condensed treatment of quaternions with 
+The Quaternions page is under construction but will be a condensed treatment of quaternions with 
 some visualizations and web based tools to explore their application in rotations and special
-relativity. (currently consists of a poem written by William Rowan Hamilton).
+relativity. (Currently the page consists of a poem written by William Rowan Hamilton).
 <ul>
 <li><a href="{{url_for('quaternions')}}"> Quaternions </a></li>
 </ul>
+</p>
 
 <h2>Essays</h2>
 <p> Romulus Magazine: <a href="https://www.wolfson.ox.ac.uk/sites/wolfson.ox.ac.uk/files/romulus_magazine_2015_web.pdf"> Thermodynamics and Arcadia. </a></p>

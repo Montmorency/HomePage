@@ -46,6 +46,13 @@ def quaternions():
   """
   return render_template("quaternions.html")
 
+@app.route('/tensorflow_notes/')
+def tensorflow_notes():
+  """
+  WebNotes for using tensorflow.
+  """
+  return render_template('tensorflow_notes.html')
+
 @app.route('/interesting_stuff/')
 def interesting_stuff():
   """
