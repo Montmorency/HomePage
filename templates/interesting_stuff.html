@@ -6,14 +6,24 @@ least I can do to give you an easy way out.
 </p>
 <p>
 The pages below are of passing, current, and permanent interest, 
-and in no particular order. Some of them pertain to code documentation 
+and in no particular order beyond roughly being split into different
+categories. Some of them pertain to code documentation 
 I find myself checking frequently. Others cover fields relevant to electronic structure theory, 
 computer programming, inference, english literature, the mystical world of 
 financial shamanism, and horse racing. Selections may be updated periodically. 
+<h2> General </h2>:
 <ul>
 {% for k,v in interesting_websites.iteritems() %}
 <li> <a href={{v}}> {{k}} </a> </li>
 {% endfor %}
 </ul>
+
+<h2> Superconductivity </h2>:
+<ul>
+{% for k,v in superconductivity.iteritems() %}
+<li><a href={{v}}>{{k}}</a></li>
+{% endfor %}
+</ul>
+
 </p>
 {% endblock body %}

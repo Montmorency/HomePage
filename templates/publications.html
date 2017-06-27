@@ -13,10 +13,16 @@ Laboratory </a> at Oxford.</p>
 
 <p> I am currently working at King's College in London
 under the direction of Alessandro De Vita with a focus on
-<a href="http://www.hems.ox.ac.uk"> Hydrogen Embrittlement Processes in Steels </a>.</p>
+<a href="http://www.hems.ox.ac.uk"> Hydrogen Embrittlement Processes in Steels </a>.
+Here is some of the work we have produced so far:</p>
+<ul>
+{% for k,v in hems_publications.iteritems() %}
+<li> <a href="{{v}}"> {{k}}</a> </li>
+{% endfor %}
+</ul>
 
-<p> Here are some posters! If the browser doesn't render them properly just download the file and open with inkscape or any
-program that can read .svg files. </p>
+<p> Here are some posters. If the browser doesn't render them properly just download the file and open with inkscape or any
+program that can read <code>.svg</code>files. </p>
 <ul>
 <li><a href="{{url_for('download_file', filename='RoyalSocietyLambert.svg')}}">HEMS poster for Royal Society meeting 16th-18th January 2017</a></li>
 </ul>
