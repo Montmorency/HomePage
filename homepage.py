@@ -40,6 +40,13 @@ def notes():
   notes = os.listdir(app.config['DOWNLOAD_FOLDER'])
   return render_template("notes.html", notes=notes)
 
+@app.route("/data_structures/")
+def data_structures():
+  """
+  Visualizations of different sorting algorithms.
+  """
+  return render_template("data_structures.html")
+
 @app.route("/quaternions")
 def quaternions():
   """
