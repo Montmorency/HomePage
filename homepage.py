@@ -27,6 +27,11 @@ def publications():
                  }
   return render_template("publications.html", publications=publications)
 
+@app.route("/games/")
+def games():
+  s_or_b = load_shake_or_bib()
+  return render_template("games.html", s_or_b=s_or_b)
+
 @app.route("/environment/")
 def environment():
   return render_template("environment.html")
