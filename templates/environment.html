@@ -105,10 +105,11 @@ $reboot
 </code>
 
 <h3> Git </h3>
-<p> I didn't come out here tonight to knock svn. It will suffice to say now I use Git always for everything.
+<p> I typically use Git for all revision/versioning needs.
 There are a couple key patterns I repeat with Git and are useful to 
-remember. The <a href="https://help.github.com"> git documentation </a> is very good. 
-Through the web interface for your git profile under <samp> settings </samp> you can add 
+remember. The <a href="https://help.github.com"> git documentation </a> is very good,
+and this <a href="http://www.ndpsoftware.com/git-cheatsheet.html"> interactive Git manual </a>
+is also quite useful. Through the web interface for your git profile under <samp> settings </samp> you can add 
 ssh keys to all the machines where you would like to work
 on different repos. You can clone a git repo using <samp>https</samp> or <samp>ssh</samp>. 
 After cloning you may want to set some general configurations like your email and username.
@@ -229,8 +230,9 @@ include your domain name and directives to run the WSGI Daemon in the <tt>.conf<
         WSGIProcessGroup website
         WSGIApplicationGroup %{GLOBAL}
         WSGIScriptReloading On
-        Order deny,allow
+        Order allow,deny
         Allow from all
+        Deny from XXX.XXX.XXX.XXX
     &lt/Directory&gt
 &lt/VirtualHost&gt
 </pre></code>
@@ -238,6 +240,14 @@ include your domain name and directives to run the WSGI Daemon in the <tt>.conf<
 Make sure you have the wsgi module loaded. <samp> sudo apt-get install libapache2-mod-wsgi </samp>.
 Run <samp>sudo a2ensite website.conf </samp> to register the conf file with the apache server.
 To track requests being issued check <tt> /var/log/apache2/ </tt>.
+
+<h3>Denying IP Adresses on apache server </h3>
+<p>
+If you find IP addresses doing naughty things in your access log the <samp>.conf</samp> file above shows
+how to match against restricted ips. If you're curious you can get an idea of the
+geographic location of these addresses <a href="http://whatismyipaddress.com/ip-lookup">whatismyip</a>,
+of the ip address accessing your site. Most of them are in california and china...
+</p>
 
 <h3> VPN and Networking </h3>
 <p> To login to the local network via a portal I am using BIG-IP Edge Client. 

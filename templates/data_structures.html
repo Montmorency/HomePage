@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="heap_sort">
+<h1> Heap Sort Visualization </h1>
+
+<style>
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+</style>
+
+<script>
+
+// Bar chart from blocks: https://bl.ocks.org/mbostock/3885304
+var a = [4, 10, 3, 5, 1];
+var data =[]
+for (i = 0; i<a.length; i++){
+	data.push({"index":i, "mag":a[i]});
+}
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+
+// Set the DISPLAY ranges
+// var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+var x = d3.scale.ordinal().rangeRoundBands([0, width], .1),
+    y = d3.scale.linear().range([height, 0]);
+
+// D3 Axis - renders a d3 scale in SVG
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+
+svg.append("g")
+    .attr("class", "y axis")
+  .append("text") // just for the title (ticks are automatic)
+    .attr("transform", "rotate(-90)") // rotate the text!
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Magnitude");
+
+x.domain(data.map(function(d) {return d.index;}));
+y.domain([0, d3.max(data, function(d) {return d.mag;})]);
+
+svg.selectAll(".bar")
+  .data(data)
+  .enter().append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d) { return x(d.index); })
+    .attr("y", function(d) { return y(d.mag); })
+    .attr("width", x.rangeBand())
+    .attr("height", function(d) { return height - y(d.mag); });
+
+function swap(a,i,j){
+	tmp = a[i];
+	a[i] = a[j]; //only swap the values.
+	a[j] = tmp;
+}
+
+function heapify(a, n, root){
+	var large_index = root;
+	var child_left = 2*root + 1;
+	var child_right = 2*root + 2;
+	if (child_left < n &&	a[root] < a[child_left]){
+		large_index = child_left;
+	}
+	if (child_right < n && a[large_index] < a[child_right]){
+		large_index = child_right;
+	}
+	if (large_index != root){
+		swap(a, large_index, root);
+		heapify(a, n, large_index);
+	}
+}
+
+function heap_sort(a){
+	n = a.length;
+	for (i = n; n > -1; --1){
+		heapify(a,n,i)	
+	}
+
+	for (i = n; n >0 ; --1){
+		swap(a, 0, n);
+		heapify(a,i,0);
+  }
+}
+heap_sort(a)
+</script>
+</div>
+
+{% endblock body %}
+

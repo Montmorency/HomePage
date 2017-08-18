@@ -21,11 +21,12 @@ def publications():
   View with links to published papers.
   """
   publications = {'Ab initio Sternheimer-GW method': 'http://link.aps.org/doi/10.1103/PhysRevB.88.075117',
-                  'Plasmonic Polarons':'http://link.aps.org/doi/10.1103/PhysRevLett.114.146404',
+                  'Plasmonic polarons':'http://link.aps.org/doi/10.1103/PhysRevLett.114.146404',
                   'Electron-phonon interaction in CaC6':'http://www.nature.com/articles/srep21414',
-                  'Combined GW and Cumulant Expansion':'http://dx.doi.org/10.1103/PhysRevB.94.035103'
-                 }
-  return render_template("publications.html", publications=publications)
+                  'Combined GW and cumulant expansion':'http://dx.doi.org/10.1103/PhysRevB.94.035103'}
+  hems_publications = {'Hydrogen embrittlement: future directions: discussion':'http://rsta.royalsocietypublishing.org/content/375/2098/20170029',
+                       'Hydrogen transport and trapping: from quantum effects to alloy design: discussion':'http://rsta.royalsocietypublishing.org/content/375/2098/20170031'}
+  return render_template("publications.html", publications=publications, hems_publications=hems_publications)
 
 @app.route("/games/")
 def games():
@@ -43,6 +44,13 @@ def notes():
   """
   notes = os.listdir(app.config['DOWNLOAD_FOLDER'])
   return render_template("notes.html", notes=notes)
+
+@app.route("/data_structures/")
+def data_structures():
+  """
+  Visualizations of different sorting algorithms.
+  """
+  return render_template("data_structures.html")
 
 @app.route("/quaternions")
 def quaternions():
@@ -75,7 +83,8 @@ def interesting_stuff():
                           "Sir David Mackay FRS":'http://www.inference.phy.cam.ac.uk/mackay/',
                           'Wolfson DVD Library':"https://www.wolfson.ox.ac.uk/dvd-library",
                           'Money Is The Way':'http://moneyistheway.blogspot.co.uk'}
-  return render_template("interesting_stuff.html", interesting_websites=interesting_websites)
+  superconductivity = {"Philip Anderson: BCS Scientific Love of my Life.":"http://dx.doi.org/10.1142/S0217979210056426"}
+  return render_template("interesting_stuff.html", interesting_websites=interesting_websites, superconductivity=superconductivity)
 
 app.config['DEBUG']              = False
 app.config['SECRET_KEY']         = '123412sdfalkjasflksqejvnoryyclzpiej'
