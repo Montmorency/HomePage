@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask, render_template, request, url_for, flash, g, session, send_file
 
 app = Flask(__name__)
@@ -28,10 +29,11 @@ def publications():
                        'Hydrogen transport and trapping: from quantum effects to alloy design: discussion':'http://rsta.royalsocietypublishing.org/content/375/2098/20170031'}
   return render_template("publications.html", publications=publications, hems_publications=hems_publications)
 
-@app.route("/games/")
-def games():
-  s_or_b = load_shake_or_bib()
-  return render_template("games.html", s_or_b=s_or_b)
+@app.route("/sorb/")
+def sorb():
+  from sorb.sorb import sorb_extracts
+  print sorb_extracts
+  return render_template("sorb.html", sorb_extracts=sorb_extracts)
 
 @app.route("/environment/")
 def environment():
@@ -86,7 +88,7 @@ def interesting_stuff():
   superconductivity = {"Philip Anderson: BCS Scientific Love of my Life.":"http://dx.doi.org/10.1142/S0217979210056426"}
   return render_template("interesting_stuff.html", interesting_websites=interesting_websites, superconductivity=superconductivity)
 
-app.config['DEBUG']              = False
+app.config['DEBUG']              = True
 app.config['SECRET_KEY']         = '123412sdfalkjasflksqejvnoryyclzpiej'
 app.config['DOWNLOAD_FOLDER']    = os.environ['DOWNLOAD_FOLDER']
 app.config['ALLOWED_EXTENSIONS'] = set(['pdf'])
