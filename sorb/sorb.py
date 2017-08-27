@@ -1,6 +1,9 @@
 import os
 import sys
 
+#("shakespeare","","")
+#("bible","","")
+
 sorb_extracts = [("shakespeare", "A beggar's book out-worths a noble's blood.", "King Henry VIII, 1:1"),
 ("shakespeare", "When I had lost one shaft, I shot his fellow of the selfsame flight, the selfsame way, with more advised watch.", "Merchant of Venice 1:1"),
 ("bible", "Who hath measured the waters in the hollow of his hand and meted out heaven with the span, and comprehended the dust of the earth in a measure, and weighted the mountains in scales, and the hills in a balance?", "Isaiah 40:12"),
@@ -14,6 +17,18 @@ sorb_extracts = [("shakespeare", "A beggar's book out-worths a noble's blood.", 
 ("shakespeare", "Cover your heads, and mock not flesh and blood", "King Richard The Second 3:2"),
 ("shakespeare", "He is a very serpent in my way, And wheresoe'er this foot of mine doth tread He lies before me", "King John 3:3"),
 ("shakespeare", "Make dust our paper, and with rainy eyes write sorrow on the bosom of the earth.", "King Richard II 3:3"),
+("shakespeare", "Bring thou her husband: This is the hole where Aaron bid us hide him.","Titus Andronichus 2:3"),
+("shakespeare", "Therefore I say again, I utterly abhor, yea, from my soul Refuse you for my judge.","King Henry VIII 2:4"),
+("shakespeare", "There is a vice that most I do abhor, And most desire should meet the blow of justice.","Measure for Measure"),
+("shakespeare", "A true devoted pilgrim is not weary To measure kingdoms with his feeble steps.","Three Gentleman of Verona 2:7"),
+("shakespeare", "I took by th'throat the circumcised dog, And smote him", "Othello 5:2"),
+("shakespeare", "Does your worship mean to geld and splay all the youth of the city?", "Measure for Measure 2:1"),
+("shakespeare","`Thou shalt not steal'?", "Measure For Measure 1:2"),
+("bible","Thou shalt not steal.", "Exodus 20:15"),
+("bible","I desired Titus, and with him I sent a brother. Did Titus make a gain of you? Walked we not in the same spirit? Walked we not in the same steps?","Corinthians II 12:18"),
+("bible","How doth the city sit solitary, that was full of people! How is she become as a widow!","Lamentations 1:1"),
+("bible", "All my inward friends abhorred me: and they whom I loved are turned against me.", "Job 19:18"),
+("bible", "It is like the precious ointment upon the head, that ran down upon the beard, even Aaron's beard","Psalms 133:2"),
 ("bible", "Every man at the beginning doth set forth good wine; and when men have well drunk, then has which is worse.", "John 2:10"),
 ("bible", "It is better to dwell in the wilderness, than with a contentious and an angry woman.", "Proverbs 21:19"),
 ("bible", "Give strong drink unto him that is ready to perish, and wine unto those that be of heavy hearts.", "Proverbs 31:6"),

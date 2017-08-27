@@ -88,7 +88,7 @@ def interesting_stuff():
   superconductivity = {"Philip Anderson: BCS Scientific Love of my Life.":"http://dx.doi.org/10.1142/S0217979210056426"}
   return render_template("interesting_stuff.html", interesting_websites=interesting_websites, superconductivity=superconductivity)
 
-app.config['DEBUG']              = True
+app.config['DEBUG']              = False
 app.config['SECRET_KEY']         = '123412sdfalkjasflksqejvnoryyclzpiej'
 app.config['DOWNLOAD_FOLDER']    = os.environ['DOWNLOAD_FOLDER']
 app.config['ALLOWED_EXTENSIONS'] = set(['pdf'])
