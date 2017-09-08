@@ -8,36 +8,29 @@
 .bar {
   fill: steelblue;
 }
-
 .bar:hover {
   fill: brown;
 }
-
 .axis {
   font: 10px sans-serif;
 }
-
 .axis path,
 .axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
 }
-
 .x.axis path {
   display: none;
 }
-
 </style>
 
 <script>
-
 // Bar chart from blocks: https://bl.ocks.org/mbostock/3885304
 var a = [4, 10, 3, 5, 1];
 var data =[]
 for (i = 0; i<a.length; i++){
-	data.push({"index":i, "mag":a[i]});
-}
+	data.push({"index":i, "mag":a[i]});}
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
@@ -70,7 +63,7 @@ svg.append("g")
 
 svg.append("g")
     .attr("class", "y axis")
-  .append("text") // just for the title (ticks are automatic)
+    .append("text") // just for the title (ticks are automatic)
     .attr("transform", "rotate(-90)") // rotate the text!
     .attr("y", 6)
     .attr("dy", ".71em")
@@ -91,38 +84,12 @@ svg.selectAll(".bar")
 
 function swap(a,i,j){
 	tmp = a[i];
-	a[i] = a[j]; //only swap the values.
+	a[i] = a[j];
 	a[j] = tmp;
 }
 
-function heapify(a, n, root){
-	var large_index = root;
-	var child_left = 2*root + 1;
-	var child_right = 2*root + 2;
-	if (child_left < n &&	a[root] < a[child_left]){
-		large_index = child_left;
-	}
-	if (child_right < n && a[large_index] < a[child_right]){
-		large_index = child_right;
-	}
-	if (large_index != root){
-		swap(a, large_index, root);
-		heapify(a, n, large_index);
-	}
-}
-
-function heap_sort(a){
-	n = a.length;
-	for (i = n; n > -1; --1){
-		heapify(a,n,i)	
-	}
-
-	for (i = n; n >0 ; --1){
-		swap(a, 0, n);
-		heapify(a,i,0);
-  }
-}
 heap_sort(a)
+
 </script>
 </div>
 
