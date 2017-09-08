@@ -50,5 +50,5 @@ sorb_extracts = [("shakespeare", "A beggar's book out-worths a noble's blood.", 
 ("wodehouse", "... the children who made mock of the prophet Elisha.","Introduction to Summer Lightning"),
 ("wodehouse", "Unseen, in the background, Fate was quietly slipping the lead into the boxing-glove.","Very Good, Jeeves"),
 ("wodehouse", "We Scripture-knowledge sharks stick together.", "Right Ho, Jeeves"),
-("wodehouse", "it was impossible for him to have won the Scripture-knowledge prize without systematic cheating on an impressive scale.", "Right Ho, Jeeves")
+("wodehouse", "It was impossible for him to have won the Scripture-knowledge prize without systematic cheating on an impressive scale.", "Right Ho, Jeeves")
 ]

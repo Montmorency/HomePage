@@ -14,7 +14,7 @@ Formerly I worked on the optical properties of materials in <a href="http://gius
 <p>
 In my spare time I fool around with software. Mainly in the domain of 
 python applications based on Flask/Peewee, some Haskell, 
-and building Neural Networks using TensorFlow for a range of applications. 
+and building neural networks using TensorFlow for a range of applications. 
 
 Some of my programming interests include first principles calculations of 
 the properties of materials, natural language processing, and market forecasting.
@@ -22,23 +22,28 @@ If you are interested in collaborating on a project in one or all of these (very
 or would like to outsource some development please don't hesitate to <a href="mailto:lamberh@tcd.ie">contact me</a>.
 </p>
 
-<ul>
+<div class=contacts>
+<ul class=contacts_list>
 <li> Github:  <a href="{{contacts.Github}}"> montmorency </a> </li>
 <li> Twitter: <a href="{{contacts.twitter}}"> @condensedhank  </a> </li>
 <li> Email:   <a href="mailto:{{contacts.email}}"> lamberh  </a> </li>
 </ul>
+</div>
 
-<ul>
+<div class=site_list>
+<ul class=page_list>
 <li><a href="{{url_for('publications')}}">Publications</a></li>
 <li><a href="{{url_for('notes')}}">Notes and Teaching</a></li>
 <li><a href="http://wolfdvd.harlambert.co.uk">Wolfson College DVD Library</a></li>
 <li><a href="{{url_for('interesting_stuff')}}">Interesting Stuff</a></li>
-<li><a href="{{url_for('data_structures')}}">Data Structures</a></li>
 </ul>
+</div>
 
+<div id=games>
 <h3> Games:</h3>
 <ul>
 <li><a href="{{url_for('sorb')}}">Shakespeare, The Bible, or P.G. Wodehouse?</a></li>
 </ul>
+</div>
 
 {% endblock body %}
