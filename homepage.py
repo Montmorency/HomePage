@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask, render_template, request, url_for, flash, g, session, send_file
 
 app = Flask(__name__)
@@ -23,10 +24,17 @@ def publications():
   publications = {'Ab initio Sternheimer-GW method': 'http://link.aps.org/doi/10.1103/PhysRevB.88.075117',
                   'Plasmonic polarons':'http://link.aps.org/doi/10.1103/PhysRevLett.114.146404',
                   'Electron-phonon interaction in CaC6':'http://www.nature.com/articles/srep21414',
-                  'Combined GW and cumulant expansion':'http://dx.doi.org/10.1103/PhysRevB.94.035103'}
+                  'Combined GW and cumulant expansion':'http://dx.doi.org/10.1103/PhysRevB.94.035103',
+                  'Origin of Superconductivity and Latent Charge Density Wave in NbS2':'https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.119.087003'}
   hems_publications = {'Hydrogen embrittlement: future directions: discussion':'http://rsta.royalsocietypublishing.org/content/375/2098/20170029',
                        'Hydrogen transport and trapping: from quantum effects to alloy design: discussion':'http://rsta.royalsocietypublishing.org/content/375/2098/20170031'}
   return render_template("publications.html", publications=publications, hems_publications=hems_publications)
+
+@app.route("/sorb/")
+def sorb():
+  from sorb.sorb import sorb_extracts
+  print sorb_extracts
+  return render_template("sorb.html", sorb_extracts=sorb_extracts)
 
 @app.route("/environment/")
 def environment():
@@ -53,6 +61,18 @@ def quaternions():
   View for handling quaternion notes.
   """
   return render_template("quaternions.html")
+
+@app.route('/frameworks_and_servers/')
+def frameworks_and_servers():
+  """
+  Notes on frameworks and servers.
+  """
+  return render_template('frameworks_and_servers.html')
+
+@app.route('/githubpages/')
+def githubpages():
+  """Note on setting up a relatively efficient documentation system on github."""
+  return render_template('githubpages.html')
 
 @app.route('/tensorflow_notes/')
 def tensorflow_notes():
@@ -81,9 +101,9 @@ def interesting_stuff():
   superconductivity = {"Philip Anderson: BCS Scientific Love of my Life.":"http://dx.doi.org/10.1142/S0217979210056426"}
   return render_template("interesting_stuff.html", interesting_websites=interesting_websites, superconductivity=superconductivity)
 
-app.config['DEBUG']              = False
-app.config['SECRET_KEY']         = '123412sdfalkjasflksqejvnoryyclzpiej'
-app.config['DOWNLOAD_FOLDER']    = os.environ['DOWNLOAD_FOLDER']
+app.config['DEBUG'] = False
+app.config['SECRET_KEY'] = '123412sdfalkjasflksqejvnoryyclzpiej'
+app.config['DOWNLOAD_FOLDER'] = os.environ['DOWNLOAD_FOLDER']
 app.config['ALLOWED_EXTENSIONS'] = set(['pdf'])
 
 if __name__ == "__main__":

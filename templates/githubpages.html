@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block body %}
+<h4> Github Pages </h4>
+<p><a href="https://pages.github.com">Github Pages </a> allows you to host documentation on the github server.
+If you wish to use <a href="http://www.sphinx-doc.org/en/stable/"> sphinx </a>to autogenerate code documentation 
+from your packages docstring there are a couple tricks. First add a /docs/ folder to your <samp>master</samp> branch with
+a <samp>build</samp> and <samp>source</samp> directory in it. In the Settings tab of your github repository enable
+the documentation under the Github Pages header. </p>
+
+<p>
+Github allows you to host your documentation pages from a few different places. You can create a separate branch in your
+repository named <samp>gh-pages</samp>. I prefer to have the documentation integrated directly into the <samp>master</samp> 
+branch in a <samp>/docs</samp> folder. This is a matter of preference.
+</p>
+
+<p> In the <samp>/docs</samp> folder of your <samp>master</samp> branch you can create your documentation
+from your source files:
+<pre><code>
+  sphinx-build -b html source build
+  make html
+</pre></code>
+</p>
+
+<p>
+The issue with integrating sphinx documentation into your github repo in this way is that
+it requires versioning your build directory. This is a necessary inconvenience unless a way 
+of automatically running sphinx build on the github server is provided. 
+</p>
+
+<p>To point github to your build folder a simple redirect script seems to be the cleanest way. 
+This solution is suggested <a href="https://github.com/sphinx-doc/sphinx/issues/3382"> here </a>. Add
+an <samp> index.html </samp> redirect in the source folder of your documentation. The root of your documentation,
+i.e. where the top level <samp>index.html</samp> file is located, must also contain a
+<samp>.nojekyll</samp> file so that directories prefixed with an underscore, which is the default when
+building your documentation with sphinx, e.g. <samp>_static</samp>,
+are included when github builds your documentation.
+This file might look like this:
+</p>
+<p>
+<code>
+  &lt;html&gt;<br/>    &lt;head&gt;<br/>    &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;
+  url=./docs/build/index.html&quot;/&gt;<br/>    &lt;/head&gt;<br/><br/>    &lt;body&gt;<br/>    &lt;/body&gt;<br/>  &lt;/html&gt;
+</code>
+</p>
+
+<p>This will redirect queries to the proper index in your build directory and should load all the style sheets.</p>
+{% endblock body %}
+
