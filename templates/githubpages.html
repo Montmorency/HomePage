@@ -21,24 +21,28 @@ from your source files:
 </pre></code>
 </p>
 
-<p>To point github to your build folder a simple redirect script seems to be the cleanest way.
-This solution is suggested <a href="https://github.com/sphinx-doc/sphinx/issues/3382"> here </a>. Adding
+<p>
+The issue with integrating sphinx documentation into your github repo in this way is that
+it requires versioning your build directory. This is a necessary inconvenience unless a way 
+of automatically running sphinx build on the github server is provided. 
+</p>
+
+<p>To point github to your build folder a simple redirect script seems to be the cleanest way. 
+This solution is suggested <a href="https://github.com/sphinx-doc/sphinx/issues/3382"> here </a>. Add
 an <samp> index.html </samp> redirect in the source folder of your documentation. The root of your documentation,
 i.e. where the top level <samp>index.html</samp> file is located, must also contain a
 <samp>.nojekyll</samp> file so that directories prefixed with an underscore, which is the default when
 building your documentation with sphinx, e.g. <samp>_static</samp>,
 are included when github builds your documentation.
 This file might look like this:
-<pre><code>
-<html>
-<head>
-<meta http-equiv="refresh" content="0; url=./docs/build/index.html"/>
-</head>
-<body>
-</body>
-</html>
-</code></pre>
-This will redirect queries to the proper index in your build directory and should load all the style sheets.
 </p>
+<p>
+<code>
+  &lt;html&gt;<br/>    &lt;head&gt;<br/>    &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;
+  url=./docs/build/index.html&quot;/&gt;<br/>    &lt;/head&gt;<br/><br/>    &lt;body&gt;<br/>    &lt;/body&gt;<br/>  &lt;/html&gt;
+</code>
+</p>
+
+<p>This will redirect queries to the proper index in your build directory and should load all the style sheets.</p>
 {% endblock body %}
 
