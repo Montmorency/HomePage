@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3> Amazon web services </h3>
+If you have an EC2 instance with <a href="https://aws.amazon.com"> amazon web services </a> you can ssh into
+your node using the private key issued when you launch the node:
+<pre><code>
+$ssh -i "myprivatekey.pem" ubuntu@ec2-00-00-00-00.eu-west-1.compute.amazonaws.com
+</pre></code>
+
+This website is deployed using Flask with an Apache web server.
+To start the apache server:
+<code>
+<pre>
+$sudo systemctl start apache2
+</pre>
+</code>
+
+If I modify any of the pages or reconfigure the back end the service can be relaunched with:
+<pre><code>
+$sudo service apache2 restart
+</pre></code>
+<h4> wsgi Configuration </h4>
+On an ubuntu server the default welcome page
+for Apache (<tt>/var/www/html/index.html</tt>) gives details on
+the default configuration for the Apache2 server on Ubuntu.
+For details on configuring the permissions of the /var/www/ directory
+see the <a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateWebServer.html">amazon documentation</a>.
+
+The wsgi configuration file is named (<samp>website.wsgi</samp>), and is
+located in <samp>/var/www/website/</samp>. 
+
+I needed to add the python modules, and the website module 
+explicitly to the system path in this small wsgi script. This
+layout should be somewhat typical for most wsgi scripts:
+<pre><code>
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+
+sys.path.append("/home/ubuntu/locationof/pythonX.X/site-packages")
+sys.path.append("/home/ubuntu/pymodules/website")
+
+from website import app as application
+</pre></code>
+
+Further configuration of the server takes place in /etc/apache2/.
+Placing a <tt>website.conf</tt> file in /etc/apache2/sites-available/
+should be sufficient to get things up and running. The configuration should 
+include your domain name and directives to run the WSGI Daemon in the <tt>.conf</tt> file.
+
+<pre><code>
+&lt VirtualHost *:80 &gt
+    ServerName website_name.co.uk
+
+    WSGIDaemonProcess website threads=5
+    WSGIScriptAlias / /var/www/website/website.wsgi
+
+    &lt Directory /var/www/website &gt
+        WSGIProcessGroup website
+        WSGIApplicationGroup %{GLOBAL}
+        WSGIScriptReloading On
+        Order allow,deny
+        Allow from all
+        Deny from XXX.XXX.XXX.XXX
+    &lt/Directory&gt
+&lt/VirtualHost&gt
+</pre></code>
+
+Make sure you have the wsgi module loaded. <samp> sudo apt-get install libapache2-mod-wsgi </samp>.
+Run <samp>sudo a2ensite website.conf </samp> to register the conf file with the apache server.
+To track requests being issued check <tt> /var/log/apache2/ </tt>.
+
+<h3>Denying IP Adresses on apache server </h3>
+<p>
+If you find IP addresses doing naughty things in your access log the <samp>.conf</samp> file above shows
+how to match against restricted ips. If you're curious you can get an idea of the
+geographic location of these addresses <a href="http://whatismyipaddress.com/ip-lookup">whatismyip</a>,
+of the ip address accessing your site. Most of them are in california and china...
+</p>
+
+<h3> VPN and Networking </h3>
+<p> To login to the local network via a portal I am using BIG-IP Edge Client. 
+Generally to check the ip address assigned to your laptop ifconfig and nslookup are
+your friends:
+<pre><code>
+$ifconfig
+  ...
+  ppp0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1500
+  inet 123.00.000.000 --> 137.00.000.0 netmask 0xffffffff 
+$nslookup 123.00.000.000
+  Server:   000.00.000.00
+  Address:  000.00.000.00#00
+
+  000.00.000.000.in-addr.arpa name = name.firepass.inst.ac.uk.
+</code></pre>
+If you enable remote login in System Preferences/Sharing (on a mac) you can now access
+your device with <samp> ssh username@name.firepass.inst.ac.uk</samp>.
+</p>
+{% endblock body %}
+
