@@ -43,6 +43,8 @@ Quotes Remaining: <span id="remaining"></span>
 
 <script type=text/javascript>
 $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+function update_db(index, correct_result){
+  $.getJSON($SCRIPT_ROOT + '/_update_sorb', {index:index, correct_result: correct_result}); }
 </script>
 
 <script>
