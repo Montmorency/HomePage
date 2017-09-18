@@ -38,3 +38,8 @@ ul { list-style-type: none;
 .flash          { background: #cee5F5; padding: 0.5em;
                   border: 1px solid #aacbe2; }
 .error          { background: #f0d6d6; padding: 0.5em; }
+
+@media only screen and (max-device-width: 480px) 
+{
+  .btn-primary {width: 100%; font-size: 4.25em;}
+}

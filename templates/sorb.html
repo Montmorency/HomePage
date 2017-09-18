@@ -41,6 +41,9 @@ Quotes Remaining: <span id="remaining"></span>
 <span id="quote"></span>
 </div>
 
+<script type=text/javascript>
+$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
 
 <script>
   var margin = {top:30, right: 100, bottom: 80, left: 50},

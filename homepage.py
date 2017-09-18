@@ -36,6 +36,19 @@ def sorb():
   print sorb_extracts
   return render_template("sorb.html", sorb_extracts=sorb_extracts)
 
+@app.route("/_update_sorb")
+def update_sorb_db():
+  index = request.args.get('index', type=int)
+  correct_result = request.args.get('correct_result', type=bool)
+  sorb_db.connect()
+  if correct_result:
+    sorb_dict.where(Sorb.index=index).update(Sorb.correct += 1)
+  elif not correct_result:
+    sorb_dict.where(Sorb.index=index).update(Sorb.incorrect += 1)
+  else:
+    pass
+  sorb_db.close()
+
 @app.route("/environment/")
 def environment():
   return render_template("environment.html")
