@@ -9,7 +9,7 @@ body  { font-family: sans-serif; }
 h1, h2  { font-family: 'Georgia', serif; margin: 0; }
 h1  { border-bottom: 2px solid #eee; }
 h2  { font-size: 1.2em; }
-form  { width: 30em; }
+form { width: 30em; }
 
 code { background: hsl(220, 80%, 90%); }
 
@@ -19,12 +19,7 @@ pre { white-space: pre-wrap;
 ul { list-style-type: none;
 		 margin: 15;
 	   padding: 0;}
-/*
-ul { display: inline; width: 15}
-ul { padding: .2em 1em;
-		 color: #fff;
-		 background-color: #036;}
-*/
+
 /* id modifiers */
 #banner h2 img {display: inline}
 

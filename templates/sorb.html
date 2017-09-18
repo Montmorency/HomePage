@@ -1,25 +1,63 @@
 {% extends "layout.html" %}
 {% block body %}
+<style>
+.active-question, .congratulations {
+    background-color: lightblue;
+    width: 50%;
+    padding: 25px;
+    margin: 0 auto;
+}
+
+.answer-stack {
+    background-color: lightgreen;
+    width: 20%;
+    padding: 15px;
+    margin-left: 75%;
+}
+
+.results{
+    padding: 15px;
+    font-size:1.5em;
+}
+</style>
 
 <form>
   <input id="btn-shakespeare" class="btn btn-primary btn-md" type="button" value="Shakespeare" />
   <input id="btn-bible" class="btn btn-primary btn-md" type="button" value="Bible" /> 
   <input id="btn-wodehouse" class="btn btn-primary btn-md" type="button" value="Wodehouse" /> 
-  <input id="btn-next" class="btn btn-primary btn-md" type="button" value="Next" /> 
+  <input id="btn-reset" class="btn btn-primary btn-md" type="button" value="Reset" /> 
 </form>
+
+<div class=results>
+<p class="counter">
+Correct: <span id="correct"></span>
+Incorrect: <span id="incorrect"></span>
+Quotes Remaining: <span id="remaining"></span>
+</p>
+</div>
+
+<div class="active-question">
+<h2 id=quote-header>Quotation:</h2>
+<span id="quote"></span>
+</div>
+
 
 <script>
   var margin = {top:30, right: 100, bottom: 80, left: 50},
       width  = 500 - margin.left - margin.right,
       height = 150 - margin.top - margin.bottom;
 
-  var svg = d3.select(".page")
-      .append("svg")
-      .attr("width",  width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", 
-            "translate(" + margin.left + "," + margin.top + ")");
+  var correct = 0;
+  var incorrect = 0;
+  var tweet_text = '';
+
+  $("#btn-tweet").hide()
+
+  d3.select("#correct")
+    .text(correct)
+
+  d3.select("#incorrect")
+    .text(incorrect)
 
   d3.select("#btn-shakespeare")
     .style("left", (width) + "px");
@@ -28,96 +66,151 @@
     .style("left", (width) + "px")
     .style("top", (height) + "px");
 
-  //defs = svg.append('defs')
-  //defs.append('svg:image')
-  //  .attr("xlink:href", "{{url_for('static', filename='roughtexturedpaper.svg')}}")
-  //  .attr("width", width)
-  //  .attr("height", height)
-  //  .attr("x", 0)
-  //  .attr("y", 0);
-
-  var correct = 0;
-  var incorrect = 0;
-
-  data = {{sorb_extracts | tojson}};
+  data_pristine = {{sorb_extracts | tojson}};
+  data = data_pristine.slice()
   index = Math.floor(Math.random()*data.length);
   quote = data[index];
 
-  d3.select(".page")
-    .append("p")
-    .text(quote[1])
-    .attr("id", "quote");
+  d3.select("#remaining")
+    .text(data.length)
 
-  d3.select(".page")
-    .append("p")
-    .text(quote[2])
-    .attr("id", "citation")
-    .style({'display':'none'})
+  d3.select("#quote")
+    .text(quote[1]);
 
-  d3.select(".page")
-    .append("p")
-    .text("True")
-    .attr("id", "true")
-    .style({'display':'none'})
-
-  d3.select(".page")
-    .append("p")
-    .text("False")
-    .attr("id", "false")
-    .style({'display':'none'})
-
-  d3.select(".page")
-    .append("p")
-    .text(quote[0])
-    .attr("id", "source")
-    .style({'display':'none'})
-
-  d3.select("#btn-next")
+  d3.select("#btn-reset")
     .on("click", function(e) {
-                    $("#citation").hide()
-                    $("#true").hide()
-                    $("#false").hide()
-                    index = Math.floor(Math.random()*data.length);
-                    quote = data[index];
-                    d3.select("#quote")
-                      .text(quote[1]);
-                    d3.select("#citation")
-                      .text(quote[2]);
-                    d3.select("#source")
-                      .text(quote[0]);
-                    });
+    $(".answer-stack").css("background","lightgreen")
+    $(".active-question").show()
+    $("#btn-tweet").hide()
+    $("#btn-shakespeare").show()
+    $("#btn-wodehouse").show()
+    $("#btn-bible").show()
+    $("#quote-header").show()
+    correct = 0;
+    incorrect = 0;
+    data = data_pristine.slice();
+    index = Math.floor(Math.random()*data.length);
+    quote = data[index];
+    d3.select("#quote")
+      .text(quote[1]);
+    d3.select("#citation")
+      .text(quote[2]);
+    d3.select("#source")
+      .text(quote[0]);
+    d3.select("#correct")
+      .text(correct);
+    d3.select("#incorrect")
+      .text(incorrect);
+    d3.select("#remaining")
+      .text(data.length);
+    $("#previous-result").text("")
+    $("#previous-quote").text("")
+    $("#previous-citation").text("")
+    });
+
+  function next_question() {
+                    $("#previous-quote").text(quote[1])
+                    $("#previous-citation").text(quote[2])
+                    $("#citation").hide();
+
+                    if (data.length >= 1){
+                      index = Math.floor(Math.random()*data.length);
+                      quote = data[index];
+                      d3.select("#quote")
+                        .text(quote[1]);
+                      d3.select("#citation")
+                        .text(quote[2]);
+                      d3.select("#source")
+                        .text(quote[0]);
+                      d3.select("#correct")
+                        .text(correct);
+                      d3.select("#incorrect")
+                        .text(incorrect);
+                      data.splice(index, 1);
+                      d3.select("#remaining")
+                        .text(data.length); 
+                        }
+                    else{
+                      $("#btn-shakespeare").hide()
+                      $("#btn-wodehouse").hide()
+                      $("#btn-bible").hide()
+                      $("#btn-tweet").show()
+                      //$(".active-question").hide()
+                      $("#quote-header").hide()
+                      d3.select("#quote")
+                        .text("Congratulations you have finished the game! Tweet your score and Click Reset to play again.");
+                      d3.select(".page")
+                        .append("button")
+                        .attr("class", "btn btn-primary btn-md") 
+                        .attr("id", "btn-tweet")
+                        .text("Tweet It!");
+                     tweet_text = 'I got ' + correct +' out of '+ data_pristine.length +' in that exciting game: "Shakespeare or the bible?" (harlambert.co.uk/sorb)';
+                      $("#btn-tweet").on("click", function() {
+                                      window.open('https://twitter.com/intent/tweet?text=' + tweet_text)
+                                    });
+                      }
+                    }
 
   d3.select("#btn-shakespeare")
     .on("click", function(e) {
                   $("#citation").show()
-                  if('shakespeare' ==d3.select("#source").text()){
-                    $("#true").show();
+                  if('shakespeare' == quote[0]){
+                    $(".answer-stack").css("background","lightgreen")
+                    $("#previous-result").text("Correct!");
+                    correct += 1;
+                    next_question();
                     }
                   else{
-                    $("#false").show();
+                    $(".answer-stack").css("background","red")
+                    $("#previous-result").text("Incorrect.");
+                    incorrect += 1;
+                    next_question();
                     }
                   });
 
   d3.select("#btn-bible")
     .on("click", function(e) {
                   $("#citation").show()
-                  if('bible' == d3.select("#source").text()){
-                    $("#true").show();
+                  if('bible' == quote[0]){
+                    $(".answer-stack").css("background","lightgreen")
+                    $("#previous-result").text("Correct!");
+                    correct += 1;
+                    next_question();
                     }
                   else{
-                    $("#false").show();
+                    $(".answer-stack").css("background","red")
+                    $("#previous-result").text("Incorrect.");
+                    incorrect += 1;
+                    next_question();
                     }
                   });
 
   d3.select("#btn-wodehouse")
     .on("click", function(e) {
                   $("#citation").show()
-                  if('wodehouse' == d3.select("#source").text()){
-                    $("#true").show();
+                  if('wodehouse' == quote[0]){
+                    $(".answer-stack").css("background","lightgreen")
+                    $("#previous-result").text("Correct!");
+                    correct += 1;
+                    next_question();
                     }
                   else{
-                    $("#false").show();
+                    $(".answer-stack").css("background","red")
+                    $("#previous-result").text("Incorrect.");
+                    incorrect += 1;
+                    next_question();
                     }
                   });
 </script>
+
+
+<div class="answer-stack">
+<p> Previous Answer:</p>
+<p class="answer-para">
+  <p id="previous-result"></p>
+  <p id="previous-source"></p>
+  <p id="previous-quote"></p>
+  <p id="previous-citation"></p>
+</p>
+</div>
 {% endblock body %}

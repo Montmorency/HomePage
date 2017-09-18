@@ -2,7 +2,7 @@ import os
 import json
 from flask import Flask, render_template, request, url_for, flash, g, session, send_file
 
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
 
 @app.route("/")
 def homepage():
@@ -107,4 +107,5 @@ app.config['DOWNLOAD_FOLDER'] = os.environ['DOWNLOAD_FOLDER']
 app.config['ALLOWED_EXTENSIONS'] = set(['pdf'])
 
 if __name__ == "__main__":
+  app.config.from_pyfile('config.py')
   app.run()
