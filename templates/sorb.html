@@ -36,6 +36,9 @@
   //  .attr("x", 0)
   //  .attr("y", 0);
 
+  var correct = 0;
+  var incorrect = 0;
+
   data = {{sorb_extracts | tojson}};
   index = Math.floor(Math.random()*data.length);
   quote = data[index];
