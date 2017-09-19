@@ -42,9 +42,9 @@ def update_sorb_db():
   correct_result = request.args.get('correct_result', type=bool)
   sorb_db.connect()
   if correct_result:
-    sorb_db.update(correct = Sorb.correct + 1).where(Sorb.index=index)
+    Sorb.update(correct = Sorb.correct + 1).where(Sorb.index==index)
   elif not correct_result:
-    sorb_dict.update(incorrect = Sorb.incorrect + 1).where(Sorb.index=index)
+    Sorb.update(incorrect = Sorb.incorrect + 1).where(Sorb.index==index)
   else:
     pass
   sorb_db.close()

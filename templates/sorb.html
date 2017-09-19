@@ -149,10 +149,10 @@ function update_db(index, correct_result){
                         .attr("class", "btn btn-primary btn-md") 
                         .attr("id", "btn-tweet")
                         .text("Tweet It!");
-                     tweet_text = 'I got ' + correct +' out of '+ data_pristine.length +' in that exciting game: "Shakespeare or the bible?" (harlambert.co.uk/sorb)';
+                      tweet_text = 'I got ' + correct +' correct out of '+ (data_pristine.length+1) +' in that exciting game: "Shakespeare or the Bible?" (harlambert.co.uk/sorb)';
                       $("#btn-tweet").on("click", function() {
-                                      window.open('https://twitter.com/intent/tweet?text=' + tweet_text)
-                                    });
+                                          window.open('https://twitter.com/intent/tweet?text=' + tweet_text)
+                                      });
                       }
                     }
 
