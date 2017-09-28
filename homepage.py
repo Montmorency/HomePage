@@ -33,7 +33,6 @@ def publications():
 @app.route("/sorb/")
 def sorb():
   from sorb.sorb import sorb_extracts
-  print sorb_extracts
   return render_template("sorb.html", sorb_extracts=sorb_extracts)
 
 @app.route("/_update_sorb")
@@ -99,18 +98,20 @@ def interesting_stuff():
   """
   View of links to alternative pages.
   """
-  interesting_websites = {'Tensorflow':'https://www.tensorflow.org',
-                          'Quantum Espresso':'http://www.quantum-espresso.org',
-                          'QUIP': "http://libatoms.github.io/QUIP/index.html",
-                          "Mr. Bauld's English":'http://www.mrbauld.com',
+  interesting_websites = {"Tensorflow":"https://www.tensorflow.org",
+                          "Quantum Espresso":"http://www.quantum-espresso.org",
+                          "QUIP": "http://libatoms.github.io/QUIP/index.html",
+                          "Mr. Bauld's English":"http://www.mrbauld.com",
                           "Flask Documentation":"http://flask.pocoo.org/docs/0.11/",
                           "Peewee ORM": "http://peewee.readthedocs.io/en/latest/",
-                          'Learn You a Haskell For Great Good':'http://learnyouahaskell.com',
+                          "Learn You a Haskell For Great Good":"http://learnyouahaskell.com",
                           "Python":"https://www.python.org",
-                          'Racing Post': 'http://www.racingpost.com',
-                          "Sir David Mackay FRS":'http://www.inference.phy.cam.ac.uk/mackay/',
-                          'Wolfson DVD Library':"https://www.wolfson.ox.ac.uk/dvd-library",
-                          'Money Is The Way':'http://moneyistheway.blogspot.co.uk'}
+                          "Racing Post": "http://www.racingpost.com",
+                          "Sir David Mackay FRS":"http://www.inference.phy.cam.ac.uk/mackay/",
+                          "Wolfson DVD Library":"https://www.wolfson.ox.ac.uk/dvd-library",
+                          "The Grymoire Unix Musings":"http://www.grymoire.com",
+                          "Mozilla Developers":"https://developer.mozilla.org/en-US/",
+                          "Money Is The Way":"http://moneyistheway.blogspot.co.uk"}
   superconductivity = {"Philip Anderson: BCS Scientific Love of my Life.":"http://dx.doi.org/10.1142/S0217979210056426"}
   return render_template("interesting_stuff.html", interesting_websites=interesting_websites, superconductivity=superconductivity)
 
