@@ -57,5 +57,7 @@ function heap_sort(a){
     N -= 1;
     down_heap(a, 0, N);
   }
+  return a;
 }
+
 
