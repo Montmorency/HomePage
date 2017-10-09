@@ -1,9 +1,59 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<div class="heap_sort">
-<h1> Heap Sort Visualization </h1>
+<h1> Databases </h1>
+<h2> Data and Reality </h2>
+<p> Designing a database requires some practical philosophy. Namely, "What are the things?", "What things are there?", 
+and, "How are the things related to each other?".</p> 
 
+<p> An excellent introduction to the ambiguities and considerations that go into 
+designing a database is the book Data and Reality by William Kent. 
+I would <emph>strongly</emph> recommend trying to obtain an edition other than the "third edition"
+which has been significantly modified by Steve Hoberman. I am in complete agreement with this 
+<a href="https://www.amazon.co.uk/gp/customer-reviews/RZUKQF8JV7DM3/ref=cm_cr_dp_d_rvw_ttl?ie=UTF8&ASIN=1935504215"> amazon review </a>.
+I would recommend attempting to get hold of an older edition while emailing Penguin asking 
+them for a new edition of the original book.
+</p>
+
+<p> I'll reproduce a representative example of what to expect from this book. This short 
+section is from the first chapter titled "Entities".</p>
+
+<div class="extract">
+<blockquote>
+<h2> The Murderer and the Butler </h2>
+<p>Combining the ideas of our last two sections: sometimes it is our
+perception of "how many" which changes. Sometimes two distinct
+entities are eventually determined to be the same one, perhaps after we have accumulated
+substantial amounts of information about each.</p>
+
+<p>
+At the beginning of a mystery, we need to think of the murderer and the butler as two distinct entities,
+collecting information about each of them separately. After we discover that "the butler did it" have
+we established that they are "the same entity"? Shall we require the modelling system to collapse their two representatives
+into one? I don't know of any modelling system which can cope with that adequately.
+</p>
+</blockquote>
+</div>
+
+<p> Ambiguities and a number of debateable choices are fundamental to the act of seeking 
+a representation of real world data in a machine. Kent's book succeeds in helping designers clarify
+their design decisions and why those decisions are necessary.</p> 
+
+<p> For active workers it is also interesting to observe how the language has evolved 
+since the last edition of the book, and where object orientation and object relational 
+mappings have attempted to address some of the issues raised in Kent's book. In short it is a highly
+recommended work.</p>
+
+
+<h1> Heap Sort Visualization </h1><button class="togglebutton" id="hide_heapsort">Show/Hide</button>
+
+<script>
+  $("#hide_heapsort").click(function(){
+    $("#heapsort").toggle();
+    });
+</script>
+
+<div id="heapsort">
 <style>
 .bar {
   fill: steelblue;
@@ -51,10 +101,10 @@ var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#heapsort").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 svg.append("g")
@@ -63,12 +113,10 @@ svg.append("g")
 
 svg.append("g")
     .attr("class", "y axis")
-    .append("text") // just for the title (ticks are automatic)
     .attr("transform", "rotate(-90)") // rotate the text!
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
-    .text("Magnitude");
 
 x.domain(data.map(function(d) {return d.index;}));
 y.domain([0, d3.max(data, function(d) {return d.mag;})]);
@@ -88,10 +136,10 @@ function swap(a,i,j){
 	a[j] = tmp;
 }
 
-heap_sort(a)
 
 </script>
 </div>
+
 
 {% endblock body %}
 

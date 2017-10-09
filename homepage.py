@@ -98,22 +98,26 @@ def interesting_stuff():
   """
   View of links to alternative pages.
   """
-  interesting_websites = {"Tensorflow":"https://www.tensorflow.org",
-                          "Quantum Espresso":"http://www.quantum-espresso.org",
-                          "QUIP": "http://libatoms.github.io/QUIP/index.html",
-                          "Mr. Bauld's English":"http://www.mrbauld.com",
-                          "Flask Documentation":"http://flask.pocoo.org/docs/0.11/",
-                          "Peewee ORM": "http://peewee.readthedocs.io/en/latest/",
+
+  code_documentation = {"Tensorflow":"https://www.tensorflow.org",
+  "Flask Documentation":"http://flask.pocoo.org/docs/0.11/",
+  "Peewee ORM": "http://peewee.readthedocs.io/en/latest/",
+  "Mozilla Developers":"https://developer.mozilla.org/en-US/",
+  "The Grymoire Unix Musings":"http://www.grymoire.com",
+  "QUIP": "http://libatoms.github.io/QUIP/index.html",
+  "Python":"https://www.python.org"} 
+
+  interesting_websites = {"Mr. Bauld's English":"http://www.mrbauld.com",
                           "Learn You a Haskell For Great Good":"http://learnyouahaskell.com",
-                          "Python":"https://www.python.org",
                           "Racing Post": "http://www.racingpost.com",
                           "Sir David Mackay FRS":"http://www.inference.phy.cam.ac.uk/mackay/",
-                          "Wolfson DVD Library":"https://www.wolfson.ox.ac.uk/dvd-library",
-                          "The Grymoire Unix Musings":"http://www.grymoire.com",
-                          "Mozilla Developers":"https://developer.mozilla.org/en-US/",
+                          "Anno Urbis: Facts and Information About The Roman Empire": "http://www.annourbis.com/",
+                          "Wolfson DVD Library":"http://wolfdvd.harlambert.co.uk",
                           "Money Is The Way":"http://moneyistheway.blogspot.co.uk"}
+
   superconductivity = {"Philip Anderson: BCS Scientific Love of my Life.":"http://dx.doi.org/10.1142/S0217979210056426"}
-  return render_template("interesting_stuff.html", interesting_websites=interesting_websites, superconductivity=superconductivity)
+  return render_template("interesting_stuff.html", interesting_websites=interesting_websites, superconductivity=superconductivity,
+                         code_documentation=code_documentation)
 
 app.config['DEBUG'] = False
 app.config['SECRET_KEY'] = '123412sdfalkjasflksqejvnoryyclzpiej'
