@@ -1,13 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<h1> Databases </h1>
-<h2> Data and Reality </h2>
+<h1> Databases and Data Structures </h1>
+<h2> Building a Database <button class="togglebutton" id="hide_databases">+/-</button></h2>
+<div id="databases">
 <p> Designing a database requires some practical philosophy. Namely, "What are the things?", "What things are there?", 
 and, "How are the things related to each other?".</p> 
 
-<p> An excellent introduction to the ambiguities and considerations that go into 
-designing a database is the book Data and Reality by William Kent. 
+<p> For an introduction to the ambiguities that make 
+designing a database difficult is the book Data and Reality by William Kent. 
 I would <emph>strongly</emph> recommend trying to obtain an edition other than the "third edition"
 which has been significantly modified by Steve Hoberman. I am in complete agreement with this 
 <a href="https://www.amazon.co.uk/gp/customer-reviews/RZUKQF8JV7DM3/ref=cm_cr_dp_d_rvw_ttl?ie=UTF8&ASIN=1935504215"> amazon review </a>.
@@ -39,28 +40,34 @@ into one? I don't know of any modelling system which can cope with that adequate
 a representation of real world data in a machine. Kent's book succeeds in helping designers clarify
 their design decisions and why those decisions are necessary.</p> 
 
-<p> For active workers it is also interesting to observe how the language has evolved 
-since the last edition of the book, and where object orientation and object relational 
-mappings have attempted to address some of the issues raised in Kent's book. In short it is a highly
-recommended work.</p>
-
-
-<h1> Heap Sort Visualization </h1><button class="togglebutton" id="hide_heapsort">Show/Hide</button>
+<p> It is also interesting to observe how the language has evolved 
+since the last edition of the book, and where the subsequent successes of SQL, object orientation,
+and object relational mappings have attempted to address some of the issues raised in Kent's book. 
+In short it is a highly recommended work.</p>
+</div>
 
 <script>
-  $("#hide_heapsort").click(function(){
-    $("#heapsort").toggle();
+  $("#hide_databases").click(function(){
+    $("#databases").toggle();
     });
 </script>
 
+<h2> Heap Sort <button class="togglebutton" id="hide_heapsort">+/-</button></h2>
 <div id="heapsort">
+<p>
+The first sorting algorithm we'll look at is <a href="https://en.wikipedia.org/wiki/Heapsort"> Heapsort </a>. 
+This method involves modifying your array, of N values, so that it is organised as a <a
+href="https://en.wikipedia.org/wiki/Heap_(data_structure)"> heap </a>. Once the array has been "heaped" 
+then a single swap is performed, so that the largest (or smallest value is at the head of the array). 
+The next step is to "re-heap" an array of length N-1 (leaving out the recently swapped value). 
+This iterative process is continued until the array is sorted. In the heap sort animation on this page
+the data in the array is "heaped", then swapped, then heaped, then swapped, etc.
+</p>
+
+<head>
 <style>
-.bar {
-  fill: steelblue;
-}
-.bar:hover {
-  fill: brown;
-}
+.bar { fill: steelblue; }
+.bar:hover { fill: brown; }
 .axis {
   font: 10px sans-serif;
 }
@@ -70,29 +77,26 @@ recommended work.</p>
   stroke: #000;
   shape-rendering: crispEdges;
 }
-.x.axis path {
-  display: none;
-}
 </style>
+</head>
 
 <script>
 // Bar chart from blocks: https://bl.ocks.org/mbostock/3885304
+
 var a = [4, 10, 3, 5, 1];
 var data =[]
+
 for (i = 0; i<a.length; i++){
-	data.push({"index":i, "mag":a[i]});}
-
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+	data.push({"previous":i, "next":i, "mag":a[i]});}
 
 
-// Set the DISPLAY ranges
-// var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
-var x = d3.scale.ordinal().rangeRoundBands([0, width], .1),
-    y = d3.scale.linear().range([height, 0]);
+var margin = {top: 20, right: 20, bottom: 70, left: 40},
+    width = 600 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
 
-// D3 Axis - renders a d3 scale in SVG
+var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.1, 1);
+var y = d3.scale.linear().range([height, 0]);
+
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
@@ -102,44 +106,66 @@ var yAxis = d3.svg.axis()
     .orient("left");
 
 var svg = d3.select("#heapsort").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+     .attr("width", width + margin.left + margin.right)
+     .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// svg.selectAll("text")
+//   .data(data)
+//   .enter()
+//   .append("text")
+//   .attr("x", function(d,i) {
+//     return 20 + 50*i;
+//   })
+//   .attr("y", 300-margin.top)
+//   .text(function(d) {return d.mag});
+
+x.domain(data.map(function(d) { return d.previous; }));
+y.domain([0, d3.max(data, function(d) { return d.mag; })]);
 
 svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+   	 .attr("class", "x axis")
+   	 .attr("transform", "translate(0," + height + ")")
+   	 .call(xAxis);
+   //.selectAll("text")
+   // .style("text-anchor", "end")
+   //  .attr("dx", "-.8em")
+   //  .attr("dy", "-.55em")
+   //  .attr("transform", "rotate(-90)" );
 
 svg.append("g")
-    .attr("class", "y axis")
-    .attr("transform", "rotate(-90)") // rotate the text!
-    .attr("y", 6)
-    .attr("dy", ".71em")
-    .style("text-anchor", "end")
-
-x.domain(data.map(function(d) {return d.index;}));
-y.domain([0, d3.max(data, function(d) {return d.mag;})]);
+     .attr("class", "y axis")
+     .call(yAxis)
+	 .append("text")
+     .attr("transform", "rotate(-90)")
+     .attr("y", 6)
+     .attr("dy", ".71em")
+     .style("text-anchor", "end")
+     .text("Magnitude");
 
 svg.selectAll(".bar")
-  .data(data)
-  .enter().append("rect")
-    .attr("class", "bar")
-    .attr("x", function(d) { return x(d.index); })
-    .attr("y", function(d) { return y(d.mag); })
-    .attr("width", x.rangeBand())
-    .attr("height", function(d) { return height - y(d.mag); });
+		 .data(data)
+	 .enter().append("rect")
+     .attr("class", "bar")
+     .attr("x", function(d) { return x(d.previous); })
+     .attr("width", x.rangeBand())
+     .attr("y", function(d) { return y(d.mag); })
+     .attr("height", function(d) { return height - y(d.mag); });
 
-function swap(a,i,j){
+function swap(a, i, j){
 	tmp = a[i];
 	a[i] = a[j];
 	a[j] = tmp;
 }
-
-
 </script>
 </div>
 
+<script>
+  $("#hide_heapsort").click(function(){
+    $("#heapsort").toggle();
+    });
+</script>
 
 {% endblock body %}
 
