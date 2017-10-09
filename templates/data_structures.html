@@ -8,12 +8,12 @@
 and, "How are the things related to each other?".</p> 
 
 <p> For an introduction to the ambiguities that make 
-designing a database difficult is the book Data and Reality by William Kent. 
-I would <emph>strongly</emph> recommend trying to obtain an edition other than the "third edition"
+designing a database difficult is the book <a href="https://dl.acm.org/citation.cfm?id=539994">Data and Reality </a>
+by William Kent. I would <emph>strongly</emph> recommend trying to obtain an edition other than the "third edition"
 which has been significantly modified by Steve Hoberman. I am in complete agreement with this 
 <a href="https://www.amazon.co.uk/gp/customer-reviews/RZUKQF8JV7DM3/ref=cm_cr_dp_d_rvw_ttl?ie=UTF8&ASIN=1935504215"> amazon review </a>.
-I would recommend attempting to get hold of an older edition while emailing Penguin asking 
-them for a new edition of the original book.
+I would recommend attempting to get hold of an older edition while emailing Penguin asking them for 
+a new edition of the original book.
 </p>
 
 <p> I'll reproduce a representative example of what to expect from this book. This short 
@@ -61,8 +61,14 @@ href="https://en.wikipedia.org/wiki/Heap_(data_structure)"> heap </a>. Once the 
 then a single swap is performed, so that the largest (or smallest value is at the head of the array). 
 The next step is to "re-heap" an array of length N-1 (leaving out the recently swapped value). 
 This iterative process is continued until the array is sorted. In the heap sort animation on this page
-the data in the array is "heaped", then swapped, then heaped, then swapped, etc.
+the data in the array is "heaped", then swapped, then heaped, then swapped, etc. The template
+for the d3 visualization can be found <a href="https://bl.ocks.org/mbostock/3885705"> here </a>.
 </p>
+
+<label>
+<input type="checkbox">
+Sort Array
+</label>
 
 <head>
 <style>
@@ -80,6 +86,7 @@ the data in the array is "heaped", then swapped, then heaped, then swapped, etc.
 </style>
 </head>
 
+<script src={{url_for('static', filename='heap_sort.js')}}></script>
 <script>
 // Bar chart from blocks: https://bl.ocks.org/mbostock/3885304
 
@@ -111,15 +118,6 @@ var svg = d3.select("#heapsort").append("svg")
     .append("g")
      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// svg.selectAll("text")
-//   .data(data)
-//   .enter()
-//   .append("text")
-//   .attr("x", function(d,i) {
-//     return 20 + 50*i;
-//   })
-//   .attr("y", 300-margin.top)
-//   .text(function(d) {return d.mag});
 
 x.domain(data.map(function(d) { return d.previous; }));
 y.domain([0, d3.max(data, function(d) { return d.mag; })]);
@@ -128,11 +126,6 @@ svg.append("g")
    	 .attr("class", "x axis")
    	 .attr("transform", "translate(0," + height + ")")
    	 .call(xAxis);
-   //.selectAll("text")
-   // .style("text-anchor", "end")
-   //  .attr("dx", "-.8em")
-   //  .attr("dy", "-.55em")
-   //  .attr("transform", "rotate(-90)" );
 
 svg.append("g")
      .attr("class", "y axis")
@@ -153,11 +146,18 @@ svg.selectAll(".bar")
      .attr("y", function(d) { return y(d.mag); })
      .attr("height", function(d) { return height - y(d.mag); });
 
-function swap(a, i, j){
-	tmp = a[i];
-	a[i] = a[j];
-	a[j] = tmp;
+d3.select("input").on("change", vis_heap(data));
+
+function vis_heap(data) {
+  svg.selectAll("text")
+       .data(data)
+       .enter()
+         .append("text")
+            .attr("x", function(d,i) {return 20 + 50*i;})
+            .attr("y", 300-margin.top)
+            .text(function(d) {return d.mag});
 }
+
 </script>
 </div>
 
