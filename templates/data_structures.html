@@ -65,10 +65,15 @@ the data in the array is "heaped", then swapped, then heaped, then swapped, etc.
 for the d3 visualization can be found <a href="https://bl.ocks.org/mbostock/3885705"> here </a>.
 </p>
 
-<label>
+{#<label>
 <input type="checkbox">
 Sort Array
-</label>
+</label>#}
+
+<div class="control_buttons"> 
+<button id="sort" onclick="heap_sort(a)">Sort</button>
+<button id="reset" onclick="reset()">Reset</button>
+</div>
 
 <head>
 <style>
@@ -90,12 +95,23 @@ Sort Array
 <script>
 // Bar chart from blocks: https://bl.ocks.org/mbostock/3885304
 
-var a = [4, 10, 3, 5, 1];
-var data =[]
+var a = [4, 10, 3, 5, 1, 9,2,7,8];
+var a_can = [4, 10, 3, 5, 1, 9,2,7,8];
 
-for (i = 0; i<a.length; i++){
-	data.push({"previous":i, "next":i, "mag":a[i]});}
-
+function reset(){
+  a = a_can
+  svg.selectAll(".bar").remove()
+  svg.append("g")
+   .attr("class", "bars")
+   .selectAll(".bar")
+    .data(a, function(d){return d;})
+	 .enter().append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d, i) { return x(i); })
+    .attr("width", x.rangeBand())
+    .attr("y", function(d,i) { return y(d); })
+    .attr("height", function(d) { return height - y(d); });
+  };
 
 var margin = {top: 20, right: 20, bottom: 70, left: 40},
     width = 600 - margin.left - margin.right,
@@ -119,13 +135,19 @@ var svg = d3.select("#heapsort").append("svg")
      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-x.domain(data.map(function(d) { return d.previous; }));
-y.domain([0, d3.max(data, function(d) { return d.mag; })]);
+x.domain(a.map(function(d,i) { return i; }));
+y.domain([0, d3.max(a, function(d) { return d; })]);
 
 svg.append("g")
    	 .attr("class", "x axis")
    	 .attr("transform", "translate(0," + height + ")")
    	 .call(xAxis);
+
+svg.append("text")
+  .attr("id", "sort_phase")
+  .attr("y", 6)
+  .attr("x", (width-margin.right)/2.0)
+  .text("Heapsort")
 
 svg.append("g")
      .attr("class", "y axis")
@@ -137,54 +159,31 @@ svg.append("g")
      .style("text-anchor", "end")
      .text("Magnitude");
 
-svg.selectAll(".bar")
-		 .data(data)
+d3.select("#sort").on("click", heap_sort);
+d3.select("#reset").on("click", reset);
+
+svg.append("g")
+   .attr("class", "bars")
+   .selectAll(".bar")
+    .data(a, function(d){return d;})
 	 .enter().append("rect")
-     .attr("class", "bar")
-     .attr("x", function(d) { return x(d.previous); })
-     .attr("width", x.rangeBand())
-     .attr("y", function(d) { return y(d.mag); })
-     .attr("height", function(d) { return height - y(d.mag); });
+    .attr("class", "bar")
+    .attr("x", function(d, i) { return x(i); })
+    .attr("width", x.rangeBand())
+    .attr("y", function(d,i) { return y(d); })
+    .attr("height", function(d) { return height - y(d); });
 
-console.log(a)
-console.log(data)
-//d3.select("input").on("change", heap_sort(a));
-//var sortTimeout = setTimeout(function() {
-//      d3.select("input").property("checked", true).each(heap_sort(a));
-//    }, 2000);
-
-{#  function change() {
-    clearTimeout(sortTimeout);
-    // Copy-on-write since tweens are evaluated after a delay.
-    var x0 = x.domain(data.sort(this.checked
-        ? function(a, b) { return b.frequency - a.frequency; }
-        : function(a, b) { return d3.ascending(a.letter, b.letter); })
-        .map(function(d) { return d.letter; }))
-        .copy();
-
-    svg.selectAll(".bar")
-        .sort(function(a, b) { return x0(a.letter) - x0(b.letter); });
-
-    var transition = svg.transition().duration(750),
-        delay = function(d, i) { return i * 50; };
-
-    transition.selectAll(".bar")
-        .delay(delay)
-        .attr("x", function(d) { return x0(d.letter); });
-
-    transition.select(".x.axis")
-        .call(xAxis)
-      .selectAll("g")
-        .delay(delay);
-  }
-});
-#}
 </script>
 </div>
+
 <script>
   $("#hide_heapsort").click(function(){
     $("#heapsort").toggle();
     });
 </script>
 
+<h2> Quick Sort <button class="togglebutton" id="hide_quicksort">+/-</button></h2>
+<div id="quick_sort">
+
+</div>
 {% endblock body %}
