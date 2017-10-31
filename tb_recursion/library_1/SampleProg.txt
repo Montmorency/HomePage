@@ -1,0 +1,61 @@
+C Greenian for complex argument reading in cfts
+C
+C PARAMETERS:
+
+	IMPLICIT REAL*8 (A-H,O-Z)
+	REAL*8     EPS
+      PARAMETER (EPS=1.0D-15, LM1=200, GRMIN=-2,DOSMAX=2.0, NZPTS=10,
+	1           LEN=200)
+      REAL*8     AA(LM1),B2(LM1),RB2(LM1),WKR(LM1,3)
+	COMPLEX*16 Z,ZSTART,ZEND,DZ,WK(LM1,4),GRVAL1(2),EXACT
+	PI = 4*ATAN(1.0D0)
+C
+C meaning of parameters:
+C EPS    accuracy of working
+C LM1    maximum length of continued fraction to be used
+C GRMIN  minimum value on graph below which values are chopped
+C NZPTS  number of (Z) points computed in plots
+C
+      OPEN(UNIT=15,FILE='a.dat',STATUS='NEW')
+	OPEN(UNIT=14,FILE='SqLatRcCf.dat',STATUS='OLD')
+C
+C read c.f. coefficients - diagonal elts are zero
+C
+	READ(14,1)N
+1	FORMAT(/I6)
+	READ(14,2)(RB2(I),I=1,N)
+2	FORMAT(500(16X,F24.16/))
+	DO 3 I=1,N
+	 AA(I)=0
+3	CONTINUE
+	WRITE(15,4)LEN,(AA(I),RB2(I),I=1,LEN)
+4	FORMAT(I6,' levels used',/'      a          b',
+     1		500(/2F12.6))
+	CLOSE(14)
+C
+C set up plotting parameters
+C
+	ZSTART=(-4.5D0,0.0D0)
+	ZEND=(0.0D0,0.0D0)
+	DZ=(ZEND - ZSTART)/(NZPTS-1)
+	WRITE(15,5)NZPTS,ZSTART,ZEND
+5	FORMAT(' plotting',I6,' points from',2F12.4,' to',2F12.4)
+C
+C tabulate the Greenian
+C
+	DO 8 IZ=1,NZPTS
+	 Z = ZSTART + (IZ-1)*DZ
+	 CALL GRASSZ(Z,AA,RB2,LEN,GRVAL1,WK,LM1)
+	 EXACT=GRVAL1(1)
+	 WRITE(15,10)
+10	 FORMAT('Level    Re(z)',8X,'Error')
+	 DO 7 LEV=5,LEN
+	  CALL GRASSZ(Z,AA,RB2,LEV,GRVAL1,WK,LM1)
+	  ERR0=ABS(IMAG(-GRVAL1(1)/PI)-IMAG(-EXACT/PI))
+	  WRITE(15,13)LEV,REAL(Z),ERR0
+7	 CONTINUE
+13	 FORMAT(I6,2E13.5)
+8	CONTINUE
+      CLOSE(15)
+      STOP
+      END
