@@ -1,16 +1,84 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<div class="heap_sort">
-<h1> Heap Sort Visualization </h1>
+<h1> Databases and Data Structures </h1>
+<h2> Building a Database <button class="togglebutton" id="hide_databases">+/-</button></h2>
+<div id="databases">
+<p> Designing a database requires some practical philosophy. Namely, "What are the things?", "What things are there?", 
+and, "How are the things related to each other?".</p> 
 
+<p> For an introduction to the ambiguities that make 
+designing a database difficult is the book <a href="https://dl.acm.org/citation.cfm?id=539994">Data and Reality </a>
+by William Kent. I would <emph>strongly</emph> recommend trying to obtain an edition other than the "third edition"
+which has been significantly modified by Steve Hoberman. I am in complete agreement with this 
+<a href="https://www.amazon.co.uk/gp/customer-reviews/RZUKQF8JV7DM3/ref=cm_cr_dp_d_rvw_ttl?ie=UTF8&ASIN=1935504215"> amazon review </a>.
+I would recommend attempting to get hold of an older edition while emailing Penguin asking them for 
+a new edition of the original book.
+</p>
+
+<p> I'll reproduce a representative example of what to expect from this book. This short 
+section is from the first chapter titled "Entities".</p>
+
+<div class="extract">
+<blockquote>
+<h2> The Murderer and the Butler </h2>
+<p>Combining the ideas of our last two sections: sometimes it is our
+perception of "how many" which changes. Sometimes two distinct
+entities are eventually determined to be the same one, perhaps after we have accumulated
+substantial amounts of information about each.</p>
+
+<p>
+At the beginning of a mystery, we need to think of the murderer and the butler as two distinct entities,
+collecting information about each of them separately. After we discover that "the butler did it" have
+we established that they are "the same entity"? Shall we require the modelling system to collapse their two representatives
+into one? I don't know of any modelling system which can cope with that adequately.
+</p>
+</blockquote>
+</div>
+
+<p> Ambiguities and a number of debateable choices are fundamental to the act of seeking 
+a representation of real world data in a machine. Kent's book succeeds in helping designers clarify
+their design decisions and why those decisions are necessary.</p> 
+
+<p> It is also interesting to observe how the language has evolved 
+since the last edition of the book, and where the subsequent successes of SQL, object orientation,
+and object relational mappings have attempted to address some of the issues raised in Kent's book. 
+In short it is a highly recommended work.</p>
+</div>
+
+<script>
+  $("#hide_databases").click(function(){
+    $("#databases").toggle();
+    });
+</script>
+
+<h2> Heap Sort <button class="togglebutton" id="hide_heapsort">+/-</button></h2>
+<div id="heapsort">
+<p>
+The first sorting algorithm we'll look at is <a href="https://en.wikipedia.org/wiki/Heapsort"> Heapsort </a>. 
+This method involves modifying your array, of N values, so that it is organised as a <a
+href="https://en.wikipedia.org/wiki/Heap_(data_structure)"> heap </a>. Once the array has been "heaped" 
+then a single swap is performed, so that the largest (or smallest value is at the head of the array). 
+The next step is to "re-heap" an array of length N-1 (leaving out the recently swapped value). 
+This iterative process is continued until the array is sorted. In the heap sort animation on this page
+the data in the array is "heaped", then swapped, then heaped, then swapped, etc. The template
+for the d3 visualization can be found <a href="https://bl.ocks.org/mbostock/3885705"> here </a>.
+</p>
+
+{#<label>
+<input type="checkbox">
+Sort Array
+</label>#}
+
+<div class="control_buttons"> 
+<button id="sort" onclick="heap_sort(a)">Sort</button>
+<button id="reset" onclick="reset()">Reset</button>
+</div>
+
+<head>
 <style>
-.bar {
-  fill: steelblue;
-}
-.bar:hover {
-  fill: brown;
-}
+.bar { fill: steelblue; }
+.bar:hover { fill: brown; }
 .axis {
   font: 10px sans-serif;
 }
@@ -20,78 +88,97 @@
   stroke: #000;
   shape-rendering: crispEdges;
 }
-.x.axis path {
-  display: none;
-}
 </style>
+</head>
 
+<script src={{url_for('static', filename='heap_sort.js')}}></script>
 <script>
 // Bar chart from blocks: https://bl.ocks.org/mbostock/3885304
-var a = [4, 10, 3, 5, 1];
-var data =[]
-for (i = 0; i<a.length; i++){
-	data.push({"index":i, "mag":a[i]});}
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+var a = [4, 10, 3, 5, 1, 9,2,7,8];
+var a_can = [4, 10, 3, 5, 1, 9,2,7,8];
 
-
-// Set the DISPLAY ranges
-// var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
-var x = d3.scale.ordinal().rangeRoundBands([0, width], .1),
-    y = d3.scale.linear().range([height, 0]);
-
-// D3 Axis - renders a d3 scale in SVG
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
-
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left");
-
-var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-
-svg.append("g")
-    .attr("class", "y axis")
-    .append("text") // just for the title (ticks are automatic)
-    .attr("transform", "rotate(-90)") // rotate the text!
-    .attr("y", 6)
-    .attr("dy", ".71em")
-    .style("text-anchor", "end")
-    .text("Magnitude");
-
-x.domain(data.map(function(d) {return d.index;}));
-y.domain([0, d3.max(data, function(d) {return d.mag;})]);
-
-svg.selectAll(".bar")
-  .data(data)
-  .enter().append("rect")
+function reset(){
+  a = a_can
+  svg.selectAll(".bar").remove()
+  svg.append("g")
+   .attr("class", "bars")
+   .selectAll(".bar")
+    .data(a, function(d){return d;})
+	 .enter().append("rect")
     .attr("class", "bar")
-    .attr("x", function(d) { return x(d.index); })
-    .attr("y", function(d) { return y(d.mag); })
-    .attr("width", x.rangeBand())
-    .attr("height", function(d) { return height - y(d.mag); });
+    .attr("x", function(d, i) { return x(i); })
+    .attr("width", x.bandwidth())
+    .attr("y", function(d,i) { return y(d); })
+    .attr("height", function(d) { return height - y(d); });
+  };
 
-function swap(a,i,j){
-	tmp = a[i];
-	a[i] = a[j];
-	a[j] = tmp;
-}
+var margin = {top: 20, right: 20, bottom: 70, left: 40},
+    width = 600 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
 
-heap_sort(a)
+var x = d3.scaleBand().range([0, width]).padding(0.1);
+var y = d3.scaleLinear().range([height, 0]);
+
+var xAxis = d3.axisBottom(x);
+var yAxis = d3.axisLeft(y);
+
+var svg = d3.select("#heapsort").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+x.domain(a.map(function(d,i) { return i; }));
+y.domain([0, d3.max(a, function(d) { return d; })]);
+
+svg.append("g")
+   	 .attr("class", "x axis")
+   	 .attr("transform", "translate(0," + height + ")")
+   	 .call(xAxis);
+
+svg.append("text")
+  .attr("id", "sort_phase")
+  .attr("y", 6)
+  .attr("x", (width-margin.right)/2.0)
+  .text("Heapsort")
+
+svg.append("g")
+     .attr("class", "y axis")
+     .call(yAxis)
+	 .append("text")
+     .attr("transform", "rotate(-90)")
+     .attr("y", 6)
+     .attr("dy", ".71em")
+     .style("text-anchor", "end")
+     .text("Magnitude");
+
+d3.select("#sort").on("click", heap_sort);
+d3.select("#reset").on("click", reset);
+
+svg.append("g")
+   .attr("class", "bars")
+   .selectAll(".bar")
+    .data(a, function(d){return d;})
+	 .enter().append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d, i) { return x(i); })
+    .attr("width", x.bandwidth())
+    .attr("y", function(d,i) { return y(d); })
+    .attr("height", function(d) { return height - y(d); });
 
 </script>
 </div>
 
-{% endblock body %}
+<script>
+  $("#hide_heapsort").click(function(){
+    $("#heapsort").toggle();
+    });
+</script>
 
+<h2> Quick Sort <button class="togglebutton" id="hide_quicksort">+/-</button></h2>
+<div id="quick_sort">
+
+</div>
+{% endblock body %}
