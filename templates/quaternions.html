@@ -20,7 +20,9 @@ A westward floating, mystic dream of FOUR.
 </pre>
 </p>
 
-<p>For animations <a href="https://threejs.org"> three.js </a> and its <a href="https://threejs.org/docs/api/math/Quaternion.html"> quaternion </a> 
+{# for letter shuffling example. https://bl.ocks.org/mbostock/3808218#}
+
+<p> For animations <a href="https://threejs.org"> three.js </a> and its <a href="https://threejs.org/docs/api/math/Quaternion.html"> quaternion </a> 
 library provides some basic functions for manipulating quaternions and making nice animations. Let's test the three example app:</p>
 
 <body>
@@ -33,18 +35,13 @@ init();
 animate();
 
 function init() {
-
     scene = new THREE.Scene();
-
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
     camera.position.z = 1000;
-
     geometry = new THREE.BoxGeometry( 200, 200, 200 );
     material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
-
     mesh = new THREE.Mesh( geometry, material );
     scene.add( mesh );
-
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
@@ -56,6 +53,7 @@ function animate() {
     mesh.rotation.y += 0.02;
     renderer.render( scene, camera );
 }
+
 </script>
 </body>
 {% endblock body %}

@@ -373,7 +373,7 @@ Haydock's conclusion is interesting in he gives prognosis for further work
 along two lines: the extension to many-body Hamiltonians.
 
 \begin{quote}
-One of the outstanding probles is that of the Anderson model
+One of the outstanding problems is that of the Anderson model
 of a disordered solid. Here the Hamiltonian is defined statistically and
 one would like to transform to a corresponding statistically defined chain where
 one could discuss the distributions of various physical quantities.
@@ -383,48 +383,310 @@ one could discuss the distributions of various physical quantities.
 Finally, the reader may have noticed that the approach of this chapter has been entirely directed
 toward independent particle models. However, many-body Hamiltonians must be similarly 
 transformable to chain models. Aside from a small amount of thought and continuing interest, 
-nothing has been done about this and it remains a most interesting problem concerning
-recursive solution of the Schrodinger equation.
+nothing has been done about this and it remains a most interesting problem concerning recursive 
+solution of the Schrodinger equation.
 \end{quote}
 
-\bibliography
-J Friedel Adv. Phys. 3, 446 (1954) #dilutealloys
+\section{Many Body Recursion}
+\label{sec:manybodyrecursion}
+	Since Vol. 35 was published there has been a rise in the accessibility of density functional methods 
+and the access to good single particle approximations to the electronic eigenstates of a crystal
+is routine. Additionally progress on the problem of determining unique approximations to localized
+electronic states, Wannier functions, means tight binding Hamiltonians can be parameterized directly
+rather than via fits to band structures and relying on physical intuition.
 
-Matching green's functions:
-J. E. Inglesfield J. Phys C 4, L14 (1971)
-B. Velicky and I. Bartos, J. Phys C 4, L104 (1971)
-F. Garcia-Moliner and J Rubio J Phys C 2, 1789 (1969)
-F. Garcia-Moliner and J Rubio Proc R. Soc. London, Ser. A 324, 257 (1971)
+A many body Hamiltonian amenable to being written in a sparse format might look like this:
+%
+\begin{equation}
+H = [\frac{1}{2}\nabla^{2} + \tilde{v}_{\rm loc} + \hat{\sigma}]
+\end{equation}
+%
+	With the requirement that spatial integrals over $\Sigma$ can be performed in 
+well defined atom centered regions of space. For instance 
+the first neighbour interaction is now formally written as: 
+%
+\begin{equation}
+\int_{\Omega_{j}}<w_{i}(r-R)|\sigma(\R,\r';\omega)|w_{j}(r-R)>d\r'
+\end{equation}
+%
+	Subsequent neighbour interactions would take a similar form
+with the integration region, $\Omega_{j}$ being a Wigner cell around an 
+atom j. In order for the scheme to be sensible the contributions from subsequent shells 
+must be negligible. This is likely to be the case so long as $w$ and/or $\Sigma$ 
+are falling off quickly enough. Which, as will become clear when we discuss
+the relationship of this scheme to the GW approximation, requires 
+the Green's function or the screened Coulomb interaction 
+to be sufficiently localized.
 
-Non-hermitian matrices
-R. Haydock and M.J. Kelly. J. PHys. C 8, L290
-R. Haydock, J. Phys. A 7, 2120 (1974)
+The on-site self-interaction term can be computed as
+%
+\begin{equation}
+\int_{\Omega_{i}}<w_{i}(r-R_{i})|\sigma(\r,\r';\omega)|w_{i}(r-R_{i})>d\r'd\r
+\end{equation}
+%
+If $\Sigma$ is chosen to be Hermitian a self-consistent calculation 
+becomes tractable resulting in a new collection of single particle 
+states with higher order polarization and exchange terms included 
+in their summation the SC-GW is an example of this procedure. The more of
+these processes that can be included in the single particle configuration of the
+system the better the tight binding guess is likely to be. The self-consistency
+in the recursion method relies on the adjustment of the $\Sigma$ operator and the
+fewer depths of recursion required to stabilize this quantity the more efficient the
+scheme can be considered.
 
-Application Recursion Method:
-R. Haydock and M.J. Kelly, Surf. Sci. 38, 139 (1973) #d-orbitals #Fesurfaces #gallagherthesis
-M. J. Kelly J. Phys. C 7 L157 (1974)
-M. J. Kelly Surf. Sci. 43 587 (1974)
+In principle we can now compute any quantity we like that can be expressed
+as a density of states, or an integral over the density of states.
+The basis set may remain an issue. The localized functions will not have the 
+flexibility of planes waves so if we seek the green's function in the 
+region of the plasmon energies our basis set might not have the flexibility 
+to describe that solution? I'll have to think about this. Ultimately the 
+solution for the resolvent at those energies i.e. $ImG_{nk}(\omega)$ should 
+reproduce what I'm looking for. The test for this would be with Si, if 
+I can reproduce spectral functions with TB recursion that is a legitimate 
+proof of concept and would clarify the extent to which collective excitations,
+plasmon, can be incorporated in TB recursion. The difficulty of 
+Van Hove singularities suggests we might be at cross purposes...
 
-Perovskites:
-I. Gyemant and M. J. Kelly, J. Phys. C 11, L193 (1978)
+Also Writing the equations in this way and the proposed method of solution
+yield some post hoc justification for parameterizations of plasmon
+pole models or the use of Pad\'e approximants to capture the frequency dependence
+of the key operators.
 
-Chevrel Compounds:
-Bullett Phys. Rev. Lett. 39, 664 (1977)
+Similarly the contributions of neighbours to the self-energy 
+operator yields some physical insight.
 
-Lave Phases:
-R. L. Johannes, R. Haydock, and Volker Heine Phys. Rev. Lett. 36, 372 1976 #lavephases
+A good first order approximation to $\Sigma$ comes from the GW approximation.
+We will write matrix elements of this to see the connection between the
+recursion method and the calculation of $\Sigma$. 
+%
+\begin{equation}
+\label{eq:sigma}
+\Sigma_{ij}(\omega) = <\phi_{i}|\int G(\omega-\omega')W(\omega')d\omega'|\phi_{j}>
+\end{equation}
+%
+	We now insert the identity operator into Eq.$\sigma$ strategically and at 
+a number of places:
+%
+\begin{equation}
+\label{eq:sigma}
+\Sigma_{ij}(\omega) = <\phi_{i}|\int G(\omega')\sum_{n}|\phi_{n}><\phi_{n}|(G(\omega')|\phi_{n}><\phi_{n}|G(-\omega')v)d\omega'|\phi_{j}>
+\end{equation}
+%
+\begin{equation}
+\label{eq:sigma_onsite}%need to check the frequency polarization expression
+\Sigma_{ii}(\omega) = <\phi_{i}|\int G(\omega')\sum_{n}|\phi_{n}><\phi_{n}|(G(\omega')|\phi_{n}><\phi_{n}|G(-\omega')v)d\omega'|\phi_{i}>
+\end{equation}
+%
+	The insertion of multiple identity operators
+makes our scheme clear: the mechanics of the recursion method 
+can now be fully exploited. All that is required to compute the self energy 
+operator is a number of Greenian's for $G_{ij}($\omega$)$ which we will
+initialize however we like. These will modify the coefficients at the
+off diagonal elements and on the onsite terms. The closed form
+expressions for $G_{ij}(\omega)$ means we have a rigorous 
+energetic description $\omega$ and the values of the greenian 
+can be tabulated and then reused in the solution of \ref{eq:green}.
+We can now make a variety of choices to compute the on site self interaction
+i.e. where G only couples on site terms, in the fashion of a hubbard U model,
+and a variety of approximations i.e. is the screening local or extended.
+For this scheme to be workable we again stress that the system interaction
+must be sufficiently local such that $Sigma_{ij}$ matrix elements can be
+calculated.
 
-Anderson Localization
-R. Haydock Philos. Mag. [Part] B 37, 97 (1978)
-R. Haydock and A. Mookerejee, J. Phys. C 7, 3001 (1974)
+I think Umari's operator for |\phi><\phi| would be the best one!
+We then have the continuum states as $\e^{i\G\cdot\r}-<G|w_{i}(r-R)>$,
+with occupied and low lying conduction manifold represented as Wannier 
+functions.
 
-Interfacial Energies
-C.C. Pei Phys. Rev. B 18, 2583 (1978)
+	Although this is essentially just a rewriting of Hedin's equations
+it has practical consequences. The present method eliminates
+burdensome storage of what are in practice gigantic Green's function, 
+screened coulomb and self energy matrices. It also eliminates the need for 
+numerical integrations and convolutions. These savings are
+obtained at the price of a nested call stack of recursions which 
+in principle must be infinite. This may seem troubling but we do intend to truncate
+the level of recursion at some point 
 
-Self Consistency
-J. J. Rehr and C.C. Pei, PRB 16 5506 (1977)
-M. Mosteller and T. Kaplan,  PRB 19 552 (1979)
+	Careful, justified, selection of the initial wave functions and tight binding parameters
+is also required and these quantities (if they are not chosen to be analytic and approximate)
+must be computed and stored. However work done on Wannier functions makes this a very
+practical route. We will now embark on some numerical work in the hope that satisfactory 
+results can be obtained by truncation of the terms. In particular the dielectric constant
+and the plasmon frequency should emerge from this representation. These quantities
+might be considered $\rho_{1}$ off diagonal long range order i.e. macroscopic parameters
+that arise from the microscopic phase locking of electronic states in a crystal. See
+\ref{sec:odlro} for a further discussion of this.
 
-UV
-R. K. C. McLean and R. Haydock, J. Phys. C 10, 1929 (1977)
+
+\subsection{Application of Recursion Method to the Electron Gas}
+	We now wish to apply the ideas discussed in section \. Specifically to 
+calculate the exchange-correlation energy of an electron gas. Again it is 
+no coincidence that the Pad\'e approximant is used. The coefficients
+of a Pad\'e approximant can be calculated via a recursive algorithm
+as a continued fraction \cite{vidbergserene} and, from the physical
+intuition of the local environment, this is the appropriate functional form.
+
+The idea would be to initialize spherically localized electrons in a box 
+(where the box size determines the effective electron density)
+then let them diffuse and calculate the contribution to the
+single particle energy and the exchange correlation energy. 
+If there is a clever choice of grids and co-ordinate systems this
+should be easier to compute.
+
+This is in line with the original work of Ceperley and Alder \cite{ceperley80} except 
+instead of a diffusive Monte-Carlo approach we exploit the
+recursion method to obtain analytic approximations to the energy.
+In their case the trial function is a product
+of two-body correlation factors times a Slater determinant of 
+single-particle orbitals. The two-body correlation factors are
+chosen such that they remove exactly the singularities in the local energy when two electrons
+approach each other. The single particle states are plane waves
+in the fluid phase: when the system is polarized, to allow for there only being
+one spin per spatial state, the fermi wave vector is increased to allow
+for twice as many spatial orbitals. 
+
+In the crystal phase the orbital are Gaussians centered 
+at body-centered cubic lattice sites. Their simulations were typically 
+for 38-248 electrons.
+
+At each density the energy was extrapolated to an infinite number of particles
+%
+\begin{equation}
+E(N) = E_{0} + E_{1}/N + E_{2}\Delta_{N}
+\end{equation}
+
+$E_{1}$ arises from the potential energy due to the correlation between a particle and its images
+$E_{2}$ comes from the discrete nature of the Fermi sea for finite systems, $\Delta_{N}$ is the 
+size dependence of an ideal Fermi system.
+
+More details on the technique are given in an earlier version of the paper
+\cite{ceperley78}. The BDJ wavefunction is written
+
+\begin{equation}
+\psi_{T}(R) = D(R) {\rm exp}(-\sum_{i<j} u(|\r_{i}-\r_{j}|))
+\end{equation}
+%
+where D(R) is a Slater determinant of plane waves, separate slater determinants for
+spin-up and spin-down particles in the unpolarized phase. The $u(r)$ is a pseudopotential
+with a repulsive character and is intended to account for the particle correlation. 
+(We will come back to this).
+
+The issues of Van Hove singularities will be apparent in a recursion treatment because 
+the formal solution to electron gas problems involve the creation of plasma modes.
+
+
+\subsection{Application to Long Range off Diagonal Order}
+The advantage of tight binding is it allows us to think in a co-ordinate space representation
+of electronic structure and still obtain accurate results mainly by exploiting our notions
+of locality and appealing broadly to the invariance theorem discussed by Heine and introduced
+in the first part of this note. Yang presents the local diagonal order present in crystalline materials
+and represent $\rho_{1}$ (the single particle density matrix) results in the 
+creation of a macroscopic variable the strain, but does not precise what the macroscopic 
+analog is for off diagonal long range order. Progessively higher density matrices are 
+written with index n. Yang's insight is condensed in the following quotation.
+%
+\begin{quote}
+It thus seems that in a macroscopic system, ODLRO can set in 
+at $\rho_{n}$. The theorems of II indicate that
+the reduced density matrix, to be called $\rho_{m}$, of lowest
+order which has ODLRO must operate on a basic group that consists 
+of an even number of fermions and any number of bosons. For liquid He II the basic
+group is the He atom; for superconductors the basic group is a set of two electrons.
+For $\rho_{m}$ the largest eigenvalue is of the order of N. It has an ODLRO
+in the sense that in coordinate representation, when the unprimed coordinates are
+microscopically close to a point $\x$, and the primed coordinates are microscopically
+close to another point $\x'$. with $\x$ and $\x'$ macroscopically apart, $rho_{m}$
+remains nonvanishing. For fixed unprimed coordinates microscopically
+close together, the region of the primed coordinates where
+$\rho_{m}$ remains nonvanishing is thus a "tube" with one 3-space dimension 
+extending macroscopically. The volume of the region is 
+\begin{equation}
+\Omega \times ({\rm microscopic dimension)^{m-1}
+\end{equation}
+\end{quote}
+%
+
+The analogy between Bloch's solution for wavefunctions in a crystal is also worth
+repeating in its entirety.
+
+\begin{quote}
+The difference in the behavior of $R$ under changes in $\Phi$ for the cases 
+with and without ODLRO is quite similar to the Bloch eigenvalue problem
+in a periodic potential. Bloch showed that wave functions should be sought 
+that changes by a phase factor $e^{i\Phi}$ for each lattice displacement. How does the 
+wave function depend on $\Phi$? If the wave function remains finite between lattice points, 
+the energy value and the wave function would be dependent on \Phi. If, however, 
+the wave function becomes very small in a region between lattice points, 
+caused by, e.g., a potential barrier, then the energy and the wave function 
+would not be very much dependent on $\Phi$. For an infinite potential barrier in 
+between the atoms, the wave function vanishes in the barrier, and the energy 
+levels would be independent of $\Phi$ while the
+wave function only picks up phase factors $e^{i\Phi}$ from one atom to the next.
+The physical meaning of the effect of the presence of ODLRO on the 
+phase condition (36) is the, t ODLRO preserves the memory of phases over 
+macroscopic distances. Also in this sense, one can interpret for the 
+Bloch problem, the eGect of the small nonvanishing interatomic 
+value of the wave function on the C dependence of the energy: 
+The nonvanishing interatomic value of the wave function preserves the 
+memory of phases from one atom to the next.
+
+The physical meaning of the effect of the presence of ODLRO on the 
+phase condition (36) is the, t ODLRO preserves the memory of phases over 
+macroscopic distances. Also in this sense, one can interpret for the 
+Bloch problem, the eGect of the small nonvanishing interatomic value of the 
+wave function on the C dependence of the energy: The nonvanishing interatomic 
+value of the wave function preserves the memory of phases from one atom to the next.
+\end{quote}
+
+This is the first description of Bloch's function I have really understood. 
+It also provides a sound mathematical basis for the pairing mechanism in BCS
+superconductivity in the proof of Theorem 6 which Yang gives in the appendix.
+The R spacing argument can be applied to the electrons. The strip equivalent
+is microscopic (around the atom) but the spacing between phase locked electrons
+is of the order of the lattice constant.
+
+
+
+%\bibliography
+%J Friedel Adv. Phys. 3, 446 (1954) #dilutealloys
+%
+%Matching green's functions:
+%J. E. Inglesfield J. Phys C 4, L14 (1971)
+%B. Velicky and I. Bartos, J. Phys C 4, L104 (1971)
+%F. Garcia-Moliner and J Rubio J Phys C 2, 1789 (1969)
+%F. Garcia-Moliner and J Rubio Proc R. Soc. London, Ser. A 324, 257 (1971)
+%
+%Non-hermitian matrices
+%R. Haydock and M.J. Kelly. J. PHys. C 8, L290
+%R. Haydock, J. Phys. A 7, 2120 (1974)
+%
+%Application Recursion Method:
+%R. Haydock and M.J. Kelly, Surf. Sci. 38, 139 (1973) #d-orbitals #Fesurfaces #gallagherthesis
+%M. J. Kelly J. Phys. C 7 L157 (1974)
+%M. J. Kelly Surf. Sci. 43 587 (1974)
+%
+%Perturbation Theory:
+%
+%Perovskites:
+%I. Gyemant and M. J. Kelly, J. Phys. C 11, L193 (1978)
+%
+%Chevrel Compounds:
+%Bullett Phys. Rev. Lett. 39, 664 (1977)
+%
+%Lave Phases:
+%R. L. Johannes, R. Haydock, and Volker Heine Phys. Rev. Lett. 36, 372 1976 #lavephases
+%
+%Anderson Localization
+%R. Haydock Philos. Mag. [Part] B 37, 97 (1978)
+%R. Haydock and A. Mookerejee, J. Phys. C 7, 3001 (1974)
+%
+%Interfacial Energies
+%C.C. Pei Phys. Rev. B 18, 2583 (1978)
+%
+%Self Consistency
+%J. J. Rehr and C.C. Pei, PRB 16 5506 (1977)
+%M. Mosteller and T. Kaplan,  PRB 19 552 (1979)
+%
+%UV Photoemission
+%R. K. C. McLean and R. Haydock, J. Phys. C 10, 1929 (1977)
 
