@@ -34,21 +34,32 @@ At this point the man questioning me stopped and looked up from his computer.
 "There are no solids.", he said, "only space and energy." He then 
 chuckled, returned my passport, and told me I was free to enter the country.
 
-To this day I don't know if he was joking or not. I suspect not, and I am
+To this day I don't know if he was joking or not. Although I suspect not, and I am
 of the opinion that there is an english border guard of asian descent, possibly retired now, 
-with a deeper intuitive sense of what matter and solids are than most professors
+with a deeper intuitive sense of the secrets of the material universe than most professors
 of the subject.
 
-Perhaps being jealous of the calm certainty with which the border guard 
+Perhaps being jealous of the calm certainty with which the guard
 commanded the subject I thought it might be appropriate for me
-to develop my own idea of what exactly is solid state physics.
+to develop my own idea of what exactly materials are and how they work.
 
-These pages are the result of that undertaking.
+First some bad news. I am afraid that the discussion still requires a fair amount of mathematical formalism
+to be introduced. The economy of expression afforded by mathematics can't be beaten.
+So with this paragraph consider yourself forewarned. I also do not intend to posit strange metaphors to
+attempt to explain how certain equations behave. Though the consequences of certain derivations 
+will be discussed and the relevance of their inclusion hopefully justified.
+
+The good news is there will be pictures. Wherever there is alot of math there 
+should be a picture that captures, schematically, the essential ideas which is referenced in the text. 
+It turns out that for most of materials science the most important pictures always seem to be ones showing you
+how the atoms are arranged in space, and graphs showing you where a resonance is likely to occur. 
+Resonances, peaks in spectra, are typically what turn up in experimental
+probes. In a strict sense of the words we shine light on materials to try to understand how they work. 
 
 \section{Electronic Structure for Materials Science}
 
-In 1987 Henry Ehrenreich published an article in science called
-Electronic Theory for Materials Science. The article begins
+In 1987 Henry Ehrenreich published an article in Science called
+"Electronic Theory for Materials Science". The article begins
 with what might now be considered a bold statement:
 
 \begin{quote}
@@ -56,24 +67,22 @@ Theoretical Materials Science remains to be invented as a discipline,
 and for good reason.
 \end{quote}
 
-The reason he supplies is that materials processing, at least
-historically, was a craft. A pinch of gypsum here, a dash of nickel 
-transforms the quality of concrete or sword or shield beyond
-what one might have any reason to expect. 
+The reason he supplies is that materials processing, historically, was a craft. 
+A roman engineer knew that a pinch of gypsum could significantly 
+impact the properties of the concrete
+produced. A Blacksmith learned that swords and shields were 
+effected by the alloying of the metals and careful control of heat: 
+firing the blade then quenching the blade in cold water.
 
-An atom is indivisible and unique yet it is difficult to formulate,
-mathematically, a description applicable to that same atom in all
-its potential different environments. An atom as it stands 
-alone, saying sitting in a vacuum, is in some ways completely 
-different from the same atom surrounded by copies of itself.
+Each element in its atomic form is identical to every element of the same kind,
+yet it is difficult to formulate, mathematically, a description applicable 
+to that same atom in all its potentially different environments. 
 
-"The importance of this approach would lie in the fact that
-one has a single entity $G_{A}$ to represent an element 
-in anything from a small molecule to a complex alloy."
-
-"What we lack is a fundamental quantum theory of the cohesion and structure
-of a wide diversity of solids." 
-pg. 34 Heine
+The properties of an atom as it stands alone, perhaps sitting in a 
+vacuum, is in some ways completely different from the same atom 
+surrounded by copies of itself, and there are changes again
+in the collective properties of the material when that atom is 
+surrounded by different neighbour atoms.
 
 So we now have developed two important arguments. Electronic structure
 is a theory of the local environment, the effects depend on nearest
@@ -84,9 +93,6 @@ produce dramatic effects across macroscopic length
 scales completely altering the properties of the material.
 
 These two proposition seem to be at odds.
-
-On the one hand we have elements in their atomic confirmation on the other 
-we have extended materials: bulk crystals, alloys, solids of many descriptions.
 
 Cottrell noted that metallurgy would require a "theory... which explains
 the properties of metallic solids and the explanation of the origin of this

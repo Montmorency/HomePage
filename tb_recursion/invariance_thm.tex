@@ -47,39 +47,53 @@
 \sethlcolor{yellow}
 
 \begin{document}
-\title{The GW approximation and Tight Binding Recursion}
+\title{Tight Binding Recursion and the GW approximation}
 \author{Henry Lambert}
 \date{\today}
 \maketitle
 
 \section{Introduction}
-  Vol. 35 of Solid State Physics is dedicated to electronic structure
-physics from the point of view of the local environment. This perspective
+  Vol.~35 of Solid State Physics is dedicated to electronic structure
+theory from the point of view of the local environment. This perspective
 has a long tradition in physical and chemical electronic structure theory.
-The theory has a certain intuitive appeal and follows naturally from 
-the early progress in quantum mechanics. 
 
-Initially understanding of quantum mechanics came from the study
-of black body radiation, the hydrogen atom, photoemission phenomenon, 
-and electron diffraction experiments. From 
-the understanding of the electronic states of hydrogen emerged the
-understanding of larger atomic systems. Hartree theory and Hartree-Fock
-theory, the latter of which includes the exchange interaction arising 
-from Pauli's work on the statistics of fundamental particles 
-provided access to the wave functions of these many electron 
-atomic systems. Similarly the susceptibility of atomic
-systems was investigated at an early stage via perturbation theory.
-As the mechanics of atoms came t  be understood it was natural 
-to base subsequent theories of the mechanics
-of electrons in crystals and solids as an extension of atomic theory.
+  Topics that are often discussed at the beginning of introductory physics courses include:
+the study of black body radiation, photoemission phenomenon, De Broghlie waves,
+electron diffraction experiments and the structure of the hydrogen atom.
+Examination of thesis topics constitutes a suitable foundation 
+for understanding the formalism and experimental justificiation for the theory.
 
-From this shared intellectual heritage emerged the many tribes of present
-day electronic structure theory. The tribes are well known 
-to practicioners in the field, approaches, some of which we could name 
-here, Linear combination of atomic orbitals(LCAO), 
-linear muffing tin orbitals (LMTO), plane waves
-and pseudopotentials, gaussian orbitals, tight binding formalisms, 
-Kohn-Kuttinger-Rostiger theory.
+  It is natural to hope that from the understanding of the electronic states of hydrogen the
+understanding of larger atomic systems, containing progressively more electrons, might emerge. 
+However as the number of electrons in a system grows the wave function becomes 
+somewhat unwieldly to work with and the accurate evaluation of the 
+electron-electron repulsions becomes more difficult. Computers provide a route
+to numerical solutions of the equations governing the behaviour of these systems.
+As discussed in Sec.\ref{sec:} computer simulations in materials is a common past time
+these days in many branch of physics, chemistry, engineering and biology.
+The many, many tribes of electronic structure theory. The tribes are well known 
+to practicioners in the field, some of which we could name 
+here: tight binding and linear combination of atomic orbitals (LCAO), 
+linear muffing tin orbitals (LMTO), plane waves and pseudopotentials, 
+Gaussian orbitals, and Kohn-Kuttinger-Rostiger theory.
+
+ While successful in a number of respects numerical work can be tedious, obscure the underlying
+mechanisms, become excessively obsessed with algorithmic details and, most importantly,
+does not necessarily provide a theoretical description that accounts for a broad range
+of natural phenomenon. As an example of the economy of expression which can be achieved 
+I would cite Ref.~\cite{johannes76}. In that work 76 crystal structures are correctly predicted 
+with a model containing 9 parameters, a determinedly naive work would
+require computing the total energies of each of those structures and provide little insight into the physical
+reason underlying the formation of these phases..
+
+The purpose of this note is two fold: firstly to attempt to summarize the incredible range and
+detail of theory and application covered in Vol. 35; secondly, to speculate on where it should be possible
+to exploit modern computational advantages and new understanding about the nature of exchange 
+and correlation in materials to systematically improve descriptions of quantum systems based
+on the local environment 
+
+%"What we lack is a fundamental quantum theory of the cohesion and structure
+%of a wide diversity of solids." Volker Heine
 
 \section{The Invariance Theorem}
 \label{sec:invariance}
@@ -125,43 +139,41 @@ This relies, again in analogy with black bodies, on the Green
 function being independent of the size and shape
 of the container (of electrons) and the boundary conditions.
 
-
-First a change of variables is perform from r to r'' in 4.1 and r to r'' and r'
-to r in 4.3
+First a change of variables is perform from $\r$ to $\r''$ in 4.1 and $\r$ to $\r''$ and $\r'$
+to $\r$ in 4.3:
+%
 \begin{equation}
 \label{eq:greentot}
 [-\frac{1}{2}\nabla^{2}_{\r''} + V(\r'') - E]G(\r'',\r',E)= -\delta(\r''-\r')
 \end{equation}
-
+%
 \begin{equation}
 \label{eq:greenA}
 [-\frac{1}{2}\nabla^{2}_{\r''} + V(\r'') - E]G_{A}(\r,\r'',E)= -\delta(\r''-\r')
 \end{equation}
 
-Now multiply Eq. \ref{eq:greentot} by $G_{A}$ and Eq.
-\ref{eq:greenA} by $G$ Then integrate over r'' over region A using
+Now multiply Eq.~\ref{eq:greentot} by $G_{A}$ and Eq.
+\ref{eq:greenA} by $G$ Then integrate over $\r''$ over region A using
 Green's theorem:
-
+%
 \begin{equation}
 \label{eq:greenthm}
 \int\int\int(\phi\nabla^{2}\psi - \psi\nabla^{2}\phi)d^{3}\r 
 = \int(\phi\nabla\psi-psi\nabla\phi)d{\mathbf{S}}
 \end{equation}
- One then obtains
-
-Subsuming the energy arguments we obtain an
-expressions for G by integrating r'' over region A.
-
+%
+We suppress the energy arguments from here on in assuming them to be obtained by 
+expressions for $G$ by integrating $\r''$ over region $A$.
+%
 \begin{equation}
 \label{eq:green1a}
 G(\r,\r') = G_{A}(\r,\r') + \frac{1}{2} \int d\mathbf{S} 
-[\frac{\partial G_{A}(\r,\r_{s})}{\partial n_{S}}G(\r_{S},\r')
-- G_{A}(\r,\r_{S})\frac{\partial G(\r_{S},\r')}{\partial n_{S}} [\r, \r' \in A]]
+[\frac{\partial G_{A}(\r,\r_{s})}{\partial n_{S}}G(\r_{S},\r') - G_{A}(\r,\r_{S})\frac{\partial G(\r_{S},\r')}{\partial n_{S}} [\r, \r' \in A]]
 \end{equation}
 
 $\frac{\partial}{\partial n_{S}}$ denotes the normal component of grad across
 the surface S and $\r_{S}$ is a point on S. (The grad term is a directional component
-so can induce a change in sign!)
+so the sign can change depending on the orientation.)
 
 And in region B:
 %
@@ -179,15 +191,15 @@ A further property has been used:
 G(\r,\r',E) = G(\r',\r,E)
 \end{equation}
 %
-which is often justified on the ground of a time reversal theorem
-applying to the wave functions.
+which is often justified on the ground of a time reversal theorem applying 
+to the wave functions in the system.
 
-Finally consideration of r' and r'' in different regions is required.
+Finally consideration of the case where $r'$ and $r''$ are in different regions is required.
 
 With $\r''$ in B and $\r'$ in A Eq.~\ref{eq:greentot} becomes:
 %
 \begin{equation}
-[-\frac{1}{2}\nabla^{2}_{\r''} + V(\r'') - E]G(\r'',\r')=0,
+[-\frac{1}{2}\nabla^{2}_{\r''} + V(\r'') - E]G(\r'',\r') = 0,
 \end{equation}
 %
 the delta function is uniformally zero with those spatial constraints.
@@ -204,14 +216,14 @@ A similar cross multiplying trick gives:
 \begin{equation}
 \label{eq:green1c}
 G(\r,\r') = -\frac{1}{2} \int dS[\frac{\partial G_{B}(\r, \r_{S}}{\partial n_{S}} G(\r_{S},\r')
-- G_{B}(\r, \r_{S})\frac{\partial G(\r_{S},\r'}{\partial n_{S}}] [\r in B, \r' in A],
+- G_{B}(\r, \r_{S})\frac{\partial G(\r_{S},\r'}{\partial n_{S}}] \quad [\r {\rm in} B, \r' {\rm in} A],
 \end{equation}
 %
 and a similar relation for [$\r$ in A and $\r'$ in B].
 
 Eq.~\ref{green1a} and Eq.~\ref{green1b} give solutions for G but 
-aren't very useful until the terms
-$G(\r_S,\r)$ and $\frac{\partial G}{\partial n_{S}}$ are eliminated.
+aren't very useful until the terms $G(\r_S,\r)$ and 
+$\frac{\partial G}{\partial n_{S}}$ are eliminated.
 
 From Eq.~\ref{eq:green1a} we let $\r$ tend to the boundary so $\r = \r_{S}$
 %
@@ -238,63 +250,78 @@ were necessary to motivate the physical argument for how we have a Green's funct
 description in one region of space, a Green's function description in another, 
 and the joined physical system should be some combination of these two descriptions
 which match at the interface. The final step is to write Eq.~\ref{eq:greensys1} 
-and Eq.~\ref{eq:greensys2}.
-
-
+and Eq.~\ref{eq:greensys2} as matrices:
+%
 \begin{eqnarray}
 \label{eq:operator1}
 \g = \g_{A} + \frac{1}{2}\G'_{A}\g - \frac{1}{2}\G_{A}\g' \\
 \g = -\frac{1}{2}\G'_{B}\g + \frac{1}{2}\G_{B}\g' \\
 \end{eqnarray}
-
+%
 \begin{eqnarray}
 \label{eq:operator2}
 \g = [\G^{-1}_{A}(1-\frac{1}{2}\G'_{A}) + \G^{-1}_{B}(1+\frac{1}{2}\G'_{B})]^{-1} \G^{-1}_{A}\g_{A}
 \g'= [(1-\frac{1}{2}\G'_{A})^{-1}\G_{A} + (1+\frac{1}{2}\G'_{B})^{-1}]^{-1}(1 - \frac{1}{2}\G'_{A})^{-1}2\g_{A}
 \end{eqnarray}
-
+%
 $\g$, $\g_{A}$, $\g'$ are vectors in a space $\{\r_{S}\}$ with components $G(\r_{S},\r')$,
 $G_{A}(\r_{S},\r')$, $\partial G(\r_{S},\r')/\partial n_{S}$ with $\r'$ fixed and
 $\G_{A}$, $\G'_{A}$ are operators in the space with matrix elements
 $G_(A)(\r''_{S}, \r_{S})$, $\partial G_{A}(\r''_{S}, \r_{S})/\partial n_{S}$.
 
 Where the inverse in Eq.~\ref{eq:operator1, eq:operator2} 
-doesn't exist there is a pole and this is the condition
-for a discrete energy level of the Schrodinger equation 
-for the combined A + B systems. 
+doesn't exist there is a pole. This is the condition for a discrete energy level 
+of the Schrodinger equation for the combined A + B systems. 
 
 Equations written in the form of \ref{eq:green1a} are of the type required for the invariance theorem namely:
+%
 \begin{equation}
 G(\r,\r') = G_{A}(\r,\r') + {\rm boundary corrections}.
 \end{equation}
+%
 
 These considerations provide a reasonable mathematical framework for 
 investigating electronic structure from the point of view of the local environment.
+Indeed as Heine himself says: 
+
+\begin{quote}
+The importance of this approach would lie in the fact that
+one has a single entity $G_{A}$ to represent an element in anything 
+from a small molecule to a complex alloy.
+\end{quote}
+
+The success of plane wave pseudopotential methods can be considered as being reliant
+on finding sufficient approximations to the quantity $G_{A}$. The plane waves
+in the interstitial regions must match the Green's function for the atomic system
+at a particular cutoff. If a function can be found that describes the scattering of
+these waves across a suitable energy range the approximation is a good one and the matching
+of the two systems will be successful.
 
 \section{Recursion Method}
-The principle of the recursion method, the details of the calculation will follow, is 
-to obtain an efficient expression for a diagonal element of the Green's function.
-
+  The principle of the recursion method is to obtain an efficient expression 
+for an element of the Green's function.
+%
 \begin{equation}
 G_{\chi\chi}(E) = \bra\chi|[E + i\delta -H]^{-1}|\chi\ket
 \end{equation}
+%
 
+The Green's function can be immediately related to the local density of states as:
+%
 \begin{equation}
 n_{\alpha l}(E) = -\frac{1}{\pi} {\rm Im}\bra\alpha l|[E + i\delta -H]^{-1}|\alpha l\ket
 \end{equation}
+%
 
-$\chi$ can be made up of some linear combination of the local basis set $\phi_{\alpha l}$,
-which, in turn, could be local atom centered orbitals, of bond orbitals, 
-or even atomic diplacements to describe lattice vibrations. The method is thus
-applicable to a wide range of problems in condensed matter.
-
-\begin{equation}
-b_{n+1}|u_{n+1}\ket = H |u_{n}\ket - a_{n}|u_{n}\ket - b_{n}|u_{n-1}\ket
-\end{equation}
+The state $\chi$ which we project on to can be made up of some linear combination 
+of the local basis set $\phi_{\alpha l}$, which, in turn, could be local atom centered orbitals, bond orbitals, 
+Wannier functions, atomic diplacements, or any localized quantity we wish to define. The method is thus
+applicable to a wide range of problems in condensed matter. In short what we wish to examine, 
+is determined by the choice of $u_{0}$.
 
 \subsection{Mathematical Origin}
 The trick of the recursion method, if you like to think of things in terms of tricks, 
-or its generating feature, if you prefer, is that from the outset the `greenian' is constricted
+or its generating feature, if you prefer, is that from the outset the `Greenian' is constricted
 to the particular starting orbital $u_{0}$: 
 %
 \begin{equation}
@@ -305,7 +332,7 @@ As Heine puts it in his chapter:
 %
 \begin{quote}
 Note that we do not want the whole of the inverse matrix $[E-H]^{-1}$, 
-\emph{only one element}. and on this the whole method depends. In physics we do not
+\emph{only one element}, and on this the whole method depends. In physics we do not
 usually inquire about the whole of life, but about one particular matrix element (at a time) and we have chosen
 $u_{0}$ so that \ref{eq:greenian} gives us what, to put it crudely, we want.
 \end{quote}
@@ -317,23 +344,28 @@ $u_{0}$ so that \ref{eq:greenian} gives us what, to put it crudely, we want.
 %
 
 This can be equivalently written as:
+%
 \begin{equation}
 \bra u_{0}|[E-H]^{-1}|u_{0}\ket = \frac{1}{\frac{{\rm det}|D_{0}|}{{\rm det}|D_{1}|}}
 \end{equation}
-
+%
 Appeal is then made to Cauchy for the following expansion:
-
+%
 \begin{equation}
 {\rm det}|D_{0}| = (E-a_{0}){\rm det}|D_{1}| - b^{2}_{1}{\rm det}|D_{2}|
 \end{equation}
-
+%
 and when generalized to determinants for $|D_{n}|$, $|D_{n+1}|$, and $|D_{n+2}|$:
-
+%
 \begin{equation}
 \frac{{\rm det}|D_{n}|}{{\rm det} D_{n+1}} = E-a_{n}) - \frac{b^{2}_{n+1}}{\frac{{\rm det}|D_{n+1}}{{\rm det}|D_n+2|}}
 \end{equation}
 
-\subsection{Integrated Quantities and Energy Difference between Two Substructures}
+\begin{equation}
+b_{n+1}|u_{n+1}\ket = H |u_{n}\ket - a_{n}|u_{n}\ket - b_{n}|u_{n-1}\ket
+\end{equation}
+
+\section{Integrated Quantities and Energy Difference between Two Substructures}
 Some integrated quantities over the density of states of interest would be
 the electron occupancy of a specific orbital:
 %
@@ -383,29 +415,29 @@ final expression:
 U_{A}-U_{B} = \int_{-\infty}^{E_{F}}(E-E_{F})[n_{A}(E) -n_{B}(E)]dE.
 \end{equation}
 %
-It is this expression used to separate the Lave phases of transition metals in  Ref.~\cite{haydock76}.
+It is this expression used to separate the Lave phases of transition metals in Ref.~\cite{haydock76}.
 
 \section{Kelly}
-An example from Kelly helps to make the shape of the Hamiltonian absolutely 
-concrete.
-
+An example from Kelly helps to make the application of the scheme clear:
+%
 \begin{quote}
-As input data we require a convenient local representation of H. In simple crystals,
+As input data we require a convenient local representation of $H$. In simple crystals,
 this is most easily given in terms of interactions with a unit cell and between neighboring cells.
-For a fcc transition metal we have nine orbital (1s, 3p, 5d) per site, and a diagonal 9x9 matrix
+For a fcc transition metal we have nine orbital (1 s-orbital, 3 p-orbitals, 5 d-orbitals) per site, and a diagonal 9x9 matrix
 for the self-energies of these orbitals. Twelve 9x9 matrices suffice to describe the interaction 
-of any atom with its neighbors.
+of any atom with its nearest neighbors.
 \end{quote}
+%
 
-And it is probably worth noting at this stage, for the practically minded,  
-that the actual operations of $H|u_{n}\ket$ can be written as:
+The actual operations of $H|u_{n}\ket$ which have been discussed, in a general way so far, 
+can be written as:
 %
 \begin{equation}
 H|u_{n}\ket = \sum_{\alpha l \beta j}a_{n \alpha l}(\bra \beta j |H| \alpha l\ket)|\beta j\ket,
 \end{equation}
 %
-and since we wish to exploit the sparsity of H we introduce an index $z$ which
-runs over the neighbors of site l with which the orbitals interact:
+to exploit the sparsity of H we introduce an index $z$ which runs over the neighbors of 
+site l with which the orbitals interact:
 \begin{equation}
 H|u_{n}\ket = \sum_{\alpha l z}a_{n \alpha l}(\bra \beta_{z} j_{z} |H^{z}|\alpha l\ket)|\beta_{z} j_{z}\ket.
 \end{equation}
@@ -414,36 +446,28 @@ There are no restrictions on the number of orbitals per site, or on the range of
 incorporated, these only impact on the efficiency of the method and the validity of the original assumptions
 about the dominance of the local atomic environment.
 
-\section{Aside Green's Function Matching}
-I would argue that every plane wave/pseudopotential calculation is in fact
-an example of Green's function matching. Between atoms a basis of plane
-waves describes interatomic bonding. In the vicinity of ions a pseudopotential
-describes the way these plane waves are scattered at the atomic sites.
-Indeed the logarithmic derivatives are required to match 
-that of the atomic wavefunction at the cutoff radius for the pseudopotential.
-
-\section{Free Electrons}
-\begin{equation}
-H = - \hbar^{2}/2m \nabla^{2}
-\end{equation}
-
-In spherical co-ordinates:
+%\section{Aside Green's Function Matching}
+%I would argue that every plane wave/pseudopotential calculation is in fact
+%an example of Green's function matching. Between atoms a basis of plane
+%waves describes interatomic bonding. In the vicinity of ions a pseudopotential
+%describes the way these plane waves are scattered at the atomic sites.
+%Indeed the logarithmic derivatives are required to match 
+%that of the atomic wavefunction at the cutoff radius for the pseudopotential.
+%\section{Free Electrons}
+%\begin{equation}
+%H = - \hbar^{2}/2m \nabla^{2}
+%\end{equation}
+%In spherical co-ordinates:
 %
-\begin{equation}
-H = \frac{hbar^{2}}{2m}(d/dr^{2}  ) 
-\end{equation}
+%\begin{equation}
+%H = \frac{hbar^{2}}{2m}(d/dr^{2}  ) 
+%\end{equation}
 
 \section{Future Work}
-The chain model has been used in numerical work as a way of 
-diagonalizing matrices in a computer 
+The chain model has been used in numerical work as a way of diagonalizing matrices in a computer 
 C. Lanczos J. Res. Natl. Bur. Stand. 45, 255 (1950) and
 by Chebyshev for approximating functions on an interval
 P. L. Chebyshev, Bull. Acad. Imp. Sci. St. Petersbourg 1, 193 (1859)
-
-What we wish to examine, is determined by $u_{0}$, this could be a combination
-of neighbouring orbitals if we wish to determine the bond order, if it is the electronic
-structure at a surface, the $u_{0}$ should be a state at the surface, and similarly if it
-is a bulk state we wish to probe.
 
 The references in Vol. 35 demonstrate the scope of application of the method 
 already achieved by 1980. A subset of those works have been referenced here. 
@@ -458,7 +482,7 @@ one could discuss the distributions of various physical quantities.
 \end{quote}
 
 \begin{quote}
-  Finally, the reader may have noticed that the approach of this chapter has been entirely directed
+Finally, the reader may have noticed that the approach of this chapter has been entirely directed
 toward independent particle models. However, many-body Hamiltonians must be similarly 
 transformable to chain models. Aside from a small amount of thought and continuing interest, 
 nothing has been done about this and it remains a most interesting problem concerning recursive 
@@ -472,8 +496,6 @@ in the PDOT correspond to thresholds for creating long lived elementary excitati
 of the many body system.
 
 \section{Many Body Recursion}
-
-
 \label{sec:manybodyrecursion}
 	Since Vol. 35 was published there has been a rise in the accessibility of density functional methods 
 and the access to good single particle approximations to the electronic eigenstates of a crystal
