@@ -1,8 +1,95 @@
-\section{Matching Green's Functions}
+\documentclass{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{default}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[sort&compress]{natbib}
+\usepackage[a4paper,total={6in,9in}]{geometry}
+
+\def\wp{\omega^\prime}
+\def\w{\omega}
+\def\wc{{\omega_{\rm C}}}
+\def\ket{\rangle}
+\def\bra{\langle}
+\def\H{\hat{H}}
+\def\P{\hat{P}_{\rm occ}}
+\def\E{\varepsilon}
+\def\vp{{v^\prime}}
+\def\q{{\bf q}}
+\def\s{\sigma}
+\def\k{{\bf k}}
+\def\qp{{\bf q^\prime}}
+\def\G{{\bf G}}
+\def\Gp{{\bf G^\prime}}
+\def\rt{\tilde{r}}
+\def\pt{\tilde{p}}
+\def\r{{\bf r}}
+\def\R{{\bf R}}
+\def\rp{{\bf r^\prime}}
+\def\rpp{{\bf r^{\prime\prime}}}
+\def\rppp{{\bf r^{\prime\prime\prime}}}
+\def\x{{\bf x}}
+\def\mo{$\overline{1}$}
+\def\mt{$\overline{2}$}
+\def\S{\mathcal{S}}
+\def\Gs{\mathcal{G}}
+\def\v{\mathbf{v}}
+\def\symm{\left\{\mathcal{S}|\mathbf{v}\right\}}
+\def\g{\mathcal{g}}
+
+\usepackage{soul}
+\usepackage{color}
+\usepackage{subfig}
+
+\definecolor{yellow}{rgb}{1,1,0}
+\definecolor{lightblue}{rgb}{0.6,0.6,0.9}
+\sethlcolor{yellow}
+
+\begin{document}
+\title{The GW approximation and Tight Binding Recursion}
+\author{Henry Lambert}
+\date{\today}
+\maketitle
+
+\section{Introduction}
+  Vol. 35 of Solid State Physics is dedicated to electronic structure
+physics from the point of view of the local environment. This perspective
+has a long tradition in physical and chemical electronic structure theory.
+The theory has a certain intuitive appeal and follows naturally from 
+the early progress in quantum mechanics. 
+
+Initially understanding of quantum mechanics came from the study
+of black body radiation, the hydrogen atom, photoemission phenomenon, 
+and electron diffraction experiments. From 
+the understanding of the electronic states of hydrogen emerged the
+understanding of larger atomic systems. Hartree theory and Hartree-Fock
+theory, the latter of which includes the exchange interaction arising 
+from Pauli's work on the statistics of fundamental particles 
+provided access to the wave functions of these many electron 
+atomic systems. Similarly the susceptibility of atomic
+systems was investigated at an early stage via perturbation theory.
+As the mechanics of atoms came t  be understood it was natural 
+to base subsequent theories of the mechanics
+of electrons in crystals and solids as an extension of atomic theory.
+
+From this shared intellectual heritage emerged the many tribes of present
+day electronic structure theory. The tribes are well known 
+to practicioners in the field, approaches, some of which we could name 
+here, Linear combination of atomic orbitals(LCAO), 
+linear muffing tin orbitals (LMTO), plane waves
+and pseudopotentials, gaussian orbitals, tight binding formalisms, 
+Kohn-Kuttinger-Rostiger theory.
+
+\section{The Invariance Theorem}
 \label{sec:invariance}
-  In Vol 35 Heine presents an extended discussion of the invariance
-theorem. By way of introduction he points out an analogy between
-the the local density of states written (for each spin direction):
+Heine presents an extended discussion of the invariance
+theorem. Heine's section begins, by way of introduction, by pointing 
+out an analogy between  the the local density of states of a system of interacting
+electrons and the black body spectrum of electromagnetic radiation.
+
+The analogy can be seen by writing the density of states,
+and the local density of states (for each spin direction) as:
 
 \begin{eqnarray}
 n(E) = \sum_{n}\delta(E-E_{n}) \\
@@ -153,8 +240,6 @@ and the joined physical system should be some combination of these two descripti
 which match at the interface. The final step is to write Eq.~\ref{eq:greensys1} 
 and Eq.~\ref{eq:greensys2}.
 
-\def{\G}{\mathcal{G}}
-\def{\g}{\mathcal{g}}
 
 \begin{eqnarray}
 \label{eq:operator1}
@@ -168,8 +253,8 @@ and Eq.~\ref{eq:greensys2}.
 \g'= [(1-\frac{1}{2}\G'_{A})^{-1}\G_{A} + (1+\frac{1}{2}\G'_{B})^{-1}]^{-1}(1 - \frac{1}{2}\G'_{A})^{-1}2\g_{A}
 \end{eqnarray}
 
-$\g$, $\g_{A}$, $\g'$ are vectors in a space \{\r_{S}\} with components $G(\r_{S},\r')$,
-$G_{A}(\r_{S},\r')$, $\partial G(\r_{S},\r')/\partial n_{S}$ with \r' fixed and
+$\g$, $\g_{A}$, $\g'$ are vectors in a space $\{\r_{S}\}$ with components $G(\r_{S},\r')$,
+$G_{A}(\r_{S},\r')$, $\partial G(\r_{S},\r')/\partial n_{S}$ with $\r'$ fixed and
 $\G_{A}$, $\G'_{A}$ are operators in the space with matrix elements
 $G_(A)(\r''_{S}, \r_{S})$, $\partial G_{A}(\r''_{S}, \r_{S})/\partial n_{S}$.
 
@@ -222,7 +307,7 @@ As Heine puts it in his chapter:
 Note that we do not want the whole of the inverse matrix $[E-H]^{-1}$, 
 \emph{only one element}. and on this the whole method depends. In physics we do not
 usually inquire about the whole of life, but about one particular matrix element (at a time) and we have chosen
-u_{0} so that \ref{eq:greenian} gives us what we want.
+$u_{0}$ so that \ref{eq:greenian} gives us what, to put it crudely, we want.
 \end{quote}
 
 %
@@ -256,12 +341,12 @@ the electron occupancy of a specific orbital:
 N_{\alpha l}(E) = \int_{-\infty}^{E_{F}}E' n_{\alpha l}(E') dE'
 \end{equation}
 
-The total energy in the orbital is also convergent with increasing cluster size
-#
+The total energy in a particular orbital is also convergent with increasing cluster size:
+%
 \begin{equation}
 U_{d} = \int_{-\infty}^{E_{F}}E'n_{\alpha l}(E') dE'
 \end{equation}
-#
+%
 
 Lets calculate energy difference of two structures A and B for the same transition metal
 in fcc and hcp structures.
@@ -338,19 +423,15 @@ Indeed the logarithmic derivatives are required to match
 that of the atomic wavefunction at the cutoff radius for the pseudopotential.
 
 \section{Free Electrons}
-
 \begin{equation}
 H = - \hbar^{2}/2m \nabla^{2}
 \end{equation}
-
 
 In spherical co-ordinates:
 %
 \begin{equation}
 H = \frac{hbar^{2}}{2m}(d/dr^{2}  ) 
 \end{equation}
-
-
 
 \section{Future Work}
 The chain model has been used in numerical work as a way of 
@@ -359,13 +440,10 @@ C. Lanczos J. Res. Natl. Bur. Stand. 45, 255 (1950) and
 by Chebyshev for approximating functions on an interval
 P. L. Chebyshev, Bull. Acad. Imp. Sci. St. Petersbourg 1, 193 (1859)
 
-What we wish to examine, is determined by u_{0}, this could be a combination
+What we wish to examine, is determined by $u_{0}$, this could be a combination
 of neighbouring orbitals if we wish to determine the bond order, if it is the electronic
-structure at a surface, the u_{0} should be a state at the surface.
-
-These notes are intended to serve as an extremely abbreviated reference 
-to Vol. 35 Solid State physics, and a basis for understanding the theory 
-underlying the interactive recursion library.
+structure at a surface, the $u_{0}$ should be a state at the surface, and similarly if it
+is a bulk state we wish to probe.
 
 The references in Vol. 35 demonstrate the scope of application of the method 
 already achieved by 1980. A subset of those works have been referenced here. 
@@ -380,28 +458,39 @@ one could discuss the distributions of various physical quantities.
 \end{quote}
 
 \begin{quote}
-Finally, the reader may have noticed that the approach of this chapter has been entirely directed
+  Finally, the reader may have noticed that the approach of this chapter has been entirely directed
 toward independent particle models. However, many-body Hamiltonians must be similarly 
 transformable to chain models. Aside from a small amount of thought and continuing interest, 
 nothing has been done about this and it remains a most interesting problem concerning recursive 
 solution of the Schrodinger equation.
 \end{quote}
 
+\section{Intermediate Epilogue}
+Work did continue in this field and \cite{annett94}. There the LDOS is extended
+to the PDOT projected density of transitions and it is argued singularities
+in the PDOT correspond to thresholds for creating long lived elementary excitations 
+of the many body system.
+
 \section{Many Body Recursion}
+
+
 \label{sec:manybodyrecursion}
 	Since Vol. 35 was published there has been a rise in the accessibility of density functional methods 
 and the access to good single particle approximations to the electronic eigenstates of a crystal
 is routine. Additionally progress on the problem of determining unique approximations to localized
 electronic states, Wannier functions, means tight binding Hamiltonians can be parameterized directly
-rather than via fits to band structures and relying on physical intuition.
+rather than via fits to band structures and relying on physical intuition. Finally ab initio many body
+calculations have also proved quite successful
 
 A many body Hamiltonian amenable to being written in a sparse format might look like this:
 %
 \begin{equation}
-H = [\frac{1}{2}\nabla^{2} + \tilde{v}_{\rm loc} + \hat{\sigma}]
+H = [\frac{1}{2}\nabla^{2} + \tilde{v}_{\rm loc} + \hat{\Sigma}(\r,\r';\omega)]
 \end{equation}
 %
-	With the requirement that spatial integrals over $\Sigma$ can be performed in 
+	$\Sigma(\r,\r';\omega)$ is a self energy operator, it is not local and 
+has an additional argument that includes the energy.
+If we impose a requirement that spatial integrals over $\Sigma$ can be performed in 
 well defined atom centered regions of space. For instance 
 the first neighbour interaction is now formally written as: 
 %
@@ -480,7 +569,7 @@ a number of places:
 	The insertion of multiple identity operators
 makes our scheme clear: the mechanics of the recursion method 
 can now be fully exploited. All that is required to compute the self energy 
-operator is a number of Greenian's for $G_{ij}($\omega$)$ which we will
+operator is a number of Greenian's for $G_{ij}(\omega)$ which we will
 initialize however we like. These will modify the coefficients at the
 off diagonal elements and on the onsite terms. The closed form
 expressions for $G_{ij}(\omega)$ means we have a rigorous 
@@ -493,8 +582,14 @@ For this scheme to be workable we again stress that the system interaction
 must be sufficiently local such that $Sigma_{ij}$ matrix elements can be
 calculated.
 
-I think Umari's operator for |\phi><\phi| would be the best one!
-We then have the continuum states as $\e^{i\G\cdot\r}-<G|w_{i}(r-R)>$,
+Alternatively the PDOT method might be more appropriate for calculating W.
+
+\begin{figure}
+\includegraphics{schematicpolestructure.pdf}
+\end{figure}
+
+I think Umari's operator for $|\phi><\phi|$ would be the best one!
+We then have the continuum states as $e^{i\G\cdot\r}-<G|w_{i}(r-R)>$,
 with occupied and low lying conduction manifold represented as Wannier 
 functions.
 
@@ -600,53 +695,145 @@ remains nonvanishing. For fixed unprimed coordinates microscopically
 close together, the region of the primed coordinates where
 $\rho_{m}$ remains nonvanishing is thus a "tube" with one 3-space dimension 
 extending macroscopically. The volume of the region is 
-\begin{equation}
-\Omega \times ({\rm microscopic dimension)^{m-1}
-\end{equation}
 \end{quote}
+\begin{equation}
+\Omega \times ({\rm microscopic\ dimension})^{m-1}
+\end{equation}
 %
 
 The analogy between Bloch's solution for wavefunctions in a crystal is also worth
 repeating in its entirety.
 
 \begin{quote}
-The difference in the behavior of $R$ under changes in $\Phi$ for the cases 
+  The difference in the behavior of $R$ under changes in $\Phi$ for the cases 
 with and without ODLRO is quite similar to the Bloch eigenvalue problem
 in a periodic potential. Bloch showed that wave functions should be sought 
 that changes by a phase factor $e^{i\Phi}$ for each lattice displacement. How does the 
 wave function depend on $\Phi$? If the wave function remains finite between lattice points, 
-the energy value and the wave function would be dependent on \Phi. If, however, 
+the energy value and the wave function would be dependent on $\Phi$. If, however, 
 the wave function becomes very small in a region between lattice points, 
 caused by, e.g., a potential barrier, then the energy and the wave function 
 would not be very much dependent on $\Phi$. For an infinite potential barrier in 
 between the atoms, the wave function vanishes in the barrier, and the energy 
 levels would be independent of $\Phi$ while the
 wave function only picks up phase factors $e^{i\Phi}$ from one atom to the next.
-The physical meaning of the effect of the presence of ODLRO on the 
-phase condition (36) is the, t ODLRO preserves the memory of phases over 
+
+  The physical meaning of the effect of the presence of ODLRO on the 
+phase condition (36) is the, ODLRO preserves the memory of phases over 
 macroscopic distances. Also in this sense, one can interpret for the 
-Bloch problem, the eGect of the small nonvanishing interatomic 
+Bloch problem, the effect of the small nonvanishing interatomic 
 value of the wave function on the C dependence of the energy: 
 The nonvanishing interatomic value of the wave function preserves the 
 memory of phases from one atom to the next.
 
-The physical meaning of the effect of the presence of ODLRO on the 
-phase condition (36) is the, t ODLRO preserves the memory of phases over 
-macroscopic distances. Also in this sense, one can interpret for the 
-Bloch problem, the eGect of the small nonvanishing interatomic value of the 
-wave function on the C dependence of the energy: The nonvanishing interatomic 
-value of the wave function preserves the memory of phases from one atom to the next.
 \end{quote}
 
-This is the first description of Bloch's function I have really understood. 
+This paper gives the first description of Bloch's function I have really understood. 
 It also provides a sound mathematical basis for the pairing mechanism in BCS
 superconductivity in the proof of Theorem 6 which Yang gives in the appendix.
 The R spacing argument can be applied to the electrons. The strip equivalent
 is microscopic (around the atom) but the spacing between phase locked electrons
 is of the order of the lattice constant.
 
+Moreover, Yang's formalism suggests that the formation of the superconducting state
+can be understood in the same mathematical terms as the formation of the solid state.
+The formation of a superconducting current should be no more surprising than the formation
+of extended crystals.
 
 
+\section{Bullet Tight Binding d-electrons.}
+Bullet discusses some of the problems with treating d electrons in a tight binding 
+formalism (Sec. IV 13 Solid State Physics Vol. 35). Fig. \ref{fig:datoms} demonstrates
+one of the main issues arising with d electrons:
+\begin{figure}
+\includegraphics{resonant-datoms.pdf}
+\caption{The possibility of free electron states resonating with localized states.
+The centrifugal components of the atomic d wave scattering channel can combine with
+the atomic potential to produce a bound electronic state at some energy $E^{0}_{l}$ for an atomic system.
+In a crystal the atomic potential is periodic and in the interstitial regions electrons in an 
+atomic d-like state can tunnel through the barrier localizing them and mix with free electron 
+plane wave states. This dual character of localized components and extended components requires careful 
+detangling to return to a tight binding description without any energy dependence 
+of the matrix elements. See the discussion in the text and the work
+of Pettifor in the references.}
+\end{figure}
+
+From pseudopotentials we are familiar with having to match the logarithmic energy
+derivative at some cutoff radius. Usually found by integrating the radial
+Schr\"odinger equation to find $u_{l}(\r,\epsilon)$ and matching the logarithmic derivatives:
+%
+\begin{equation}
+L_{l}(\epsilon) \equiv \frac{u'_{l}(\r_{0},\epsilon)}{u_{l}(r_{0},\epsilon)} = \frac{\kappa[j'_{l}
+(\kappa r_{0}) - tan \eta_{l} n'_{l}(\kappa r_{0})]} {j_{l}(\kappa r_{0}) - tan \eta_{l} n_{l}'(\kappa r_{0})]},
+\end{equation}
+%
+where
+\begin{equation}
+\label{eq:phaseshift}
+\tan \eta_{l} = \frac{\kappa j'_{l} - L_{l}j_{l}}{\kappa n'_{l} - L_{l}n_{l}}.
+\end{equation}
+
+In terms of the energy and width the l=2 phase shift Eq. \ref{eq:phaseshift} 
+can be written:
+%
+\begin{equation}
+\label{eq:dshift}
+\tan \eta_{d} = \frac{\frac{1}{2}W(\epsilon)}{\epsilon_{d}-\epsilon}.
+\end{equation}
+%
+
+The strong centrifugal contribution to the
+atomic scattering potential from higher angular moment channels means the effective potential
+can create a bound atomic state. In a solid the energy of this bound state can match the 
+energy of a free electron state in the interstitial region and there will
+be resonant tunneling between the two states. This results in the hybridization of d states
+and plane waves. 
+
+This means an appropriate model Hamiltonian must account for the various states as
+
+\begin{eqnarray}
+\label{eq:d-hamiltonian}
+H = d-d  & d-PW \\
+    PW-D & PW-PW \\
+\end{eqnarray}
+where d-d and PW-PW are of the tight-binding and plane-wave 
+pseudopotential form and hybridization occurring in the 
+off diagonal elements. 
+
+These difficulty have been addressed in a number of works 
+see, for example, D.G. Pettifor, J. Phys. C 5 97 (1972).
+J. Hubbard Proc. Phys. Soc. London 92 921 (1967),
+J. Hubbard and N. D. Dalton, J. Phys. C 1 1637 (1968),
+and J. Jubbard, ibid 2, 1222 (1969). The problem being to define an
+energy independent Hamiltonian, amenable to tight binding for the d electrons.
+
+The $dd\sigma$ terms behave roughly as \cite{pettifor71}:
+%
+\begin{equation}
+\label{eq:pettifor}
+dd\sigma \approx \frac{-5W\cos\kappa_{d}R}{\kappa_{d}R}
+\end{equation}
+%
+If we write our basis functions in terms of localized orbits this long range hopping of
+Eq.~\ref{eq:pettifor} is  precisely Yangs long range off diagonal order, in fact if 
+the energy is equal to $k^{2}$ constructive interference occurs and the energy summation
+diverges.
+
+This corresponds to the picture that Yang describes although the degree of 
+wave function dependence on $\k$ will be determined by how small the wave function amplitude 
+becomes between atoms.
+
+Pettifor provided explicit formulas for $dd\sigma$, $dd\pi$ and $dd\delta$ and 
+shift $d_{0}'$ of the diagonal tight-binding level in D. G. Pettifor J. Phys. C. 2, 1051 (1969).
+%
+These considerations mean a decent approximation to the electronic structure in fcc/bcc metals
+can be achieved with 9x9 matrices describing nearest neighbour interactions of the s,p and even d states,
+in the Slater-Koster form.
+
+\scriptsize
+\bibliographystyle{unsrtnat}
+\bibliography{refs}
+\end{document}
 %\bibliography
 %J Friedel Adv. Phys. 3, 446 (1954) #dilutealloys
 %
@@ -689,4 +876,4 @@ is of the order of the lattice constant.
 %
 %UV Photoemission
 %R. K. C. McLean and R. Haydock, J. Phys. C 10, 1929 (1977)
-
+%https://materialscience.uoregon.edu/wp-content/uploads/2016/02/tightbind.pdf
