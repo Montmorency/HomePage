@@ -3,9 +3,9 @@ Once, when traveling, I arrived at Heathrow airport quite late. My
 plane had been delayed and it was some while after midnight that I 
 finally made it to the front of the queue at customs. I was working
 in England at the time and required a visa to enter the country.
-The visa meant answering a pretty standard battery of questions each
-time I returned from abroad. I will reproduce my exchange with Heathrow's
-border security in full:
+The visa meant answering a standard battery of questions each
+time I returned from abroad. I will reproduce one particular exchange 
+with Heathrow's border security in full:
 
 "How do you qualify for this visa?"
 
@@ -17,44 +17,45 @@ border security in full:
 
 "What do you do?"
 
-"Research"
+"Research."
 
 "What in particular?"
 
-"Condensed matter physics."
+"Materials science."
 
 "What is that?"
 
-"Well, I suppose it is the physics of matter" then realising
-the circularity of this definition I amended it and said:
-"It is the physics of the solid state."
+"Well, I suppose it is the physics of condensed matter or the physics of the solid state."
 
 At this point the man questioning me stopped and looked up from his computer. 
 
 "There are no solids.", he said, "only space and energy." He then 
 chuckled, returned my passport, and told me I was free to enter the country.
 
-To this day I don't know if he was joking or not. Although I suspect not, and I am
-of the opinion that there is an english border guard of asian descent, possibly retired now, 
+To this day I don't know if he was joking or not. I suspect not. 
+I am of the opinion that there is an english border guard of asian descent, possibly retired now, 
 with a deeper intuitive sense of the secrets of the material universe than most professors
 of the subject.
 
 Perhaps being jealous of the calm certainty with which the guard
 commanded the subject I thought it might be appropriate for me
-to develop my own idea of what exactly materials are and how they work.
+to develop my own ideas of what exactly material science constitutes.
 
 First some bad news. I am afraid that the discussion still requires a fair amount of mathematical formalism
-to be introduced. The economy of expression afforded by mathematics can't be beaten.
-So with this paragraph consider yourself forewarned. I also do not intend to posit strange metaphors to
-attempt to explain how certain equations behave. Though the consequences of certain derivations 
-will be discussed and the relevance of their inclusion hopefully justified.
+to be introduced. The economy of expression afforded by mathematics can't be beaten. 
+Most of the mathematics will be fairly accessible to anyone who has studied
+calculus and linear algebra. I am of the opinion though that anyone patient enough and
+with sufficient cross referencing and study of the diagrams will be able to follow the mathematical
+arguments reproduced here regardless of their level of mathematical training.
 
-The good news is there will be pictures. Wherever there is alot of math there 
-should be a picture that captures, schematically, the essential ideas which is referenced in the text. 
+The good news is that there will be pictures. Wherever there is alot of math there 
+should be a picture that captures, schematically, the essential ideas which are being discussed. 
 It turns out that for most of materials science the most important pictures always seem to be ones showing you
-how the atoms are arranged in space, and graphs showing you where a resonance is likely to occur. 
-Resonances, peaks in spectra, are typically what turn up in experimental
-probes. In a strict sense of the words we shine light on materials to try to understand how they work. 
+how atoms are arranged in space, and graphs showing you where a resonance is likely to occur. 
+Resonances in the equations are what we relate to experimental probes.
+The absorption and emission of light (photoabsorption and photoemission) by materials is how 
+we infer details about a materials atomic structure and electronic properties. 
+In a strict sense of the words we shine light on materials to try to understand how they work. 
 
 \section{Electronic Structure for Materials Science}
 
@@ -63,55 +64,30 @@ In 1987 Henry Ehrenreich published an article in Science called
 with what might now be considered a bold statement:
 
 \begin{quote}
-Theoretical Materials Science remains to be invented as a discipline,
-and for good reason.
+Theoretical Materials Science remains to be invented as a discipline, and for good reason.
 \end{quote}
 
 The reason he supplies is that materials processing, historically, was a craft. 
-A roman engineer knew that a pinch of gypsum could significantly 
-impact the properties of the concrete
-produced. A Blacksmith learned that swords and shields were 
+A roman engineer knew that a pinch of gypsum could significantly impact 
+the properties of the concrete produced. A blacksmith learned that swords and shields were 
 effected by the alloying of the metals and careful control of heat: 
 firing the blade then quenching the blade in cold water.
 
-Each element in its atomic form is identical to every element of the same kind,
-yet it is difficult to formulate, mathematically, a description applicable 
-to that same atom in all its potentially different environments. 
-
-The properties of an atom as it stands alone, perhaps sitting in a 
-vacuum, is in some ways completely different from the same atom 
-surrounded by copies of itself, and there are changes again
-in the collective properties of the material when that atom is 
-surrounded by different neighbour atoms.
-
-So we now have developed two important arguments. Electronic structure
-is a theory of the local environment, the effects depend on nearest
-neighbours and swapping atoms in and out of a crystal matrix will 
-effect local properties but not general ones. Secondly, 
-tiny variations in the material composition
-produce dramatic effects across macroscopic length 
-scales completely altering the properties of the material.
-
 These two proposition seem to be at odds.
 
-Cottrell noted that metallurgy would require a "theory... which explains
-the properties of metallic solids and the explanation of the origin of this
-structure from the strutures of individual atoms." 
-
-Let's go back to Ehrenreich he posits four interesting points
-about what priorities and constraints shape the field of material
-science:
+Ehrenreich posits four points about what priorities and constraints shape 
+the field of material science:
 %
 \begin{itemize}
-\item i) theory must be closely linked to experiment
-\item ii) ab initio calculations without approximations are virtually impossible except in model systems
-\item iii) approximations are frequently based on prior experience rather than on theoretical justification
+\item i) theory must be closely linked to experiment.
+\item ii) ab initio calculations without approximations are virtually impossible except in model systems.
+\item iii) approximations are frequently based on prior experience rather than on theoretical justification.
 \item iv) the study of trends in the properties of homologous materials is a crucial ingredient of a credible theoretical framework.
 \end{itemize}
 %
 
-Keep in mind this paper was written in 1987. It is worth considering how the intervening
-30 years has rebalanced priorities. Start with point (ii). The constant development
+This paper was written in 1987. It is worth considering how the intervening
+30 years may have adjusted some of these priorities. Start with point (ii). The constant development
 of computing capacity and computer programs means that ab initio calculations
 are now standard. The methodological developments underpinning this, 
 largely density functional theory, pseudopotentials, various numerical algorithms
@@ -122,43 +98,26 @@ of DFT and methods number their citations in the tens of thousands,for the
 theoretical and algorithmic improvements improvements are sufficient testament 
 to the reach and fundamental nature of ab initio calculations.
 
-The cost of the uniquity of access to ab initio data has come to point (i) 
-and the acceptance of this comes from point (iii). Again cursory surveys of 
-the literature, APS journals PRB, J Phys. Cond. Matt. demonstrate the frequency
+The cost of the ubiquity of access to {\it ab initio} data has had a significant impact on 
+point (i). Cursory surveys of the literature demonstrate the frequency
 of publications which contain no original experimental work. 
 
 This is partly down to the high level of specialization of 
 contemporary researchers and research groups. Previously the distinction between
-a materials scientist and theoretician was not so dramatic. In addition many
-important theoretical developments came from the context of attempting to explain
-a particular new set of experimental data.
+an experimental materials scientist and theoretical one was not so dramatic. 
+In addition many important theoretical developments came 
+from the context of attempting to explain a particular new set of experimental data.
 
-Perhaps most famously the emission spectra of hydrogen and the michelson morley 
+Perhaps most famously the emission spectra of hydrogen and the Michelson-Morley 
 experiment motivated developments in quantum theory and special relativity.
-Subsequent theoretical developments follow the same pattern:
-Bethe's calculation of the lamb shift, recursion work on the magnetic moment of FeAl_{3}
-are two specific examples that come to mind.
+Subsequent theoretical developments follow the same pattern.
+Bethe's calculation of the lamb shift. The recursion work on the magnetic 
+moment of $FeAl_{3}$ are two specific examples that come to mind.
 
-\section{Waves and Particles Again}
-Whether your interest in quantum mechanics is limited to popular science descriptions
-or you have studied the subject formally the discussion will invariably and at an
-early stage touch on waves and particles and the dual wave-particle nature of 
-particles when things get very small. 
-
-The frustration of talking about waves sometimes and particles other times 
-never really goes away. It is a little bit like the frustration of reading
-Isaih Berlin's essay on the fox and the hedge hog. The beginning of the essay
-seems promising as Berlin classifies all writers as either foxes or hedgehogs 
-based on their qualities and work. However having listed a great number of foxes and
-hedgehogs he claims that Tolstoy is a hedgehog who wished he was a fox and the whole 
-situation is once more confused. 
-
-Just when you though you could understand all literature in terms of foxes and hedgehogs
-along comes a fox that wishes it was a hedgehog, or vice versa. And just when you thought
-you knew what a particle was and what a wave was you can once more be frustrated.
-
-That waves diffract is essential to understanding their properties and if we have
-electron waves
+\section{Electron Waves in Materials}
+That waves diffract is essential to understanding their properties 
+and if we have electron waves in a material we are going to have them
+interfering and piling up on each other.
 
 When the wavelength of an electron in a crystal:
 %
@@ -168,10 +127,8 @@ When the wavelength of an electron in a crystal:
 %
 is comparable to the inter atomic distance $a$ there is going to be diffraction.
 A lot of theoretical condensed matter physics, and increasingly applied materials science,
-is concerned with calculating the way electrons
-scatter off of atomic sites and these diffracted waves result 
-in the piling up of electronic charge in crystals. The problem is additionally
-complicated because the electron waves also need to scatter off each other. 
-Two electrons will act on each other via the Coulomb interaction and the matter
-waves will scatter accordingly.
+is concerned with calculating the way electrons scatter off of atomic sites. 
+These diffracted waves result in the piling up of electronic charge in different regions of space
+in crystals. The problem is additionally complicated because the electron 
+waves also need to scatter off each other. 
 

@@ -36,7 +36,6 @@
 \def\Gs{\mathcal{G}}
 \def\v{\mathbf{v}}
 \def\symm{\left\{\mathcal{S}|\mathbf{v}\right\}}
-\def\g{\mathcal{g}}
 
 \usepackage{soul}
 \usepackage{color}
@@ -45,6 +44,8 @@
 \definecolor{yellow}{rgb}{1,1,0}
 \definecolor{lightblue}{rgb}{0.6,0.6,0.9}
 \sethlcolor{yellow}
+
+\def\g{\mathcal{g}}
 
 \begin{document}
 \title{Tight Binding Recursion and the GW approximation}
@@ -69,76 +70,82 @@ However as the number of electrons in a system grows the wave function becomes
 somewhat unwieldly to work with and the accurate evaluation of the 
 electron-electron repulsions becomes more difficult. Computers provide a route
 to numerical solutions of the equations governing the behaviour of these systems.
-As discussed in Sec.\ref{sec:} computer simulations in materials is a common past time
-these days in many branch of physics, chemistry, engineering and biology.
-The many, many tribes of electronic structure theory. The tribes are well known 
-to practicioners in the field, some of which we could name 
+
+Computer simulations are commonly performed 
+these days in many branches of physics, chemistry, engineering, and biology.
+The use of computers to solve Schr"odinger's equation for electrons in crystals
+has led to the proliferation of the many, many tribes of electronic structure 
+theory. 
+
+The tribes are well known to practicioners in the field, some of which we could name 
 here: tight binding and linear combination of atomic orbitals (LCAO), 
 linear muffing tin orbitals (LMTO), plane waves and pseudopotentials, 
 Gaussian orbitals, and Kohn-Kuttinger-Rostiger theory.
 
- While successful in a number of respects numerical work can be tedious, obscure the underlying
-mechanisms, become excessively obsessed with algorithmic details and, most importantly,
-does not necessarily provide a theoretical description that accounts for a broad range
-of natural phenomenon. As an example of the economy of expression which can be achieved 
-I would cite Ref.~\cite{johannes76}. In that work 76 crystal structures are correctly predicted 
-with a model containing 9 parameters, a determinedly naive work would
-require computing the total energies of each of those structures and provide little insight into the physical
-reason underlying the formation of these phases..
+While successful in a number of respects numerical work can be tedious and, more importantly, can obscure underlying
+mechanisms. Practioners have a tendency to become excessively obsessed with algorithmic details and, most importantly,
+the results of a single calculation may not provide a framework that accounts for a broad range
+of phenomenon. (This speaks to Ehrenreich third observation that results for homologous materials should be computed
+wherever possible and the results should be compared). 
+
+An example of the economy of explanatory expression afforded by the recursion method
+and a physical formulation in terms of the local atomic environment
+is Ref.~\cite{johannes76}. In that work 76 crystal structures are correctly predicted 
+with a model containing 5 parameters, a determinedly naive numerical approach would
+require computing the total energies of each of those structures and comparing them directly. 
 
 The purpose of this note is two fold: firstly to attempt to summarize the incredible range and
-detail of theory and application covered in Vol. 35; secondly, to speculate on where it should be possible
-to exploit modern computational advantages and new understanding about the nature of exchange 
-and correlation in materials to systematically improve descriptions of quantum systems based
+detail of theory and application covered in Vol. 35 of Solid State Physics; secondly, to speculate on where 
+it should be possible to exploit modern computational advantages and new understanding 
+which has emerged in materials to systematically improve descriptions of quantum systems based
 on the local environment 
 
-%"What we lack is a fundamental quantum theory of the cohesion and structure
-%of a wide diversity of solids." Volker Heine
 
 \section{The Invariance Theorem}
 \label{sec:invariance}
 Heine presents an extended discussion of the invariance
 theorem. Heine's section begins, by way of introduction, by pointing 
-out an analogy between  the the local density of states of a system of interacting
+out an analogy between the the local density of states of a system of interacting
 electrons and the black body spectrum of electromagnetic radiation.
+Weyl [1911 Math. Ann. 71 441] demonstrated demonstrated the total density
+of modes is independent of the shape of the cavity so long as the
+radiation is contained in a cavity with dimensions greater than the wavelengths
+under consideration. Von Laue [1914 Ann. Phys. Lpz 44 1197] demonstrated that the local density of modes at 
+a particular point are exponentially insensitive to the cavity walls.
+
+This analogy has been developed by Friedel [1954 Adv. Phys. 3 446] where
+the substition is electromagnetic modes for electronic wavefunctions and
+the probability density for finding an electron at a given point
+with a given energy replaces the local density of normal modes.\cite{annett94}
 
 The analogy can be seen by writing the density of states,
 and the local density of states (for each spin direction) as:
-
+%
 \begin{eqnarray}
 n(E) = \sum_{n}\delta(E-E_{n}) \\
 n(E,\r) = \sum_{n} |\psi_{n}(\r)|^{2}\delta(E-E_{n})
 \end{eqnarray}
+%
 
-and the density of black-body radiation $\rho(\omega,\r)$
-with the substitution of the wavefunction with the electromagnetic
-field and the energy level with a frequency $\omega$.
-
-The local density of states is related in turn to the 
-Green's function of a system:
+The local density modes of black-body radiation alternatively can be written:
+%
 \begin{equation}
-n(E,\r) = -\frac{1}{\pi}{\rm Im} G(\r,\r',E)
+\rho(\omega,\r)= \sum_{i} |\bra \r| \psi_{i}\ket|^{2}\delta(\omega-\omega_{i}),
 \end{equation}
+%
+with $\psi_{i}$ the eigenfunction (of an electromagnetic wave or a wavefunction) for an eigenvalue $\omega_{i}$.\cite{annett94}
+The normal modes of a system can be quite quite sensitive to disturbances but the 
+local density of modes, averaged over a small frequency interval, is a stable quantity 
+insensitive to disturbances more than a few wavelengths away.
 
-These tools should be more than sufficient to investigate what
-we are interested in: namely cohesive properties, magnetic moments
-and localized atomic forces in clusters. The math
-should also be sufficient to devising schemes that allow for the correction
-of artificial effects introduced into numerical work from the appearance
-of spurious surfaces.
+The local density of states is related in turn to the Green's function of a system:
+%
+\begin{equation}
+n(E,\r) = -\frac{1}{\pi}{\rm Im}~G(\r,\r',E)
+\end{equation}
+%
 
-Heine's ambition turns on this:
-\begin{quote}
-We see now that the trick in the new formulation of quantum 
-mechanics is not just to express measurable quantities in terms of 
-G, {\emph but in terms of some appropriate small parts of G that can be solved 
-for and computed separately from all the unwanted remainder of G.}
-\end{quote}
-
-This relies, again in analogy with black bodies, on the Green
-function being independent of the size and shape
-of the container (of electrons) and the boundary conditions.
-
+\section{Matching Green's Functions}
 First a change of variables is perform from $\r$ to $\r''$ in 4.1 and $\r$ to $\r''$ and $\r'$
 to $\r$ in 4.3:
 %
@@ -159,16 +166,17 @@ Green's theorem:
 \begin{equation}
 \label{eq:greenthm}
 \int\int\int(\phi\nabla^{2}\psi - \psi\nabla^{2}\phi)d^{3}\r 
-= \int(\phi\nabla\psi-psi\nabla\phi)d{\mathbf{S}}
+= \int(\phi\nabla\psi-\psi\nabla\phi)d{\mathbf{S}}
 \end{equation}
 %
-We suppress the energy arguments from here on in assuming them to be obtained by 
-expressions for $G$ by integrating $\r''$ over region $A$.
+We suppress the energy arguments from here on in assuming them to be contained in G. 
+
+obtained by expressions for $G$ by integrating $\r''$ over region $A$.
 %
 \begin{equation}
 \label{eq:green1a}
 G(\r,\r') = G_{A}(\r,\r') + \frac{1}{2} \int d\mathbf{S} 
-[\frac{\partial G_{A}(\r,\r_{s})}{\partial n_{S}}G(\r_{S},\r') - G_{A}(\r,\r_{S})\frac{\partial G(\r_{S},\r')}{\partial n_{S}} [\r, \r' \in A]]
+[\frac{\partial G_{A}(\r,\r_{s})}{\partial n_{S}}G(\r_{S},\r') - G_{A}(\r,\r_{S})\frac{\partial G(\r_{S},\r')}{\partial n_{S}}] [\r, \r' \in A]
 \end{equation}
 
 $\frac{\partial}{\partial n_{S}}$ denotes the normal component of grad across
@@ -181,20 +189,20 @@ And in region B:
 \label{eq:green1b}
 G(\r,\r') = G_{B}(\r,\r') - \frac{1}{2} \int d\mathbf{S} 
 [\frac{\partial G_{B}(\r,\r_{s})}{\partial n_{S}}G(\r_{S},\r')
-- G_{B}(\r,\r_{S})\frac{\partial G(\r_{S},\r')}{\partial n_{S}} [\r, \r' \in B]]
+- G_{B}(\r,\r_{S})\frac{\partial G(\r_{S},\r')}{\partial n_{S}}] [\r, \r' \in B]
 \end{equation}
 %
 
 A further property has been used:
 %
 \begin{equation}
-G(\r,\r',E) = G(\r',\r,E)
+G(\r,\r',E) = G(\r',\r,E),
 \end{equation}
 %
 which is often justified on the ground of a time reversal theorem applying 
 to the wave functions in the system.
 
-Finally consideration of the case where $r'$ and $r''$ are in different regions is required.
+Finally consideration of the case where $\r'$ and $\r''$ are in different regions is required.
 
 With $\r''$ in B and $\r'$ in A Eq.~\ref{eq:greentot} becomes:
 %
@@ -216,7 +224,7 @@ A similar cross multiplying trick gives:
 \begin{equation}
 \label{eq:green1c}
 G(\r,\r') = -\frac{1}{2} \int dS[\frac{\partial G_{B}(\r, \r_{S}}{\partial n_{S}} G(\r_{S},\r')
-- G_{B}(\r, \r_{S})\frac{\partial G(\r_{S},\r'}{\partial n_{S}}] \quad [\r {\rm in} B, \r' {\rm in} A],
+- G_{B}(\r, \r_{S})\frac{\partial G(\r_{S},\r')}{\partial n_{S}}] \quad [\r~{\rm in}~B, \r'~{\rm in}~A],
 \end{equation}
 %
 and a similar relation for [$\r$ in A and $\r'$ in B].
@@ -231,7 +239,7 @@ From Eq.~\ref{eq:green1a} we let $\r$ tend to the boundary so $\r = \r_{S}$
 \label{eq:greensys1}
 G(\r'',\r') = G_{A}(\r''_{S}, \r') + \frac{1}{2} \int d{S}
 [\frac{\partial G_{A}(\r''_{S}, \r_{S})}{\partial n_{S}} G(\r_{S},\r) - 
-G_{A}(\r''_{S},\r_{S})\frac{\partial{G(\r_{S}, \r')}{\partial n_{S}}}].
+G_{A}(\r''_{S},\r_{S})\frac{\partial{G(\r_{S}, \r')}}{\partial n_{S}}].
 \end{equation}
 %
 
@@ -290,19 +298,31 @@ one has a single entity $G_{A}$ to represent an element in anything
 from a small molecule to a complex alloy.
 \end{quote}
 
-The success of plane wave pseudopotential methods can be considered as being reliant
-on finding sufficient approximations to the quantity $G_{A}$. The plane waves
+Heine's ambition turns on this:
+\begin{quote}
+We see now that the trick in the new formulation of quantum 
+mechanics is not just to express measurable quantities in terms of 
+G, {\emph but in terms of some appropriate small parts of G that can be solved 
+for and computed separately from all the unwanted remainder of G.}
+\end{quote}
+
+  This relies, again in analogy with black bodies, on the Green
+function in a certain region of space being independent of the size and shape
+of the container (of electrons) and the boundary conditions.
+
+The success of planewave and pseudopotential methods can be considered as being reliant
+on finding decent approximations to the quantity $G_{A}$. The plane waves
 in the interstitial regions must match the Green's function for the atomic system
-at a particular cutoff. If a function can be found that describes the scattering of
-these waves across a suitable energy range the approximation is a good one and the matching
-of the two systems will be successful.
+at a particular radial cutoff and an energy argument. If a function can be found that 
+describes the scattering of these waves across a suitable energy range the approximation 
+is a good one and the matching of the two systems will be successful.
 
 \section{Recursion Method}
-  The principle of the recursion method is to obtain an efficient expression 
-for an element of the Green's function.
+  The principle of the recursion method is to obtain a convergent expression 
+for an element of the Green's function:
 %
 \begin{equation}
-G_{\chi\chi}(E) = \bra\chi|[E + i\delta -H]^{-1}|\chi\ket
+G_{\chi\chi}(E) = \bra\chi|[E + i\delta -H]^{-1}|\chi\ket.
 \end{equation}
 %
 
@@ -317,14 +337,15 @@ The state $\chi$ which we project on to can be made up of some linear combinatio
 of the local basis set $\phi_{\alpha l}$, which, in turn, could be local atom centered orbitals, bond orbitals, 
 Wannier functions, atomic diplacements, or any localized quantity we wish to define. The method is thus
 applicable to a wide range of problems in condensed matter. In short what we wish to examine, 
-is determined by the choice of $u_{0}$.
+is determined by the choice of $\chi$.
 
 \subsection{Mathematical Origin}
 The trick of the recursion method, if you like to think of things in terms of tricks, 
-or its generating feature, if you prefer, is that from the outset the `Greenian' is constricted
-to the particular starting orbital $u_{0}$: 
+or its generating feature, if you prefer, is that from the outset the `Greenian', the element
+of the Green's function we are interested in, is constricted to a particular starting orbital $u_{0}$: 
 %
 \begin{equation}
+\label{eq:greenian}
 G_{\alpha l, \alpha l}(E) = \bra u_{0}|[E-H]^{-1}|u_{0}\ket 
 \end{equation}
 %
@@ -334,18 +355,21 @@ As Heine puts it in his chapter:
 Note that we do not want the whole of the inverse matrix $[E-H]^{-1}$, 
 \emph{only one element}, and on this the whole method depends. In physics we do not
 usually inquire about the whole of life, but about one particular matrix element (at a time) and we have chosen
-$u_{0}$ so that \ref{eq:greenian} gives us what, to put it crudely, we want.
+$u_{0}$ so that Eq.~\ref{eq:greenian} gives us what, to put it crudely, we want.
 \end{quote}
 
+Eq.~\ref{eq:greenian} can be rewritten in terms of its determinants:
 %
 \begin{equation}
-\bra u_{0}|[E-H]^{-1}|u_{0}\ket = \frac{{\rm det}|D_{1}|}{{\rm det}|D_{0}|}
+\label{eq:greendet}
+\bra u_{0}|[E-H]^{-1}|u_{0}\ket = \frac{{\rm det}|D_{1}|}{{\rm det}|D_{0}|}.
 \end{equation}
 %
 
-This can be equivalently written as:
+Eq.~\ref{eq:greendet} can equivalently be written as:
 %
 \begin{equation}
+\label{eq:greendet}
 \bra u_{0}|[E-H]^{-1}|u_{0}\ket = \frac{1}{\frac{{\rm det}|D_{0}|}{{\rm det}|D_{1}|}}
 \end{equation}
 %
@@ -358,7 +382,7 @@ Appeal is then made to Cauchy for the following expansion:
 and when generalized to determinants for $|D_{n}|$, $|D_{n+1}|$, and $|D_{n+2}|$:
 %
 \begin{equation}
-\frac{{\rm det}|D_{n}|}{{\rm det} D_{n+1}} = E-a_{n}) - \frac{b^{2}_{n+1}}{\frac{{\rm det}|D_{n+1}}{{\rm det}|D_n+2|}}
+\frac{{\rm det}|D_{n}|}{{\rm det}|D_{n+1}|} = E -a_{n} - \frac{b^{2}_{n+1}}{\frac{{\rm det}|D_{n+1}|}{{\rm det}|D_n+2|}}
 \end{equation}
 
 \begin{equation}
@@ -589,113 +613,99 @@ a number of places:
 \end{equation}
 %
 	The insertion of multiple identity operators
-makes our scheme clear: the mechanics of the recursion method 
-can now be fully exploited. All that is required to compute the self energy 
-operator is a number of Greenian's for $G_{ij}(\omega)$ which we will
-initialize however we like. These will modify the coefficients at the
-off diagonal elements and on the onsite terms. The closed form
-expressions for $G_{ij}(\omega)$ means we have a rigorous 
-energetic description $\omega$ and the values of the greenian 
-can be tabulated and then reused in the solution of \ref{eq:green}.
-We can now make a variety of choices to compute the on site self interaction
-i.e. where G only couples on site terms, in the fashion of a hubbard U model,
-and a variety of approximations i.e. is the screening local or extended.
+help makes what we need clear. All that is required 
+to compute the self energy operator is a number of Greenian's for $G_{ij}(\omega)$. 
+
 For this scheme to be workable we again stress that the system interaction
 must be sufficiently local such that $Sigma_{ij}$ matrix elements can be
-calculated.
+calculated. This corresponds to the mutual interaction of the electrons being 
+short ranged. For a single particle tight binding model these off diagonal hopping
+elements can be calculated and are fixed. It is this interaction we wish
+to generalize slightly to allow for a component of dynamical interaction.
 
-Alternatively the PDOT method might be more appropriate for calculating W.
+\section{The Project Density of Transitions}
+  The PDOT\cite{annett93, haydock00, haydock16} method is 
+appropriate for calculating the polarizability and provides a direct physical
+interpretation in a many electron system. 
+
+Written in Hedin's scheme the polarizability 
+takes the form of a term: $iGG$, in Feynman diagrams this is a bubble diagram. We need to calculate the propagator
+of an electron from 1 to 2, and a hole from 2 to 1. Dimensionally, after a Fourier transform,
+the polarizability has units of transition probability per unit energy. Where there are discrete
+states there are discrete transitions, this would be the case for systems
+that could be considered molecules, where there are continuous bands there are continuous
+bands of transitions, in metallic crystals this would be the case.
+
+Where the recursion method for the PDOS computes the final energy distribution
+for a stationary state in the syste
 
 \begin{figure}
 \includegraphics{schematicpolestructure.pdf}
 \end{figure}
 
-I think Umari's operator for $|\phi><\phi|$ would be the best one!
-We then have the continuum states as $e^{i\G\cdot\r}-<G|w_{i}(r-R)>$,
-with occupied and low lying conduction manifold represented as Wannier 
-functions.
+I think Umari's operator for $|\phi\ket\bra\phi|$ would be a natural way of
+approximating the necessary sums that are complimentary to the chosen
+localized single particle states (both valence and low lying conduction).
+We then have the continuum states as $|\phi\ket=e^{i\G\cdot\r}-<\G|w_{i}(\r-\R)>$,
+with the occupied and low lying conduction manifold represented as Wannier 
+functions and the $|\phi>$ states as orthogonalized plane waves.
 
 	Although this is essentially just a rewriting of Hedin's equations
 it has practical consequences. The present method eliminates
 burdensome storage of what are in practice gigantic Green's function, 
-screened coulomb and self energy matrices. It also eliminates the need for 
-numerical integrations and convolutions. These savings are
-obtained at the price of a nested call stack of recursions which 
+screened Coulomb, and self-energy matrices. It also 
+stabilizes the necessary numerical integrations and convolutions in frequency space. 
+The quadrature methods used in the standard recursion theory remain applicable.
+
+These savings are obtained at the price of a nested call stack of recursions which 
 in principle must be infinite. This may seem troubling but we do intend to truncate
-the level of recursion at some point 
+the level of recursion at some point and the depth of the recursive call stack should
+equate to the number of terms in the self energy expansion that are required.
 
 	Careful, justified, selection of the initial wave functions and tight binding parameters
 is also required and these quantities (if they are not chosen to be analytic and approximate)
 must be computed and stored. However work done on Wannier functions makes this a very
 practical route. We will now embark on some numerical work in the hope that satisfactory 
-results can be obtained by truncation of the terms. In particular the dielectric constant
-and the plasmon frequency should emerge from this representation. These quantities
-might be considered $\rho_{1}$ off diagonal long range order i.e. macroscopic parameters
-that arise from the microscopic phase locking of electronic states in a crystal. See
-\ref{sec:odlro} for a further discussion of this.
+results can be obtained by truncation of the recursive call stack at a manageable level. 
 
-\subsection{Application of Recursion Method to the Electron Gas}
-	We now wish to apply the ideas discussed in section \. Specifically to 
-calculate the exchange-correlation energy of an electron gas. Again it is 
-no coincidence that the Pad\'e approximant is used. The coefficients
-of a Pad\'e approximant can be calculated via a recursive algorithm
-as a continued fraction \cite{vidbergserene} and, from the physical
-intuition of the local environment, this is the appropriate functional form.
+Finally the method requires computation of the initial stationary states of the system.
 
-The idea would be to initialize spherically localized electrons in a box 
-(where the box size determines the effective electron density)
-then let them diffuse and calculate the contribution to the
-single particle energy and the exchange correlation energy. 
-If there is a clever choice of grids and co-ordinate systems this
-should be easier to compute.
-
-This is in line with the original work of Ceperley and Alder \cite{ceperley80} except 
-instead of a diffusive Monte-Carlo approach we exploit the
-recursion method to obtain analytic approximations to the energy.
-In their case the trial function is a product
-of two-body correlation factors times a Slater determinant of 
-single-particle orbitals. The two-body correlation factors are
-chosen such that they remove exactly the singularities in the local energy when two electrons
-approach each other. The single particle states are plane waves
-in the fluid phase: when the system is polarized, to allow for there only being
-one spin per spatial state, the fermi wave vector is increased to allow
-for twice as many spatial orbitals. 
-
-In the crystal phase the orbital are Gaussians centered 
-at body-centered cubic lattice sites. Their simulations were typically 
-for 38-248 electrons.
-
-At each density the energy was extrapolated to an infinite number of particles
+The electron addition operator:
 %
 \begin{equation}
-E(N) = E_{0} + E_{1}/N + E_{2}\Delta_{N}
-\end{equation}
-
-$E_{1}$ arises from the potential energy due to the correlation between a particle and its images
-$E_{2}$ comes from the discrete nature of the Fermi sea for finite systems, $\Delta_{N}$ is the 
-size dependence of an ideal Fermi system.
-
-More details on the technique are given in an earlier version of the paper
-\cite{ceperley78}. The BDJ wavefunction is written
-
-\begin{equation}
-\psi_{T}(R) = D(R) {\rm exp}(-\sum_{i<j} u(|\r_{i}-\r_{j}|))
+[H, c^{\dagger}(t)] = -i\hbar \frac{d}{dt} c^{\dagger}(t).
 \end{equation}
 %
-where D(R) is a Slater determinant of plane waves, separate slater determinants for
-spin-up and spin-down particles in the unpolarized phase. The $u(r)$ is a pseudopotential
-with a repulsive character and is intended to account for the particle correlation. 
-(We will come back to this).
+The operator will evolve into a superposition of a fraction of the 
+possible transitions of the system. If a complete set of orthonormal $\{P_{\zeta}\}$ 
+states is introduced the projected transitions can be written:
+%
+\begin{equation}
+\psi_{\alpha} = \sum_{\zeta\eta} P_{\zeta}c^{\dagger}P_{\eta} \qquad \epsilon_{\alpha} = E_{\zeta} - E_{\eta}
+\end{equation}
+%
+The PDOT is then:
+%
+\begin{equation}
+\mu(\epsilon) = \sum_{\alpha} \bra\psi_{\alpha}^{\dagger}|\psi_{\alpha}\ket \delta(\epsilon-\epsilon_{\alpha})
+\end{equation}
+%
+The stationary states all have infinite lifetimes, and according to Haydock, \ref{eq:ehpairs} can
+be interpreted as the probability distribution in energy for the decay of a bare electron into one dressed
+with electron-hole pairs.
 
-The issues of Van Hove singularities will be apparent in a recursion treatment because 
-the formal solution to electron gas problems involve the creation of plasma modes.
-
+It is possible to formulate this in terms of discrete transitions for low energies, for high energies
+the initial state is clearly going to diffuse outwards very far and result in the excitation of 
+many oscillators throughout the crystal. Where the complete set of orthonormal states
+hasn't been computed already (this refers to the sum over states problem).
 
 \subsection{Application to Long Range off Diagonal Order}
 The advantage of tight binding is it allows us to think in a co-ordinate space representation
-of electronic structure and still obtain accurate results mainly by exploiting our notions
-of locality and appealing broadly to the invariance theorem discussed by Heine and introduced
-in the first part of this note. Yang presents the local diagonal order present in crystalline materials
+of electronic structure and still obtain accurate results. These results are justified mainly 
+by exploiting our notions of locality and appealing broadly to the invariance theorem discussed by Heine and introduced
+in the first part of this note. 
+
+Yang presents the local diagonal order present in crystalline materials
 and represent $\rho_{1}$ (the single particle density matrix) results in the 
 creation of a macroscopic variable the strain, but does not precise what the macroscopic 
 analog is for off diagonal long range order. Progessively higher density matrices are 
@@ -749,18 +759,18 @@ memory of phases from one atom to the next.
 
 \end{quote}
 
+The wave function dependence on $\k$ will be determined by how small 
+the wave function amplitude becomes between unit cells.
+
 This paper gives the first description of Bloch's function I have really understood. 
 It also provides a sound mathematical basis for the pairing mechanism in BCS
 superconductivity in the proof of Theorem 6 which Yang gives in the appendix.
-The R spacing argument can be applied to the electrons. The strip equivalent
-is microscopic (around the atom) but the spacing between phase locked electrons
-is of the order of the lattice constant.
+%The R spacing argument can be applied to the electrons. The strip equivalent
+%is microscopic (around the atom) but the spacing between phase locked electrons
+%is of the order of the lattice constant.
 
-Moreover, Yang's formalism suggests that the formation of the superconducting state
-can be understood in the same mathematical terms as the formation of the solid state.
-The formation of a superconducting current should be no more surprising than the formation
-of extended crystals.
-
+Moreover, Yang's formulation implies that the superconducting state
+should be no more surprising than the formation of the solid crystalline state.
 
 \section{Bullet Tight Binding d-electrons.}
 Bullet discusses some of the problems with treating d electrons in a tight binding 
@@ -843,11 +853,9 @@ dd\sigma \approx \frac{-5W\cos\kappa_{d}R}{\kappa_{d}R}
 If we write our basis functions in terms of localized orbits this long range hopping of
 Eq.~\ref{eq:pettifor} is  precisely Yangs long range off diagonal order, in fact if 
 the energy is equal to $k^{2}$ constructive interference occurs and the energy summation
-diverges.
+diverges with off diagonal matrix elements between all d states on remote atoms becoming
+significant reflected in the growth of off diagonal matrix elements.
 
-This corresponds to the picture that Yang describes although the degree of 
-wave function dependence on $\k$ will be determined by how small the wave function amplitude 
-becomes between atoms.
 
 Pettifor provided explicit formulas for $dd\sigma$, $dd\pi$ and $dd\delta$ and 
 shift $d_{0}'$ of the diagonal tight-binding level in D. G. Pettifor J. Phys. C. 2, 1051 (1969).
