@@ -1,0 +1,193 @@
+\chapter{Introduction}
+\section{Electronic Structure for Materials Science}
+In 1987 Henry Ehrenreich published an article in Science called
+"Electronic Theory for Materials Science". The article begins
+with what might now be considered a bold statement:
+
+\begin{quote}
+Theoretical Materials Science remains to be invented as a discipline, and for good reason.
+\end{quote}
+
+The reason he supplies is that materials processing, historically, was a craft. 
+A roman engineer knew that a pinch of gypsum could significantly impact 
+the properties of the concrete produced. A blacksmith learned that swords and shields were 
+effected by the alloying of the metals and careful control of heat: 
+firing the blade then quenching the blade in cold water.
+
+Ehrenreich identified four points that characterized the state of the field of material science
+at the time:
+%
+\begin{itemize}
+\item i) theory must be closely linked to experiment.
+\item ii) ab initio calculations without approximations are virtually impossible except in model systems.
+\item iii) approximations are frequently based on prior experience rather than on theoretical justification.
+\item iv) the study of trends in the properties of homologous materials is a crucial ingredient of a credible theoretical framework.
+\end{itemize}
+%
+
+It is worth while considering how the intervening 30 years may have adjusted some of 
+these priorities and characterize the current state of the field.
+
+\section{Point 2: The rise of the computer}
+  The first point that jumps out is point ii). The intervening thirty years
+has seen an enormous extension of computing capacity and the proliferation of 
+stable algorithms. This constant development of computing capacity and 
+technique means that {\it ab initio} calculations are now standard. 
+
+  The development in computing hardware is easy to chart: storage capacity, transistor density,
+and the proliferation of high performance computing clusters with fast interconnects have
+greatly extended the range of problems that can be treated with numerical simulations.
+
+Along with advances in hardware there has been contemporaneous methodological developments.
+Compiler optimization, development of modern programming languages, shared libraries, object orientation,
+and tsable open source platforms for code development, testing, and sharing.
+
+The theoretical engines driving progress in numerical simulations of materials systems are
+largely based on density functional theory, pseudopotentials, and the various numerical algorithms
+for computing the eigenstates of electrons in material systems, and solving the coupled systems
+of linear equations which arise again and again when doing self-consistent electronic structure calculations.
+
+Looking at the citation metrics, foundational papers in the subject
+of DFT and methods number their citations in the tens of thousands, for the 
+theoretical and algorithmic improvements improvements are sufficient testament 
+to the reach and fundamental nature of {\it ab initio} calculations. 
+Table~\ref{tab:foundation} lists some of the papers in the field which, as
+their citation count suggests, have enabled subsequent research. These techniques fall into
+three categories, they are either theoretical justification for a calculation scheme, the description of
+a technique that allows for more expedient and accurate calculations to be performed, or a parameterization
+of the the exchange correlation functional.
+
+\begin{table}
+\begin{tabular}{|c|c|c|}
+\hline
+Paper & Citations & Development & Category\\
+\hline
+Inhomogeneous Electron Gas \cite{hohenberg64} & 20,527 & Ground state energy of electron gas is universal functional of the density. & Theory \\
+Self-Consistent Equations Including Exchange and Correlation Effects & 26,273 & Self-consistent set of equations for varying electron density. & Theory \\
+Linear methods in band theory \cite{andersen75}& 4,822 & Describes LAPW and LMTO approach to electronic structure calculations. & Theory/Implementation \\
+Norm-Conserving Pseudopotentials \cite{hamann79} & 2,156 & Nodeless eigenfunctions that match atomic eigenvalues.  & Pseudopotentials \\
+Soft self-consistent pseudopotentials in a generalized eigenvalue formalism \cite{vanderbilt90} & 11,560 & Effective pseudopotentials for first row and transition-metal systems  & Pseudopotentials \\
+Projector augmented-wave method \cite{blochl94paw} & 19,194 & Generalizes pseudopotential and LAPW methods; allows reconstruction of wavefunctions at nucleus.  & Pseudopotentials \\
+Efficacious Form for Model Pseudopotentials \cite{kleinman82} & 3,709 & Reduces number of integrals which need to be calculated & Pseudopotentials \\
+Special points for Brillouin-zone integrations \cite{monkhorst76} & 21,361 & Brillouin zone integration & Numerical Integration Technique \\
+Ground State of the Electron Gas by a Stochastic Method \cite{ceperley80} & 8,855 & Calculation of the exchange-correlation energy of an electron gas. & Exchange Correlation \\
+Self-interaction correction to density-functional approximations for many-electron systems \cite{perdew81} & 11,629 & Parameterization of Ceperley-Alder & Exchange Correlation \\
+Accurate and simple analytic representation of the electron-gas correlation energy \cite{perdew91} & 12,296 & Parameterization of exchange correlation functional & Exchange Correlation \\
+Atoms, molecules, solids, and surfaces: Applications of the generalized gradient approximation for exchange and correlation \cite{perdew92} & 11,418 & Generalized gradient expansion& Exchange Correlation \\
+Electron correlation in semiconductors and insulators: Band gaps and quasiparticle energies \cite{hybertsen86} & 1,929 & Extension of electronic structure calculations to excited states& Theory/Implementation \\
+Unified Approach for Molecular Dynamics and Density-Functional Theory \cite{car85} & 5,940 & Combined molecular dynamics and density functional theory & Theory/Implementation \\
+High-precision sampling for Brillouin-zone integration in metals \cite{methfessel89} & 2,908 & Brillouin zone integration & Numerical Integration Technique \\
+Improved tetrahedron method for Brillouin-zone integrations \cite{blochl94} &  2,986 & Brillouin zone integration & Numerical Integration Technique\\
+A new mixing of Hartree–Fock and local density‐functional theories \cite{becke93} & 7,143 & Combining Hartree-Fock and DFT & Exchange Correlation \\
+Generalized Gradient Approximation Made Simple \cite{perdew96} & 47,029 & GGA functionals improved.& Exchange Correlation \\
+\end{tabular}
+\caption{Citations are relevant up to Nov. 2017. Citations are according to the journals in which they appear, the actual number of
+citations are much higher. These selections have been chosen as representative of the important theoretical and algorithmic developments
+which have enabled subsequent research. In some cases there are a number of contemporary papers which
+treat the same problems but failed to "catch on" or describe techniques which differ in an incremental way to the works cited here. 
+\label{tab:foundation}}
+\end{table}
+
+This table is biased towards a "plane wave" conception of electronic structure. These methods are suitable for crystalline systems
+with periodicity and can be pushed to describe more disordered systems with a few 100 atoms. 
+
+To broadly categorize the workers we can say a material scientist 
+is interested in crystals, alloys, ceramics, glasses, and possibly elastic materials. They
+worry about energy differences on the order of 100 meV. Chemists are interested in molecules, tend to use localized basis sets and 
+exploit Monte Carlo methods to obtain energy bounds on the order of a few meV. Physicists are interested in lasers and hubbard models and the 
+general positions of resonances and asymptotes in very cold materials and wont be discussed further.
+
+If we look at the work done based on parameterization of the exchange correlation functional we see the number of citations approaches 100,000. 
+Naturally that figure includes significant double counting of citing work but we have also not included cross citations between journals in many of the 
+figures quoted so the number is probably representative. This parameterization is based on what I consider a highly abstract question.
+"What might happen if we start squeezing electrons into an imaginary box?".
+
+This imaginary box has been pondered for close to a century now. The practical utility of these considerations is unreasonable. 
+The outcome of these considerations have resulted in a family of unremarkable curves that describe some energy relationship between
+the number density of electrons at a point in space and an energy. The practical consequence is this curve enables the
+structural, electronic, and vibrational properties of an enormous class of materials to be calculated with highly creditable accuracy.
+
+How creditable this approach is returns again to point three. The theoretical justifications for the success of the approach are
+secondary to the fact that prior experience suggests these techniques work, and the rate of their acceptance and adoption
+seems to have tracked their usage in a positive feedback loop. For instance an article from 12 years ago 
+
+If you remain unconvinced of the accuracy of the method one can at least acknowledge the social benefit. 
+The sheer number of hours people have been engaged in this harmless occupation, dreaming of 
+electrons in an imaginary box, means they have a hobby that keeps them off the streets and out of trouble.
+
+O. K. Andersen expressed the purpose of self-consistent electronic structure calculations was to,
+"... compute groundstate properties such as cohesive energies, interatomic forces, charge transfer, and magnetic moments,
+and also excitation spectra described by the one- electron Green's function." \cite{anderson75} These quantities remain the
+principle goal of calculations and his list is quite comprehensive. 
+
+The computational price paid to obtain these quantities should be considered. If the amount of numerical
+work required to compute the quantities is excessive it becomes difficult to discuss trends in homologous series of materials, perform
+necessary thermal averages to describe distributions, and even in some cases reproduce exactly the calculation.
+
+\section{Point 1: Decline of Experimental Overlap}
+The cost of the ubiquity of access to {\it ab initio} data has had a significant impact on 
+Ehrenreich's first point (i): i.e., experimental corroboration. Cursory surveys of the literature 
+demonstrate the increasing frequency of appearance of publications which contain no 
+original experimental work. 
+
+This is partly down to the high level of specialization of contemporary 
+researchers and research groups. Previously the distinction between
+an experimental materials scientist and a theoretical one was not so dramatic. 
+In addition many important theoretical developments came 
+from the context of attempting to explain a new set of experimental data.
+
+%This paragraph needs research:
+%Bethe's calculation of the hyperfine? shift, the recursion work on the magnetic 
+%moment of $FeAl_{3}$, I think Bardeen mentioned his work on superconductivity was
+%initiated when they were trying, Shockley's work on the transistor. (A good source 
+%for these sorts of anecdotal history can be found in Nobel prize banquet speeches.)
+
+\section{Point 3: Justification by Utility}
+The observation that materials processing has evolved in the manner of a craft appears to have
+been imitated in the development of the theory of materials science. DFT is an excellent example of this.
+If you look through a typical electronic structure code it is interesting to look at the routine
+responsible for calculating the local exchange correlation potential. The input required is the 
+electronic density at a point in space. This density is inserted as the soul argument in a rational polynomial
+and a single number is returned. Yet in all manner of crystalline systems this functional enables the theoretical
+prediction of very accurate ground state properties and structures. 
+
+Another successful theoretical development is pseudopotentials. Focusing on the valence electrons 
+has worked for chemistry.
+
+\section{Bayesian Materials Science}
+Ehrenreich's four points help clarify a desirable objective for materials modelling:
+a minimal theoretical model informed by {\it ab initio} calculations that accounts for 
+experimental data, and {\emph predicts} quantitatively trends in material properties. 
+
+In these notes the possibility of exploiting the invariance theorem 
+and recursion techniques is assessed as the optimal framework
+for achieving this. A metric for the quality of the approach can be defined using 
+Bayesian probability theory. The Bayesian framework lets us define a metric 
+that increases as the number of free parameters in the model is reduced,
+and the reproduction of target experimental data is increased, with a bound on optimal predictions.
+
+The posterior on the parameters of the model can be assessed:
+%
+\begin{equation}
+\label{eq:bayes}
+P(\mathbf{w}|D, \mathcal{H}_{i}) = \frac{P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H})}{P(D|\mathcal{H}_{i})},
+\end{equation}
+%
+where D, the target data, can constitute a combination of {\it ab initio} and experimental data. Eq.~\ref{eq:bayes}
+McKay summarises as:
+\begin{equation}
+{\rm Posterior} = \frac{{\rm Likelihood} \times {\rm Prior}}{{\rm Evidence}}
+\end{equation}
+%
+\begin{equation}
+\label{eq:bayesH}
+P(\mathcal{H}_{i}|D) \propto P(D|\mathcal{H}_{i})P(\mathcal{H}_{i})
+\end{equation}
+%
+\begin{equation}
+\label{eq:bayesH}
+P(D|\mathcal{H}_{i}) = P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H}_{i})d\mathbf{w}
+\end{equation}
+%
+Models (hypotheses) of material systems can then be ranked according to Eq.~\ref{eq:bayesH}.
+
