@@ -1011,7 +1011,7 @@ can be achieved with 9x9 matrices describing nearest neighbour interactions of t
 in the Slater-Koster form.\cite{salter54}
 
 \section{Slater-Koster Tight Binding}
-In a crystal if we denote the translation operator $\hat{T}$
+  In a crystal if we denote the translation operator $\hat{T}$
 as the one which shifts a the coordinates of a vector by a crystal lattice vector 
 $\R_{i}$ we require firstly that $[\hat{T},\hat{H}]=0$, i.e. that the 
 translation operator commutes with the Hamiltonian. This also
@@ -1025,25 +1025,25 @@ written as $\sum{_\R_{i}} e^{i\k\cdot\R_{i}}\phi_{n}(\r-\R_{i}$. For
 a given $\k$ there will be off diagonal elements between bloch sums
 for different atomic orbitals.
 
-Interestingly Slater and Koster state that there are no off-diagonal
+  Interestingly Slater and Koster state that there are no off-diagonal
 elements of the Hamiltonian, consisting of the kinetic energy and the periodic potential, 
 between Bloch sums with different $\k$'s. This is considered again in Chapter~\ref{chap:odlro}
 where off diagonal elements in the Hamiltonian between different $\k$ values are exactly what give
 rise to persistent currents.
 
-The matrix elements between Bloch sums (where Lowdin orbitals $\psi_{n}$
+  The matrix elements between Bloch sums (where Lowdin orbitals $\psi_{n}$
 are used instead of LCAOs) gives:
 %
 \begin{equation}
 \sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \psi^{*}_{n)(\r-\R_{i})H\psi_{m}(\r-\R_{j})dV
 \end{equation}
 %
-
-The (anticipated)\footnote{The paper explicitly says the sum in Eq. could be performed with the
-help of computers:"The possibility is not excluded that eventually ways will be found to do this work by means of high-speed computers, but
-it will certainly be quite out of the question without such help. "} 
-development of computers means the secular equations  can be solved at arbitrary $\k$ points.
-The Slater-Koster work does however demonstrate in an intuitive fashion how 
+  The development of computers means the secular equations  can be solved at arbitrary $\k$ points.
+\footnote{The paper explicitly anticipates that the integrals and Bloch 
+sums could be performed with the help of computers: "The possibility is not excluded 
+that eventually ways will be found to do this work by means of high-speed computers, but
+it will certainly be quite out of the question without such help."} 
+  The Slater-Koster work does however demonstrate in an intuitive fashion how 
 waves with different phases can interfere constructively or deconstructively in order
 to allow charge to accumulate in bonds between atoms.
 
