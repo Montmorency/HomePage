@@ -1,0 +1,137 @@
+\section{Introduction}
+The Slater-Koster scheme \cite{slater54} provides a framework for estimating the numerical value of the large number of complicated 
+integrals which appear in matrix elements between Bloch sums. By exploiting a local atom centered basis set, and
+neglecting matrix elements between distant atoms, the number of these integrals can be reduced to a manageable form. 
+The numerical value of the integrals can then be obtained via a fit to a known band structure or by direct computation. 
+
+The Bloch sums in a local atomic basis set can be written:
+%
+\begin{equation}
+\label{eq:tb}
+\sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \psi^{*}_{n)(\r-\R_{i})H\psi_{m}(\r-\R_{j})dV.
+\end{equation}
+%
+Eq.~\ref{eq:tb} yields the matrix elements arising in the tight binding basis, the eigenvalues can then be obtained
+by solving the secular equation.
+
+An alternative scheme is based on the empirical pseudopotential method. In this scheme the valence electrons are considered
+to be moving in a smooth potential that can be defined with only a few fourier coefficients. The
+coefficients of the potential in this scheme are obtained by a fit to experimental ($\k$-resolved) band structures. 
+The emprical pseudopotential scheme has the advantage of providing directly the wavefunctions and eigenvalues 
+whereas the tight-binding scheme's purpose is to avoid having to deal directly with the, potentially, 
+complicated spatial structure of the wave functions.
+%
+\begin{equation}
+\label{eq:emp}
+\hat{H}_{EMP} = -\frac{1}{2}\nabla^{2} + \sum_{\G}V(\G)e^{-i\G\cdot\r}
+\end{equation}
+%
+Both Hamiltonians commute with the translation operator $\hat{T}$ as they must for Bloch's theorem to apply.
+
+The power of modern day computers is such that full {\it ab initio} methods are now common place for producing bandstructures.
+The eigenvectors of the Kohn-Sham Hamiltonian can be computed directly:
+
+\begin{equation}
+\label{eq:kohnsham}
+H = -\frac{1}{2}\nabla^{2} + V^{\rm ion}(\r-\R_{i}) + V^{\rm H}(\r-\R) + V^{\rm xc}(\r)
+\end{equation}
+
+These methods are hence reliant on some approximation for the exchange-correlation functional $V^{xc}$. Fortunately,
+highly effective approximations to this potential exist. The most common functions are those which interpolate
+the exchange-correlation potential of a free electron gas at low, intermediate, and high densities.
+
+In this work we seek alternative parameterizations of the functional based on a combination of 
+theoretical and empirical data. To accomplish this we decompose the tight binding and the empirical pseudopotential
+into a sum of the exchange correlation potential, the kinetic energy, and then everything else, i.e.
+the scattering of the valence electrons due to the atomic cores and the Hartree potential.
+The procedure is then as follows: obtain the coefficients of Eq.~\ref{eq:emp} that best match experimental data.
+Rotate these wavefunctions in Wannier functions suitable for evaluating the matrix elements in Eq.\ref{tb}.
+Subtract the matrix elements of the ionic contribution, the hartree potential, and the kinetic energy leaving only
+the exchange correlation part.
+
+The most generaly function that can be considered is:
+%
+\begin{equation}
+E_{ij} - [V^{H} + V^{ion} + \bra|-\frac{1}{2}\nabla^{2}|\ket] = E^{xc}_{ij} = \int w_{i}(\r-\R_{i})\Sigma(\r,\r';\omega)w_{j}(\r'-\R_{i})d\r d\r'
+\end{equation}
+%
+
+However we will initially work with:
+%
+\begin{equation}
+E_{ij} - [V^{H} + V^{ion} + \bra|-\frac{1}{2}\nabla^{2}|\ket] = E^{xc}_{ij} = \int w_{i}(\r-\R_{i})\frac{\delta E}{\delta[\rho(\r)]}w_{j}(\r-\R_{i}) d\r
+\end{equation}
+%
+
+The $V^{xc} = \frac{\delta E \delta[\rho[r]]}$ is what we wish to fit. In the current formulation of the 
+problem There is an indefinite number of ways to parameterize 
+this function so that the required matrix elements are returned. In order to proceed further we need to restrict the
+space of functions .
+
+The two function spaces we explore in this work are $Vxc(\r)$ and using a Pade approximant. If we attempt a Pad\'e
+fit via the direct inversion of the interpolating matrix we encounter severe problems with the condition number 
+of the matrix making the accuracy and uniqueness of the fits difficult to quantify. We lose 
+%
+\begin{equation}
+\label{eq:contfrac}
+V^{xc}(\r) = \cfrac{1+}{a_{0}\rho(r) + \cfrac{b_{0}}{a_{1}*\rho(r)+b_{1}}...}
+\end{equation}
+%
+In order for the function to be continuous in the density the poles of the function must lie somewhere in the 
+complex plane off the positive real axis. 
+
+We will employ a Bayesian model to obtain the optimal, in a sense we will define more precisely shortly,  
+coefficients for Eq.~\ref{eq:contfrac}. The model requires that the coefficients provide an accurate fit 
+across the experimental data set, as well as satisfying certain theoretical constraints in the high and low density limits.
+
+First the fits of the potential in Eq.~\ref{eq:emp} will be made for each material. Upon obtaining the wave functions
+they will be rotated into a Wannier representation. All the known {\it ab initio} components of the matrix elements
+in Eq.~\ref{eq:tb} will be tabulated: i.e., the ionic, Hartree, and kinetic energy matrix elements. the remaining quantity,
+$E^{xc}_{ij}$ will then become a target datum to fit the coefficients. For each material the number of target datum
+generated will correspond to the number of local basis functions, $N_{\w}$, times the number of $\k$-points for which
+we have optical data to hand, $N_{\k}$. The universality of the exchange correlation functional means it is greedy in
+terms of the data that can be used to provide constraints on the coeffecients appearing in the expansion.
+
+\section{Empirical Wannier Orbitals}
+In Fig.~1 we present the empirical band structures.
+
+\section{Perceptron Exchange Correlation Functionals}
+The zeroth order requirement of the perceptron is that it can reproduce the existing parameterizations
+of the exchange correlation functional. We can initialize the perceptron with these parameters when
+we seek to optimize the experimental exchange correlation functional in Sec.~\ref{sec:bayesvxc}.
+
+\section{Bayesian Fitting of Coefficients}
+\label{sec:bayesvxc}
+For a given set of weights we can generate trial data, measure the loss with respect to the empirical data,
+and then back propagate the weights and biases so that the perceptron is updated. 
+In this manner the cost function is minimized and we can obtain our parameterization of the exchange correlation functional.
+
+We note here that the Pad\'e approximation allows us to include experimental uncertainty 
+in the target empirical data, and the pseudopotential. These uncertainties can be propagated to the 
+parameterization of the functional and marginalized over. For the perceptron we only have the 
+log-loss function as an indication of the quality of our final fit.
+
+\section{Results with Fitted Potentials}
+
+\section{Conclusions}
+A Bayesian model for obtaining successive approximations to the exchange-correlation functional
+has been presented. This approach provides a general metric for the effectiveness of exchange-correlation
+functionals in terms of both generality and accuracy. The method is self-propagating in the
+sense that more accurate experimental datasets would provide additional and more rigid constraints 
+on the weights and biases of the perceptron. The method is not entirely empirical, on the theoretical side
+the eigenstates of the crystal and a rigorous mapping procedure through Wannier functions to a local atomic picture
+is necessary for fitting the matrix elements of the exchange correlation potential 
+according to the Slater-Koster picture. Furthermore the calculation of the kinetic energy, hartree potential, and,
+of particular sensitivty, the ionic pseudopotential, are all theoretical constructs.
+
+The formulation in terms of a single particle orbital and 
+target matrix elements makes it a well defined inference
+problem and all the techniques of that field, including gaussian processes and neural networks, 
+will be applicable. The data presented here gives parameterized functionals appropriate to 
+sp type free electron systems. However the procedure can be repeated for larger 
+datasets in arbitrary materials and there is no need to restrict the fitting 
+procedure to optical data. For instance atomic ionization 
+energies and electronegativities could be used to provide additional constraints on the 
+coefficients in the atomic range of densities, and for transition metals 
+cohesive energies, and magnetic data could all be employed. Work in this direction is underway.
+
