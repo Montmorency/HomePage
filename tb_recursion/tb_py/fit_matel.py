@@ -67,23 +67,32 @@ class Evaluate(object):
     return vxc_matel
 
 class VxcPerceptron(object):
-  def __init__(self, target_data=[], dim=[10]):
+  def __init__(self, density_range=[], learning_rate=0.01, epochs=100):
+    self.learning_rate = learning_rate
     self.targets = target_data
-    self.N = 10
-
-  def model(self):
-    #the Pade matrix has powers of the density in it.
-    W = tf.placeholder(tf.float64, [None, self.N])
-    y = evaluate.calc_vxc(coeffs, self.target_data)
-    cost = tf.reduce_mean(tf.square(self.targets-y))
-    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
+    self.epochs = epochs
+    self.density_range = density_range
 
   def train(self):
+  #input arb number of training data
+    X = tf.placeholder(tf.float64, [None])
+    Y = tf.placeholder(tf.float64,[None])
+    W = tf.placeholder(tf.float64, [None, self.N])
+    self.learning_rate = 0.01
+    cost = tf.reduce_sum(tf.pow(Y_pred - Y, 2))/(n_observations-1)
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
+    #optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
     init = tf.flobal_variables_initializer()
+
+    #training data
+    vxc = XC()
+    xs = np.arange(0, self.densityrange, self.ddens)
+    ys = [vxc.pz(x) for x in xs]
     with tf.Session() as sess:
       sess.run(init)
-    self.vxc_model.train(steps=steps)
-    return self.vxc_model
+      for epoch in range(self.epochs):
+        sess.run(optimized, feed_dict={X:xs, Y:ys})
+
 
 #class VxcPade(object):
 #  """

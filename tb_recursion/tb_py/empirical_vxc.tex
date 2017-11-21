@@ -49,7 +49,7 @@ Rotate these wavefunctions in Wannier functions suitable for evaluating the matr
 Subtract the matrix elements of the ionic contribution, the hartree potential, and the kinetic energy leaving only
 the exchange correlation part.
 
-The most generaly function that can be considered is:
+The most general function that can be considered is:
 %
 \begin{equation}
 E_{ij} - [V^{H} + V^{ion} + \bra|-\frac{1}{2}\nabla^{2}|\ket] = E^{xc}_{ij} = \int w_{i}(\r-\R_{i})\Sigma(\r,\r';\omega)w_{j}(\r'-\R_{i})d\r d\r'
@@ -80,8 +80,8 @@ V^{xc}(\r) = \cfrac{1+}{a_{0}\rho(r) + \cfrac{b_{0}}{a_{1}*\rho(r)+b_{1}}...}
 In order for the function to be continuous in the density the poles of the function must lie somewhere in the 
 complex plane off the positive real axis. 
 
-We will employ a Bayesian model to obtain the optimal, in a sense we will define more precisely shortly,  
-coefficients for Eq.~\ref{eq:contfrac}. The model requires that the coefficients provide an accurate fit 
+The coefficients for Eq.~\ref{eq:contfrac} can be fit using an inference method.. 
+The model requires that the coefficients provide an accurate fit 
 across the experimental data set, as well as satisfying certain theoretical constraints in the high and low density limits.
 
 First the fits of the potential in Eq.~\ref{eq:emp} will be made for each material. Upon obtaining the wave functions
@@ -96,42 +96,63 @@ terms of the data that can be used to provide constraints on the coeffecients ap
 In Fig.~1 we present the empirical band structures.
 
 \section{Perceptron Exchange Correlation Functionals}
+\label{sec:bayesvxc}
 The zeroth order requirement of the perceptron is that it can reproduce the existing parameterizations
 of the exchange correlation functional. We can initialize the perceptron with these parameters when
 we seek to optimize the experimental exchange correlation functional in Sec.~\ref{sec:bayesvxc}.
+The quality of the fit that can be achieved is shown in Fig.~\ref{fig:1}. We are fitting to the 
+Perdew-Zunger parameterization.
 
-\section{Bayesian Fitting of Coefficients}
-\label{sec:bayesvxc}
-For a given set of weights we can generate trial data, measure the loss with respect to the empirical data,
-and then back propagate the weights and biases so that the perceptron is updated. 
-In this manner the cost function is minimized and we can obtain our parameterization of the exchange correlation functional.
+We now make some physically motivated arguments for our choice of parameterizing the
+correlation and exchange parts of our functions. We argue that the important features of
+the correlation functional are the local density and its most important supporting features
+are auxiliary components of the density in $G$-space. The correlation part of the functional 
+is sensitive to the dielectric screening in the material which is important over larger 
+real space distances. The physical intuition for this is that intervening medium is required 
+to screen the inter-electron repulsion. Furthermore the plasmon modes of the systems 
+are determined by the density across the scale of a number of interatomic distances. 
 
-We note here that the Pad\'e approximation allows us to include experimental uncertainty 
-in the target empirical data, and the pseudopotential. These uncertainties can be propagated to the 
-parameterization of the functional and marginalized over. For the perceptron we only have the 
-log-loss function as an indication of the quality of our final fit.
+Alternatively the exchange part of the functional has important features in the near real space
+region where electrons approach each other. Hence the learning functional should be supported with
+additional local real space components of the density. We note here that the empricial functional fitting procedure
+would also be effective in atomic and molecular systems fitting to the optical excitation spectra starting
+from an {\it ab initio} Hartree-Fock procedure.
+
+For a given set of weights we can generate trial exchange correlation energies, 
+measure the loss with respect to the empirical data, and then back propagate the 
+weights and biases so that the perceptron is updated. In this manner the cost 
+function is minimized and we can obtain our parameterization of the exchange correlation functional.
+
+For the perceptron we only have the log-loss function as an indication of the quality 
+of our final fit. 
 
 \section{Results with Fitted Potentials}
+  A couple {\it ab initio} band structures and some phonon spectra, along with a table of band gaps?
+And a plot of the "new" exchange-correlation functionals to be compared with 
+Fig.~1, PZ, PZ-NN, PZ-NN-G, PZ-NN-GX.
 
 \section{Conclusions}
 A Bayesian model for obtaining successive approximations to the exchange-correlation functional
 has been presented. This approach provides a general metric for the effectiveness of exchange-correlation
 functionals in terms of both generality and accuracy. The method is self-propagating in the
-sense that more accurate experimental datasets would provide additional and more rigid constraints 
-on the weights and biases of the perceptron. The method is not entirely empirical, on the theoretical side
-the eigenstates of the crystal and a rigorous mapping procedure through Wannier functions to a local atomic picture
-is necessary for fitting the matrix elements of the exchange correlation potential 
-according to the Slater-Koster picture. Furthermore the calculation of the kinetic energy, hartree potential, and,
-of particular sensitivty, the ionic pseudopotential, are all theoretical constructs.
+sense that more accurate experimental datasets would provide additional and more rigid constraints
+on the weights and biases of the exchange-correlation perceptron.
 
-The formulation in terms of a single particle orbital and 
+The method is not entirely empirical, on the theoretical side
+the eigenstates of the crystal and a rigorous mapping procedure 
+through Wannier functions to a local atomic picture is necessary for 
+fitting the matrix elements of the exchange correlation potential.
+This is viewed as an extension to the Slater-Koster procedure
+where the desired matrix elements are of the exchange
+correlation functional rather than the entire crystal Hamiltonian.
+
+The calculation of the kinetic energy, hartree potential, and, the ionic
+pseudopotential, are all purely first principles quantities.
+
+The formulation in terms of a single particle orbital and
 target matrix elements makes it a well defined inference
-problem and all the techniques of that field, including gaussian processes and neural networks, 
-will be applicable. The data presented here gives parameterized functionals appropriate to 
-sp type free electron systems. However the procedure can be repeated for larger 
-datasets in arbitrary materials and there is no need to restrict the fitting 
-procedure to optical data. For instance atomic ionization 
-energies and electronegativities could be used to provide additional constraints on the 
-coefficients in the atomic range of densities, and for transition metals 
-cohesive energies, and magnetic data could all be employed. Work in this direction is underway.
+problem and all the techniques of that field are applicable.
+The data presented here gives parameterized functionals appropriate to
+sp type systems in the diamond structure. However the procedure can be repeated for larger
+datasets in arbitrary materials, work in this direction is underway.
 
