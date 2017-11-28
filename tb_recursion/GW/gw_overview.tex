@@ -1,0 +1,814 @@
+\chapter{Density Functional Theory and the $GW$ approximation}
+\label{chap:dftgw}
+\noindent
+In this chapter we discuss the theory underlying the 
+fundamental techniques used in this thesis,
+specifically the use of Density Functional Theory (DFT) 
+and the $GW$ approximation to obtain a 
+quantitative {\it ab initio} description of 
+electronic excitations.
+
+DFT has its foundations in the papers of Hohenberg 
+and Kohn~\cite{hohenbergkohn64}, and Kohn and Sham,~\cite{kohnsham65}.
+DFT provides a means for obtaining the ground-state energy of an 
+interacting system of electrons, and provides a formal 
+route to the solution of the many electron Schr\"odinger equation. 
+In this chapter we discuss the theory of obtaining ground-state 
+properties for an interacting electronic system using DFT, and 
+some of the fundamental limitations of the method. In 
+particular we highlight the success of DFT for treating structural 
+properties and its limited success for describing the excited
+state properties of an electronic system~\cite{martin}.
+
+Since standard DFT was designed specifically to obtain the ground-state energy
+of an interacting system of electrons it is not expected to yield information
+about excited state properties. To extend the theory to treat excited states
+we make use of Hedin's $GW$ approximation~\cite{hedin65}. The $GW$ formalism
+takes its name from the the Green's function, denoted~$G$, and the 
+screened Coulomb interaction,~$W$. Hedin's $GW$ 
+approximation allows us to extend the standard DFT formalism
+to obtain information about the excited state properties of materials.
+We begin by discussing the analytic properties of the interacting and
+non-interacting Green's function and how the Green's function encodes information about
+the many-body excited electronic states. To derive Hedin's equations, from which
+the $GW$ approximation follows, we examine the equation of motion for the Green's function and
+construct a closed loop of equations which contain all the effects of the
+electron-electron interaction. 
+
+\section{Density Functional Theory}
+\subsection{Hohenberg-Kohn theorem}
+\noindent
+\label{sec:hohnkohn}
+In Ref.~\cite{hohenbergkohn64} a proof is presented that the ground-state
+energy of a system of interacting electrons
+in a fixed external potential is a unique functional of the electronic density $n(\r)$,
+with $\r$ being the position vector.
+According to Hohenberg and Kohn the ground-state energy 
+as a functional of the density can be written:
+%
+\begin{equation}
+\label{eq:hkenergy}
+E[n] = \int v(\r) n(\r)d\r + \frac{1}{2}\int \frac{n(\r)n(\r')}{|\r-\r'|}d\r d\r' + G[n].
+\end{equation}
+%
+Eq.~\ref{eq:hkenergy} divides the total energy functional $E[n]$ into different contributions.
+$\int v(\r)n(\r)d\r$ is the energy contribution from the external potential $v(\r)$.
+The term $\frac{1}{2}\int\frac{n(\r)n(\r')}{|\r-\r'|}d\r d\r'$ is the Hartree energy,
+i.e. the classical Coulomb repulsion energy associated with the
+electron density. $G[n]$ is a universal functional of the 
+density accounting for all the remaining electron-electron 
+interaction effects.
+%
+If an explicit expression for $G[n]$ is provided, then 
+Eq.~\ref{eq:hkenergy} can be minimized with respect 
+to variations of the density $\delta n$.
+
+Hohenberg and Kohn begin from a Hamiltonian for the interacting electronic system of the form:
+%
+\begin{equation}
+\hat{H} = \hat{H}_{0} + \hat{H}_{\rm{int}} + v(\r),
+\end{equation}
+%
+where $\hat{H}_{0}$ is the kinetic energy, $\H_{\rm{int}}$ is the electron-electron Coulomb repulsion
+and $v(\r)$ is a local external potential. Given the particular Hamiltonian $\H$, and its associated
+ground-state electronic wave function $\Psi$, the ground-state energy of the system is: 
+%
+\begin{equation}
+E = \bra \Psi | \H | \Psi \ket.
+\end{equation}
+%
+The proof of the Hohenberg-Kohn Theorem is carried out using a {\it reductio ad absurdum} argument.
+Initially it is assumed that two external potentials, which differ by more than
+a constant, can give rise to the same ground-state electron densities. The two potentials
+give rise to two different Hamiltonians, with different ground-state wave functions. It
+can then be demonstrated that this gives rise to a contradiction in the ground-state
+energies for the two different external potentials. The only way to resolve the contradiction
+is to accept that the external potential is uniquely determined by the ground-state density to 
+within a constant. The corollary of this is also true and the Hamiltonian is uniquely determined
+as a functional of the ground-state density~\cite{martin}. The original proof is only valid
+for non-degenerate grounds states the use of constrained searches generalizes the proof
+to arbitrary ground-states~\cite{levy79, levy82, lieb83}.
+
+While the Hohenberg-Kohn theorem provides a formal route to obtaining the ground-state energy of 
+an interacting system, the exchange correlation functional $G[n]$ remains unspecified. 
+Practical solutions require explicit approximations to the functional which we will discuss in the
+subsequent sections.
+
+\subsection{Kohn-Sham theory}
+\noindent
+Building on the work of Hohenberg and Kohn in Ref.~\cite{hohenbergkohn64}, Kohn
+and Sham reformulated 
+the problem of finding the ground-state density of a system of interacting electrons 
+by considering an auxiliary set of non-interacting electrons in Ref.~\cite{kohnsham65}.
+ 
+In the approach of Ref.~\cite{kohnsham65} an electronic density is 
+generated from a fictitious set of non-interacting electronic states:
+%
+\begin{equation}
+\label{eq:density}
+n(\r) = 2\sum^{\rm{n_{occ}}}_{i=1} \psi_{i}^{*}(\r)\psi_{i}(\r).
+\end{equation}
+%
+Where $\rm{n_{occ}}$ is the number of occupied electronic states in the system and the
+factor of 2 accounts for spin degeneracy. Eq.~\ref{eq:density} implies that the many-electron
+wave function is a Slater determinant. The Hamiltonian for the non-interacting electronic
+states is chosen such that it is composed of the kinetic energy operator for non-interacting
+electrons, and a potential that is purely local:
+%
+\begin{equation}
+\label{eq:lda}
+\H^{\rm{ks}} = -\frac{1}{2}\nabla^{2} + \sum_{j}V^{\rm{e-n}}(\r-\mathbf{R}_{j}) + V^{\rm{H}}(\r) + V^{\rm{xc}}(\r).
+\end{equation}
+%
+Here $V^{\rm{e-n}}(\r-\mathbf{R}_{j})$ is the Coulomb potential felt by an
+electron at point $\r$ from a nucleus at point $\mathbf{R}_{j}$.
+The term $V^{\rm{H}}(\r)$ is the Hartree potential:
+%
+\begin{equation}
+V^{\rm{H}}(\r) = \int \frac{n(\r')}{|\r-\r'|}d\r',
+\end{equation}
+%
+and gives rise to the third term on the right hand side of Eq.~\ref{eq:hkenergy}
+
+The remaining term is the exchange and correlation potential $V^{\rm{xc}}$. 
+If an explicit functional dependence on $n(\r)$ for $V^{\rm{xc}}$ is provided 
+one can then seek an energy minimum for the fictitious non-interacting system 
+by minimizing the variation in the total energy with respect to the density:
+%
+\begin{equation}
+\frac{\delta E^{\rm{KS}}[n]}{\delta \psi^{*}_{i}} = 0,
+\end{equation}
+%
+and ensuring that the orthogonality constraints between the wavefunctions:
+%
+\begin{equation}
+\bra \psi_{i} |\psi_{j}\ket = \delta_{i,j},
+\end{equation}
+%
+are satisfied.
+%
+The Kohn-Sham Hamiltonian is determined by the electronic density $n(\r)$; the electronic density is 
+defined by the single-particle wavefunctions, $\psi_{n}(\r)$ in Eq.~\ref{eq:density}; and, 
+finally, the single particle wavefunction are defined by the solutions of the equation:
+%
+\begin{equation}
+\label{eq:kseq}
+\H^{\rm{KS}}\psi_{n}(\r) = \epsilon_{n}\psi_{n}(\r).
+\end{equation}
+%
+The dependency of the Hamiltonian on the density means obtaining the Kohn-Sham 
+wavefunctions and eigenvalues requires a self-consistent
+procedure. In order to proceed some definite form for $V^{\rm{xc}}(\r)$ 
+is required. We discuss this in the next section.
+%
+\subsection{The Local Density Approximation}
+\noindent
+\label{sec:thelda}
+The practical success of DFT is largely determined by one's ability to
+find an adequate approximation to the exchange and correlation functional.
+For many ground-state properties the Local Density Approximation (LDA) 
+has proven to be very accurate. In this scheme the exchange and correlation energy
+is written:
+%
+\begin{equation}
+E_{\rm{xc}}[n(\r)] = \int \epsilon_{\rm{xc}}(\r)n(\r)d\r,
+\end{equation}
+%
+where $\epsilon_{\rm{xc}}$ is the energy per electron at point $\r$ 
+depending only upon the density $n(\r)$ in an homogeneous electron 
+gas\cite{martin}. The exchange and correlation potential 
+can be obtained from the exchange correlation energy via:
+%
+\begin{equation}
+\label{eq:kohnshampot}
+V^{\rm{xc}}(\r) = \frac{\delta E_{\rm{xc}}[n(\r)]}{\delta n(\r)}.
+\end{equation}
+%
+
+A number of parametrizations for the function $\epsilon_{xc}(\r)$ exist.
+The first parameterizations of the correlation energy were based
+on polynomial fitting to Monte Carlo calculations of the correlation energy
+of the homogeneous electron gas performed in Ref.~\cite{ceperly80}.
+These parameterizations include Refs.~\cite{vosko80, perdew81, perdewwang92}.
+
+Using the LDA means each term appearing in the Hamiltonian, Eq.~\ref{eq:kseq},
+is local and Hermitian. In addition the exchange and correlation functional is easily 
+calculated using the aforementioned parameterizations.
+
+The success of the LDA has motivated the search for improved
+functionals which better account for the variation in the 
+ground-state charge density or incorporate exact exchange contributions
+to the ground-state densities \cite{becke88, perdew96, becke93, becke93b}.
+
+The generalization of the exchange and correlation operator beyond the LDA 
+in order to allow for non-locality and the energy dependence of the exchange and
+correlation potential is discussed in Refs.~\cite{shamkohn66}. 
+In this work Kohn and Sham rewrite Eq.~\ref{eq:kseq} so that it mirrors the form
+of the quasiparticle equation presented in Refs.~\cite{schwinger51, hedin65}:
+%
+\begin{equation}
+\label{eq:qpeq}
+\left[-\frac{1}{2}\nabla^{2} + V^{\rm{ion}}(\r) + V^{\rm{H}}(\r)\right]\psi_{n}(\r) + \int \Sigma(\r,\r';E_{n})\psi_{n}(\r') d\r' = E_{n}\psi_{n}(\r).
+\end{equation}
+%
+Here the quantity $\Sigma(\r,\r';\omega)$ is a non-local and energy dependent,
+operator which encodes all the electronic correlations
+present in the system. Calculating this quantity is a formidable challenge. We have
+introduced this quantity here because it will arise again
+in the discussion of the $GW$ approximation, and provides a natural connection 
+between DFT and the Green's functions methods. A formal connection between DFT
+and many body perturbation theory is provided in Ref.~\cite{shamschlut83}.
+
+The Kohn-Sham theory provides a set of eigenvalues and eigenvectors for an auxiliary 
+non-interacting electronic system. While it is tempting to use the unoccupied 
+electronic states resulting from a Kohn-Sham DFT/LDA calculation to represent the
+conduction states of real materials, this leads to a number of problems.
+
+As we have mentioned DFT at the LDA level is a theory 
+built to describe the ground-state of an electronic system.
+An LDA bandstructure systematically underestimates the
+magnitude of the band gaps in real materials,
+resulting in quantitative and qualitative errors
+when it comes to describing the electronic 
+excitations of a many electron system~\cite{martin}.
+This is partly due to deficiencies inherent in the approximations
+to the exchange correlation potential, and to the
+inherent discontinuity upon the addition or
+removal of an electron present in the
+exact functional \cite{perdew83, sham83, godby86}. There
+are a number of possible approaches for extending the DFT
+formalism to access excited state properties. Hybrid functionals
+~\cite{rinke05, friedrich12} and $\Delta$~SCF methods \cite{gunnarsson76, jones89}
+go someway towards providing a formalism for accurately calculating
+excitation energies. However, in the case of hybrid functionals, the choice
+of functional remains somewhat arbitrary, and for $\Delta$~SCF, the
+method is inapplicable in the case of bulk systems.
+
+
+In addition the DFT formalism cannot account for dynamical effects, 
+such as electron lifetimes. This failure 
+requires the introduction of a more sophisticated approach for an accurate description 
+of excited-state properties. In the remainder of this chapter
+we introduce the concepts required to treat excited states 
+quantitatively using the $GW$ approximation.
+%
+
+\section{The Green's function}
+\subsection{Definition of the Green's function}
+\noindent
+To begin the discussion of the $GW$ approximation we introduce the Green's function. 
+The Green's function is defined as:
+%
+\begin{equation}
+\label{eq:green0}
+G(\r,t,\rp,t') = \bra N|\hat{T}\left[\field(\r,t)\cfield(\rp,t')\right]|N \ket,
+\end{equation}
+%
+$\hat{T}$ is the time ordering operator ensuring events at time $t$ occur
+after event $t'$. $\cfield$ and $\field$ are the fermion 
+creation and annihilation field operators:
+%
+\begin{equation}
+\field(\r,t) = \sum_{n} \phi_{n}(\r) c_{n}(t),
+\end{equation}
+%
+and 
+%
+\begin{equation}
+\cfield(\r,t) = \sum_{n} \phi^{\star}_{n}(\r) c^{\dagger}_{n}(t),
+\end{equation}
+%
+where $c^{\dagger}_{n}(t)$ and $c_{n}(t)$ are creation 
+and annihilation operators, and $\phi_{n}(\r)$ are 
+the single particle wave functions, these could be Kohn-Sham wavefunctions. 
+The ground-state wave functions can be obtained from a DFT calculation. 
+Note the time dependence is included in the creation and 
+annihilation operator rather than the wave function. $|N\ket$ represents 
+the electronic ground-state wave function for a system of $N$ electrons.
+
+The time ordering operator can be expanded for
+the single particle Green's function to provide:
+%
+\begin{eqnarray}
+\label{eq:green}
+G(\r,t,\rp,t') & = & -i\Theta(t-t') \bra N|\field(\r,t)\cfield(\rp,t') |N \ket \nonumber \\
+	  	 	   &   & +i\Theta(t'-t) \bra N|\cfield(\rp,t')\field(\r,t) |N \ket. 
+\end{eqnarray}
+%
+In Eq.~\ref{eq:green} $\Theta$ is the Heaviside step function. This ensures the causality 
+of the Green's function. Physically we can interpret the role of the Heaviside step function
+as differentiating between two scenarios. When  $(t-t')>0$ the situation 
+corresponds to the matrix element with the many-body wavefunction 
+of an electron added to the system at the time $t'$ in position $\r'$, and subsequently removed
+from the system at $\r,t$. For the case $(t'-t)>0$ the Green's function describes the propagation
+of a hole.
+
+%
+To get a physical idea of what Eq.~\ref{eq:green} represents we consider the following expression:
+\begin{equation}
+P(\r,t,\rp,t') = |\bra N|\cfield(\r',t')\field(\r,t)|N\ket|^{2} \qquad t'>t.
+\end{equation}
+%
+The above expression gives the probability amplitude that if we remove an electron from the 
+position eigenstate $\r$ at time $t$ it will propagate to the point $\r',t'$. Reversing the time
+arguments and field operators would correspond to the addition of an electron at point $\r'$ and 
+removing it at point $\r$.
+%
+If we let $\r' \rightarrow \r$, $t' \rightarrow t^{+}$ 
+the Green's function reduces to the charge density of the system.\footnote{$t^{+} = t + \delta$, the 
+current time plus an infinitesimal; this is to avoid confusion 
+with the definition of the Heaviside step function}
+
+In the case of a non-interacting single-particle Hamiltonian 
+the time-dependence of the field operators can be expressed in terms of the 
+single-particle eigenvalues, $\epsilon_{n}$, as:
+%
+\begin{equation}
+\label{eq:spoper}
+\cfield(\r,t) = \sum_{n} \phi^{*}_{n}(\r)e^{-i\epsilon_{n}t} c^{\dagger}_{n}.
+\end{equation}
+%
+By replacing Eq.~\ref{eq:spoper} inside Eq.~\ref{eq:green} we find:
+%
+\begin{align}
+\label{eq:nonintergr}
+G(\r,t,\rp, t') = -i\Theta(t-t')\sum_{\epsilon_n>\epsilon_{f}}\phi_{n}(\r)\phi^{*}_{n}(\rp)e^{-i\epsilon_{n}(t-t')} \nonumber \\
+	        			  +i\Theta(t'-t)\sum_{\epsilon_n<\epsilon_{f}}\phi_{n}(\r)\phi^{*}_{n}(\rp)e^{-i\epsilon_{n}(t-t')}.
+\end{align}
+%
+Therefore in this case the Green's function separates naturally into 
+two contributions, the first term in Eq.~\ref{eq:nonintergr} coming
+from the non-interacting unoccupied electronic states of the system, the second term 
+coming from the non-interacting occupied electronic states of the system ($\epsilon_{f}$
+denotes the energy of the highest occupied state). A Fourier 
+transform of Eq.~\ref{eq:nonintergr} then yields the pole structure in 
+Fig.~\ref{fig:greenpoles} as will be discussed in the next 
+section for the interacting Green's function.
+
+\subsection{Analytic structure of the Green's function}
+\noindent
+The Green's function has two particularly useful properties. 
+The first is it effectively encodes all the response properties of the 
+system to an external perturbation. The second is that the 
+poles of the Green's function in the frequency domain, are
+equal to the energies required to excite the N electron system to
+a particular state of the $N+1$ or $N-1$ electron system.
+%
+\begin{figure}[tb]
+\begin{center}
+\includegraphics[scale=1.0]{./chap2/figures/greenpoles.pdf}
+\end{center}
+\caption{\small \label{fig:greenpoles} Pole structure 
+of the Green's function. 
+The occupied electronic states are
+slightly above the real frequency axis and below the chemical 
+potential $\mu$, the unoccupied states are located above the Fermi
+level and slightly below the real axis. The poles of the Green's 
+function correspond to the addition/removal energies 
+in the system. This example is for a system with a discrete series of 
+excitation and a gap between occupied and unoccupied states
+of $E_{g}$.}
+\end{figure}
+%
+To demonstrate this it is necessary to Fourier transform the Green's from the time
+domain to the frequency domain. This can be accomplished by 
+rewriting the field operators in the Heisenberg representation:
+%
+\begin{equation}
+\label{eq:heisenop}
+\cfield(\r,t) = e^{i\hat{H}t}\cfield(\r) e^{-i\hat{H}t}.
+\end{equation}
+%
+We then introduce a complete set of states which describe all the possible 
+intermediate excitations of the system to $N'$ particles 
+and their $s$ excited states,~$|N',s\ket$:
+%
+\begin{equation}
+\label{eq:compstates}
+\sum_{s}|N', s\ket \bra N',s| = \I,
+\end{equation}
+%
+where $\I$ is the identity matrix.
+We also note that:
+%
+\begin{equation}
+H|N,s\ket = E^{s}_{N}|N,s\ket.
+\end{equation}
+%
+%
+If one inserts Eqs. \ref{eq:heisenop} and \ref{eq:compstates} into Eq.~\ref{eq:green} it is possible 
+to write the Green's function in the time domain as:
+%
+\begin{align}
+\label{eq:grtimedom}
+G(\r,t,\rp,t') & = & \sum_{s} -i\Theta(t-t') e^{i(E^{0}_{N} - E_{N'}^{s})(t-t')}\bra N|\field(\r)|N',s\ket\bra N',s|\cfield(\r')|N\ket \nonumber \\
+	  &+ & \sum_{s} i\Theta(t'-t) e^{-i(E_{N}^{0} - E^{s}_{N'})(t-t')}\bra N|\cfield(\r') |N',s\ket \bra N',s|\field(\r)| N \ket.
+\end{align}
+%
+Now Eq.~\ref{eq:grtimedom} gives the Green's function in the time domain and the arguments depend 
+only on differences in time $t-t'$. By introducing the time variable $\tau = t-t'$ it is 
+straightforward to define a Fourier transform:
+%
+\begin{equation}
+G(\r,\r';\omega) = \frac{1}{2\pi} \int_{-\infty}^{\infty} G(\r,\r,\tau) e^{i\omega\tau} d\tau,
+\end{equation}
+%
+and represent the Green's function in the frequency domain:
+%
+\begin{eqnarray}
+\label{eq:greenfreq}
+G(\r,\rp;\omega) & = &\sum_{s} \frac{\bra N|\field(\r) |N',s\ket \bra N',s|\cfield(\r')| N \ket}{\omega - (E^{s}_{N'} - E^{0}_{N}) + i\delta} \nonumber \\
+	  		   & - & \sum_{s}\frac{\bra N|\cfield(\r') |N',s\ket \bra N',s|\field(\r)| N \ket}{\omega + (E^{s}_{N'} - E^{0}_{N}) - i\delta}.
+\end{eqnarray}
+%
+The infinitesimal factors of $i\delta$ ensure that the Fourier 
+transform converges at infinite time arguments.
+The presence of the field operators implies that the only 
+non-zero contributions to Eq.~\ref{eq:greenfreq} are between 
+the ground and excited states of the $N'=N+1$ and the $N'=N-1$ systems. 
+Therefore it is convenient to make the follow substitution~\cite{inkson}:
+%
+\begin{equation}
+(E^{s}_{N+1} - E^{0}_{N}) = \epsilon^{s}_{N+1},
+\end{equation}
+%
+with a similar expression for the $N-1$ system. The variable $\epsilon^{s}_{N\pm1}$ 
+is the energy difference of an excited state in the $N\pm1$ many body system and 
+the ground state of the $N\pm1$ system. 
+This leads us to:
+%
+\begin{eqnarray}
+\label{eq:greenpoles}
+G(\r,\rp;\omega) = \sum_{s} \frac{\bra N|\field(\r) |N+1,s\ket \bra N+1,s|\cfield(\r')| N \ket}{\omega - \epsilon^{s}_{N+1} + i\delta} \nonumber \\
+			 		-\sum_{s} \frac{\bra N|\cfield(\r')|N-1,s\ket \bra N-1,s|\field(\r)| N \ket}{\omega + \epsilon^{s}_{N-1} - i\delta}.
+\end{eqnarray}
+%
+The poles of Eq.~\ref{eq:greenpoles} are represented schematically in Fig.~\ref{fig:greenpoles} 
+and correspond to the energies of the excitations from $N$ to $N\pm1$ electrons 
+in an interacting many body system. Having discussed the pole structure of 
+the Green's function we now proceed to define the equation of motion.
+
+\section{Green's function methods}
+\noindent
+Lars Hedin first developed the $GW$ approximation with
+his publication ``New Method for Calculating the One-Particle Green's Function
+with Application to the Electron-Gas Problem.''~\cite{hedin65}. In this work Hedin developed a
+self-consistent system of equations for including all the interaction effects
+in a many electron system. Hedin describes the
+connection between his work and the development of Green's
+functions methods by Schwinger in Ref.~\cite{schwinger51} 
+working in the field of quantum electrodynamics.
+An early review of the applications of Green's function methods and
+Feynman diagrams to the many electron problem was given in Ref.~\cite{pratt63}. The procedure
+has been extensively studied in the 
+intervening thirty years and Refs.~\cite{aulbur00, aryasetgunnarsson98, onida02}
+provide a review of the contemporary state of the field.
+%
+\subsection{Equation of motion}
+\noindent
+To derive the equation of motion for the Green's 
+function we need the time derivative of Eq.~\ref{eq:green}. 
+This derivative in turn requires working out the time 
+dependence of the field operators appearing in Eq.~\ref{eq:green}:
+%
+\begin{equation}
+\frac{\partial \field(\r,t)}{\partial t} = i[\hat{H},\field(\r,t)].
+\end{equation}
+%
+The time dependence of the field operator is determined by the 
+commutator between the Hamiltonian and the field operator.
+%
+The general Hamiltonian we will consider can be separated into two parts:
+%
+\begin{equation}
+\H =  \H_{0} + v(\r,\r')\delta(t-t'),
+\end{equation}
+%
+where the $\H_{0}$ term describes the kinetic energy of the electron and the interaction of the 
+electron with an ionic lattice. 
+The $v(\r,\r')\delta(t-t')$ term represents the inter-electron Coulomb repulsion.
+We differentiate Eq.~\ref{eq:green} with respect to time to arrive at the following result:
+%
+\begin{align}
+\label{eq:greqmotn}
+\left[i\frac{\partial}{\partial t} - \H_{0}\right]G(\r,\r',t,t') +  & &  \nonumber \\
+i\int v(\r,\r'')\bra N| T[\cfield(\r'',t)\field(\r'',t)\field(\r,t)\cfield(\rp,t')] |N \ket d\r'' & = & \delta(\r-\rp)\delta(t-t').
+\end{align}
+%
+The right hand side of Eq.~\ref{eq:greqmotn} comes immediately from 
+the fact that $\frac{\partial}{\partial t}\Theta(t-t') =\delta(t-t')$, 
+and the anti-commutator identity for fermionic field operators. 
+%
+The commutator for the single particle operator, $\H_{0}$, and the 
+field operator can be separated directly. 
+The final term under the integral sign results from the commutator
+involving the field operators and the Coulomb interaction.
+
+The number of indices that we require to keep track of everything when 
+describing multi-particle propagators, and, in the next section, 
+when taking functional derivatives, can be very large. 
+Therefore, in order to proceed, we will employ the compressed notation for space, 
+time, and spin: $1 = (\r,t,\sigma)$, $2=(\r',t',\sigma')$, and so on.
+
+The quantity under the integral sign in Eq.~\ref{eq:greqmotn} is a two particle Green's function:
+%
+\begin{equation}
+\label{eq:2pgreenfxn}
+G_{2}(1,2,3,4) = \frac{1}{i^{2}} \bra N|T[\cfield(4)\cfield(3)\field(2)\field(1)]|N\ket.
+\end{equation}
+%
+Eq.~\ref{eq:greqmotn} therefore expresses the single particle Green's function now defined 
+implicitly in terms of the two particle Green's function. The two particles Green's function is 
+defined in terms of  four field operators. The equation of motion for the two particle Green's 
+function would then involve terms with an increasing number of field operators due to the coupling 
+via the Coulomb interaction.
+This is the heart of the many body problem: an infinite expansion of interaction terms,
+all of comparable magnitude, due to the strength of the Coulomb coupling.
+
+When trying to solve equations of the form Eq.~\ref{eq:greqmotn} it is convenient to 
+replace the function appearing under the integral sign with a new function,
+termed a kernel, and then attempt to solve the system of equations in terms of this kernel.
+In order to solve Eq.~\ref{eq:greqmotn} and derive the $GW$ approximation,
+we will introduce three new quantities: $\Sigma$, $P$ and $\Gamma$.
+Respectively these are named the self-energy, the polarization propagator, and the vertex function.
+At this stage we introduce the self-energy $\Sigma$, by rewriting the integrand in Eq.~\ref{eq:greqmotn} as:
+%
+\begin{equation}
+\label{eq:greqmsig}
+\left[i\frac{\partial}{\partial t} - \H_{0}\right]G(\r,\r',t,t') - \int \Sigma(\r,\r'',t,t'')G(\r'',\rp,t'',t')d\r''dt'' =  \delta(\r-\rp)\delta(t-t').
+\end{equation}
+%
+The equation now has the shape that we discussed in Sec.~\ref{sec:thelda} when discussing
+the generalized Kohn-Sham exchange correlation potential. The Green's 
+function evolves under the single particle
+interactions included in $\H_{0}$ and according to some non-local, energy dependent potential, $\Sigma$.
+What remains to be done is to show how we can calculate $\Sigma$ efficiently, and remove the 
+implicit definition of the Green's function in terms of multi-particle propagators.
+
+\subsection{Functional derivative of the Green's function}
+\noindent
+Eq.~\ref{eq:greqmotn} defines the equation of motion for the one particle Green's
+function by making reference to the two particle Green's function.
+In the following we will rewrite the equation of motion so that it is entirely defined in
+terms of the single particle Green's function. This can be
+accomplished by relating the single particle Green's function to the two particle Green's
+function via a functional derivative.
+
+To derive Hedin's equation we make some formal modifications. The following derivation follows closely
+that presented in Appendix A of Ref.~\cite{hedin65}, the review article of \cite{strinati88} 
+and the textbook of Inkson \cite{inkson}. A few important functional identities 
+are reproduced in Appendix~\ref{app:funcdiv}. These are required to manipulate the equations 
+and obtain their final closed form.
+
+First Eq.~\ref{eq:greqmotn} is rewritten to include a perturbing potential $\phi(1)$:\footnote{For our
+purposes a local scalar potential $\phi(1)$ is sufficient to derive the $GW$ approximation. More general 
+perturbations, i.e. coupling to non-local vector potentials is considered in Ref.~\cite{strinati88}.}
+%
+\begin{align}
+\label{eq:greqmotn2}
+\left[i\frac{\partial}{\partial t} - \H_{0} - \phi(1)\right]G(1,2) +& \nonumber \\
+i\int v(1,3)\delta(t_{3}-t_{1})\bra N| T[\cfield(3)\field(3)\field(1)\cfield(2)] |N \ket d3 &= \delta(1,2).
+\end{align}
+%
+The perturbing potential will be set to zero at the end of the derivation.
+
+Eq.~\ref{eq:greqmotn2} allows us to separate motion generated by the original Hamiltonian, 
+which is composed of the single electron and electron-electron
+interaction terms, from the time development due to the perturbation $\phi(1)$. The perturbing potential 
+allows us to define the functional derivative of the system's Green's
+function, and hence relate the propagation of a single particle to the propagation of multiple particles. 
+The introduction of $\phi(1)$ allows us to generate an infinite 
+series of terms describing the electron-electron interactions 
+in terms of functional derivatives.
+
+Eq.~\ref{eq:greqmotn2} is rewritten so that the field operators refer to the ground-state field
+operators, denoted $\field_{0}$, and their time development due to $\phi(1)$ is made explicit:
+%
+\begin{equation}
+\label{eq:intergr}
+G(1,2) =  \frac{\bra N|\hat{T}[\hat{S}\field_{0}(1)\cfield_{0}(2)]|N\ket}{\bra N| \hat{S} |N\ket}.
+\end{equation}
+%
+The $\hat{S}$ operator propagates the ground-state field operators according to:
+%
+\begin{equation}
+\hat{S} = T\rm{exp}\left[-i\int_{t_{1}}^{t_{2}} \phi(2)\field_{0}(2)\cfield_{0}(2)d{2}\right].
+\end{equation}
+%
+This separation ensures the time development of the field operators due to $\phi$ is made explicit
+and the field operators have no implicit dependence on the perturbation. In this way the field 
+operators reflect only the dynamics of the underlying electron system interacting via the Coulomb interaction.
+
+By functional differentiation of Eq.~\ref{eq:intergr} with respect to the perturbing potential $\phi$ 
+the two particle Green's function can be written:
+%
+\begin{equation}
+\label{eq:funcdifgr}
+G(1,3,2,3^{+}) = G(1,2)G(3,3^{+}) - \frac{\delta G(1,2)}{\delta \phi(3)}.
+\end{equation}
+%
+To arrive at Eq.~\ref{eq:funcdifgr} we used the quotient rule as it applies to functional derivatives, 
+and that the variation in $S$ is:   
+%
+\begin{equation}
+\frac{\delta \hat{S}}{\delta\phi(3)} = i \hat{S} \field(3)\cfield(3).
+\end{equation}
+%
+We can now use Eq.~\ref{eq:funcdifgr} to replace the two particle propagator in Eq.~\ref{eq:greqmotn}:
+%
+\begin{align}
+\label{eq:greqmwfd}
+\left[i\frac{\partial}{\partial t}-\H_{0}(1)-V(1)\right]G(1,2) &
+	-i\int v(1,3)\frac{\delta G(1,2)}{\phi(3)}d3 &=\delta(1,2),
+\end{align}
+%
+where: 
+%
+\begin{equation}
+V(1) = \phi(1) - i\int v(1,3) G(3,3^{+})d3.
+\end{equation}
+%
+Eq.~\ref{eq:greqmwfd} has now separated into two terms. The first term
+contains the single electron components
+of the Hamiltonian, the perturbing potential, and what can now be
+identified as the Hartree potential, i.e. the mean field
+felt by an electron due to the classical potential generated from the electron cloud  discussed in
+Section~\ref{sec:hohnkohn}. The connection can be seen directly 
+by noting that the quantity $G(3,3^{+})$ is the electronic density.
+
+The second term contains the \emph{bare} Coulomb interaction 
+multiplied by the functional derivative of the 
+one particle Green's function. Upon comparison of 
+Eq.~\ref{eq:greqmwfd} with Eq.~\ref{eq:greqmsig} we can 
+rearrange terms by observing:
+%
+\begin{equation}
+\int \Sigma(1,3)G(3,2)d3 = -i\int v(1,3) \frac{\delta G(1,2)}{\delta \phi(3)}d3,
+\end{equation}
+%
+or by isolating the self-energy $\Sigma$ as: %(where we have used app. 1 Eq.~\ref{eq:expansionrule}):
+%
+\begin{equation}
+\label{eq:sigma}
+\Sigma(1,2) = i \int v(1,4) G(1,3) \frac{\delta G^{-1}(4,2)}{\delta\phi(4)}d3d4.
+\end{equation}
+%
+We now retrieve the equation of motion for the Green's function 
+as it appeared in Eq.~\ref{eq:greqmsig} as:
+%
+\begin{equation}
+\label{eq:greqmsig2}
+\left[i\frac{\partial}{\partial t} - \H_{0}(1) - V(1)\right]G(1,2) - i\int \Sigma(1,3)G(3,2)d3 = \delta(1,2).
+\end{equation}
+%
+One could formally solve this equation as it stands using an iterative method, 
+however it is worth noting that the resulting expansion of the self-energy $\Sigma$ 
+would contain increasing powers of the bare Coulomb interaction $v$. 
+It is unlikely that the resulting series will converge particularly 
+quickly if it converges at all. 
+%
+Therefore it is necessary to expand $\Sigma$ in a closed form without making 
+reference to the perturbing potential $\phi$. In doing so the equations are rearranged so that
+the bare Coulomb interaction is modified and the electrons experience 
+an effective screened Coulomb interaction. This will be done in the next two sections.
+%
+\section{Hedin's equations}
+\subsection{Dielectric function}
+\label{sec:dielecfun}
+\noindent
+At this point it is useful to introduce the following functional relationships 
+which define the dielectric function in a many-body system.
+We will switch back to labeling time and space coordinates as $\r,t$ 
+here for ease of reference Section~\ref{sec:nscfstern}. 
+
+The effective potential acting on the electrons is:
+%
+\begin{equation}
+\label{eq:internalpot}
+V(\r,t) = \phi(\r,t) - i\int v(\r,\r') G(\r',\r',t,t^{+}) d\r',
+\end{equation}
+%
+where $iG(\r',\r',t,t^{+})$ is the single particle density $n(\r')$.
+%
+We now define the inverse dielectric function to be the self-consistent variation 
+of this effective potential with respect to the external perturbing potential:
+%
+\begin{equation}
+\label{eq:invepsvphi}
+\inveps(\r,t,\r',t') = \frac{\delta V(\r,t)}{\delta\phi(\r',t')}.
+\end{equation}
+%
+Upon inserting Eq.~\ref{eq:internalpot} into Eq.~\ref{eq:invepsvphi} we arrive at:
+%
+\begin{equation}
+\label{eq:simpphys}
+\inveps(\r,t,\r',t') = \delta(\r-\r')\delta(t-t') + \int v(\r,\r'') \frac{\delta n(\r'',t)}{\delta\phi(\rp,t')}d\r''.
+\end{equation}
+%
+Eq.~\ref{eq:simpphys} has a simple physical interpretation. The inverse dielectric function 
+encodes the self-consistent variation in the charge density 
+with respect to a variation in the potential $\phi$.
+This rearrangement of charge means that the bare Coulomb interaction
+ between two points is altered by the induced screening in
+the interacting medium. This altered Coulomb interaction is the 
+screened Coulomb interaction, and can be defined 
+in terms of the inverse dielectric function as:
+%
+\begin{equation}
+\label{eq:scrncoul}
+W(\r,t,\r',t') = \int v(\r,\r'')\delta(t-t'') \frac{\delta V(\r',t')}{\delta \phi(\r'',t'')} dr''dt''.
+\end{equation}
+%
+The screened Coulomb interaction can also be written as an integral equation: 
+%
+\begin{equation}
+\label{eq:dysw}
+W(\r,t,\r',t') =  v(\r,\r') + \int d\r''' v(\r,\r''')\int P(\r''',t,\r'',t'') W(\r'',t'',\r',t')dt''d\r''.
+\end{equation}
+%
+where the polarizability, $P$, has been introduced:
+%
+\begin{equation}
+P(\r,\r',t,t') = \frac{\delta n(\r',t')}{\delta V(\r,t)}.
+\end{equation}
+%
+Alternatively we can introduce the dielectric function in its non-inverted form as:
+%
+\begin{equation}
+\label{eq:epschap2}
+\epsilon(\r,t,\rp,t') = \delta(\r-\r')\delta(t-t') - \int v(\r,\r'') P(\r'',t'',\r',t') \delta(t-t'') d\r''dt''.
+\end{equation}
+
+\subsection{Hedin's equations}
+\noindent
+While the Coulomb repulsion between electrons remains the bare Coulomb interaction, 
+the dielectric function provides a route to interpreting 
+an auxiliary system of quasi-electrons interacting via a \emph{screened} Coulomb interaction.
+
+In order to include this screening implicitly in the definition of the self-energy, we 
+go back to the definition of $\Sigma$ in Eq.~\ref{eq:sigma}. We now use the chain 
+rule to take the functional derivative of $G$ with 
+respect to the total potential $V$ rather than the perturbing potential $\phi$:
+%
+\begin{equation}
+\label{eq:funcdifsig}
+\Sigma(1,2) =  i\int v(1,4) G(1,3)\frac{\delta G^{-1}(3,2)}{\delta V(5)}\frac{\delta V(5)}{\delta\phi(4)}d3d4d5.
+\end{equation}
+%
+By comparison of Eqs. \ref{eq:invepsvphi}, \ref{eq:scrncoul}, and \ref{eq:funcdifsig} we can combine
+the inverse dielectric function and the bare Coulomb interaction into the screened Coulomb interaction $W$:
+%
+\begin{equation}
+\Sigma(1,2) =  i\int W(1,4)G(1,3)\frac{\delta G^{-1}(3,2)}{\delta V(4)}d3d4.
+\end{equation}
+%
+The final piece of notation to be introduced is the vertex function. This is defined as the variation 
+of the inverse Green's function with respect to the potential $V$:
+%
+\begin{equation}
+\label{eq:vertex}
+\Gamma(1,2;3) = \frac{\delta G^{-1}(1,2)}{\delta V(3)}.
+\end{equation}
+%
+Having obtained the expression for the vertex function in Eq.~\ref{eq:vertex} we
+can write all of Hedin's equations in a closed form.
+We summarize Hedin's equations describing the interacting Green's function,
+the screened Coulomb interaction, the polarizability, and the vertex function of the system:
+%
+\begin{align}
+\label{eq:hedinsig}
+&\Sigma(1,2)   = i\int W(1^{+},4)G(1,3)\Gamma(3,2;4)d4d3 &   \\
+\label{eq:hedinw}
+&W(1,2)        =  \int \inveps(1,3)v(3,2) d3 &               \\
+\label{eq:hedineps}
+&\epsilon(1,2) =  \delta(1,2) - \int v(1,3)P(3,2)d3 &        \\
+\label{eq:hedinpol}
+&P(1,2)        = -i\int G(1,3)\Gamma(3,4;2) G(4,1^{+})d4d3 & \\
+\label{eq:hedinvert}
+&\Gamma(1,2;3) = \delta(1,2)\delta(1,3) + \int \frac{\delta\Sigma(1,2)}{\delta G(4,5)}G(4,6)G(7,5) \Gamma(6,7;3)d4d5d6d7 & 
+\end{align}
+
+In summary, starting from the equation of motion, and relating the two particle Green's
+function to the functional derivative of the one particle Green's function with
+respect to a perturbing potential, we obtained a set of self-consistent equations known as Hedin's equations.
+When solved iteratively these equations incorporate all the many body effects of a many-electron system.
+
+\section{Conclusion}
+\noindent
+In this chapter we have discussed the Hohenberg-Kohn theorem which states that
+the ground-state energy of an interacting electronic system is a function of the 
+ground-state charge density. We then discussed the Kohn-Sham scheme, which provides
+a prescription for obtaining a set of wavefunctions, and eigenvalues, that describe
+the ground-state density. The various approximations to the exchange correlation functional
+commonly used in applications of Kohn-Sham DFT were discussed: the LDA, GGA, and hybrid functionals.
+
+We discussed various schemes for extending DFT, a theory for the ground state,
+to describe excited state properties. In particular we discussed an
+approach based on Green's function methods to accurately treat processes involving
+electron addition and removal. Along these lines we presented a detailed discussion
+of the analytic properties of the Green's function and a full derivation of Hedin's
+equations which define the $GW$ approximation.
+
+In the next chapter we discuss the details and practicalities of performing DFT and $GW$
+calculations for real materials.
+
