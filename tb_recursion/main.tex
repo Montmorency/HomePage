@@ -12,9 +12,10 @@
 \usepackage{tools/appendix}
 \usepackage{setspace}
 \usepackage{subfigure}
-%\include{tools/dimensions}
-%\include{tools/defs}
-%\include{tools/hmod}
+\usepackage{enumerate}
+\include{tools/dimensions}
+\include{tools/defs}
+\include{tools/hmod}
 \usepackage[sort&compress]{natbib}
 \setlength{\bibsep}{0.0pt}
 \bibpunct{[}{]}{,}{n}{,}{,}
@@ -31,14 +32,12 @@ King's College London
 \pagenumbering{roman}
 \makeatletter
 \tableofcontents
-\clearemptydoublepage
+
 \mainmatter
 \pagenumbering{arabic}
 
 \include{intro/intro}
-\clearemptydoublepage
 \include{invariance/invariance}
-\clearemptydoublepage
 
 \bibliographystyle{cj}
 \bibliography{./bibli/biblio.bib}

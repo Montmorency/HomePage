@@ -1,59 +1,5 @@
-\documentclass{article}
-\usepackage[utf8x]{inputenc}
-\usepackage{default}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{hyperref}
-\usepackage[sort&compress]{natbib}
-\usepackage[a4paper,total={6in,9in}]{geometry}
-
-\def\wp{\omega^\prime}
-\def\w{\omega}
-\def\wc{{\omega_{\rm C}}}
-\def\ket{\rangle}
-\def\bra{\langle}
-\def\H{\hat{H}}
-\def\P{\hat{P}_{\rm occ}}
-\def\E{\varepsilon}
-\def\vp{{v^\prime}}
-\def\q{{\bf q}}
-\def\s{\sigma}
-\def\k{{\bf k}}
-\def\qp{{\bf q^\prime}}
-\def\G{{\bf G}}
-\def\Gp{{\bf G^\prime}}
-\def\rt{\tilde{r}}
-\def\pt{\tilde{p}}
-\def\r{{\bf r}}
-\def\R{{\bf R}}
-\def\rp{{\bf r^\prime}}
-\def\rpp{{\bf r^{\prime\prime}}}
-\def\rppp{{\bf r^{\prime\prime\prime}}}
-\def\x{{\bf x}}
-\def\mo{$\overline{1}$}
-\def\mt{$\overline{2}$}
-\def\S{\mathcal{S}}
-\def\Gs{\mathcal{G}}
-\def\v{\mathbf{v}}
-\def\symm{\left\{\mathcal{S}|\mathbf{v}\right\}}
-
-\usepackage{soul}
-\usepackage{color}
-\usepackage{subfig}
-
-\definecolor{yellow}{rgb}{1,1,0}
-\definecolor{lightblue}{rgb}{0.6,0.6,0.9}
-\sethlcolor{yellow}
-
-\def\g{\mathcal{g}}
-
-\begin{document}
-\title{Tight Binding Recursion and the GW approximation}
-\author{Henry Lambert}
-\date{\today}
-\maketitle
-
-\section{Introduction}
+\chapter{Tight Binding Recursion and the GW approximation}
+\section{The Local Atomic Environment}
   Vol.~35 of Solid State Physics is dedicated to electronic structure
 theory from the point of view of the local environment. This perspective
 has a long tradition in physical and chemical electronic structure theory.
@@ -554,7 +500,7 @@ the Green's function or the screened Coulomb interaction to be sufficiently loca
 The on-site self-interaction term can be computed as
 %
 \begin{equation}
-\int_{\Omega_{i}}\bra w_{i}(r-R_{i})|\sigma(\r,\r';\omega)|w_{i}(r-R_{i})\ketd\r'd\r
+\int_{\Omega_{i}}\bra w_{i}(\r-\R_{i})|\sigma(\r,\r';\omega)|w_{i}(\r-\R_{i})\ket d\r'd\r
 \end{equation}
 %
 The self-consistency in the recursion method relies on the adjustment of the $\Sigma$ operator 
@@ -600,7 +546,7 @@ a number of places:
 %
 \begin{equation}
 \label{eq:sigma}
-\Sigma_{ij}(\omega) = \bra\phi_{i}|\intG(\omega')\sum_{n}|\phi_{n}\ket\bra\phi_{n}|(G(\omega')|\phi_{n}\ket\bra\phi_{n}|G(-\omega')v)d\omega'|\phi_{j}\ket
+\Sigma_{ij}(\omega) = \bra\phi_{i}|\int G(\omega')\sum_{n}|\phi_{n}\ket\bra\phi_{n}|(G(\omega')|\phi_{n}\ket\bra\phi_{n}|G(-\omega')v)d\omega'|\phi_{j}\ket
 \end{equation}
 %
 \begin{equation}
@@ -639,7 +585,7 @@ Where the recursion method for the PDOS computes the final energy distribution
 for a stationary state in the syste
 
 \begin{figure}
-\includegraphics{schematicpolestructure.pdf}
+\includegraphics{./invariance/schematicpolestructure.pdf}
 \end{figure}
 
 I think Umari's operator for $|\phi\ket\bra\phi|$ would be a natural way of
@@ -882,30 +828,30 @@ formalism and Mori's memory function.
 
 Interestingly when working on the diffusion
 of hydrogen in a lattice I realised I would require a way of computing the
-inverse laplace transform of the continued fraction generated 
+inverse Laplace transform of the continued fraction generated 
 using Haydock's method. A quick search later and one of the first items to come up
 was a paper titled "A Continued-Fraction Representation of the Time-Correlation
-Functions" the first line of the abstract was , "A continued-fraction expansion of the Laplace
+Functions" the first line of the abstract was, "A continued-fraction expansion of the Laplace
 transform of the time-correlation functions is obtained...". It is very nice when a problem
 arises where all you have to do is go to the shop and grab the solution off the shelf.
 
-Although like many store bought items some element of self-assembly is required. In this
+Like many store bought items some element of self-assembly is required. In this
 section we wish to simplify Mori's analysis as much as possible so that we can directly 
 apply the mathematical machinery of translating a continued fraction representation of
-a diffusion problem into the time domain and extract physical quantities 
-like the diffusivity.
+a diffusion problem into the time domain and extract measurable quantities.
 
 The inner product, or matrix elements required to generate the coefficients 
-$a_{n}$ and $b_{n}$ in Mori's notation are generalized.
+$a_{n}$ and $b_{n}$ in Mori's approach are generalized to include a thermal averaging:
 
-\begin{equation}
-(F,G^{*})= \frac{1}{\beta}\int_{0}^{\beta} \bra e^{\lamda H)F e^{-\lambda H}G^{*}\ket d\lambda
-\end{equation}
+%\begin{equation}
+%\label{eq:moriinner}
+%(F, G^{*})= \frac{1}{\beta} \int_{0}^{\beta} \bra e^{\lambda H)Fe^{-\lambda H}G^{*}\ket d\lambda
+%\end{equation}
 
 There is a further computational advantage here. Though the inner product in Eq.\ref{eq:moriinner}
 looks complicated, in fact, it only has the effect of altering the coefficients entering
-the hopping matrix. This means the laplace transform and the tquantum mechanical hopping parameters
-can be computed separately.
+the hopping matrix. This means the laplace transform computed from the continued fraction,
+and the quantum mechanical hopping parameters can be computed separately.
 
 Mori's formula allows us to interpret the spectral function in two ways. The first is as
 a purely phenomenological one of an electron in a material being excited and as it passes through
@@ -929,7 +875,7 @@ formalism (Sec. IV 13 Solid State Physics Vol. 35). Fig. \ref{fig:datoms} demons
 one of the main issues arising with d electrons:
 %
 \begin{figure}
-\includegraphics{resonant-datoms.pdf}
+\includegraphics{./invariance/resonant-datoms.pdf}
 \caption{The possibility of free electron states resonating with localized states.
 The centrifugal components of the atomic d wave scattering channel can combine with
 the atomic potential to produce a bound electronic state at some energy $E^{0}_{l}$ for an atomic system.
@@ -1033,7 +979,7 @@ celebrated theorem suggests that the eigenvalues of the
 translation operator acting on the eigenvector of a crystal is $e^{i\k\cdot\R}$.
 If a basis set of atomic orbitals $\phi_{n}(\r-\R_{i})$
 is placed on each atom in the crystal an un-normalized Bloch sum can be 
-written as $\sum{_\R_{i}} e^{i\k\cdot\R_{i}}\phi_{n}(\r-\R_{i}$. For
+written as $\sum_{\R_{i}} e^{i\k\cdot\R_{i}}\phi_{n}(\r-\R_{i})$. For
 a given $\k$ there will be off diagonal elements between bloch sums
 for different atomic orbitals.
 
@@ -1043,30 +989,31 @@ between Bloch sums with different $\k$'s. This is considered again in Chapter~\r
 where off diagonal elements in the Hamiltonian between different $\k$ values are exactly what give
 rise to persistent currents.
 
-  The matrix elements between Bloch sums (where Lowdin orbitals $\psi_{n}$
+  The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$
 are used instead of LCAOs) gives:
 %
 \begin{equation}
-\sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \psi^{*}_{n)(\r-\R_{i})H\psi_{m}(\r-\R_{j})dV
+\sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \psi^{*}_{n}(\r-\R_{i})H\psi_{m}(\r-\R_{j})dV
 \end{equation}
 %
-  The development of computers means the secular equations  can be solved at arbitrary $\k$ points.
-\footnote{The paper explicitly anticipates that the integrals and Bloch 
+The development of computers means the secular equations can be solved 
+at arbitrary $\k$ points. \footnote{The paper explicitly anticipates that the integrals and Bloch 
 sums could be performed with the help of computers: "The possibility is not excluded 
 that eventually ways will be found to do this work by means of high-speed computers, but
 it will certainly be quite out of the question without such help."} 
-  The Slater-Koster work does however demonstrate in an intuitive fashion how 
-waves with different phases can interfere constructively or deconstructively in order
+
+The Slater-Koster work does however demonstrate in an intuitive fashion how localized atomic
+waves, with different phases, can interfere (constructively or deconstructively) in order
 to allow charge to accumulate in bonds between atoms.
 
 A relatively small program where the Slater-Koster integral tables are included and
 the fitted integral parameters are returned when you feed the program either empirical
 or {\it ab initio} (or both) data would be a good exercise.
 
-\scriptsize
-\bibliographystyle{unsrtnat}
-\bibliography{refs}
-\end{document}
+%\scriptsize
+%\bibliographystyle{unsrtnat}
+%\bibliography{refs}
+%\end{document}
 %\bibliography
 %J Friedel Adv. Phys. 3, 446 (1954) #dilutealloys
 %

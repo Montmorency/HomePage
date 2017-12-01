@@ -9,43 +9,121 @@ Theoretical Materials Science remains to be invented as a discipline, and for go
 \end{quote}
 
 The reason he supplies is that materials processing, historically, was a craft. 
-A roman engineer knew that a pinch of gypsum could significantly impact 
-the properties of the concrete produced. A blacksmith learned that swords and shields were 
-effected by the alloying of the metals and careful control of heat: 
-firing the blade then quenching the blade in cold water.
+Roman engineers could manufacture concrete which was in some ways superior to that
+made today without any specific knowledge of the microstructure of the material.
+A blacksmith learned that the hardness of swords and shields could be manipulated 
+by the alloying of metals and precise control of heat. This expertise was not accumulated 
+based on reasoning from first principles but based on experience, trial and error, 
+and general trade craft.
 
-Ehrenreich identified four points that characterized the state of the field of material science
-at the time:
+A satisfactory atomic theory and the techniques to solve the equations which arise in that theory
+have only arisen in the last 100 years. Over the past 40 years the possibility of constructing
+accurate models of materials systems beginning from the arrangment of the constituent atoms has
+driven a great deal of what is sometimes called first principles or {\it ab initio} modelling.
+
+The extent to which theoretical materials science as a discipline has evolved is worth examining. 
+It is important because the character of this evolution dictates which directions of research may prove most
+immediately fruitful. It is also important because it allows researchers to identify the many avenues
+where people are going backwards, obscuring knowledge, and in some sense unlearning or convoluting 
+what is already understood. 
+
+To chart this evolution we may begin from Ehrenreich's survey of the field from 30 years ago.
+
+Ehrenreich identified four points that characterized the state of the field of material science at the time:
 %
-\begin{itemize}
-\item i) theory must be closely linked to experiment.
-\item ii) ab initio calculations without approximations are virtually impossible except in model systems.
-\item iii) approximations are frequently based on prior experience rather than on theoretical justification.
-\item iv) the study of trends in the properties of homologous materials is a crucial ingredient of a credible theoretical framework.
-\end{itemize}
+\begin{enumerate}[i)]
+\item Theory must be closely linked to experiment.
+\item Ab initio calculations without approximations are virtually impossible except in model systems.
+\item Approximations are frequently based on prior experience rather than on theoretical justification.
+\item The study of trends in the properties of homologous materials 
+      is a crucial ingredient of a credible theoretical framework.
+\end{enumerate}
 %
 
 It is worth while considering how the intervening 30 years may have adjusted some of 
 these priorities and characterize the current state of the field.
 
-\section{Point 2: The rise of the computer}
-  The first point that jumps out is point ii). The intervening thirty years
-has seen an enormous extension of computing capacity and the proliferation of 
-stable algorithms. This constant development of computing capacity and 
-technique means that {\it ab initio} calculations are now standard. 
+\section{The Rise of the Computer}
+The intervening thirty years has seen an enormous extension of 
+computing capacity. 
 
-  The development in computing hardware is easy to chart: storage capacity, transistor density,
-and the proliferation of high performance computing clusters with fast interconnects have
-greatly extended the range of problems that can be treated with numerical simulations.
+Around the time Ehrenreich was writing an example of a 
+state of the art computer would be the Connection Machine.
+\footnote{One of the employees at Thinking Machines Corporation,
+the company building the connection machine, was Richard Feynman.
+For an interesting discussion of the work they
+did at Thinking Machines and Feynman's time there see W. Daniel
+Hillis' article in Physics Today 42, 2, 78 (1989).
+There was a strong focus on design at the company. Some of that
+work can be found at Tamiko Thiel's page}%; \url{http://www.tamikothiel.com/theory/cm_txts/di-frames.html}}
+
+The CM-2 was launched in 1987 It was configured with up to 512 MB of RAM and 25 GB of RAID
+hard disk space. It had 65K microprocessors (each with 600 bytes of memory). Support for
+32 bit floating point operations meant just over 2048 processors in practice per machine.
+
+By contrast a standard HPC machine accessible at the moment to a university (2017) 
+is measured in nodes each of which 2x12 core Intel Broadwell processors.
+Each node has 128 GB RAM and 120 GB static storage. An accessible 
+cluster of these nodes could include up to 720 nodes. The processors themselves have 
+up to 6,8 or 10 cores with clock speeds on the order of 3 GHz, and, relative to 1987,
+abundant cache space of 10x 256 KiB L2 Cache, and 25 MiB of L3 cache. 
+By comparison a clock speed of 12.5 MHz would be cutting edge in 1987. 
+There could be on the order of 3 billion transistors in a single microprocessor now;
+in 1987 that number would be closer to 100,000. 
+
+The constant development of computing capacity is an important component of enabling
+{\it ab initio} calculations. 
+
+What are the scales involved in connecting atomic systems where quantum mechanics is important
+to macroscopic systems? Chemists arrived at the mol as a convenient unit for describing
+quantities of atoms which is on the order of $10^{23}$ atoms. This is clearly impractical.
+
+More realisitically a suitably macroscopic region for human purposes might be on the 
+order of 200 nm$^{3}$ of material. A sample of 
+material of this size is of the same order as the wavelength of visible light and could be
+resolved with an optical microscope. Thus a dynamical simulation of around 8 billion atoms
+done using quantum mechanics could be considered a quantum mechanical simulation of
+a macroscopic system. If computer technology continues developing at the same rate it has
+over the previous 30 years than within 60 years, with no developements in the numerical
+algorithms their efficiency etc., quantum mechanical simulations of systems of these 
+size should be feasible. I am not so sure that the same changes in computing
+power can be expected. Much like the leveling off of transport technology from
+horse, to train, to plane. A flight from the UK to England may have taken 12 hours
+50 years ago. Now it takes 7. The improvement is incremental 
+%and unlikely to change
+%significantly in the next 60 years (if anything it will become slower).
+
+The development in computing hardware is in some ways the easy part to chart. 
+Clock speeds, transistor density, and the proliferation of high 
+performance computing clusters with fast interconnects have greatly extended 
+the range of problems that can be treated with numerical simulations
+simply by providing more horse power.
 
 Along with advances in hardware there has been contemporaneous methodological developments.
-Compiler optimization, development of modern programming languages, shared libraries, object orientation,
-and tsable open source platforms for code development, testing, and sharing.
+Compiler optimization, development of modern programming languages, 
+shared libraries, object orientation, and stable open source platforms for 
+code development, testing, and sharing. The theoretical advance is more difficult
+to quantify in what exactly it has enabled.
+
+\section{The Rise of Technique}
+Given a really good computer what would you like to do with it?
+
+Write documents and send them to people? Create a system where the computers share files
+with each other? Listen to music? Watch films? Learn Things? Compute things? The latter is in some
+ways becoming a niche application of computers.
+
+What sort of things should a computer compute? Well before things become too philosophical we
+can answer this question definitively.
+For our purposes we wish to calculate O. K. Andersen's wish list, we want to:
+"... compute groundstate properties such as cohesive energies, interatomic forces, charge transfer, and magnetic moments,
+and also excitation spectra described by the one-electron Green's function." \cite{anderson75} 
+Essentially from our point of view computers exist to simulate the behaviour of atoms.
 
 The theoretical engines driving progress in numerical simulations of materials systems are
 largely based on density functional theory, pseudopotentials, and the various numerical algorithms
 for computing the eigenstates of electrons in material systems, and solving the coupled systems
-of linear equations which arise again and again when doing self-consistent electronic structure calculations.
+of linear equations which arise again and again when doing self-consistent 
+electronic structure calculations.
 
 Looking at the citation metrics, foundational papers in the subject
 of DFT and methods number their citations in the tens of thousands, for the 
@@ -58,7 +136,7 @@ a technique that allows for more expedient and accurate calculations to be perfo
 of the the exchange correlation functional.
 
 \begin{table}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|l|l|l|l|}
 \hline
 Paper & Citations & Development & Category\\
 \hline
@@ -115,10 +193,6 @@ If you remain unconvinced of the accuracy of the method one can at least acknowl
 The sheer number of hours people have been engaged in this harmless occupation, dreaming of 
 electrons in an imaginary box, means they have a hobby that keeps them off the streets and out of trouble.
 
-O. K. Andersen expressed the purpose of self-consistent electronic structure calculations was to,
-"... compute groundstate properties such as cohesive energies, interatomic forces, charge transfer, and magnetic moments,
-and also excitation spectra described by the one- electron Green's function." \cite{anderson75} These quantities remain the
-principle goal of calculations and his list is quite comprehensive. 
 
 The computational price paid to obtain these quantities should be considered. If the amount of numerical
 work required to compute the quantities is excessive it becomes difficult to discuss trends in homologous series of materials, perform
