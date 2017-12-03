@@ -1,18 +1,34 @@
-\chapter{Density Functional Theory and the $GW$ approximation}
-\label{chap:dftgw}
+\chapter{The $GW$ approximation}
+\label{chap:gw}
 \noindent
+\section{Introduction}
 In this chapter we discuss the theory underlying the 
-fundamental techniques used in this thesis,
-specifically the use of Density Functional Theory (DFT) 
-and the $GW$ approximation to obtain a 
-quantitative {\it ab initio} description of 
-electronic excitations.
+the $GW$ approximation to obtain a quantitative {\it ab initio} 
+description of electronic excitations. Density functional theory
+is also discussed because it provides a useful starting point for
+performing $GW$ calculations. The guiding principle for treating electron 
+correlation followed here is to start from the "best possible" ground state description
+that can be calculated precisely. This may be a Hartree-Fock ground state,
+a DFT ground state, a ground state computed using some mixture of exact exchange
+and DFT etc. While the Green's function formalism allows for systematic
+inclusion of higher and higher order interactions in keeping with the "materials
+science as a craft" approach it is much more efficient to start from the most 
+favourable position possible: i.e., the best single particle description we can obtain.
 
-DFT has its foundations in the papers of Hohenberg 
-and Kohn~\cite{hohenbergkohn64}, and Kohn and Sham,~\cite{kohnsham65}.
-DFT provides a means for obtaining the ground-state energy of an 
-interacting system of electrons, and provides a formal 
-route to the solution of the many electron Schr\"odinger equation. 
+To make the connection with the tight-binding recursion method 
+we need to transform our ground state (however it might be obtained), into a
+Hamiltonian capable of being written in terms of local interactions. This work
+we leave to subsequent chapters. Presently we just want demonstrate how the $GW$
+approximation is derived.
+
+\section{Density Functional Theory}
+\subsection{Hohenberg-Kohn theorem}
+
+Density Functional Theory (DFT) has its foundations in the papers of Hohenberg
+and Kohn~\cite{hohenbergkohn64}, and Kohn and Sham~\cite{kohnsham65}.
+DFT provides a means for obtaining the ground-state energy of an
+interacting system of electrons, and provides a formal
+route to the solution of the many electron Schr\"odinger equation.
 In this chapter we discuss the theory of obtaining ground-state 
 properties for an interacting electronic system using DFT, and 
 some of the fundamental limitations of the method. In 
@@ -35,16 +51,14 @@ the $GW$ approximation follows, we examine the equation of motion for the Green'
 construct a closed loop of equations which contain all the effects of the
 electron-electron interaction. 
 
-\section{Density Functional Theory}
-\subsection{Hohenberg-Kohn theorem}
 \noindent
 \label{sec:hohnkohn}
 In Ref.~\cite{hohenbergkohn64} a proof is presented that the ground-state
 energy of a system of interacting electrons
 in a fixed external potential is a unique functional of the electronic density $n(\r)$,
 with $\r$ being the position vector.
-According to Hohenberg and Kohn the ground-state energy 
-as a functional of the density can be written:
+According to Hohenberg and Kohn the ground-state energy as a 
+functional of the density can be written:
 %
 \begin{equation}
 \label{eq:hkenergy}
@@ -356,7 +370,7 @@ a particular state of the $N+1$ or $N-1$ electron system.
 %
 \begin{figure}[tb]
 \begin{center}
-\includegraphics[scale=1.0]{./chap2/figures/greenpoles.pdf}
+\includegraphics[scale=1.0]{./gw/greenpoles.pdf}
 \end{center}
 \caption{\small \label{fig:greenpoles} Pole structure 
 of the Green's function. 

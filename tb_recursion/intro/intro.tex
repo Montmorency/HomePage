@@ -1,7 +1,7 @@
 \chapter{Introduction}
 \section{Electronic Structure for Materials Science}
 In 1987 Henry Ehrenreich published an article in Science called
-"Electronic Theory for Materials Science". The article begins
+``Electronic Theory for Materials Science". The article begins
 with what might now be considered a bold statement:
 
 \begin{quote}
@@ -10,26 +10,33 @@ Theoretical Materials Science remains to be invented as a discipline, and for go
 
 The reason he supplies is that materials processing, historically, was a craft. 
 Roman engineers could manufacture concrete which was in some ways superior to that
-made today without any specific knowledge of the microstructure of the material.
-A blacksmith learned that the hardness of swords and shields could be manipulated 
-by the alloying of metals and precise control of heat. This expertise was not accumulated 
-based on reasoning from first principles but based on experience, trial and error, 
-and general trade craft.
+made today. This was done without any specific knowledge of the microstructure and chemistry 
+of its concrete. Similarly, a blacksmith learned that the hardness of swords and shields could be manipulated 
+by the alloying of metals and precise control of heat; yet had limited conception of 
+the atomic composition of the weapons or the size and character of the metallic grains. 
+In each case the material practitioner's expertise was not accumulated based on reasoning 
+from first principles but based on experience, trial and error, and craft.
 
-A satisfactory atomic theory and the techniques to solve the equations which arise in that theory
-have only arisen in the last 100 years. Over the past 40 years the possibility of constructing
-accurate models of materials systems beginning from the arrangment of the constituent atoms has
-driven a great deal of what is sometimes called first principles or {\it ab initio} modelling.
+A comprehensive atomic theory describing the way atoms bind, the forces acting on them, 
+and the techniques to solve these equations has only arisen in the last 100 years. 
+Over the past 40 years the combination of the theory and access to computers 
+means the possibility of constructing accurate models of materials 
+systems beginning from the arrangment of the constituent atoms has
+progressed giving rise to the large field of first principles or {\it ab initio} modelling.
 
 The extent to which theoretical materials science as a discipline has evolved is worth examining. 
 It is important because the character of this evolution dictates which directions of research may prove most
-immediately fruitful. It is also important because it allows researchers to identify the many avenues
-where people are going backwards, obscuring knowledge, and in some sense unlearning or convoluting 
+immediately fruitful. It is also important because it allows researchers to identify the avenues
+of research that are inefficient, that are potentially obscuring knowledge, and convoluting 
 what is already understood. 
+
+The rapid growth of the field is interesting in itself as it has taken place along side
+the explosion of computational resources in the form of high performance computing machines.
 
 To chart this evolution we may begin from Ehrenreich's survey of the field from 30 years ago.
 
-Ehrenreich identified four points that characterized the state of the field of material science at the time:
+Ehrenreich identified four points that either characterized the state of the field of material science at the time
+or constituted essential principles that a satisfactory theory of materials must uphold:
 %
 \begin{enumerate}[i)]
 \item Theory must be closely linked to experiment.
@@ -44,11 +51,13 @@ It is worth while considering how the intervening 30 years may have adjusted som
 these priorities and characterize the current state of the field.
 
 \section{The Rise of the Computer}
-The intervening thirty years has seen an enormous extension of 
-computing capacity. 
+The first point to address is the development in ab initio techniques.
+The intervening thirty years has seen an enormous extension of computing capacity. 
 
-Around the time Ehrenreich was writing an example of a 
-state of the art computer would be the Connection Machine.
+To demonstrate this we may contrast the machines available at the time
+he was writing to those that are available now. 
+
+In 1987 an example of a state of the art computer would be the Connection Machine.
 \footnote{One of the employees at Thinking Machines Corporation,
 the company building the connection machine, was Richard Feynman.
 For an interesting discussion of the work they
@@ -58,40 +67,55 @@ There was a strong focus on design at the company. Some of that
 work can be found at Tamiko Thiel's page}%; \url{http://www.tamikothiel.com/theory/cm_txts/di-frames.html}}
 
 The CM-2 was launched in 1987 It was configured with up to 512 MB of RAM and 25 GB of RAID
-hard disk space. It had 65K microprocessors (each with 600 bytes of memory). Support for
-32 bit floating point operations meant just over 2048 processors in practice per machine.
+hard disk space. It had 65K microprocessors (each with 600 bytes of memory). 
+%Support for 32 bit floating point operations meant just over 2048 processors in practice per machine.
 
 By contrast a standard HPC machine accessible at the moment to a university (2017) 
-is measured in nodes each of which 2x12 core Intel Broadwell processors.
+is more easily measured in nodes. Each node in a machine has 2x12 core Intel Broadwell processors.
 Each node has 128 GB RAM and 120 GB static storage. An accessible 
 cluster of these nodes could include up to 720 nodes. The processors themselves have 
 up to 6,8 or 10 cores with clock speeds on the order of 3 GHz, and, relative to 1987,
 abundant cache space of 10x 256 KiB L2 Cache, and 25 MiB of L3 cache. 
 By comparison a clock speed of 12.5 MHz would be cutting edge in 1987. 
 There could be on the order of 3 billion transistors in a single microprocessor now;
-in 1987 that number would be closer to 100,000. 
+in 1987 that number would be closer to 100,000. Listing specifications doesn't
+necessarily clarify how much more powerful machines have becomes but it is striking
+that in terms of speed, storage, and transistor density there are 3-5 orders of magnitude 
+improvements. The stability and optimization of compilers and the ease of programmability
+of the machines has also improved.
 
-The constant development of computing capacity is an important component of enabling
+This constant development of computing capacity has played an important component in enabling
 {\it ab initio} calculations. 
 
 What are the scales involved in connecting atomic systems where quantum mechanics is important
 to macroscopic systems? Chemists arrived at the mol as a convenient unit for describing
 quantities of atoms which is on the order of $10^{23}$ atoms. This is clearly impractical.
 
-More realisitically a suitably macroscopic region for human purposes might be on the 
-order of 200 nm$^{3}$ of material. A sample of 
-material of this size is of the same order as the wavelength of visible light and could be
-resolved with an optical microscope. Thus a dynamical simulation of around 8 billion atoms
-done using quantum mechanics could be considered a quantum mechanical simulation of
-a macroscopic system. If computer technology continues developing at the same rate it has
+More realisitically a suitably macroscopic specimen might be considered to be on the 
+order of 200 nm$^{3}$ of material. A sample of material of this size is of the 
+same order as the wavelength of visible light and could be
+resolved with an optical microscope. Assuming an atomic spacing of 1 tenth of a nanometer 
+a dynamical simulation of around 8 billion atoms done using quantum mechanics 
+could be considered a quantum mechanical simulation of a macroscopic system. 
+
+At present the dynamical simulation of a system of 1000 atoms for a few picoseconds 
+might take around a month of computing time. 
+
+If computer technology continues developing at the same rate it has
 over the previous 30 years than within 60 years, with no developements in the numerical
-algorithms their efficiency etc., quantum mechanical simulations of systems of these 
-size should be feasible. I am not so sure that the same changes in computing
-power can be expected. Much like the leveling off of transport technology from
-horse, to train, to plane. A flight from the UK to England may have taken 12 hours
-50 years ago. Now it takes 7. The improvement is incremental 
-%and unlikely to change
-%significantly in the next 60 years (if anything it will become slower).
+algorithms quantum mechanical simulations of systems of
+8 million atoms might be feasible. Although extending the time scales from picoseconds
+(10^{-12}) to seconds would require another 12 orders of magnitude improvement.
+
+These considerations are artificial for two important reasons. The first
+is I strongly suspect computational power will not continue developing at the rate
+seen over the previous 30 years. The second is that even if they did continue developing
+at this rate simulations of the nature described would almost certainly be entirely pointless.
+The objective of {\it ab initio} modeling is to extract meaningful information
+about trends and characteristic material properties. Massive simulations may very
+well obscure reasoning and consume resources without providing insight. Sec.~\ref{sec:bayes}
+discusses possible criterion for assessing the quality of an {\it ab initio} model. 
+
 
 The development in computing hardware is in some ways the easy part to chart. 
 Clock speeds, transistor density, and the proliferation of high 
@@ -100,12 +124,12 @@ the range of problems that can be treated with numerical simulations
 simply by providing more horse power.
 
 Along with advances in hardware there has been contemporaneous methodological developments.
-Compiler optimization, development of modern programming languages, 
+These include compiler optimization, development of modern programming languages, 
 shared libraries, object orientation, and stable open source platforms for 
-code development, testing, and sharing. The theoretical advance is more difficult
-to quantify in what exactly it has enabled.
+code development, testing, and sharing. The important theoretical
+advances are more difficult to quantify in what exactly they are and what they have enabled.
 
-\section{The Rise of Technique}
+\section{Computational Craft}
 Given a really good computer what would you like to do with it?
 
 Write documents and send them to people? Create a system where the computers share files
@@ -114,21 +138,19 @@ ways becoming a niche application of computers.
 
 What sort of things should a computer compute? Well before things become too philosophical we
 can answer this question definitively.
-For our purposes we wish to calculate O. K. Andersen's wish list, we want to:
+O. K. Andersen provided a theoretical material scientist's wish list. One would like to,
 "... compute groundstate properties such as cohesive energies, interatomic forces, charge transfer, and magnetic moments,
 and also excitation spectra described by the one-electron Green's function." \cite{anderson75} 
 Essentially from our point of view computers exist to simulate the behaviour of atoms.
 
 The theoretical engines driving progress in numerical simulations of materials systems are
-largely based on density functional theory, pseudopotentials, and the various numerical algorithms
-for computing the eigenstates of electrons in material systems, and solving the coupled systems
-of linear equations which arise again and again when doing self-consistent 
-electronic structure calculations.
+largely based on density functional theory, effective treatment of core-valence electronic interactions,
+and the various numerical algorithms for computing the eigenstates of electrons in material 
+systems, and solving the coupled systems of linear equations which arise 
+again and again when doing self-consistent electronic structure calculations.
 
-Looking at the citation metrics, foundational papers in the subject
-of DFT and methods number their citations in the tens of thousands, for the 
-theoretical and algorithmic improvements improvements are sufficient testament 
-to the reach and fundamental nature of {\it ab initio} calculations. 
+Looking at the citation metrics, foundational papers in theoretical materials science
+number their citations in the tens of thousands.
 Table~\ref{tab:foundation} lists some of the papers in the field which, as
 their citation count suggests, have enabled subsequent research. These techniques fall into
 three categories, they are either theoretical justification for a calculation scheme, the description of
@@ -247,8 +269,8 @@ The posterior on the parameters of the model can be assessed:
 P(\mathbf{w}|D, \mathcal{H}_{i}) = \frac{P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H})}{P(D|\mathcal{H}_{i})},
 \end{equation}
 %
-where D, the target data, can constitute a combination of {\it ab initio} and experimental data. Eq.~\ref{eq:bayes}
-McKay summarises as:
+where D, the target data, can constitute a combination of {\it ab initio} and experimental data. 
+Eq.~\ref{eq:bayes} McKay summarises as:
 \begin{equation}
 {\rm Posterior} = \frac{{\rm Likelihood} \times {\rm Prior}}{{\rm Evidence}}
 \end{equation}
@@ -264,4 +286,18 @@ P(D|\mathcal{H}_{i}) = P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H}_
 \end{equation}
 %
 Models (hypotheses) of material systems can then be ranked according to Eq.~\ref{eq:bayesH}.
+
+\section{Prospective}
+The purpose of these notes are to establish a comprehensive framework 
+for incorporating knowledge about material systems.
+The general procedure is to use ab initio data to map 
+to rigorous local models of the atomic environment. The local models
+of atomic interaction become easier to store, physical intuition is clarified
+and the knowledge obtained becomes persistent. Finally the quality of the models
+can be quantified and improved systematically with reference to experiment using
+inference techniques.
+
+Subsequent chapters will discuss the theory underlying each of these planks; a
+theory of the local atomic environment, a theory of electronic excitations, long
+range order in material systems, and bayesian techniques.
 
