@@ -1,0 +1,49 @@
+\documentclass[a4paper,11pt]{book}
+\usepackage{graphicx}
+\usepackage{epsf}
+\usepackage{tocbibind}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tools/fancyhdr}
+\usepackage{tools/appendix}
+\usepackage{setspace}
+\usepackage{subfigure}
+\usepackage{enumerate}
+\include{tools/dimensions}
+\include{tools/defs}
+\include{tools/hmod}
+\usepackage[sort&compress]{natbib}
+\setlength{\bibsep}{0.0pt}
+\bibpunct{[}{]}{,}{n}{,}{,}
+
+\begin{document}
+\frontmatter
+\title{Electronic Structure From the Perspective of the Local Environment}
+\author{Henry Lambert \\
+\vspace{0.2cm} \\
+King's College London
+}
+
+\maketitle
+\pagenumbering{roman}
+\makeatletter
+\tableofcontents
+
+\mainmatter
+\pagenumbering{arabic}
+
+\include{intro/intro}
+\include{invariance/invariance}
+\include{GW/gw}
+\include{ODLR/odlr}
+%\include{metallurgy}
+%\include{bayes}
+
+\bibliographystyle{cj}
+\bibliography{./bibli/biblio.bib}
+\end{document}
+

@@ -69,5 +69,8 @@ sorb_extracts = [("shakespeare", "A beggar's book out-worths a noble's blood.", 
 ("wodehouse", "We Scripture-knowledge sharks stick together.", "Right Ho, Jeeves"),
 ("wodehouse", "It was impossible for him to have won the Scripture-knowledge prize without systematic cheating on an impressive scale.",
 "Right Ho, Jeeves"),
+("bible", "I have been a stranger in a strange land.", "Exodus 2:22"),
+("bible", "Because there were no graves in Egypt, hast thou taken us away to die in the wilderness?", "Exodus 14:11"),
+("bible", "he hath triumphed gloriously: the horse and his rider hath he thrown into the sea.","Exodus 15:1"),
 ("shakespeare", "He hath the horn of abundance, and the lightness of his wife shines through it: and yet cannot he see, though he have his own lantern to him", "Henry iv part 2 1:2")
 ]
