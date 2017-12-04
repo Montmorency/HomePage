@@ -1,255 +1,117 @@
-  THE ROUTINES  IN THE  LIBRARY  FALL INTO TWO  CATEGORIES : THOSE
-
-WHICH  ASSIST  IN THE SETTING  UP OF THE  PROBLEM, AND THOSE WHICH
-
-COMPUTE  FROM THE  CALCULATED  COEFFICIENTS  THE  LOCAL DENSITY OF
-
-STATES AND RELATED  FUNCTIONS. THESE ARE  DESCRIBED  SEPARATELY IN
-
-THE FOLLOWING TWO SECTIONS.
-
-  THERE EXISTS IN THE LITERATURE SOME SLIGHT CONFUSION OF NOTATION,
-
-BUT THAT USED IN THE LIBRARY IS  CONSISTENT WITHIN ITSELF AND WITH
-
-THE RECURSION FORMULA :
-
-   B(N+1).PSI(N+1) = ( H - A(N) ).PSI(N) - B(N).PSI(N-1) ,N=0,1,..
-
-WHERE  A(N) = <PSI(N),H.PSI(N)>  AND  B(N+1)  IS  CHOSEN SUCH THAT
-
-<PSI(N+1),PSI(N+1)>=1. PSI(-1) (=0) AND PSI(0) ARE GIVEN.
-
-(WITHIN THE FORTRAN THE SUBSCRIPTS ARE INCREASED BY 1 TO CONFORM TO
-
-FORTRAN IV CONVENTION, ALTHOUGH ALL ROUTINES HAVE ALSO RUN IN
-
-FORTRAN 77 UNDER THE IBM VS COMPILER)
-
-
-
-
-
-
-
-
-
-1.2: PROBLEM INITIALISATION ROUTINES
-
-
-
-
-
-  THE  SYSTEM  ADOPTED  FOR THE SETTING  UP OF THE PROBLEM FOR THE
-
-APPLICATION  OF  THE  RECURSION  METHOD  CONSISTS OF A  LIBRARY OF
-
-ROUTINES  DIVIDED  INTO THREE  SECTIONS , WITH ONLY A SUBSET BEING
-
-USED IN ANY ONE PROBLEM , AND FOR SOME PROBLEMS THE USER SUPPLYING
-
-HIS OWN ROUTINES  TO REPLACE  AND  SUPPLEMENT  SOME OF THE LIBRARY
-
-ONES. THE THREE GROUPS OF ROUTINES ARE AS FOLLOWS: THE FIRST SERVE
-
-TO DEFINE A CLUSTER OF 'ATOM SITES' , THE NEXT SET UP A 'NEIGHBOUR
-
-MAP ' ( OR  MATRIX  SPARSITY  PATTERN ) , AND THE  LAST SET UP THE
-
-COMPONENT SUBMATRICES OF THE HAMILTONIAN . THE APPROPRIATE RESULTS
-
-OF THESE ROUTINES ARE LOADED BY THE USER INTO A COMMON BLOCK WHICH
-
-SHOULD THEN CONTAIN ALL THE  INFORMATION  NECESSARY  TO DEFINE THE
-
-MATRIX  REPRESENTATION OF THE HAMILTONIAN.THIS IS THEN USED BY THE
-
-SUBROUTINE  AT THE  HEART  OF THE  RECURSION  LIBRARY ( RECAL ) TO
-
-OPERATE   WITH  THE   HAMILTONIAN   AND   PRODUCE   THE  RECURSION
-
-COEFFICIENTS.
-
-
-
-
-
-
-
-1.2.1 SUBROUTINES FOR GENERATING A CLUSTER :
-
-
-
-
-
-  BCCLAT  AND  FCCLAT  GENERATE  CUBOID  CLUSTERS IN  BCC AND  FCC
-
-LATTICES RESPECTIVELY . MORE EXOTIC CLUSTER SHAPES MAY BE OBTAINED
-
-BY  USE   OF  THE   FOLLOWING   ROUTINES   BUT  THEIR   USE  NEEDS
-
-JUSTIFICATION . ONION  WILL  CLASSIFY  EACH  ATOM ACCORDING TO THE
-
-NUMBER OF 'HOPS' FROM A GIVEN  GROUP  OF 'CENTRAL' ATOMS , BUT CAN
-
-ONLY BE USED  AFTER  THE ATOM 'NEIGHBOURS' HAVE BEEN DEFINED (E.G.
-
-BY NNCAL - SEE  BELOW ) ; PEEL  EXCISES  ATOMS  FROM A CLUSTER AND
-
-RENUMBERS THE REMAINING ONES . THE LAST TWO ROUTINES MAY BE USEFUL
-
-TO  USERS  WITH  PARTICULAR  CLUSTER-SHAPE  REQUIREMENTS , BUT  IN
-
-GENERAL  THE  CUBOID CLUSTERS  HAVE PROVED SATISFACTORY FOR ALMOST
-
-ALL APPLICATIONS TO DATE.
-
-
-
-
-
-
-
-1.2.2 THE SETTING-UP OF THE HAMILTONIAN MATRIX.
-
-
-
-
-
-NNCAL IS THE CENTRAL  SUBROUTINE USED TO SET UP A 'NEIGHBOUR MAP'
-
-OF THE ATOM CLUSTER. THIS USES ANOTHER ROUTINE ('IBONDS') DEFINING
-
-THE NEIGHBOUR  CRITERION ; THIS MAY BE REPLACED  BY THE USER  WITH
-
-MORE  PARTICULAR   REQUIREMENTS ( I.E. FIRST  AND  SECOND  NEAREST
-
-NEIGHBOURS) OR A DIFFERENT LATTICE . ONCE THE NEIGHBOUR MAP IS SET
-
-UP, THE NON-EQUIVALENT  INTERACTIONS  MAY BE  SET UP  USING MMCAL.
-
-THE 'EQUIVALENCE' OF TWO  INTERACTIONS  IS DEFINED  IN  A  ROUTINE
-
-'EQUIV' WHICH  AGAIN  MAY  BE  REPLACED  BY A USER  WITH  SPECIFIC
-
-REQUIREMENTS . MMCAL  GENERATES A LIST OF  NON-EQUIVALENT  VECTORS
-
-WHICH MAY THEN BE  USED  TO SET UP THE 'INTERACTION BLOCKS' OF THE
-
-HAMILTONIAN  MATRIX, FOR INSTANCE AS IN SLKODE TO GIVE THE SLATER-
-
-KOSTER  INTERACTION  MATRICES  FOR THE  5 D-ORBITALS . SUBROUTINES
-
-GENERATING THE THE S,P OR D SLATER-KOSTER MATRICES ARE SUPPLIED IN
-
-THE LIBRARY AND HAVE NAMES STARTING SK-- .
-
-   THE ESSENTIAL INFORMATION DEFINING THE HAMILTONIAN MATRIX FOR A
-
-REGULAR LATTICE MAY BE SET UP BY THE ROUTINE SETUP AND  AMENDMENTS
-
-TO THE MATRIX MADE USING ADDAT, ORPEEL OR PEEL (ADDING OR EXCISING
-
-ATOMS FROM THE CLUSTER ) . FOR A RANDOM SYSTEM AN ALTERNATIVE FORM
-
-OF STORAGE OF THE  HAMILTONIAN  MATRIX IS PROBABLY MORE  EFFICIENT
-
-AND ROUTINES SCAN AND SCAN1 ARE SUPPLIED TO FACILITATE THE SETTING
-
-UP AND OPERATION OF THE MATRIX OF SUCH A PROBLEM.
-
-
-
-
-
-
-
-1.2.3 GENERATION OF RECURSION COEFFICIENTS.
-
-
-
-
-
-  THE APPROPRIATE  RESULTS OF THE ABOVE SUBROUTINES SHOULD THEN BE
-
-LOADED BY THE USER INTO  A  COMMON  BLOCK  AND USED BY A ROUTINE ,
-
-SUCH  AS  HOP  OF  THE  EXAMPLE  RUN , TO SUPPLY  THE  HAMILTONIAN
-
-OPERATOR REQUIRED BY THE ACTUAL RECURSION SUBROUTINE, RECAL.
-
-
-
-
-
-
-
-
-
-
-
-1.3: PROCESSING THE RECURSION COEFFICIENTS.
-
-
-
-
-
-
-
-TWO  METHODS  ARE  PROVIDED  FOR  THE   CALCULATION  OF THE LOCAL
-
-DENSITY OF STATES : TERMINOR AND QUADRATURE, AS DESCRIBED IN NEX(3).
-
-IF INTEGRALS ARE THE FINAL OBJECT OF THE CALCULATION THEN QUADRATURE
-
-(DENQD) IS APPROPRIATE , WHILE TO ESTIMATE THE DENSITY ITSELF WITH
-
-SECURE KNOWLEDGE OF THE BAND-GAPS THE ANALYTIC TERMINATOR(DENSQ OR
-
-DENCRS) CAN BE USED.
-
-  IF THE SUM OF SEVERAL DENSITIES OF STATES IS REQUIRED (E.G. OVER
-
-SEVERAL ORBITALS), THIS AGAIN MAY BE DONE EFFICIENTLY BY 'SUMMING'
-
-THEIR TRIDIAGONALISATIONS  USING RECSUM TO PRODUCE A RESULTANT SET
-
-OF COEFFICIENTS . IF THE  FUNCTIONS  SUMMED  ARE VERY DIFFERENT IN
-
-CHARACTER, THIS MAY INTRODUCE SIGNIFICANT ERROR, IN WHICH CASE THE
-
-FUNCTIONS SHOULD BE TABULATED SEPARATELY , BUT AGAIN FOR GRAPHICAL
-
-PURPOSES THE RESULTS OF RECSUM ARE USUALLY ADEQUATE.
-
-  FOR QUANTITATIVE WORK , ONLY THE  INTEGRATED DENSITY OF STATES ,
-
-N(E), FUNCTION VALUES SHOULD BE RELIED ON, AND ANY OTHER FUNCTIONS
-
-COMPUTED FROM THIS ONE. IT SHOULD BE NOTED THAT THE APPROXIMATIONS
-
-OBTAINED FROM THE QUADRATURE  FORMULA ARE NOT ANALYTICALLY RELATED
-
-IN THE WAY ONE MIGHT EXPECT:
-
-
-
-
-
-INTEGRAL E N(E) DE DOES NOT EQUAL    E N(E) - INTEGRAL N(E) DE
-
-
-
-
-
-WHERE THE L.H.S AND N(E) REPRESENT VALUES  OBTAINED DIRECTLY  FROM
-
-DENQD. SUCH IDENTITIES ARE USUALLY SATISFIED APPROXIMATELY, BUT IF
-
-PRECISE ANALYTICITY  IS DEMANDED THE  APPROXIMATION TO N(E) SHOULD
-
-BE TAKEN  AND ALL  OTHER RESULTS  COMPUTED  DIRECTLY FROM IT . THE
-
-EXCEPTION IS THAT D/DE N(E) = N(E) BY DEFINITION .
-
+The routines in the library fall into two categories: those
+which assist in the setting up of the problem, and those which
+compute from the calculated coefficients the local density of
+states and related functions. These are described separately in
+the following two sections. There exists in the literature some slight confusion of notation,
+but that used in the library is consistent within itself and with
+the recursion formula:
+
+  b(n+1)\psi(n+1) = (H - a(n))\psi(n) - b(n)\psi(n-1) , n=0,1,.
+  
+  Where a(n) = <psi(n),H \psi(n)> and b(n+1) is chosen such that
+<\psi(n+1),\psi(n+1)> = 1. \psi(-1) (=0) and psi(0) are given. 
+
+(Within the Fortran the subscripts are increased by 1 to conform to
+Fortran IV convention, although all routines have also run in
+Fortran 77 under the IBM vs compiler)
+
+
+Problem Initialisation Routines
+---------------------------------
+
+ The system adopted for the setting up of the problem for the
+application of the recursion method consists of a library of
+routines divided into three sections, with only a subset being
+used in any one problem , and for some problems the user supplying
+his own routines to replace and supplement some of the library
+ones. The three groups of routines are as follows: the first serve
+to define a cluster of 'atom sites', the next set up a 'neighbour
+map' ( or matrix sparsity pattern ) , and the last set up the
+component submatrices of the Hamiltonian. The appropriate results
+of these routines are loaded by the user into a common block which
+should then contain all the information necessary to define the
+matrix representation of the Hamiltonian. This is then used by the
+subroutine at the heart of the recursion library ( :rec:`RECAL` ) to
+operate  with the  Hamiltonian  and  produce  the recursion
+coefficients. 
+
+Subroutines for Generating a Cluster 
+-------------------------------------
+
+ :rec:`BCCLAT` and :rec:`FCCLAT` generate cuboid clusters in bcc and fcc
+lattices respectively. More exotic cluster shapes may be obtained
+by use  of the  following  routines  but their  use needs
+justification. Onion will classify each atom according to the
+number of 'hops' from a given group of 'central' atoms , but can
+only be used after the atom 'neighbours' have been defined 
+(e.g. by :rec:`NNCAL` - see below); rec:`PEEL` excises atoms from a cluster and
+renumbers the remaining ones. The last two routines may be useful
+to users with particular cluster-shape requirements , but in
+general the cuboid clusters have proved satisfactory for almost
+all applications to date. 
+
+Setting-up of the Hamiltonian matrix. 
+--------------------------------------
+
+:rec:`NNCAL` is the central subroutine used to set up a 'neighbour map'
+of the atom cluster. This uses another routine (:rec:`IBONDS`) defining
+the neighbour criterion; this may be replaced by the user with
+more particular requirements (i. e. first and second nearest
+neighbours) or a different lattice.
+
+Once the neighbour map is set up, the non-equivalent interactions 
+may be set up using :rec:`MMCAL`. The 'equivalence' of two interactions 
+is defined in a routine :rec:`EQUIV` which again may be replaced by a user with specific
+requirements. :rec:`MMCAL` generates a list of non-equivalent vectors
+which may then be used to set up the 'interaction blocks' of the
+Hamiltonian matrix, for instance as in :rec:`SLKODE` to give the Slater-
+Koster interaction matrices for the 5 d-orbitals. Subroutines
+generating the s, p or d Slater-Koster matrices are supplied in
+the library and have names starting sk--. The essential information 
+defining the Hamiltonian matrix for a
+regular lattice may be set up by the routine :rec:`SETUP` and amendments
+to the matrix made using :rec:`ADDAT`, :rec:`ORPEEL` or :rec:`PEEL` 
+(adding or excising atoms from the cluster ). 
+
+For a random system an alternative form of storage of the Hamiltonian 
+matrix is probably more efficient and routines :rec:`SCAN` and :rec:`SCAN1` 
+are supplied to facilitate the setting up and operation of the 
+matrix of such a problem. 
+
+Generation of Recursion Coefficients 
+-------------------------------------
+
+The appropriate results of the above subroutines should then be
+loaded by the user into a common block and used by a routine ,
+such as :rec:`HOP` of the example run, to supply the Hamiltonian
+operator required by the actual recursion subroutine, :rec:`RECAL`. 
+
+Processing the Recursion Coefficients 
+----------------------------------------
+
+Two methods are provided for the  calculation of the local
+density of states : terminor and quadrature, as described in Nex(3). 
+If integrals are the final object of the calculation then quadrature
+(:rec:`DENQD`) is appropriate , while to estimate the density itself with
+secure knowledge of the band-gaps the analytic terminator (:rec:`DENSQ` or
+:rec:`DENCRS`) can be used. If the sum of several densities of states is required 
+(e.g. over several orbitals), this again may be done efficiently by 'summing'
+their tridiagonalisations using :rec:`RECSUM` to produce a resultant set
+of coefficients. If the functions summed are very different in
+character, this may introduce significant error, in which case the
+functions should be tabulated separately , but again for graphical
+purposes the results of :rec:`RECSUM` are usually adequate.
+For quantitative work , only the integrated density of states,
+N(E), function values should be relied on, and any other functions
+computed from this one. It should be noted that the approximations
+obtained from the quadrature formula are not analytically related
+in the way one might expect:
+
+\int E N(E)dE \neq  E N(E) - \int N(E)dE
+
+where the L.H.S and N(E) represent values obtained directly from
+:rec:`DENQD`. Such identities are usually satisfied approximately, but if
+precise analyticity is demanded the approximation to N(E) should
+be taken and all other results computed directly from it. The
+exception is that d/de N(E) = N(E) by definition. 
 

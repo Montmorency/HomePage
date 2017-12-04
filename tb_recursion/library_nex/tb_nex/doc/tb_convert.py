@@ -2,6 +2,10 @@ import os
 import sys
 import string
 
+#These routines are meant to change from the ALLCAPS notes in the original
+#recursion library to the more human readable/internet friendly .rst format.
+
+
 def swap_rst(fname='preface.rst'):
   with open(fname, 'r') as f:
     file_str = f.read()

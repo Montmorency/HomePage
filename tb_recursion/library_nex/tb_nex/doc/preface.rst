@@ -1,56 +1,37 @@
-  THE RECURSION SUBROUTINE LIBRARY CONTAINS ROUTINES TO ENABLE THE
+Preface
+=======
 
-COMPUTATION OF THE  INTEGRATED  DENSITY OF STATES AND INTEGRALS OF
+The recursion subroutine library contains routines to enable the
+computation of the  integrated  density of states and integrals of
+an arbitrary  function times the density of states to be effected. 
+The  appropriate  Hamiltonians  are those for a finite (60 - 6000)
+cluster of atoms with n orbitals ( 1 - 10 or more) and 'neighbour'
+interactions , giving  an effective  large , sparse  matrix eigen-
+problem for which is  required  the  distribution  of  eigenvalues
+corresponding to the  local density of states. The  mathematics of
+the  recursion  method  is  described  in  Heine, Haydock, kelly &
+Bullett (1) and of the computation of integrals in Nex (2). For a
+description  of  the  basic  mathematical  routines  see  Nex (3),
+although there are a few additional specialised  routines included
+in this collection. Two independant parameters at the disposal of the user, giving a
+control on the  accuracy , are the  size of the  cluster  and  the
+'number of levels' in  the  recursion. The  appropriate  values of
+these  parameters will vary from  problem to problem  depending on
+the Hamiltonian, the  nature of the  lattice, and of the  physical
+quantity  of  interest  ultimately  being  computed, and should be
+determined by some trial runs of the program. For five d-electrons
+per site in fcc and bcc clusters and the calculation of structural
+energies it has been  found that the number of levels  appropriate
+is  2-5 times the 'radius' of the cluster (in numbers of atoms) in
+cuboid  clusters. A  mathematically  exact  error  bound  on  the
+integrated   density  of  states   is  available   if  only  exact
+coefficients are used , but , as is the nature of such quantities,
+this  bound is  pessimistic , usually  by  at  least  an  order of
+magnitude. 
 
-AN ARBITRARY  FUNCTION TIMES THE DENSITY OF STATES TO BE EFFECTED.
+References
+==========
 
-THE  APPROPRIATE  HAMILTONIANS  ARE THOSE FOR A FINITE (60 - 6000)
-
-CLUSTER OF ATOMS WITH N ORBITALS ( 1 - 10 OR MORE) AND 'NEIGHBOUR'
-
-INTERACTIONS , GIVING  AN EFFECTIVE  LARGE , SPARSE  MATRIX EIGEN-
-
-PROBLEM FOR WHICH IS  REQUIRED  THE  DISTRIBUTION  OF  EIGENVALUES
-
-CORRESPONDING TO THE  LOCAL DENSITY OF STATES. THE  MATHEMATICS OF
-
-THE  RECURSION  METHOD  IS  DESCRIBED  IN  HEINE, HAYDOCK, KELLY &
-
-BULLETT (1) AND OF THE COMPUTATION OF INTEGRALS IN NEX (2).  FOR A
-
-DESCRIPTION  OF  THE  BASIC  MATHEMATICAL  ROUTINES  SEE  NEX (3),
-
-ALTHOUGH THERE ARE A FEW ADDITIONAL SPECIALISED  ROUTINES INCLUDED
-
-IN THIS COLLECTION.
-
-  TWO INDEPENDANT PARAMETERS AT THE DISPOSAL OF THE USER, GIVING A
-
-CONTROL ON THE  ACCURACY , ARE THE  SIZE OF THE  CLUSTER  AND  THE
-
-'NUMBER OF LEVELS' IN  THE  RECURSION. THE  APPROPRIATE  VALUES OF
-
-THESE  PARAMETERS WILL VARY FROM  PROBLEM TO PROBLEM  DEPENDING ON
-
-THE HAMILTONIAN, THE  NATURE OF THE  LATTICE, AND OF THE  PHYSICAL
-
-QUANTITY  OF  INTEREST  ULTIMATELY  BEING  COMPUTED, AND SHOULD BE
-
-DETERMINED BY SOME TRIAL RUNS OF THE PROGRAM. FOR FIVE D-ELECTRONS
-
-PER SITE IN FCC AND BCC CLUSTERS AND THE CALCULATION OF STRUCTURAL
-
-ENERGIES IT HAS BEEN  FOUND THAT THE NUMBER OF LEVELS  APPROPRIATE
-
-IS  2-5 TIMES THE 'RADIUS' OF THE CLUSTER (IN NUMBERS OF ATOMS) IN
-
-CUBOID  CLUSTERS . A  MATHEMATICALLY  EXACT  ERROR  BOUND  ON  THE
-
-INTEGRATED   DENSITY  OF  STATES   IS  AVAILABLE   IF  ONLY  EXACT
-
-COEFFICIENTS ARE USED , BUT , AS IS THE NATURE OF SUCH QUANTITIES,
-
-THIS  BOUND IS  PESSIMISTIC , USUALLY  BY  AT  LEAST  AN  ORDER OF
-
-MAGNITUDE.
-
+1. HEINE,HAYDOCK,KELLY & BULLETT  SOLID STATE PHYSICS VOL.35 (1979)
+2. NEX C.M.M. J.PHYS. A  VOL.11 653 ET SEQ. (1978)
+3. NEX C.M.M. COMP.PHYS.COMM  (1985)

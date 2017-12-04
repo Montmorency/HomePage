@@ -19,12 +19,20 @@ Contents
   :maxdepth: 2
   
   preface.rst
-  subroutines.rst
+  introduction.rst
+  initialization_routines.rst
+  coefficient_routines.rst
   specification.rst
   example_1.rst
   example_phonon.rst
   example_surface.rst
 
 
+Index 
+======
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
 
