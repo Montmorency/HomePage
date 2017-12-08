@@ -16,7 +16,7 @@ C LM1    maximum length of continued fraction to be used
 C GRMIN  minimum value on graph below which values are chopped
 C NZPTS  number of (Z) points computed in plots
 C
-      OPEN(UNIT=15,FILE='a.dat',STATUS='NEW')
+  OPEN(UNIT=15,FILE='a.dat',STATUS='NEW')
 	OPEN(UNIT=14,FILE='SqLatRcCf.dat',STATUS='OLD')
 C
 C read c.f. coefficients - diagonal elts are zero

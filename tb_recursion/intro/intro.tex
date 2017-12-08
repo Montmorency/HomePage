@@ -68,7 +68,6 @@ which addresses the state of ab initio calculations
 and the inherent difficulties in performing them. 
 
 The intervening thirty years has seen an enormous extension of computing capacity. 
-
 To demonstrate this we may contrast the machines available at the time
 he was writing to those that are available at the present time of writing (2017). 
 
@@ -80,7 +79,6 @@ did at Thinking Machines and Feynman's time there see W. Daniel
 Hillis' article in Physics Today 42, 2, 78 (1989).
 There was a strong focus on design at the company. Some of that
 work can be found at Tamiko Thiel's page}%; \url{http://www.tamikothiel.com/theory/cm_txts/di-frames.html}}
-
 The CM-2 was launched in 1987 It was configured with up to 512 MB of RAM and 25 GB of RAID
 hard disk space. It had 65K microprocessors (each with 600 bytes of memory). 
 %Support for 32 bit floating point operations meant just over 2048 processors in practice per machine.
@@ -238,6 +236,12 @@ tend to use localized basis sets and exploit Monte Carlo methods to obtain energ
 bounds on the order of a few meV. Physicists are interested in lasers and hubbard models and the 
 general positions of resonances and asymptotes in very cold materials and wont be discussed further.
 
+\section{Point 3: Justification by Utility}
+The observation that materials processing has evolved in the manner 
+of a craft appears to have been imitated in the development of the 
+theory of materials science.
+
+\subsection{Exchange and Correlation}
 If we look at the work done based on parameterization of the exchange correlation functional 
 we see the number of citations approaches 100,000. Naturally that figure includes significant 
 double counting of citing work but we have also not included cross citations between journals in many of the 
@@ -253,18 +257,13 @@ How creditable this approach is returns again to point three. The theoretical ju
 secondary to the fact that prior experience suggests these techniques work, and the rate of their acceptance and adoption
 seems to have tracked their usage in a positive feedback loop. 
 %For instance an article from 12 years ago 
-
 %If you remain unconvinced of the accuracy of the method one can at least acknowledge the social benefit. 
 %The sheer number of hours people have been engaged in this harmless occupation, dreaming of 
 %electrons in an imaginary box, means they have a hobby that keeps them off the streets and out of trouble.
-
 %The computational price paid to obtain these quantities should be considered. If the amount of numerical
 %work required to compute the quantities is excessive it becomes difficult to discuss trends in homologous series of materials, perform
 %necessary thermal averages to describe distributions, and even in some cases reproduce exactly the calculation.
 
-\section{Point 3: Justification by Utility}
-The observation that materials processing has evolved in the manner of a craft appears to have
-been imitated in the development of the theory of materials science.
 
 If you look through a typical electronic structure code it is interesting to look at the routine
 responsible for calculating the local exchange correlation potential. The input required is the 
@@ -292,6 +291,7 @@ etc. with varying degrees of success.
 Yet in all manner of crystalline systems this functional enables the theoretical
 prediction of very accurate ground state properties and structures. 
 
+\subsection{Core Electrons and Valence Electrons}
 Another successful theoretical development is pseudopotentials. Focusing on the valence electrons 
 has worked for chemistry.
 
@@ -381,5 +381,4 @@ While the quantum paradigm is well establish the amount of normal science it mot
 essentially charting and calculating the properties of normal matter means there is 
 an indeterminate scope for puzzle solving. The process of setting up and solving Schr\"odingers
 equation over and over for increasingly complex systems would seem tedious if it weren't so enjoyable.
-
 
