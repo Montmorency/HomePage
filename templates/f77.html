@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h1> Reading Fortran 77 for those Experienced with Fortran 90 </h1>
+<p>
+See this <a href="https://web.stanford.edu/class/me200c/tutorial_77/"> F77 Tutorial </a> for a 
+overview of the basic standards. The key differences between f90 and f77 
+to look out for are reproduced on this page.
+Oracle also provides a docmentation of the Fortran 77 standard 
+<a href="https://docs.oracle.com/cd/E19957-01/805-4939/index.html">Oracle Fortran 77</a> standard.
+</p>
+
+<h3> Formatting and Line Continuation </h3>
+<p>
+Fortran 77 source files are not free format. The column positions are reserved for different purposes.
+<pre><code>
+Col. 1    : Blank, or a "c" or "*" for comments
+Col. 1-5  : Statement label (optional)
+Col. 6    : Continuation of previous line (optional)
+Col. 7-72 : Statements
+Col. 73-80: Sequence number (optional, rarely used today)
+</pre></code>
+
+Column six is reserved for continuation marks for statements that extend 
+across multiple lines. Any character can be used as the continuation character:
+<pre><code>
+c This subroutine is split across two lines with 1 as the continuation character
+      SUBROUTINE LOTSOFARGUMENTS(A, B, C.
+     1 D, E, F)
+</code></pre>
+</p>
+
+<h3> Loops </h3>
+<p>
+Loops can look different in Fortran 77. Each <samp>do</samp> statement is followed
+by a label. The loop is then terminated with the label and a <samp>continue</samp> statement.
+The <samp>enddo</samp> is a shorthand for terminating <samp>do</samp> loops;
+it is assumed to refer to the most immediate <samp>do</samp> loop. For example:
+<pre><code>
+      integer i, n, sum
+      sum = 0
+      do 10 i = 1, n
+         sum = sum + i
+         write(*,*) 'i =', i
+         write(*,*) 'sum =', sum
+  10  continue
+</code></pre>
+
+The generic form of a do loop looks like this:
+<pre><code>
+      do label  var =  expr1, expr2, expr3
+         statements
+label continue
+</code></pre>
+
+Out of interest we include the standard way of implementing a <samp>do while</samp> loop:
+<pre><code>
+label if (logical expr) then
+         statements
+         goto label
+      endif 
+</code></pre>
+</p>
+
+<h3> The Commons </h3>
+<p>
+Common blocks are where we place variables that are shared among different program units.
+The syntax is:
+<pre><code>
+    common / name / list-of-variables
+</pre></code>
+
+The <samp>common</samp> statement should come alongside variable declarations.
+Every common block has a name. Variables cannot belong to more than one common block.
+You get extra points if you have a <samp>common</samp> variable called <samp>people</samp>.
+<pre><code>
+      <a href="https://www.youtube.com/watch?v=yuTMWgOduFM">COMMON /PEOPLE/PULP,JARVIS(2000)</a>
+</pre></code>
+
+Variables in common blocks do not require the same name wherever that common block appears (though it would
+be advisable to make sure they do). They must, however, be listed in the same order,  and have the same dimensions.
+
+Typically in Fortan 77 arrays are dimensioned in the main program and then passed to the subprograms that need them.
+The subprograms have the address of the beginning of the array and can operate on the data without needing to copy all
+the data to a new set of locations.
+</p>
+
+<h3>EQUIVALENCE</h3>
+<p>
+<samp> EQUIVALENCE </samp> specifies that two or more variables or arrays share the same memory. For an array
+the <samp> EQUIVALENCE </samp> accomplishes this by setting both arrays to the same starting point of the 
+storage sequence.
+</p>
+
+<h3>EXTERNAL</h3>
+<p>
+<samp>EXTERNAL</samp> specifies external procedures so that their symbolic names can be used as arguments.
+</p>
+{% endblock body %}
