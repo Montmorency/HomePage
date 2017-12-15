@@ -4,17 +4,11 @@ FCFLAGS = -g -fbounds-check
 #FCFLAGS +=
 #LDFLAGS = -l_i_need
 
-programs = exrecal
-
-all: $(programs) 
-
-exrecal: slkode.o, fccbnd.o, equiv.o, fcclat.o, out.o, recal.o, setup.o
-
-%: %.o
-	$(FC) $(FCFLAGS) -o $@ $^ $(LDFLAGS)
-
 %.o: %.f
 	$(FC) $(FCFLAGS) -c $<
+
+exrecal.x: exrecal.o slkode.o equiv.o recal.o fccbnd.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o fcclat.o
+	$(FC) -o $@ $^ 
 
 clean:
 	rm -f *.o
