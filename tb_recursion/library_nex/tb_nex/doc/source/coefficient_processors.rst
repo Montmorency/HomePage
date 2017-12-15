@@ -1,5 +1,5 @@
-Mathematical Subroutines for Processing Coefficients
-=====================================================
+Subroutines for Processing Coefficients
+=========================================
 
 BNDCRD  ESTIMATES BAND EDGES FROM TABULATED DATA
 

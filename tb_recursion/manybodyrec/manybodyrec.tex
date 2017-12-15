@@ -1,59 +1,56 @@
 \chapter{Many Body Recursion}
 \label{chap:manybodyrecursion}
 \section{Recursive GW}
-A many body Hamiltonian amenable to being written in a sparse format might look like this:
+We write down the many body Hamiltonian amenable in a manageable form:
 %
 \begin{equation}
-H = [\frac{1}{2}\nabla^{2} + \tilde{v}_{\rm loc} + \hat{\Sigma}(\r,\r';\omega)]
+\hat{H} = [-\frac{1}{2}\nabla^{2} + \tilde{v}_{\rm loc} + \hat{\Sigma}(\r,\r';\omega)]
 \end{equation}
 %
 	$\Sigma(\r,\r';\omega)$ is a self energy operator, it is not local and 
 has an additional argument that includes the energy.
-If we impose a requirement that spatial integrals over $\Sigma$ are performed in 
-well defined atom centered regions of space with localized Wannier functions. 
-The off diagonal elements of a tight binding Hamiltonian can be quantified as:
+
+The on-site self-interaction term can be computed as:
 %
 \begin{equation}
-\int_{\Omega_{j}}\bra w_{i}(r-R)|\Sigma(\R,\r';\omega)|w_{j}(r-R)\ket d\r'
+a_{0}(\omega) = \int\int\bra w_{i}(\r-\R_{i})|\hat{\Sigma}(\r,\r';\omega)|w_{i}(\r'-\R_{i})\ket d\r'd\r.
+\end{equation}
+%
+
+The off diagonal elements of a tight binding Hamiltonian can be written as:
+%
+\begin{equation}
+b_{ij}(w) = \int\int\bra w_{i}(\r-\R)|\hat{\Sigma}(\r,\r';\omega)|w_{j}(\r'-\R_{j})\ket d\r d\r'
 \end{equation}
 %
 	Subsequent neighbour interactions would take a similar form
 with the integration region, $\Omega_{j}$ being a Wigner cell around an 
-atom with its Wannier center at $\R_j$. In order for the scheme to be sensible the contributions from subsequent shells 
-must be negligible. This is likely to be the case so long as either the atomic orbitals $w$ and/or $\Sigma$ 
+atom with its Wannier center at $\R_j$. In order for the scheme to be sensible 
+the contributions from subsequent shells must be negligible. This is likely 
+to be the case so long as either the atomic orbitals $w$ and/or $\Sigma$ 
 fall off quickly enough. Which, as will become clear when we discuss
 the relationship of this scheme to the GW approximation, requires 
 the Green's function or the screened Coulomb interaction to be sufficiently localized.
 
-The on-site self-interaction term can be computed as
 %
-\begin{equation}
-\int_{\Omega_{i}}\bra w_{i}(\r-\R_{i})|\sigma(\r,\r';\omega)|w_{i}(\r-\R_{i})\ket d\r'd\r
-\end{equation}
-%
-The self-consistency in the recursion method relies on the adjustment of the $\Sigma$ operator 
-and the fewer depths of recursion required to stabilize this quantity the more efficient the
-scheme can be considered.
+The self-consistency in the recursion method relies on the adjustment of the coefficients that
+define the Green's function. If a suitable non interacting Hamiltonian is selected in the first
+place this self-consistency can be treated as a perturbation problem.
 
 In principle we can now compute any quantity we like that can be expressed
-as a density of states, or an integral over the density of states.
-The basis set may remain an issue. The localized functions will not have the 
-flexibility of planes waves so if we seek the green's function in the 
-region of the plasmon energies our basis set might not have the flexibility 
-to describe that solution? I'll have to think about this. Ultimately the 
-solution for the resolvent at those energies i.e. ${\rm Im} G_{nk}(\omega)$ should 
-reproduce what I'm looking for. The test for this would be with Si, if 
-I can reproduce spectral functions with TB recursion that is a legitimate 
-proof of concept and would clarify the extent to which collective excitations,
-plasmon, can be incorporated in TB recursion. 
+as a density of states, or an integral over the DOS, with the Many-Body Green's 
+function just as in the non-interacting case discussed in Chap.~\ref{chap:invariance}.
 
-Also Writing the equations in this way and the proposed method of solution
-yield some post hoc justification for parameterizations of plasmon
-pole models or the use of Pad\'e approximants to capture the frequency dependence
-of the key operators.
+%
+%The link then has to come to Mori for random forces/coherent forces
+%resulting in the emergence of the dielectric constant, plasmon frequency etc.
+%
+%The test case for this would be with Si, if 
+%I can reproduce spectral functions with TB recursion that is a legitimate 
+%proof of concept and would clarify the extent to which collective excitations,
+%plasmons etc., can be incorporated in TB recursion. 
+%
 
-Similarly the contributions of neighbours to the self-energy 
-operator yields some physical insight.
 
 \section{The Self-Energy From Multiple Greenian Elements}
   A good first order approximation to $\Sigma$ comes from the GW approximation.
@@ -183,13 +180,16 @@ acts on an operator $\mathbf{x}$ as:
 \mathbf{L} \mathbf{x} = [\mathbf{H}, \mathbf{x}]
 \end{equation}
 %
-Eq.~\ref{eq:creationt} will only converge if the interactions are expanded in terms
-of the screened interaction. The mechanics discussed in the the project density of 
-transitions is equivalent to the Hedin's GW approximation, and provides a framework
-for computing the renormalization in terms of local orbitals and an 
-effective energy band correponding to the plasmons.
+Eq.~\ref{eq:creationt} generates an expanding set of operators similar to what we encountered
+in Chap.~\ref{chap:gw} at Eq.~\ref{eq:2pgreenfxn} where the field operators kept coupling
+together as we expanded the many body interaction. Being able to truncate this expansion
+rigorously is something we would like to do.
 
-With the choices $u_{0}=c^{\dagger}/<c c^{dagger}>^{\frac{1}{2}}$, $u_{-1}=0$,
+We would like to compare the mechanics discussed in the the project density of transitions
+to Hedin's GW approximation, and provides a framework for computing the renormalization 
+in terms of local orbitals and effective energy bands.
+
+With the choices $u_{0}=c^{\dagger}/<c c^{\dagger}>^{\frac{1}{2}}$, and $u_{-1}=0$,
 subsequent operators are:
 %
 \begin{equation}
@@ -209,8 +209,13 @@ b_{n+1} = \bra
 \end{equation}
 %
 
-This recursion rarely terminates in practice due to loss of orthogonality of
-the vectors or because the subspace is too large to compute.
+Like conjugate gradients this recursion rarely terminates in practice 
+due to loss of orthogonality of the vectors or because the subspace is 
+too large to compute.
+
+Where the charge density oscillations are on an interatomic scale of distance
+we talk about single particle excitations, where they are across multiple 
+interatomic spacings we speak of charge density oscillations and plasmons.
 
 If the PDoT consists of a single band of transitions with a known width 
 and energy,then the recurrence can be continued with constant matrix elements, $a_{n}$ and $b_{n}=b$
@@ -220,20 +225,20 @@ For interacting bands it becomes more difficult to approximate a
 single effective energy band.
 
 The termination of the recurrence is a very important point. 
-We are interested in the excited state properties of a system (N+1, N-1) electrons
+We are interested in the excited state properties of an N+1 or N-1 electron system
 from a local perspective. In Chapter.~\ref{chap:invariance} we worked hard to collect work
-justifying this perspective. A plasmon is the collective variable of the electronic system.
+justifying this perspective. 
+
 In a continued fraction expansion of the the PDoT more and more distance transitions are coupled
 to the starting transition. In a real system the continued fraction will terminate at the surface,
 however if the surface atom is changed by a small number of atomic positions it would
-be very surprising if the collective plasmon modes of the cavity changed. 
-Picking a value of anywhere from 30-60 moments away should help the reader to visualize this.
-The contribution of successive transistion are finite, in reality there are not an infinite number
-of hops, and the effect of these remote transitions can be mapped onto collective variables.
+be somewhat surprising, and very interesting, if this had a strong effect on the electronic
+properties around an atom deep in the cavity. Picking a value of anywhere from 30-60 moments 
+away from a starting atom should help the reader to visualize this.
 
 For silicon, the plasmon energy band occurs around 16 eV. This is very high compared
-to the single particle excitations which occur around 1 eV. The long range $1/\r$ nature of the Coulomb
-interaction means electrons are coupled over large distance.
+to the single particle excitations which occur around 1 eV. The long range $1/r$ nature of the Coulomb
+interaction means electrons are coupled over large distances.
 This coupling accounts for the high excitation energy: to get the
 electron cloud moving collectively requires a relatively large amount of energy.
 
@@ -295,9 +300,6 @@ essentially a plane wave or free electron state. This is equivalent to saying fo
 sufficiently high energy states the kinetic energy is the dominant term in the Hamiltonian.
 For these plane wave states the Wannier transformation is a psinc function. These psincs
 give a local representation of high energy plasmon modes.
-
-
-
 
 \section{Appeal of A Local Formulation of Many Body Quantum Systems}
  A resonance or transition in k-space corresponds to an excitation 
@@ -386,8 +388,8 @@ The second is to interpret the probe as measuring a statistical distribution of 
 renormalized many-body electron states which have spectral weight across the full
 interacting energy spectrum. 
 
-The former, via the Mori picture, is similar to the treatment of a free particle path
-being modified by its interaction with atoms in what is termed Brownian motion. In the
-case of a fermion in a crystal we are looking at its `brownian motion' as it interacts
-with bosons on its way to a detector.
+The former is similar to the treatment of a molecules path
+being modified by its collisions with atoms in what is termed Brownian motion. In the
+case of a fermion in a crystal we are looking at its `Brownian motion' as it interacts
+with bosons on its way to a detector. 
 

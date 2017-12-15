@@ -1,16 +1,33 @@
 Preface
 =======
+This library of programs for the recursion method was written by Chris
+Nex and is made available at no cost. Chris and I only ask that users
+acknowledge the recursion library when it has made a significant contribution
+to their work, and that they notify me of any errors they discover. I
+strongly encourage users to consult with me before embarking on large projects
+to avoid the pitfalls others have encountered and to avoid duplication of
+effort.
+
+Please enjoy the opportunities these programs offer.
+
+Roger Haydock
+Eugene, Oregon
+2000 April 5
+
+Project Description
+--------------------
 The recursion subroutine library contains routines to enable the
 computation of the integrated density of states and integrals of
 an arbitrary function times the density of states to be effected. 
 The appropriate Hamiltonians are those for a finite (60 - 6000)
 cluster of atoms with n orbitals ( 1 - 10 or more) and 'neighbour'
-interactions , giving an effective large , sparse matrix eigen-
+interactions, giving an effective large, sparse matrix eigen-
 problem for which is required the distribution of eigenvalues
-corresponding to the local density of states. The mathematics of
-the recursion method is described in Heine, Haydock, Kelly &
-Bullett (1) and of the computation of integrals in Nex (2). For a
-description of the basic mathematical routines see Nex (3),
+corresponding to the local density of states. 
+
+The mathematics of the recursion method is described in Heine, Haydock, Kelly &
+Bullett [1] and of the computation of integrals in Nex [2]. For a
+description of the basic mathematical routines see Nex [3],
 although there are a few additional specialised routines included
 in this collection. Two independant parameters at the 
 disposal of the user, giving a control on the accuracy, 
@@ -30,7 +47,7 @@ this bound is pessimistic, usually by at least an order of
 magnitude. 
 
 References
-==========
+------------
 1. Heine, Haydock, Kelly & Bullett Solid State Physics Vol. 35 (1979)
 2. Nex C.M.M. J. Phys. A VOL. 11, 653 et seq. (1978)
 3. Nex C.M.M. Comp. Phys. Comm (1985)

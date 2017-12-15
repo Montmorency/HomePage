@@ -1,30 +1,24 @@
-NOTE
-====
-  THIS LIBRARY OF PROGRAMS FOR THE RECURSION METHOD WAS WRITTEN BY CHRIS
-NEX AND IS MADE AVAILABLE AT NO COST.  CHRIS AND I ONLY ASK THAT USERS
-ACKNOWLEDGE THE RECURSION LIBRARY WHEN IT HAS MADE A SIGNIFICANT CONTRIBUTION
-TO THEIR WORK, AND THAT THEY NOTIFY ME OF ANY ERRORS THEY DISCOVER.  I
-STRONGLY ENCOURAGE USERS TO CONSULT WITH ME BEFORE EMBARKING ON LARGE PROJECTS
-TO AVOID THE PITFALLS OTHERS HAVE ENCOUNTERED AND TO AVOID DUPLICATION OF
-EFFORT.
-  PLEASE ENJOY THE OPPORTUNITIES THESE PROGRAMS OFFER.
+.. RecLib documentation master file, created by
+   sphinx-quickstart on Fri Dec  8 09:12:05 2017.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
-ROGER HAYDOCK
-EUGENE, OREGON
-2000 APRIL 5
+Cambridge Recursion Library
+============================
 
-Contents
-========
 .. toctree::
-  :maxdepth: 2
-  
-  preface.rst
-  subroutines.rst
-  specification.rst
-  example_1.rst
-  example_phonon.rst
-  example_surface.rst
+   :maxdepth: 2
+   :caption: Contents:
 
+   preface.rst
+   introduction.rst
+   initialization_routines.rst
+   coefficient_processors.rst
+   subroutines.rst
 
+Indices and tables
+==================
 
-
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

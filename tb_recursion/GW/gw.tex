@@ -531,7 +531,7 @@ The quantity under the integral sign in Eq.~\ref{eq:greqmotn} is a two particle 
 G_{2}(1,2,3,4) = \frac{1}{i^{2}} \bra N|T[\cfield(4)\cfield(3)\field(2)\field(1)]|N\ket.
 \end{equation}
 %
-Eq.~\ref{eq:greqmotn} therefore expresses the single particle Green's function now defined 
+Eq.~\ref{eq:greqmotn} expresses the single particle Green's function now defined 
 implicitly in terms of the two particle Green's function. The two particles Green's function is 
 defined in terms of  four field operators. The equation of motion for the two particle Green's 
 function would then involve terms with an increasing number of field operators due to the coupling 
@@ -805,16 +805,249 @@ the screened Coulomb interaction, the polarizability, and the vertex function of
 In summary, starting from the equation of motion, and relating the two particle Green's
 function to the functional derivative of the one particle Green's function with
 respect to a perturbing potential, we obtained a set of self-consistent equations known as Hedin's equations.
-When solved iteratively these equations incorporate all the many body effects of a many-electron system.
+When solved iteratively these equations incorporate all the many body 
+effects of a many-electron system.
+
+\section{$G_0W_0$ self-energy and corrections to LDA eigenvalues}
+\noindent
+In the first section of this chapter we have discussed the
+procedure for constructing the $G_0W_0$ self-energy operator.
+We have also discussed some of the considerations required when
+performing DFT calculations within a planewaves basis set.
+It remains to show how the $G_0W_0$ self-energy can be
+used to connect the eigenvalues obtained from a DFT calculation.
+
+We proceed as in Ref.~\cite{HL86} by assuming the $G_0W_0$
+self-energy can be treated as a perturbation to the
+DFT Kohn-Sham exchange and correlation potential.
+
+In Chapter~\ref{chap:dftgw} we discussed the quasiparticle equation:
+%
+\begin{equation}
+\label{eq:qpeq2}
+\left[-\frac{1}{2}\nabla^{2} + \hat{V}^{\rm{ion}} + \hat{V}^{\rm{H}}\right]\phi_{n\k}(\r) + \int{d}\r' \Sigma(\r,\r';E_{n\k})\phi_{n\k}(\r')=E_{n\k}\phi_{n\k}(\r).
+\end{equation}
+%
+By adding and subtracting $V_{xc}(\r)\psi_{n\k}(\r)$ one obtains:
+%
+\begin{equation}
+(-\frac{1}{2}\nabla^{2} + \hat{V}^{\rm{ion}} + \hat{V}^{\rm{H}} + \hat{V}^{\rm{xc}})\phi_{n\k}(\r) + \int{d}\r' \left[\Sigma(\r,\r';E_{n\k})-\hat{V}^{\rm{xc}}(\r')\delta(\r,\r')\right]\phi_{n\k}(\r') = E_{n\k}\phi_{n\k}(\r).
+\end{equation}
+%
+If we treat $\Sigma-V^{\rm{xc}}$ as a perturbation we can express $E_{n\k}$
+in terms of the Kohn-Sham eigenvalues $\epsilon^{\rm{LDA}}_{n\k}$ using 
+first order perturbation theory:
+%
+\begin{equation}
+\label{eq:QPenergy}
+E_{n\k}^{\rm{QP}} = \epsilon_{n\k}^{\rm{LDA}} + \bra n\k| \Sigma(E_{n\k}^{\rm{QP}}) - \hat{V}^{\rm{xc}}|n\k\ket.
+\end{equation}
+%
+Following Ref.~\cite{HL86} we expand the self-energy operator to first order around the LDA eigenvalue:
+%
+\begin{equation}
+\label{eq:sigmafirst}
+\Sigma( E_{nk}^{\rm{QP}} ) = \Sigma(\epsilon_{nk}^{\rm{LDA}}) + \frac{\partial\Sigma(\omega)}{\partial \omega}\bigg|_{\omega = \epsilon_{n\k}^{\rm{LDA}}}(E_{n\k}^{\rm{QP}} - \epsilon_{n\k}^{\rm{LDA}}). 
+\end{equation}
+%
+The quasiparticle energy can than be obtained by substituting Eq.~\ref{eq:sigmafirst} into Eq.~\ref{eq:QPenergy}:
+%
+\begin{equation}
+\label{eq:QPfirst}
+E_{n\k}^{\rm{QP}} = \epsilon_{n\k}^{\rm{LDA}} + \left(1-\frac{\partial\Sigma(\omega)}{\partial \omega}\bigg|_{\omega=\epsilon_{n\k}^{\rm{LDA}}}\right)^{-1}(E_{n\k}^{\rm{QP}} - \epsilon_{n\k}^{\rm{LDA}}). 
+\end{equation}
+%
+The quasiparticle renormalization value $Z$ is defined by:
+%
+\begin{equation}
+Z_{n\k} =  \left[1-\frac{\partial\Sigma(\omega)}{\partial \omega}\bigg|_{\omega = \epsilon_{n\k}^{\rm{LDA}}}\right]^{-1}.
+\end{equation}
+%
+In summary, we find the expression for the $G_{0}W_{0}$ perturbative correction to the LDA eigenvalues is:
+%
+\begin{equation}
+\label{eq:qpcorrpert}
+E^{\rm{QP}}_{n\k} =  \epsilon^{\rm{LDA}}_{n\k} + Z_{n\k}\bra n\k|\Sigma(\epsilon^{\rm{LDA}}_{n\k})-V^{xc}_{n\k}| n\k\ket.
+\end{equation}
+%
+
+\section{The Spectral function}
+\subsection{The $GW$ spectral function}
+\label{sec:spec}
+\noindent
+In this section we introduce the spectral function. For simplicity we will contract the
+block notation $n\k$ to a single index $n$, and then reintroduce the full Bloch notation when
+we arrive at the final expression for the spectral function.
+
+Given a set of single particle eigenvectors $\phi_{m}(\r)$ we can take matrix elements of the
+single particle states with the Green's function and self-energy:
+%
+\begin{eqnarray}
+G_{mn}(\omega)       = \int \int \phi_{m}^{\star}(\r) G(\r,\r';\omega) \phi_{n}(\r')  d\r d\r', \\
+\Sigma_{mn}(\omega)  = \int \int \phi_{m}^{\star}(\r) \Sigma(\r,\r';\omega) \phi_{n}(\r') d\r d\r'.
+\end{eqnarray}
+%
+We can employ the same notation for matrix elements with $V^{\rm{xc}}(\r)$,
+and the Kohn-Sham Hamiltonian $\hat{H}^{\rm{KS}}$.
+%
+In matrix notation the Dyson equation \cite{inkson} can be written:
+%
+\begin{equation}
+\label{eq:matdys}
+G^{-1} = G_{0}^{-1} - [\Sigma(\omega) - V_{\rm{xc}}].
+\end{equation}
+%
+Eq. \ref{eq:matdys} gives the expression for interacting Green's function.
+We note that the exchange and correlation potential of the ground state
+calculation is subtracted from the final self-energy. If the Green's function is diagonal
+in the state indices we can invert each element of the matrix and write:
+%
+\begin{equation}
+G_{nn}(\omega) = \frac{1}{\omega -\epsilon^{\rm{KS}}_{n}+{\rm Re}\Sigma_{nn}(\omega)-V^{\rm{xc}}_{nn}+{\rm Im}\Sigma_{nn}(\omega)}.
+\end{equation}
+%
+In the case where the non-diagonal elements cannot be ignored,
+a full matrix inversion would be required to construct the Green's function:
+%
+\begin{equation}
+G_{mn}(\omega) = [\omega \delta_{mn} - \epsilon^{\rm{KS}}_{mn}\delta_{mn} + {\rm Re}\Sigma_{mn}(\omega) - V^{\rm{xc}}_{nn} + {\rm Im}\Sigma_{mn}(\omega)]^{-1}.
+\end{equation}
+
+We can employ the same notation for matrix elements with $V^{\rm{xc}}(\r)$,
+and the Kohn-Sham Hamiltonian $\hat{H}^{\rm{KS}}$.
+%
+In matrix notation the Dyson equation \cite{inkson} can be written:
+%
+\begin{equation}
+\label{eq:matdys}
+G^{-1} = G_{0}^{-1} - [\Sigma(\omega) - V_{\rm{xc}}].
+\end{equation}
+%
+Eq. \ref{eq:matdys} gives the expression for interacting Green's function.
+We note that the exchange and correlation potential of the ground state
+calculation is subtracted from the final self-energy. If the Green's function is diagonal
+in the state indices we can invert each element of the matrix and write:
+%
+\begin{equation}
+G_{nn}(\omega) = \frac{1}{\omega -\epsilon^{\rm{KS}}_{n}+{\rm Re}\Sigma_{nn}(\omega)-V^{\rm{xc}}_{nn}+{\rm Im}\Sigma_{nn}(\omega)}.
+\end{equation}
+%
+In the case where the non-diagonal elements cannot be ignored,
+a full matrix inversion would be required to construct the Green's function:
+%
+\begin{equation}
+G_{mn}(\omega) = [\omega \delta_{mn} - \epsilon^{\rm{KS}}_{mn}\delta_{mn} + {\rm Re}\Sigma_{mn}(\omega) - V^{\rm{xc}}_{nn} + {\rm Im}\Sigma_{mn}(\omega)]^{-1}.
+\end{equation}
+
+At this stage we introduce the spectral function by defining it in terms of the Green's function:
+%
+\begin{equation}
+A_{mn}(\omega) = {\rm Im} |G_{mn}(\omega)|.
+\end{equation}
+%
+Reintroducing the Bloch notation we can write the full spectral function
+for the diagonal Green's function:
+%
+\begin{equation}
+\label{eq:aspec}
+A_\k(\omega) = \frac{1}{\pi}\sum_{n} \frac{|{\rm Im}\Sigma_{n\k}(\omega)|}
+{[\omega- \epsilon_{n\k}-({\rm Re}\Sigma_{n\k}(\omega) -V^{\rm{xc}}_{n\k})]^{2} + \left[{\rm Im}\Sigma_{n\k}(\omega)\right]^{2}}.
+\end{equation}
+
+The spectral function helps clarify the quasiparticle picture. Eq.~\ref{eq:aspec} is strongly
+peaked when the frequency $\omega$ sweeps through the renormalized
+eigenvalue $\epsilon_{n\k} + {\rm Re}(\Sigma_{n\k}(\omega) - V^{\rm{xc}}_{n\k}) $. Given
+the frequency dependence of $\Sigma$ additional zeros in the real part of the
+denominator of Eq. \ref{eq:aspec} are possible. These can correspond to the
+appearance of new excitations which are not present in the non-interacting system. Finally
+the imaginary part of the self-energy introduces a broadening of the the quasiparticle peak
+and is associated with lifetime effects.
+
+\subsection{Contact with experiment}
+\noindent
+Angle Resolved Photoemission Spectroscopy (ARPES) is a very useful
+probe for investigating the electronic structure of materials~\cite{damascelli04}.
+%Incident radiation on a sample can excite electrons via the photoelectric effect. 
+%These excited electrons can then propagate to a detector where their energy and momentum 
+%is measured. Given the momentum and energy of the impinging light source it is 
+%possible to determine the initial electronic state the captured electron occupied 
+%in the material. 
+%
+The intensity of the electrons captured at the experimental detector, $I_{\k}(\omega)$,
+can be expressed in terms of the quasiparticle spectral function~\cite{damascelli04}:
+%
+\begin{equation}
+\label{eq:photoemission}
+I_{\k}(\omega) = I_{0}(\k,\nu)f(\omega)A_{\k}(\omega),
+\end{equation}
+%
+Where $\nu$ is the frequency of the incident radiation and $f(\omega)$ is the Fermi-Dirac distribution.
+The factor $I_{0}(\k,\nu)$ includes matrix element effects, i.e.
+the strength of the coupling of the initial and final electron states via
+the electromagnetic probe, the effect of surfaces, and 
+inelastic scattering in the sample~\cite{damascelli04}.
+
+\subsection{Bardyszewski-Hedin theory of photoemission}
+\noindent
+A comprehensive analysis of the connection between the spectral function
+and photoemission data is given by Bardyszewski and Hedin in Ref.~\cite{bardy85}.
+Their formulation begins by relating the photocurrent, $J$, i.e. the number
+of electrons ejected from the sample, per unit solid angle and energy
+to the intensity, $I$, measured at the detector:
+%
+\begin{equation}
+\frac{\partial^{2}J}{\partial \Omega \partial \epsilon_{\k}} \sim I.
+\end{equation}
+%
+The standard definition for the intensity is then given in Refs.~\cite{goldberger64, almbladh83}:
+%
+\begin{equation}
+\label{eq:intens}
+I = \sum_{s}|\bra \k,N-1,s|\hat{\Delta}|N\ket|^{2}\delta(\epsilon_{\k}-\epsilon_{s}-\omega).
+\end{equation}
+%
+The $|\k,N-1,s\ket$ state is a product state of the photoelectron with wave vector
+$\k$ and the $|N-1, s\ket$ many electron wavefunction described in Eq. \ref{eq:compstates}.
+The frequency of the incoming radiation is $\omega$. The $\hat{\Delta}$
+operator is the electric dipole operator.
+
+Eq.~\ref{eq:intens} explicitly couples many-body states via the dipole operator.
+The intrinsic contribution of a particular photoelectron $\tilde{\phi}_{\k}$, to the measured photocurrent
+can now be written in terms of the one-electron spectral
+function discussed in Section~\ref{sec:spec}~\cite{bardy85}:
+%
+\begin{equation}
+\label{eq:barhed}
+I(\k,\omega)=\int \tilde{\phi}^{\star}_{\k}(\r)\hat{\Delta}(\r)A(\r,\r';\epsilon_\k-\omega)\hat{\Delta}(\r')\tilde{\phi}_{\k}(\r')d\r d\r'.
+\end{equation}
+%
+If we assume the spectral function is diagonal in $\r$, $\r'$, and exploit the matrix
+notation for the spectral function from the previous section we arrive at the expression:
+%
+\begin{equation}
+I(\k,\omega) \approx \sum_{n} |\bra\tilde{\phi}_{\k}|\hat{\Delta}|\phi_{n}\ket|^{2} A_{nn}(\epsilon_{\k}-\epsilon_{n}-\omega).
+\end{equation}
+%
+The photoelectron will not generally travel unimpeded to the detector. 
+Along the way the photoelectron can scatter off of phonons, plasmons, 
+or other particle-hole excitations.
+Ref. \cite{bardy85} provides a detailed derivation of the 
+expressions reported here for the intrinsic intensity
+of the photocurrent and the possible types of quasiparticle 
+excitations in an interacting system.
+These results are mentioned here because they provide a direct 
+connection between experimental probes and the mathematical 
+formalism of the $GW$ approximation.
 
 \section{Conclusion}
 \noindent
 In this chapter we have discussed the Hohenberg-Kohn theorem which states that
 the ground-state energy of an interacting electronic system is a function of the 
 ground-state charge density. We then discussed the Kohn-Sham scheme, which provides
-a prescription for obtaining a set of wavefunctions, and eigenvalues, that describe
-the ground-state density. The various approximations to the exchange correlation functional
-commonly used in applications of Kohn-Sham DFT were discussed: the LDA, GGA, and hybrid functionals.
+a prescription for obtaining a set of wavefunctions, and eigenvalues, describing
+the ground-state density. The various approximations to the exchange correlation 
+functional commonly used in applications of Kohn-Sham DFT were discussed: the LDA, 
+GGA, and hybrid functionals.
 
 We discussed various schemes for extending DFT, a theory for the ground state,
 to describe excited state properties. In particular we discussed an
@@ -823,6 +1056,11 @@ electron addition and removal. Along these lines we presented a detailed discuss
 of the analytic properties of the Green's function and a full derivation of Hedin's
 equations which define the $GW$ approximation.
 
-In the next chapter we discuss the details and practicalities of performing DFT and $GW$
-calculations for real materials.
+The connection to the tight binding formulation of materials science was motivated
+in the final section by sketching out the type of integrals that would 
+have to be computed to form the matrix elements of the Green's function and self-energy
+operator. The possibility of exploiting a perturbative approach to including
+the exchange and correlation energies systematically is discussed
+in Section~\ref{sec:gwpert}. By mapping these operators onto matrix elements and being selective  about which experimentally accessible quantities we wish to compute 
+it should be possible to streamline the calculations into a more manageable framework.
 
