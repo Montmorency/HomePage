@@ -35,14 +35,18 @@ Here are the core lines I like to add to <samp> ~/.vimrc </samp> whenever I'm on
 <pre><code>
 syntax on
 au BufNewFile, BufRead *.py
-  set tabstop=2
-  set softtabstop=2
-  set shiftwidth=2
-  set textwidth=140
-  set expandtab
-  set autoindent
-  set fileformat=unix
-  set ruler
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set textwidth=140
+set expandtab
+set autoindent
+set fileformat=unix
+set ruler
+
+if has("autocmd")
+  autocmd FileType make set noexpandtab
+endif
 </code></pre>
 </p>
 <h3> SSH </h3>
