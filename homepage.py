@@ -93,14 +93,15 @@ def tensorflow_notes():
   """
   return render_template('tensorflow_notes.html')
 
-@app.route('fortran_77')
+@app.route('/fortran_77/')
 def fortran_77():
   """
+  Fortran 77 notes.
   """
-  return render_template('')
+  return render_template('f77.html')
 
 @app.route('/interesting_stuff/')
-def interesting_stuff(''):
+def interesting_stuff():
   """
   View of links to alternative pages.
   """

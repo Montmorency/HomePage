@@ -111,7 +111,7 @@ class VxcPerceptron(object):
 #    trace = sample(2000, step, start=start, progressbar=False) 
 
 def plot_vxc_pz():
-  densities = np.arange(0,3,0.1)
+  densities = np.arange(0,1,0.025)
   xc = XC()
   ec = [xc.pz(rho)[0]  for rho in densities]
   vc = [xc.pz(rho)[1]  for rho in densities]
@@ -127,8 +127,11 @@ def plot_vxc_pz():
   ax2.plot(densities, vx)
   plt.show()
 
+  with open('pz_vxc.dat', 'w') as f:
+    for rho, ec_, ex_ in zip(densities, ec, ex):
+      print >> f, rho, ec_, ex_
+
 if __name__ == "__main__":
 #plot densities
   plot_vxc_pz()
-
 
