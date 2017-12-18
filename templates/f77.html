@@ -96,4 +96,19 @@ storage sequence.
 <p>
 <samp>EXTERNAL</samp> specifies external procedures so that their symbolic names can be used as arguments.
 </p>
+
+<h3> Read/Write </h3>
+<p>
+A typical pattern for a <samp>READ</samp> statement takes a unit identifier, a format identifier as arguments,
+followed by a program variable to store the results of the read e.g.:
+<pre><code>
+      READ(5,21) IWK
+      21    FORMAT(15A4)
+
+</pre></code>
+
+The format identifier in the example, 21, is the label of the <samp>FORMAT</samp> statement in the same program unit.
+A <samp>FORMAT</samp> statement specifies the layout of input/output to be read or printed to the connected unit.
+
+</p>
 {% endblock body %}
