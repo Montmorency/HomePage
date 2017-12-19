@@ -1,5 +1,5 @@
 FC = gfortran
-FCFLAGS = -g -fbounds-check
+FCFLAGS = -g -fbounds-check -fdefault-real-8
 #FCFLAGS = -O2
 #FCFLAGS +=
 #LDFLAGS = -l_i_need
