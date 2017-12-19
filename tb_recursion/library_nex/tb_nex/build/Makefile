@@ -21,4 +21,4 @@ exrecal.x: exrecal.o slkode.o equiv.o recal.o fccbnd.o out.o selfd.o setup.o skd
 
 
 clean:
-	rm -f *.o
+	rm -f *.o *.x

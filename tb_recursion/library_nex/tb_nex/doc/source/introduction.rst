@@ -35,7 +35,7 @@ component submatrices of the Hamiltonian. The appropriate results
 of these routines are loaded by the user into a common block which
 should then contain all the information necessary to define the
 matrix representation of the Hamiltonian. This is then used by the
-subroutine at the heart of the recursion library ( :f:subroutine:`RECAL` ) to
+subroutine at the heart of the recursion library ( :f:subr:`RECAL` ) to
 operate  with the  Hamiltonian  and  produce  the recursion
 coefficients. 
 
@@ -114,13 +114,13 @@ obtained from the quadrature formula are not analytically related
 in the way one might expect:
 
 .. math::
-
   :label: intdos
+
   \int E N(E)dE \neq  E N(E) - \int N(E)dE
 
 where the L.H.S of Eq. :eq:`intdos` and N(E) represent values obtained directly from
 `DENQD`. Such identities are usually satisfied approximately, but if
 precise analyticity is demanded the approximation to :math:`N(E)` should
 be taken and all other results computed directly from it. The
-exception is that :math:`d/de N(E) = N(E)` by definition. 
+exception is that :math:`\frac{d}{dE}\int N(E)dE = N(E)` by definition. 
 
