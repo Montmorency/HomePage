@@ -2,7 +2,11 @@ import os
 import sys
 import string
 
-def swap_rst(fname='preface.rst'):
+def swap_rst(fname='olddoc.txt'):
+  """
+  Take a txt file written in the older documentation format (All Caps, double line spacing) 
+  and change it to single spacing.
+  """
   with open(fname, 'r') as f:
     file_str = f.read()
   new_str = '. '.join(map(string.capitalize, [x.strip().replace('\n\n','\n') for x in file_str.split('.')]))
