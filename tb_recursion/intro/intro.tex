@@ -25,8 +25,8 @@ chemistry of the concrete. How it even came to be discovered is somewhat mysteri
 
 Equally crafty we have mediaeval blacksmith's who learned to manipulate the 
 hardness of swords and shields by the alloying of metals and precise control of heat. 
-Again the theoretical model they worked with in there heads had no conception of 
-the atomic composition of the weapons or the size and character of the metallic grains within them. 
+Again the theoretical model they worked with lacked the modern conception of 
+atomic composition and specific microstructure.
 
 In each case the material practitioner's expertise was not accumulated based on reasoning 
 from first principles but based on experience, trial and error, and craft.
@@ -38,11 +38,13 @@ means the possibility of constructing accurate models of materials
 systems beginning from the arrangment of the constituent atoms has
 progressed giving rise to the large field of first principles or {\it ab initio} modelling.
 
-The extent to which theoretical materials science as a discipline has evolved over this period of time is worth examining. 
-It is important because the character of this evolution dictates which directions of research may prove most
-immediately fruitful. It is also important because it allows researchers to identify the avenues
-of research that are inefficient, that are potentially obscuring knowledge, and convoluting 
-what is already understood. 
+The extent to which theoretical materials science as a discipline has evolved 
+over this period of time is worth examining. 
+It is important because the character of this evolution dictates which 
+directions of research may prove most immediately fruitful. It is also important 
+because it allows researchers to identify the avenues
+of research that are inefficient, that are potentially obscuring knowledge, 
+and convoluting what is already understood. 
 
 To chart this evolution we may begin from Ehrenreich's survey of the field from 30 years ago.
 
@@ -52,14 +54,15 @@ that a satisfactory theory of materials must uphold:
 %
 \begin{enumerate}[i)]
 \item Theory must be closely linked to experiment.
-\item Ab initio calculations without approximations are virtually impossible except in model systems.
-\item Approximations are frequently based on prior experience rather than on theoretical justification.
+\item Ab initio calculations without approximations are virtually impossible 
+      except in model systems.
+\item Approximations are frequently based on prior experience rather 
+      than on theoretical justification.
 \item The study of trends in the properties of homologous materials 
       is a crucial ingredient of a credible theoretical framework.
 \end{enumerate}
 %
-Based on these four observations provide a useful framework to 
-analyze the current state of the field.
+These four observations provide a useful framework to analyze the current state of the field.
 
 \section{The Rise of the Computer}
 \label{sec:riseofcomp}
@@ -69,7 +72,7 @@ and the inherent difficulties in performing them.
 
 The intervening thirty years has seen an enormous extension of computing capacity. 
 To demonstrate this we may contrast the machines available at the time
-he was writing to those that are available at the present time of writing (2017). 
+he was writing to those that are widely available at the present time of writing (2017). 
 
 In 1987 an example of a state of the art computer would be the Connection Machine.
 \footnote{One of the employees at Thinking Machines Corporation,
@@ -81,21 +84,24 @@ There was a strong focus on design at the company. Some of that
 work can be found at Tamiko Thiel's page}%; \url{http://www.tamikothiel.com/theory/cm_txts/di-frames.html}}
 The CM-2 was launched in 1987 It was configured with up to 512 MB of RAM and 25 GB of RAID
 hard disk space. It had 65K microprocessors (each with 600 bytes of memory). 
-%Support for 32 bit floating point operations meant just over 2048 processors in practice per machine.
+%Support for 32 bit floating point operations meant just over 
+%2048 processors in practice per machine.
 
 By contrast the HPC machine presently accessible to the author 
 is more easily measured in nodes. Each node in a machine has 2x12 core Intel Broadwell processors.
 Each node has 128 GB RAM and 120 GB static storage. The machine has in total 720 nodes. 
 The processors themselves have up to 10 cores with clock speeds (roughly the speed the
-processor can execute instructions) on the order of 3 GHz a clock speed of 12.5 MHz would be representative in 1987. 
+processor can execute instructions) on the order of 3 GHz a clock speed 
+of 12.5 MHz would be representative in 1987. 
 Each processor has abundant cache space of 10x 256 KiB L2 Cache, and 25 MiB of L3 cache 
 (compared to 600 bytes in the connection machine). 
-There could be on the order of 3 billion transistors in a single microprocessor now;
+Nowadays there could be on the order of 3 billion transistors in a single microprocessor;
 in 1987 that number would be closer to 100,000. 
 
 Listing specifications doesn't necessarily clarify how much more powerful machines have become, 
-but it is striking that in terms of speed, storage, and transistor density there are 3-5 orders of magnitude 
-improvements in each category. The stability and optimization of compilers and the ease of programmability
+but it is striking that in terms of speed, storage, and transistor density 
+there are 3-5 orders of magnitude improvements in each category. 
+The stability and optimization of compilers and the ease of programmability
 of the machines has also improved.
 
 This constant development of computing capacity has played an important component in enabling
@@ -104,7 +110,9 @@ This constant development of computing capacity has played an important componen
 \subsection{Scales of Materials Modelling}
 What are the scales involved in connecting atomic systems where quantum mechanics is important
 to macroscopic systems? Chemists arrived at the mol as a convenient unit for describing
-quantities of atoms which is on the order of $10^{23}$ atoms. This is clearly impractical.
+quantities of atoms which is on the order of $10^{23}$ atoms. Setting up a single 
+system of equations to describe the motion of and mutual interactions of 
+this number of particles is not practical.
 
 More realisitically a suitably macroscopic specimen might be considered to be on the 
 order of 200 nm$^{3}$ of material. A sample of material of this size is of the 
@@ -127,8 +135,8 @@ quantum mechanical simulations of systems of millions of atoms should be feasibl
 within a similar amount of computing time. 
 
 If dynamical properties are of interest the atoms motion must be propagated forward. 
-If a time step of a femtosecond $(10^{-15}s)$ is taken between evaluations of the 
-forces generating a picosecond of data $(10^{-12}s)$ would require about 5 months 
+If a time step of a femtosecond $(10^{-15})$s is taken between evaluations of the 
+forces generating a picosecond of data $(10^{-12})$s would require about 5 months 
 computing time. Another 12 orders of magnitude efficiency would remain to be found to 
 simulate the motion of particles on time scales more familiar to everyday experience.
 
@@ -359,10 +367,8 @@ instantiated.
 
 The general procedure is to use ab initio data to map 
 to rigorous local models of the atomic environment. The local models
-of atomic interaction become easier to store, physical intuition is clarified
-and the knowledge obtained becomes persistent. Finally the quality of the models
-can be quantified and improved systematically with reference to experiment using
-inference techniques.
+of atomic interaction become easier to store, physical intuition is clarified,
+and the computational workload is reduced. 
 
 Subsequent chapters will discuss the theory underlying each of these planks; a
 theory of the local atomic environment, a theory of electronic excitations, long
@@ -372,13 +378,8 @@ them into a single place still seems a worthwhile endeavour.
 
 In chapter \ref{chap:odlr} the passage from discrete atomic models to continuum mechanics
 where collective variables, for instance stress and strain tensors, arise is discussed. 
-In Chapter \ref{chap:bayes} the criterion for assessing the quality of {\it ab initio} 
+Finally, in Chapter \ref{chap:bayes} the criterion for assessing the quality of {\it ab initio} 
 models is discussed which ranks models positively according to their ability to 
-describe target experimental data and penalizes them for the number of 
-adjustable parameters that enter their description.
-
-While the quantum paradigm is well establish the amount of normal science it motivates
-essentially charting and calculating the properties of normal matter means there is 
-an indeterminate scope for puzzle solving. The process of setting up and solving Schr\"odingers
-equation over and over for increasingly complex systems would seem tedious if it weren't so enjoyable.
+describe target experimental data, and penalizes them for the number of 
+adjustable parameters they require.
 

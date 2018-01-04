@@ -21,12 +21,12 @@ Specification of Subroutines
 .. f:subroutine:: RECSUM(AC,BC,NA,LL,NP,A,B2,EPS,WK,NW)
 
 	Computes the tridiagonalisation (continued fraction, Jacobi matrix)
-	corresponding to the sum of NP tridiagonalisations, :math:`w_{m}(x)`.
+	corresponding to the sum of NP tridiagonalisations :math:`w_{m}(x)`.
 
 	.. math::
 
      \sqrt{b_{n+1,m}} P_{n+1,m}(x) = (x-a_{n,m})P_{n,m}(x)-\sqrt(b_{n,m})P_{n-1,m}(x)
-     w(x) = \sum_{m=1}^{NC} B(0,m) w_{m}(x)
+     w(x) = \sum_{m=1}^{NC} b(0,m) w_{m}(x)
 
 	DIMENSION AC(NA,NP),BC(NA,NP),WK(NW),A(NA),B(NA)
   AC    AC(N,M) = A(N-1,M),  N=1,M,  M=1,NP
@@ -243,6 +243,54 @@ Specification of Subroutines
     IW(1,K)*  'TYPE' OF ATOM I AT ONE END OF THE K TH VECTOR
     IW(2,K)*  'TYPE' OF ATOM J AT THE OTHER END OF THE K TH VECTOR
 
+
+.. f:function:: DENQD(E,EMX,A,B2,LL,ALP,EPS,TB,NT,NQ,NE,IWK)
+  
+  Evaluates the density of states, :math:`N(E)`, corresponding to a given
+  continued fraction (J-Matrix) at a given point :math:`E` and returns that value
+  and also quadrature nodes and weights at a set of points bounded above by
+  EMX. The table of values TB is output so that the integrated density of states,
+  density of states, and similar functions may be evaluated at each E(I) not greater
+  than EMX.
+
+.. f:function:: DENCRS(E,A,B2,LL,AA,RNG,WB,NB,AM,BM2)
+
+  Computes the value of a continued fraction using a terminator
+  based on the number, weights and positions of separate bands using
+  a general prescription. The matching continued fraction with square 
+  root band edges may be generated using :f:subr:`CFGPGN` or :f:subr:`TERGEN`
+  and should be of the same length as the original.
+
+  The function:
+  .. math::
+    
+    F(E) = \sum_{K}8.0*\frac{WB(K)}{RNG(K)^{2}}*(E-{AA(K)+RNG(K)*0.5}-\sqrt{E-AA(K)}\sqrt{AA(K)+RNG(K)-E}
+
+  is assumed to correspond to the supplied coefficients AM(I) and BM2(I).
+
+  .. math::
+
+    T(E) = {S(E,N-1)-F(E)*R(E,N)}/{S(E,N-2)-F(E)*R(E,N-1)}/BM2(N)
+    N(E) = \frac{-1}{\pi}*{\rm Im}[Q(E,N-1)-\frac{B2(N)*T(E)*Q(E,N-2)}{P(E,N)-B2(N)*T(E)*P(E,N-1)}]
+
+  where N=LL and P,Q and R,S are the orthogonal polynomials of the first and second kinds 
+  corresponding to A,B2 and AM,BM2 respectively.
+  ARGUMENTS : (* INDICATES AN OVERWRITTEN ARGUMENT)
+
+  DENCRS TAKES THE REQUIRED VALUE
+  E    ARGUMENT OF CONTINUED FRACTION
+  A    DENOMINATOR COEFFICIENTS OF CONTINUED FRACTION I=1,LL-1
+  B2   NUMERATOR COEFFICIENTS OF CONTINUED FRACTION I=1,LL
+  LL   LENGTH OF CONTINUED FRACTION
+  AA   LIST OF BAND LEFT EXTREMA
+  RNG  LIST OF BAND WIDTHS
+  WB   LIST OF WEIGHTS OF BANDS
+  NB   NUMBER OF BANDS (GREATER THAN 0)
+  AM   LL-1 DENOMINATOR COEFFICIENTS OF MATCHING CONTINUED FRACTION
+  BM2  LL NUMERATOR COEFFICIENTS OF MATCHING CONTINUED FRACTION
+
+.. f:subroutine:: DENCRQ(E,A,B2,LL,AA,RNG,WB,NB,AM,BM2)
+
 .. f:function:: RECWT(E,A,B2,LL,EPS,N,P,NS)
 
   Computes the value of the weight at the fixed point in a 1-fixed
@@ -341,8 +389,9 @@ Specification of Subroutines
 
 .. f:subroutine:: RECPER(HOP,VOP,W1,W0,A,B,NW,LLIM,NA,NL,AMAT)
 
-  See J.PHYS.A VOL.10,NO.4 (1977) and R. Haydock, Philos. Mag. [Part] B 37, 97 (1978).
-  See 283 in SSPV 35 for discussion of perturbation of a chain. 
+  For a discussion of perturbation theory and the recursion method see
+  J. Phys. A Vol. 10, No. 4 (1977) and R. Haydock, Philos. Mag. [Part] B 37, 97 (1978).
+  See 283 in SSPV 35 for a discussion of perturbation to the chain model. 
   
   ARGUMENTS (* INDICATES OVERWRITTEN BY THE ROUTINE)
 
@@ -362,7 +411,8 @@ Specification of Subroutines
              NA  FIRST DIMENSION OF ARRAY A
              LL  NO. OF COLUMNS IN MATRICES X AND Y
 
-         NOTE THAT ONLY THE *ED ITEMS ARE TO BE SET BY THE USER.
+         NOTE THAT ONLY THE STARRED (*) ITEMS ARE TO BE SET BY THE USER.
+
   VOP    NAME OF A SUBROUTINE  SATISFYING THE SAME CONDITIONS AS HOP
          BUT WITH V REPLACING H.
   W1*    SQRT(B(0,0))*W0 : THE STARTING VECTORS OF THE
@@ -383,6 +433,19 @@ Specification of Subroutines
 
 
 .. f:subroutine:: BCCLAT(CRD,NDIM,IZP,NAT,NX,NY,NZ,NTYPE)
+
+  Generates a BCC lattice on a positive integer grid, enclosed by
+  a cuboid of a given size.
+
+  ARGUMENTS:( * INDICATES AN OVERWRITTEN ARGUMENT)
+  CRD*    LATTICE COORDINATES ((I,J),I=1,3),J=1,NAT
+  NDIM    FIRST FIRST DIMENSION OF ARRAY COORD >OR= 3
+  IZP*    INTEGER*2 ARRAY RETURNING THE VALUE NTYPE IN EACH ELEMENT
+  NAT*    ON INPUT THE MAXIMUM NUMBER OF LATTICE POINTS ALLOWED
+          ON OUTPUT THE ACTUAL NUMBER OF POINTS GENERATED
+          NX,NY,NZ  INTEGER DIMENSIONS OF THE CUBOID TO CONTAIN THE LATTICE
+          NTYPE   'TYPE' CODE FOR EACH LATTICE SITE
+
 
 .. f:function:: BCCBFE(I,J,R2,DD)
 

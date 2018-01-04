@@ -4,12 +4,13 @@
   Vol.~35 of Solid State Physics is dedicated to electronic structure
 theory from the point of view of the local environment. This perspective
 has a long tradition in physical and chemical electronic structure theory.
+This chapter is purely a summary of the work developed there.
 
-  Topics that are often discussed at the beginning of introductory physics courses include:
-the study of black body radiation, photoemission phenomenon, De Broghlie waves,
-electron diffraction experiments and the structure of the hydrogen atom.
-Examination of thesis topics constitute a suitable foundation 
-for understanding the formalism and experimental justification for the theory.
+%Topics that are often discussed at the beginning of introductory physics courses include:
+%the study of black body radiation, photoemission phenomenon, De Broghlie waves,
+%electron diffraction experiments and the structure of the hydrogen atom.
+%Examination of thesis topics constitute a suitable foundation 
+%for understanding the formalism and experimental justification for the theory.
 
   It is natural to hope that from the understanding of the electronic states of hydrogen the
 understanding of larger atomic systems, containing progressively more electrons, might emerge. 
@@ -18,23 +19,22 @@ somewhat unwieldly to work with and the accurate evaluation of the
 electron-electron repulsions becomes more difficult. Computers provide a route
 to numerical solutions of the equations governing the behaviour of these systems.
 
-Computer simulations are commonly performed these days in many branches of physics, 
-chemistry, engineering, and biology. The use of computers to solve Schr\"odinger's 
-equation for electrons in crystals has led to the proliferation of the 
-many, many tribes of electronic structure theory. 
-
-The tribes are well known to practitioners in the field. A non-exhaustive list
-of some of these we can name here as: tight binding and linear combination of atomic orbitals (LCAO), 
-linear muffing tin orbitals (LMTO), plane waves and pseudopotentials, Gaussian orbitals, and 
-Kohn-Kuttinger-Rostiger theory.
-
-While successful in a number of respects numerical work can be tedious and, more importantly, can obscure underlying
-mechanisms. There is also a tendency for people working in numerical methods to become 
-excessively obsessed with algorithmic details and, most importantly,
-the results of a single calculation may not provide a framework that accounts for a range
-of phenomenon in homologous series of materials where only slight adjustment of the physical
-interaction parameters change. (This speaks to Ehrenreich third observation that results for homologous materials should be computed
-wherever possible and the results should be compared). 
+%Computer simulations are commonly performed these days in many branches of physics, 
+%chemistry, engineering, and biology. The use of computers to solve Schr\"odinger's 
+%equation for electrons in crystals has led to the proliferation of the 
+%many, many tribes of electronic structure theory. 
+%The tribes are well known to practitioners in the field. A non-exhaustive list
+%of some of these we can name here as: tight binding and linear combination of atomic orbitals (LCAO), 
+%linear muffing tin orbitals (LMTO), plane waves and pseudopotentials, Gaussian orbitals, and 
+%Kohn-Kuttinger-Rostiger theory.
+%While successful in a number of respects numerical work can be tedious and, more importantly, can obscure underlying
+%mechanisms. There is also a tendency for people working in numerical methods to become 
+%excessively obsessed with algorithmic details and, most importantly,
+%the results of a single calculation may not provide a framework that accounts for a range
+%of phenomenon in homologous series of materials where only slight adjustment of the physical
+%interaction parameters change. (This speaks to Ehrenreich third observation 
+%that results for homologous materials should be computed
+%wherever possible and the results should be compared). 
 
 An example of the economy of explanatory expression afforded by the recursion method
 and a physical formulation in terms of the local atomic environment
@@ -283,7 +283,7 @@ of the container and the boundary conditions.
 
 
 \section{Recursion Method}
-  The principle of the recursion method is to obtain a convergent expression 
+The principle of the recursion method is to obtain a convergent expression 
 for an element of the Green's function:
 %
 \begin{equation}
@@ -417,7 +417,7 @@ It is this expression used to separate the Lave phases of transition metals in R
 \section{Bullet Tight Binding Method}
 \label{sec:bullet}
 Bullet discusses some of the problems with treating d electrons in a tight binding 
-formalism (Sec. IV 13 Solid State Physics Vol. 35). Fig. \ref{fig:datoms} demonstrates
+formalism (Sec. IV 13 Solid State Physics Vol. 35). Fig.~\ref{fig:datoms} demonstrates
 one of the main issues arising with d electrons:
 %
 \begin{figure}
@@ -428,20 +428,22 @@ the atomic potential to produce a bound electronic state at some energy $E^{0}_{
 In a crystal the atomic periodic potential can be such that electrons can be bound in an
 atomic d-like state can have the same energy as tunnel through the barrier localizing them and mix with free electron 
 plane wave states. This dual character of the wave function, with localized components and extended components, requires careful 
-detangling to return to a tight binding description. This difficulty stems from the presence of an energy resonance 
-complicating the process of choosing the coefficients of the tight binding matrix. For the optimal, energy independent,
-set of coefficients that can be chosen see the work of Pettifor. There is a close parallel with this resonant scattering of d-waves in materials
-and Feschenbach resonances Ref.~\cite{chin10}.}
+detangling to return to a tight binding description. This difficulty 
+stems from the presence of an energy resonance 
+complicating the process of choosing the coefficients of the tight binding matrix. 
+For the optimal, energy independent, set of coefficients that can be 
+chosen see the work of Pettifor. There is a close parallel with this resonant 
+scattering of d-waves in materials and Feshbach resonances Ref.~\cite{chin10}.}
 \end{figure}
 %
 
 From pseudopotentials we are familiar with having to match the logarithmic energy
 derivative at some cutoff radius. Usually found by integrating the radial
-Schr\"odinger equation to find $u_{l}(\r,\epsilon)$ and matching the logarithmic derivatives:
+Schr\"odinger equation to find $u_{l}(r,\epsilon)$ and matching the logarithmic derivatives:
 %
 \begin{equation}
-L_{l}(\epsilon) \equiv \frac{u'_{l}(\r_{0},\epsilon)}{u_{l}(r_{0},\epsilon)} = \frac{\kappa[j'_{l}
-(\kappa r_{0}) - tan \eta_{l} n'_{l}(\kappa r_{0})]} {j_{l}(\kappa r_{0}) - tan \eta_{l} n_{l}'(\kappa r_{0})]},
+L_{l}(\epsilon) \equiv \frac{u'_{l}(r_{0},\epsilon)}{u_{l}(r_{0},\epsilon)} = \frac{\kappa[j'_{l}
+(\kappa r_{0}) - \tan \eta_{l} n'_{l}(\kappa r_{0})]} {j_{l}(\kappa r_{0}) - \tan \eta_{l} n_{l}'(\kappa r_{0})]},
 \end{equation}
 %
 where
@@ -526,7 +528,7 @@ translation operator acting on the eigenvector of a crystal is $e^{i\k\cdot\R}$.
 If a basis set of atomic orbitals $\phi_{n}(\r-\R_{i})$
 is placed on each atom in the crystal an un-normalized Bloch sum can be 
 written as $\sum_{\R_{i}} e^{i\k\cdot\R_{i}}\phi_{n}(\r-\R_{i})$. For
-a given $\k$ there will be off diagonal elements between bloch sums
+a given $\k$ there will be off diagonal elements between Bloch sums
 for different atomic orbitals.
 
   Interestingly Slater and Koster state that there are no off-diagonal
@@ -535,8 +537,7 @@ between Bloch sums with different $\k$'s. This is considered again in Chapter~\r
 where off diagonal elements in the Hamiltonian between different $\k$ values are exactly what give
 rise to persistent currents.
 
-  The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$
-are used instead of LCAOs) gives:
+The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ are used instead of LCAOs) gives:
 %
 \begin{equation}
 \sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \psi^{*}_{n}(\r-\R_{i})H\psi_{m}(\r-\R_{j})dV
@@ -550,7 +551,7 @@ it will certainly be quite out of the question without such help."}
 
 The Slater-Koster work does however demonstrate in an intuitive fashion how localized atomic
 waves, with different phases, can interfere (constructively or deconstructively) in order
-to allow charge to accumulate in bonds between atoms.
+to allow charge to accumulate in different spatial patterns between atoms.
 
 \section{Practical Recursion}
 We can conclude this chapter by putting the above ideas into practice.
@@ -584,7 +585,111 @@ There are no restrictions on the number of orbitals per site, or on the range of
 incorporated, these only impact on the efficiency of the method and the validity of the original assumptions
 about the dominance of the local atomic environment.
 
-Recursion calculation of Fe.
+\section{Recursion in Practice}
+To conclude this section some practical examples of recursion type calculations are discussed.
+The simplest chain model that can be handled analytically is the constant chain.
+%
+\begin{equation}
+\label{eq:constantchain}
+G_{0}(E) = \cfrac{1}{E-a_{0}-\cfrac{b_{0}^2}{E-a_{1}-\cfrac{b_{1}^{2}}{E-a_{2}-\cfrac{b_{2}^{2}}{...}}}},
+\end{equation}
+%
+where $a_{0}=a_{1}=...=a_{n}$ and similarly for the coefficients $b_{n}^{2}$. In this chain an electron
+experiences the same pull to every site on the chain the $a$ coefficients, and can hop from one site to 
+the next with the same hopping amplitude $b^{2}_{n}$. That all the coefficients are the same means a closed form solution
+can easily be found by recognizing that Eq.~\ref{eq:constantchain} can be written as:
+\begin{equation}
+G_{0}(E) = \frac{1}{E-a-b^{2}G_{0}(E)},
+\end{equation}
+and finally solved:
+\begin{equation}
+G_{0}(E) = (\frac{E-a}{2b^{2}}) \pm \sqrt{\frac{1}{4}(\frac{E-a}{b^{2}})^{2} - \frac{1}{b^{2}}}.
+\end{equation}
+
+The argument of the Green's function is $E + i\delta$ for positive E the negative root is choosen
+for negative energies the positive root is chosen. This gives the density of states and the real
+part of the Green's function plotted in Fig.~\ref{fig:greensfuncconstchain}.
+
+Some interesting physics can be obtained directly from the particular with reference 
+to the inclusion of an impurity or vacancy in the bulk, or an atom added to the surface. To couple 
+an impurity to a constant chain we allow $a_{0}$ and $b_{0}$ to vary, and the rest of the chain remains
+constant. This leads to the expression:
+%
+\begin{equation}
+G(E) = \frac{1/b_{0}}{\frac{E-a_{0}}{b_{0}} - G_{0}(E)}
+\end{equation}
+%
+There are a few different cases depending on the relative magnitude of $a_0$ and $b_0$.
+
+\subsection{Local Density of States}
+Moving to numerical examples the simplest demonstration of the Cambridge Recursion Library 
+is a computation of the local density of states for an Fe atom located at the center of a small cluster. 
+Fig.~\ref{fig:cuboid} depicts a 75 atom cuboid cluster and the computed local density of states for an 
+Fe atom located in the middle of the cluster. 
+The contribution of the electronic states to the total energy are also plotted. 
+%
+\begin{figure}
+\begin{center}
+\includegraphics[width=\columnwidth]{./invariance/rec_examples/exrecal/combined.png}
+\caption{(a) 75 atom cuboid cluster of FCC Fe. Green atoms are in an FCC environment, and have a complete
+set of FCC neighbours, grey atoms are surface atoms of the cluster and a have a lower coordination number.
+(b) Same cluster with an extra Fe atom and two additional atoms placed on the surface at two different sites. 
+\label{fig:cuboid}}
+\end{center}
+\end{figure}
+%
+The density of states in Fig.~\ref{fig:fcc_dos} is computed using 11 levels of recursion. i.e coefficients
+are computed from $a_{0}$ to $a_{11}$ and $b_{0}$ to $b_11$. The Hamiltonian consists of five d orbitals.
+The Hamiltonian parameters and the coefficients of the continued fraction are given in Table~\ref{tab:reccoeffs}.
+The total DOS in this case is computed by summing up the continued fractions computed for each of the 
+five starting orbitals. Symmetry considerations would allow this to be constraing to the two inequivalent 
+orbitals in 
+
+%
+\begin{figure}
+\begin{center}
+{\graphicspath{{./invariance/rec_examples/exrecal/}}\input{./invariance/rec_examples/exrecal/recal_dos.tex}}
+\caption{Top panel: the local density of states on the central atom for the cluster in Fig.~\ref{fig:cuboid}
+is computed along with the contribution of the band structure to the cohesive energy and the integrated
+density of states.\label{fig:fcc_dos}}
+\end{center}
+\end{figure}
+
+\begin{table}
+\begin{tabular}{|c|c|}
+\hline
+$a_{n}$ & $b_{n}$ \\
+\hline
+ 0.000000E+00 & 0.100000E+01\\
+-0.736283E-02 & 0.295643E-02\\
+-0.296524E-01 & 0.178593E-02\\
+-0.126548E-01 & 0.221181E-02\\
+-0.225989E-01 & 0.178256E-02\\
+ 0.296606E-02 & 0.141733E-02\\
+-0.129493E-01 & 0.196435E-02\\
+-0.136124E-01 & 0.141377E-02\\
+-0.170328E-01 & 0.181703E-02\\
+-0.161681E-01 & 0.173104E-02\\
+ 0.000000E+00 & 0.148088E-02\\
+\hline
+\end{tabular}
+\caption{Coefficients for the continued fraction DOS for a $d_{xy}$ orbital of an Fe 
+atom in the middle of a small iron cluster.}
+\end{table}
+
+The difference in the qualities, in terms of the structure revealed, in the DOS 
+is determined by the different termination scheme employed. \footnote{See the routines 
+\texttt{DENCRS} and \texttt{DENSQ} for the analytic terminator (TermDOS) scheme and \texttt{DENQD} 
+for the QuadDOS termination scheme in the Cambridge Recursion Library}
+
+The TermDOS scheme is described in NEX C.M.M. Comp. Phys. Comm.  (1985)
+
+\subsection{Surface Atoms}
+
+
+\subsection{Phonon Recursion}
+With a simple modification phonon spectra can be computed directly using the recurrence technique.
+
 
 \section{Future Work}
 The references in Vol. 35 demonstrate the scope of application of the method 
