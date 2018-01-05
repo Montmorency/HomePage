@@ -587,11 +587,14 @@ about the dominance of the local atomic environment.
 
 \section{Recursion in Practice}
 To conclude this section some practical examples of recursion type calculations are discussed.
-The simplest chain model that can be handled analytically is the constant chain.
+
+\subsection{The Constant Chain}
+The simplest chain model that can be handled analytically is the constant chain. It is 
+also the paradigmatic model of all the recursion type calculations that will be undertaken.
 %
 \begin{equation}
 \label{eq:constantchain}
-G_{0}(E) = \cfrac{1}{E-a_{0}-\cfrac{b_{0}^2}{E-a_{1}-\cfrac{b_{1}^{2}}{E-a_{2}-\cfrac{b_{2}^{2}}{...}}}},
+G_{0}(E) = \cfrac{1}{E-a_{0}-\cfrac{b_{1}^2}{E-a_{1}-\cfrac{b_{2}^{2}}{E-a_{2}-\cfrac{b_{3}^{2}}{...}}}},
 \end{equation}
 %
 where $a_{0}=a_{1}=...=a_{n}$ and similarly for the coefficients $b_{n}^{2}$. In this chain an electron
@@ -606,20 +609,58 @@ and finally solved:
 G_{0}(E) = (\frac{E-a}{2b^{2}}) \pm \sqrt{\frac{1}{4}(\frac{E-a}{b^{2}})^{2} - \frac{1}{b^{2}}}.
 \end{equation}
 
-The argument of the Green's function is $E + i\delta$ for positive E the negative root is choosen
-for negative energies the positive root is chosen. This gives the density of states and the real
-part of the Green's function plotted in Fig.~\ref{fig:greensfuncconstchain}.
-
-Some interesting physics can be obtained directly from the particular with reference 
-to the inclusion of an impurity or vacancy in the bulk, or an atom added to the surface. To couple 
-an impurity to a constant chain we allow $a_{0}$ and $b_{0}$ to vary, and the rest of the chain remains
-constant. This leads to the expression:
+The argument of the Green's function is $E + i\delta$, for positive energies the negative root is chosen
+and for negative energies the positive root is chosen. This gives the real
+and imaginary part of the Green's function plotted in Fig.~\ref{fig:gfconstchain}.
+%
+\begin{figure}
+\begin{center}
+{\graphicspath{{./invariance/chain_figs/}}\input{./invariance/chain_figs/chain_plot.tex}}
+\caption{Real and imaginary parts of the Green's function for the constant chain.\label{fig:gfconstchain}}
+\end{center}
+\end{figure}
+%
+A great deal of interesting physics can be obtained directly from the chain model. In particular with reference 
+to the inclusion of an impurity or vacancy state in the bulk, or an atom added to the surface. To couple 
+an impurity to a constant chain we allow the first two coefficients $a_{0}$ and $b_{1}$ to vary, 
+and the rest of the chain remains constant. This leads to the expression:
 %
 \begin{equation}
-G(E) = \frac{1/b_{0}}{\frac{E-a_{0}}{b_{0}} - G_{0}(E)}
+G(E) = \frac{1/b_{1}}{\frac{E-a_{0}}{b_{1}} - G_{0}(E)}
 \end{equation}
 %
-There are a few different cases depending on the relative magnitude of $a_0$ and $b_0$.
+There are a few different cases depending on the relative magnitude of $a_0$ 
+and $b_1$ and the chain parameters $a$ and $b$.
+We plot the behaviour of the function for a few different choices of the coupling to the band, 
+$b_1$, and the relative position of the defect state $a_0$ in Fig.\ref{fig:gfdefect}. 
+We will return to the idea of coupling single particle states to bands in Chap.~\ref{chap:manybodyrec}. 
+
+We first plot for a state located within the band and with different magnitudes of coupling. For
+strong coupling there are bound and antibound states outside the band.
+
+\begin{figure}
+\begin{center}
+{\graphicspath{{./invariance/chain_figs/}}\input{./invariance/chain_figs/inband_plot.tex}}
+\caption{State with energy within the band and a range of coupling strengths. For well matched systems
+the density of states splits into two resonances corresponding to bound and antibound states.}
+\end{center}
+\end{figure}
+
+For states outside the energy range of the band, the coupling to the band shifts the position
+of the pole from $a_{0}$ and adjusts the areas under the two curves. Where there is 
+near matching of the chain and the defect the function changes rapidly for small
+variations in the coupling parameters.
+
+\begin{figure}
+\begin{center}
+{\graphicspath{{./invariance/chain_figs/}}\input{./invariance/chain_figs/adsorbate_plot.tex}}
+\caption{Coupling of an adsorbate to a constant chain model. Where there is strong coupling
+to the chain two distinct resonances appear. In this case $a_{0}$ is chosen to be outside the band.
+$b_{1}$ the blue and green curves correspond to $b_{1}=2b$ and $b_{1}=b/10$ respectively.
+\label{fig:gfconstchain}}
+\end{center}
+\end{figure}
+
 
 \subsection{Local Density of States}
 Moving to numerical examples the simplest demonstration of the Cambridge Recursion Library 
@@ -631,7 +672,7 @@ The contribution of the electronic states to the total energy are also plotted.
 \begin{figure}
 \begin{center}
 \includegraphics[width=\columnwidth]{./invariance/rec_examples/exrecal/combined.png}
-\caption{(a) 75 atom cuboid cluster of FCC Fe. Green atoms are in an FCC environment, and have a complete
+\caption{(a) 75 atom cuboid cluster of FCC. Green atoms are in an FCC environment, and have a complete
 set of FCC neighbours, grey atoms are surface atoms of the cluster and a have a lower coordination number.
 (b) Same cluster with an extra Fe atom and two additional atoms placed on the surface at two different sites. 
 \label{fig:cuboid}}
@@ -649,7 +690,7 @@ orbitals in
 \begin{figure}
 \begin{center}
 {\graphicspath{{./invariance/rec_examples/exrecal/}}\input{./invariance/rec_examples/exrecal/recal_dos.tex}}
-\caption{Top panel: the local density of states on the central atom for the cluster in Fig.~\ref{fig:cuboid}
+\caption{Top panel: the local density of states on the central atom for the Fe cluster in Fig.~\ref{fig:cuboid}
 is computed along with the contribution of the band structure to the cohesive energy and the integrated
 density of states.\label{fig:fcc_dos}}
 \end{center}
@@ -689,7 +730,8 @@ The TermDOS scheme is described in NEX C.M.M. Comp. Phys. Comm.  (1985)
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly using the recurrence technique.
-
+Instead of localized orbitals, localized displacements are introduced, and in the place of hopping
+matrix elements force constants connect neighbour displacements.
 
 \section{Future Work}
 The references in Vol. 35 demonstrate the scope of application of the method 
@@ -719,31 +761,20 @@ nothing has been done about this and it remains a most interesting problem conce
 solutions of the Schrodinger equation.
 \end{quote}
 
-In fact work did continue in this field. In Ref.~\cite{annett94} the local density of states (LDOS)
-is extended to the projected density of transitions (PDOT) and it is argued singularities
-in the PDoT correspond to thresholds for creating long lived elementary excitations 
-of the many body system.
-
-In the rest of this note we will consider the possibile extensions of the recursion method.
-For the first we will consider the possibility of treating the diffusion of hydrogen 
-in a lattice with varying degrees of disorder. In the second we will consider the extension
-of the recursion method to performing GW type calculations.
-
 	Since Vol. 35 was published there has been a rise in the accessibility of density functional methods 
 and the access to good single particle approximations to the electronic eigenstates of a crystal
 is routine. Additionally progress on the problem of determining unique approximations to localized
 electronic states, Wannier functions, means tight binding Hamiltonians can be parameterized directly
-rather than via fits to band structures. 
+rather than via fits to band structures. First principles understanding of Green's function methods 
+has also developed.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=\columnwidth]{./invariance/schematicpolestructure.pdf}
-\caption{Schematic of the poles of the Green's function in terms of the parameters of the 
-coefficients of the recursion calculation.}
-\end{center}
-\end{figure}
-
-
+%\begin{figure}
+%\begin{center}
+%\includegraphics[width=\columnwidth]{./invariance/schematicpolestructure.pdf}
+%\caption{Schematic of the poles of the Green's function in terms of the parameters of the 
+%coefficients of the recursion calculation.}
+%\end{center}
+%\end{figure}
 %\scriptsize
 %\bibliographystyle{unsrtnat}
 %\bibliography{refs}

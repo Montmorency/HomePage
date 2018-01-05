@@ -1,5 +1,25 @@
 \chapter{Many Body Recursion}
 \label{chap:manybodyrecursion}
+\section{Introduction}
+As mentioned at the close of Chapter.~\ref{chap:invariance} one of the 
+
+The most direct extension of the recursion approach to many body Hamiltonians 
+was undertaken In Ref.~\cite{annett94}. The concept of the local density of states (LDOS)
+is extended to the projected density of transitions (PDOT) and it is argued singularities
+in the PDoT correspond to thresholds for creating long lived elementary excitations 
+in the many body system. In this chapter we demonstrate how to map a GW type calculation
+on to a chain model. The analogy between an impurity or adsorbed atom interacting with
+a constant chain and single particle states interacting via plasmon excitations is 
+also pointed out the plasmon band serving to renormalize the single particle state.
+The important calculations are then the position and bandwidth of the interaction
+bands and the coupling of the single particle states to the interaction bands.
+Efficient schemes for computing the positions of the interactions bands and 
+their coupling to the single particle states (represented as Wannier functions)
+are discussed.
+
+Mapping the interacting problem to chain models means larger configurations can be studied
+and the positions of band edges and defect states can be computed.
+
 \section{Recursive GW}
 We write down the many body Hamiltonian amenable in a manageable form:
 %
@@ -353,25 +373,25 @@ at the energy of the electron hole bound state.
   As noted in Ref.~\cite{annett94} there is a close connection between the PDOT
 formalism and Mori's memory function. 
 
-Interestingly when working on the diffusion
-of hydrogen in a lattice I realised I would require a way of computing the
-inverse Laplace transform of the continued fraction generated 
-using Haydock's method. A quick search later and one of the first items to come up
-was a paper titled "A Continued-Fraction Representation of the Time-Correlation
-Functions" the first line of the abstract was, "A continued-fraction expansion of the Laplace
-transform of the time-correlation functions is obtained...". It is very nice when a problem
-arises where all you have to do is go to the shop and grab the solution off the shelf.
+%Interestingly when working on the diffusion
+%of hydrogen in a lattice I realised I would require a way of computing the
+%inverse Laplace transform of the continued fraction generated 
+%using Haydock's method. A quick search later and one of the first items to come up
+%was a paper titled "A Continued-Fraction Representation of the Time-Correlation
+%Functions" the first line of the abstract was, "A continued-fraction expansion of the Laplace
+%transform of the time-correlation functions is obtained...". It is very nice when a problem
+%arises where all you have to do is go to the shop and grab the solution off the shelf.
 
-Like many store bought items some element of self-assembly is required. In this
-section we wish to simplify Mori's analysis as much as possible so that we can directly 
-apply the mathematical machinery of translating a continued fraction representation of
-a diffusion problem into the time domain and extract measurable quantities.
+%Like many store bought items some element of self-assembly is required. In this
+%section we wish to simplify Mori's analysis as much as possible so that we can directly 
+%apply the mathematical machinery of translating a continued fraction representation of
+%a diffusion problem into the time domain and extract measurable quantities.
 
 The inner product, or matrix elements required to generate the coefficients 
 $a_{n}$ and $b_{n}$ in Mori's approach are generalized to include a thermal averaging:
 %\begin{equation}
 %\label{eq:moriinner}
-%(F, G^{*})= \frac{1}{\beta} \int_{0}^{\beta} \bra e^{\lambda H)Fe^{-\lambda H}G^{*}\ket d\lambda
+%(F, G^{*})= \frac{1}{\beta} \int_{0}^{\beta} \bra e^{\lambda H)F e^{-\lambda H}G^{*}\ket d\lambda
 %\end{equation}
 There is a further computational advantage here. Though the inner product in Eq.\ref{eq:moriinner}
 looks complicated, in fact, it only has the effect of altering the coefficients entering
