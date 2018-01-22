@@ -6,19 +6,26 @@ theory from the point of view of the local environment. This perspective
 has a long tradition in physical and chemical electronic structure theory.
 This chapter is purely a summary of the work developed there.
 
+Given a Hamiltonian Haydock's Recursion method gives a rapidly convergent 
+scheme for computing quantities of interest. The primary quantity of interest 
+is the density of states. When this has been computed comparisons between the energetics of 
+structures can be made. The method is applicable in situations where Bloch's theorem no longer holds.
+A situation which arises at surfaces, in glasses, disordered structures, in structures with a substantial
+quantity of impurites, vacancies, defects and dislocations. In short the method is applicable
+in realistic physical situations and yields quantities which can be interpreted directly.
+
 %Topics that are often discussed at the beginning of introductory physics courses include:
 %the study of black body radiation, photoemission phenomenon, De Broghlie waves,
 %electron diffraction experiments and the structure of the hydrogen atom.
 %Examination of thesis topics constitute a suitable foundation 
 %for understanding the formalism and experimental justification for the theory.
 
-  It is natural to hope that from the understanding of the electronic states of hydrogen the
-understanding of larger atomic systems, containing progressively more electrons, might emerge. 
-However as the number of electrons in a system grows the wave function becomes 
-somewhat unwieldly to work with and the accurate evaluation of the 
-electron-electron repulsions becomes more difficult. Computers provide a route
-to numerical solutions of the equations governing the behaviour of these systems.
-
+%  It is natural to hope that from the understanding of the electronic states of hydrogen the
+%understanding of larger atomic systems, containing progressively more electrons, might emerge. 
+%However as the number of electrons in a system grows the wave function becomes 
+%somewhat unwieldly to work with and the accurate evaluation of the 
+%electron-electron repulsions becomes more difficult. Computers provide a route
+%to numerical solutions of the equations governing the behaviour of these systems.
 %Computer simulations are commonly performed these days in many branches of physics, 
 %chemistry, engineering, and biology. The use of computers to solve Schr\"odinger's 
 %equation for electrons in crystals has led to the proliferation of the 
@@ -39,12 +46,11 @@ to numerical solutions of the equations governing the behaviour of these systems
 An example of the economy of explanatory expression afforded by the recursion method
 and a physical formulation in terms of the local atomic environment
 is Ref.~\cite{johannes76}. In that work 76 crystal structures are correctly predicted 
-with a model containing 5 parameters, a determinedly naive numerical approach would
-require computing the total energies of each of those structures and comparing them directly.
+with a model containing 5 parameters.
 
-The purpose of this note is two fold: firstly to attempt to summarize the incredible range and
-detail of theory and application covered in Vol. 35 of Solid State Physics; secondly, to speculate on where 
-it should be possible to exploit modern computational advantages and new understanding 
+The purpose of this chapter is two fold: firstly to attempt to summarize the incredible range and
+detail of theory and application covered in Vol. 35 of Solid State Physics; and secondly, to speculate on where 
+it should be possible to exploit modern computational advantages and the new understanding 
 which has emerged in materials to systematically improve descriptions of quantum systems based
 on the local environment. 
 
@@ -630,43 +636,56 @@ G(E) = \frac{1/b_{1}}{\frac{E-a_{0}}{b_{1}} - G_{0}(E)}
 \end{equation}
 %
 There are a few different cases depending on the relative magnitude of $a_0$ 
-and $b_1$ and the chain parameters $a$ and $b$.
-We plot the behaviour of the function for a few different choices of the coupling to the band, 
-$b_1$, and the relative position of the defect state $a_0$ in Fig.\ref{fig:gfdefect}. 
+and $b_{1}$ and the chain parameters $a$ and $b$.
+We plot the behaviour of the function for a few different choices of coupling parameters
+$b_{1}$, and the relative position of the defect state $a_0$ in Fig.\ref{fig:gfdefect}. 
 We will return to the idea of coupling single particle states to bands in Chap.~\ref{chap:manybodyrec}. 
 
-We first plot for a state located within the band and with different magnitudes of coupling. For
-strong coupling there are bound and antibound states outside the band.
-
+In Fig.~\ref{fig:inband} the defect state energy is placed inside the energy range of the band. The
+results for different couplings $b_{1}$ are plotted.
+%
 \begin{figure}
 \begin{center}
 {\graphicspath{{./invariance/chain_figs/}}\input{./invariance/chain_figs/inband_plot.tex}}
-\caption{State with energy within the band and a range of coupling strengths. For well matched systems
-the density of states splits into two resonances corresponding to bound and antibound states.}
+\caption{State with $a_{0}$ chosen to be within the band and a range of coupling strengths. 
+For well matched systems the density of states splits into two resonances corresponding 
+to bound and antibound states.}
 \end{center}
 \end{figure}
+%
 
 For states outside the energy range of the band, the coupling to the band shifts the position
 of the pole from $a_{0}$ and adjusts the areas under the two curves. Where there is 
 near matching of the chain and the defect the function changes rapidly for small
 variations in the coupling parameters.
-
+%
 \begin{figure}
 \begin{center}
 {\graphicspath{{./invariance/chain_figs/}}\input{./invariance/chain_figs/adsorbate_plot.tex}}
 \caption{Coupling of an adsorbate to a constant chain model. Where there is strong coupling
 to the chain two distinct resonances appear. In this case $a_{0}$ is chosen to be outside the band.
-$b_{1}$ the blue and green curves correspond to $b_{1}=2b$ and $b_{1}=b/10$ respectively.
+The blue and green curves correspond to couplings of $b_{1}=2b$ and $b_{1}=b/10$ respectively.
 \label{fig:gfconstchain}}
 \end{center}
 \end{figure}
+%
+In cases where the defect state is far removed and only weakly coupled to the band
+there is only a small renormalization of the pole from $a_{0}$ and redistribution of the weight across the band.
+This will be discussed more in Chap.\ref{chap:manybodyrec} in the context of single particle states
+interacting with plasmon bands and the continuum.
 
+\subsection{The Cambridge Recursion Library}
+Moving from the constant chain to material systems with different atoms requires specification
+of the Hamiltonian. The choice of the tight binding parameters was discussed in the first half of this
+chapter. For present purposes the Slater-Koster tight binding parameters for the interaction of 
+d-electrons should be sufficient to demonstrate the important features of a typical recursion type calculation.
+In subsequent chapters we will prefer the use of tight binding parameters based on Wannier functions.
 
 \subsection{Local Density of States}
-Moving to numerical examples the simplest demonstration of the Cambridge Recursion Library 
-is a computation of the local density of states for an Fe atom located at the center of a small cluster. 
+The simplest demonstration of the Cambridge Recursion Library 
+is a computation of the local density of states for an Ni atom located at the center of a small cluster. 
 Fig.~\ref{fig:cuboid} depicts a 75 atom cuboid cluster and the computed local density of states for an 
-Fe atom located in the middle of the cluster. 
+Ni atom located in the middle of the cluster. 
 The contribution of the electronic states to the total energy are also plotted. 
 %
 \begin{figure}
@@ -674,7 +693,7 @@ The contribution of the electronic states to the total energy are also plotted.
 \includegraphics[width=\columnwidth]{./invariance/rec_examples/exrecal/combined.png}
 \caption{(a) 75 atom cuboid cluster of FCC. Green atoms are in an FCC environment, and have a complete
 set of FCC neighbours, grey atoms are surface atoms of the cluster and a have a lower coordination number.
-(b) Same cluster with an extra Fe atom and two additional atoms placed on the surface at two different sites. 
+(b) Same cluster with an extra Ni atom and two additional atoms placed on the surface at two different sites. 
 \label{fig:cuboid}}
 \end{center}
 \end{figure}
@@ -690,13 +709,14 @@ orbitals in
 \begin{figure}
 \begin{center}
 {\graphicspath{{./invariance/rec_examples/exrecal/}}\input{./invariance/rec_examples/exrecal/recal_dos.tex}}
-\caption{Top panel: the local density of states on the central atom for the Fe cluster in Fig.~\ref{fig:cuboid}
+\caption{Top panel: the local density of states on the central atom for the Ni cluster in Fig.~\ref{fig:cuboid}
 is computed along with the contribution of the band structure to the cohesive energy and the integrated
 density of states.\label{fig:fcc_dos}}
 \end{center}
 \end{figure}
 
 \begin{table}
+\begin{center}
 \begin{tabular}{|c|c|}
 \hline
 $a_{n}$ & $b_{n}$ \\
@@ -714,8 +734,9 @@ $a_{n}$ & $b_{n}$ \\
  0.000000E+00 & 0.148088E-02\\
 \hline
 \end{tabular}
-\caption{Coefficients for the continued fraction DOS for a $d_{xy}$ orbital of an Fe 
-atom in the middle of a small iron cluster.}
+\caption{Coefficients for the continued fraction DOS for a $d_{xy}$ orbital of a Ni 
+atom in the middle of a small nickel cluster.}
+\end{center}
 \end{table}
 
 The difference in the qualities, in terms of the structure revealed, in the DOS 
@@ -726,12 +747,36 @@ for the QuadDOS termination scheme in the Cambridge Recursion Library}
 The TermDOS scheme is described in NEX C.M.M. Comp. Phys. Comm.  (1985)
 
 \subsection{Surface Atoms}
+For atoms added to the surface the CamRecLibrary provides an example. 
+Surface chemistry using the recursion method was hindered 
+by the arbitrariness in the choice of the Hamiltonian and accessing the 
+charge density in the presence of a surface.
+For early work on generalized Wannier Functions see: 
+J. R. Smith and J. G. Gay Phys. Rev. Lett. 32, 774 (1974),
+and for incorporating self consistency into the scheme see
+Philos. Mag [8] 35, 845 (1977).
 
+\begin{equation}
+N = \int_{-\infty}^{E_{f}}N(E) dE)
+\end{equation}
+
+\begin{equation}
+U_{1} = \int_{-\infty}^{E_{f}}EN(E)dE
+\end{equation}
 
 \subsection{Phonon Recursion}
-With a simple modification phonon spectra can be computed directly using the recurrence technique.
+With a simple modification phonon spectra can be computed directly using the recursion technique.
 Instead of localized orbitals, localized displacements are introduced, and in the place of hopping
-matrix elements force constants connect neighbour displacements.
+matrix elements force constants connect neighbour displacements. The phonon density of states
+for a six atom cluster is computed in Fig.~\ref{fig:phonondos}. 
+
+M.W. Finnis and V. Heine, J. Phys. F 4 L37 (1974)
+
+\footnote{For a derivation of the solution to an infinite chain of spring
+coupled massed using a continued fraction expansion see 
+The classical harmonic chain:solution via Laplace transforms and continued fractions
+(https://arxiv.org/pdf/1608.00616).
+}
 
 \section{Future Work}
 The references in Vol. 35 demonstrate the scope of application of the method 
@@ -768,6 +813,32 @@ electronic states, Wannier functions, means tight binding Hamiltonians can be pa
 rather than via fits to band structures. First principles understanding of Green's function methods 
 has also developed.
 
+\section{Questions}
+\begin{itemize}
+\item (Haydock) Take the Hamiltonian for a non-relativistic free electron in radial coordinates:
+\begin{equation}
+H = \frac{-\hbar^{2}}{2m}[\frac{d}{dr^{2}}+ \frac{2}{r}\frac{d}{dr}]
+\end{equation}
+Now assume an electron has been prepared in an initial state:
+\begin{equation}
+(\frac{\lambda}{\sqrt{\pi}})^{3/2} e^{-(\lambda r)^{2}/2}
+\end{equation}
+What are the first terms in a continued fraction expansion of the Green's
+function $a_{0}$ and $b_{1}$? What is the first vector in the chain $u_{1}$?
+Look up the Laguerre polynomials and right down the general 
+coefficient $a_{n}$ and $b_n$ and $u_{n}$. A convenient unit of 
+energy in this problem is $\frac{\hbar^{2}\lambda^{2}}{2m}$.
+
+Evaluate the infinite sum with the results from part 1 to obtain the eigenstate
+of a free electron:
+%
+\begin{equation}
+\psi(r) = \sum_{n=0}^{\infty}P_{n}(E)u_{n}
+\end{equation}
+%
+What type of function then represents the eigenstate of a free electron?
+
+\end{itemize}
 %\begin{figure}
 %\begin{center}
 %\includegraphics[width=\columnwidth]{./invariance/schematicpolestructure.pdf}
@@ -780,15 +851,16 @@ has also developed.
 %\bibliography{refs}
 %\end{document}
 %\bibliography
-%J Friedel Adv. Phys. 3, 446 (1954) #dilutealloys
+%Dilute Alloys
+%J Friedel Adv. Phys. 3, 446 (1954)
 %
-%Matching green's functions:
+%Matching Green's functions:
 %J. E. Inglesfield J. Phys C 4, L14 (1971)
 %B. Velicky and I. Bartos, J. Phys C 4, L104 (1971)
 %F. Garcia-Moliner and J Rubio J Phys C 2, 1789 (1969)
 %F. Garcia-Moliner and J Rubio Proc R. Soc. London, Ser. A 324, 257 (1971)
 %
-%Non-hermitian matrices
+%Non-Hermitian Matrices
 %R. Haydock and M.J. Kelly. J. PHys. C 8, L290
 %R. Haydock, J. Phys. A 7, 2120 (1974)
 %
@@ -796,8 +868,6 @@ has also developed.
 %R. Haydock and M.J. Kelly, Surf. Sci. 38, 139 (1973) #d-orbitals #Fesurfaces #gallagherthesis
 %M. J. Kelly J. Phys. C 7 L157 (1974)
 %M. J. Kelly Surf. Sci. 43 587 (1974)
-%
-%Perturbation Theory:
 %
 %Perovskites:
 %I. Gyemant and M. J. Kelly, J. Phys. C 11, L193 (1978)
@@ -807,6 +877,7 @@ has also developed.
 %
 %Lave Phases:
 %R. L. Johannes, R. Haydock, and Volker Heine Phys. Rev. Lett. 36, 372 1976 #lavephases
+%A. K. Sinha, Prog. Mater. Sci. 15, 81 (1972)
 %
 %Anderson Localization
 %R. Haydock Philos. Mag. [Part] B 37, 97 (1978)
@@ -814,6 +885,7 @@ has also developed.
 %
 %Interfacial Energies
 %C.C. Pei Phys. Rev. B 18, 2583 (1978)
+%
 %GrainBoundaries 
 %Masuda-Jindo ISIJ 28, 843 (1988)
 %
@@ -824,6 +896,17 @@ has also developed.
 %UV Photoemission
 %R. K. C. McLean and R. Haydock, J. Phys. C 10, 1929 (1977)
 %https://materialscience.uoregon.edu/wp-content/uploads/2016/02/tightbind.pdf
-
+%
 %Perturbations:
 %Haydock J. Phys. A Vol. 10, No. 4 (1977)
+%
+%Susceptibilities
+%K. Terakura, J. Phys. C 11 469 (1978)
+%
+%Binary Alloys 
+%R. L. Jacobs, J. Phys. F 3, 933 (1973)
+%Random Alloys
+%T. Kaplan and L. J. Gray, J. Phys. C 9, L303 and L483 (1976)
+%T. Kaplan and L. J. Gray, Phys. Rev. B 14 3462 (1976)
+%Add Atoms
+%N. R. Burke, Surf. Sci. 58 349 (1976)

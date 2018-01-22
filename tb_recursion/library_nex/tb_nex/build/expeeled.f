@@ -6,13 +6,13 @@
 
      1,EN(201,10),NL(2)
 
-      NPTS=34
+      NPTS=68
 
       ND=30
 
       ELO=-0.2
 
-      EHI=0.6
+      EHI=2.0
 
       EPS=5.0E-12
 
