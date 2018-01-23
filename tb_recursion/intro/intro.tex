@@ -154,13 +154,17 @@ reasoning and consume resources without providing insight and general principles
 
 If, as Ehrenreich suggests, studying trends in homologous materials is truly a necessary component of a satisfactory
 theory then these simulations would have to be repeated over and over again, for every element in a group,
-for each compound in a series, etc..
-Furthermore macroscopic materials mechanics does not require a quantum description.
-Thermodynamics and continuum mechanics provides a suitable description of the physics of these systems.
-Engineers are accustomed to working with the Young's moduli and elastic tensors, dielectric constants, 
-all quantities which characterize the properties of a system made up of many tiny degrees of freedom.
-The point at which quantum dynamical variables merge into macroscopic parameters should be incorporated
-into a satisfactory theory.
+for each compound in a series, etc... The ``one-off" character of numerical calculations makes them unsuitable
+as the basis for an actual theory of trends in the measurable properties of materials.
+
+There is also the observation that many of the macroscopic properties of materials do not require a quantum description.
+For instance many mechanical properties of materials can be describe by a scalar, like Youngs modulus, poisson ratios, 
+or small tensors to describe the elasticity. Even some electronic properties can be described using a single number
+like the dielectric constant of a material.
+All these properties of systems are made up of many tiny degrees of freedom.
+The point at which quantum dynamical variables merge into macroscopic parameters 
+should also be incorporated into a satisfactory theory.
+%{this seems like it might require some additivity element similar to in entropy}
 
 The development in computing hardware is in some ways the easy part to chart. 
 Clock speeds, transistor density, and the proliferation of high 
@@ -182,8 +186,7 @@ next section we try and identify the major pillars of materials modelling.
 
 \section{Computational Craft}
 What sort of things should a computer compute? A theoretical material scientist
-can answer this question definitively. One would like to:
-"... compute groundstate properties such as cohesive energies, interatomic forces, 
+wishes to ``compute groundstate properties such as cohesive energies, interatomic forces, 
 charge transfer, and magnetic moments, and also excitation spectra described 
 by the one-electron Green's function."\cite{anderson75} 
 
@@ -376,8 +379,8 @@ Models (hypotheses) of material systems can then be ranked according to Eq.~\ref
 
 \section{Prospective}
 The purpose of these notes are to establish a comprehensive framework 
-for incorporating knowledge about material systems into models that can be rapidly
-instantiated.
+for incorporating knowledge about material systems into transparent models 
+which can be used to compute the properties of materials that may interest engineers.
 
 The general procedure is to use ab initio data to map 
 to rigorous local models of the atomic environment. The local models

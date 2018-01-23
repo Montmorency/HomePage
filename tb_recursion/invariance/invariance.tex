@@ -543,7 +543,7 @@ between Bloch sums with different $\k$'s. This is considered again in Chapter~\r
 where off diagonal elements in the Hamiltonian between different $\k$ values are exactly what give
 rise to persistent currents.
 
-The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ are used instead of LCAOs) gives:
+The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ are used instead of LCAOs \cite{lowdin62}) gives:
 %
 \begin{equation}
 \sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \psi^{*}_{n}(\r-\R_{i})H\psi_{m}(\r-\R_{j})dV
@@ -674,7 +674,7 @@ there is only a small renormalization of the pole from $a_{0}$ and redistributio
 This will be discussed more in Chap.\ref{chap:manybodyrec} in the context of single particle states
 interacting with plasmon bands and the continuum.
 
-\subsection{The Cambridge Recursion Library}
+\section{The Cambridge Recursion Library}
 Moving from the constant chain to material systems with different atoms requires specification
 of the Hamiltonian. The choice of the tight binding parameters was discussed in the first half of this
 chapter. For present purposes the Slater-Koster tight binding parameters for the interaction of 
@@ -742,19 +742,15 @@ atom in the middle of a small nickel cluster.}
 The difference in the qualities, in terms of the structure revealed, in the DOS 
 is determined by the different termination scheme employed. \footnote{See the routines 
 \texttt{DENCRS} and \texttt{DENSQ} for the analytic terminator (TermDOS) scheme and \texttt{DENQD} 
-for the QuadDOS termination scheme in the Cambridge Recursion Library}
-
-The TermDOS scheme is described in NEX C.M.M. Comp. Phys. Comm.  (1985)
+for the QuadDOS termination scheme in the Cambridge Recursion Library. 
+The TermDOS scheme is described in NEX C.M.M. Comp. Phys. Comm.  (1985)}
 
 \subsection{Surface Atoms}
 For atoms added to the surface the CamRecLibrary provides an example. 
 Surface chemistry using the recursion method was hindered 
 by the arbitrariness in the choice of the Hamiltonian and accessing the 
-charge density in the presence of a surface.
-For early work on generalized Wannier Functions see: 
-J. R. Smith and J. G. Gay Phys. Rev. Lett. 32, 774 (1974),
-and for incorporating self consistency into the scheme see
-Philos. Mag [8] 35, 845 (1977).
+charge density in the presence of a surface. 
+
 
 \begin{equation}
 N = \int_{-\infty}^{E_{f}}N(E) dE)
@@ -766,15 +762,28 @@ U_{1} = \int_{-\infty}^{E_{f}}EN(E)dE
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly using the recursion technique.
-Instead of localized orbitals, localized displacements are introduced, and in the place of hopping
-matrix elements force constants connect neighbour displacements. The phonon density of states
-for a six atom cluster is computed in Fig.~\ref{fig:phonondos}. 
+Instead of localized orbitals, localized displacements are introduced, and in the place of onsite and hopping
+matrix elements force constants connect nearest and next nearest neighbour displacements. 
+%
+\begin{figure}
+\begin{center}
+{\graphicspath{{./invariance/rec_examples/phonon/}}\input{./invariance/rec_examples/phonon/phonon_dos.tex}}
+\caption{The local phonon density of states for a small six atom molecule composed of two atom types.
+The model is specified by giving the masses of the two atoms. In the present simulation 
+the masses are chosen to be 0.25 and $0.189$ amu. Two force constants are also
+specified, a bond stretching force constant of 1.0, which is the same for both atomic types
+and two bond bending force constants of 0.5 and 0.25 \label{fig:phonondos}. The phonon DOS relies on the routine
+\texttt{RECSUM} to combine the continued fraction coefficients for the vibration modes computed for each
+site. The six atom systems has the expected 12 vibration modes thus acting as a check on the numerics.}
+\end{center}
+\end{figure}
+The phonon density of states and the integrated phonon density of states is depicted in Fig.~\ref{fig:phonondos} 
+for a six atom molecule consisting of two atomic types. 
 
-M.W. Finnis and V. Heine, J. Phys. F 4 L37 (1974)
 
-\footnote{For a derivation of the solution to an infinite chain of spring
+\footnote{For an instructuve derivation of the solution to an infinite chain of spring
 coupled massed using a continued fraction expansion see 
-The classical harmonic chain:solution via Laplace transforms and continued fractions
+The Classical Harmonic Chain: Solution via Laplace Transforms and Continued Fractions
 (https://arxiv.org/pdf/1608.00616).
 }
 
@@ -809,25 +818,61 @@ solutions of the Schrodinger equation.
 	Since Vol. 35 was published there has been a rise in the accessibility of density functional methods 
 and the access to good single particle approximations to the electronic eigenstates of a crystal
 is routine. Additionally progress on the problem of determining unique approximations to localized
-electronic states, Wannier functions, means tight binding Hamiltonians can be parameterized directly
-rather than via fits to band structures. First principles understanding of Green's function methods 
-has also developed.
+electronic states, Wannier functions, means tight binding Hamiltonians can be determined unambiguously.
+First principles understanding of Green's function methods and their application to the many body
+problem have also developed. In the following chapters we will look at how the development of these
+methods provides a framework for a computationally tractable toolkit for performing highly 
+accurate calculations of material properties.
 
 \section{Questions}
 \begin{itemize}
-\item (Haydock) Take the Hamiltonian for a non-relativistic free electron in radial coordinates:
+\item (Kwidzinski: Continued Fractions and Classical Vibrations) 
+      Let $x_{n}(t)$ be a time dependent function for the position of mass $m$.
+      For a one sided infinite chain of coupled harmonic oscillators, with 
+      spring constants $k$ and masses $m$ the equations of motion for the $0^th$ and
+      $n^th$ spring can be shown to be:
+      %
+      \begin{equation}
+      (s^{2} + \frac{k_{0}}{m_{0}}) x_{0}(s) - \frac{k_{0}}{m_{0}}x_{1}(s) = As 
+      \end{equation}
+      %
+      and for the $n^{th}$ oscillating mass:
+      %
+      \begin{equation}
+      (s^{2}+\frac{k_{n-1}+k_{n}}{m_{n}})x_{n}(s)-(\frac{k_{n-1}}{m_{n}}x_{n-1}(s) + \frac{k_{n}}{m_{n}}x_{n+1}(s)) = 0
+      \end{equation}
+      % 
+      where $x_{m}(s) = \int_{0}^{\infty}e^{-st}f(t)dt$ is the Laplace transform of the time dependent position.
+      Write this system of equations as a matrix where the vectors are $[x_{0}(s), 0, 0, 0,...]^{\rm T}$, $[0, x_{1}(s), 0, 0, ...]^{\rm T}$ etc,
+      and use the determinant expansion trick in Eq.~\ref{eq:detexpansion} to find a continued fraction expansion for the $x_{0}$ element.
+      Simplify this continued fraction to obtain an expression for the Laplace transform of the position operator.
+      %
+      The time dependence of the position can then be found by performing the inverse Laplace transform
+      this can be done most easily by checking a correspondence table
+      in an appropriate handbook. (For instance, M. Abramowitz, I. Stegun (1965) 
+      Handbook of Mathematical Functions).
+
+      %For a two sided infinite chain the relevant equations of motion are: 
+      %What is the continued fraction expansion for the laplace transform of a mass $n$?
+      %What is its form in the time domain?
+
+\item (Haydock: Recursion for a Free Electron) Take the Hamiltonian for a non-relativistic free electron in radial coordinates:
+%
 \begin{equation}
-H = \frac{-\hbar^{2}}{2m}[\frac{d}{dr^{2}}+ \frac{2}{r}\frac{d}{dr}]
+H = \frac{-\hbar^{2}}{2m}\left[\frac{d}{dr^{2}}+ \frac{2}{r}\frac{d}{dr}\right]
 \end{equation}
+%
 Now assume an electron has been prepared in an initial state:
+%
 \begin{equation}
-(\frac{\lambda}{\sqrt{\pi}})^{3/2} e^{-(\lambda r)^{2}/2}
+u_{0}=(\frac{\lambda}{\sqrt{\pi}})^{3/2} e^{-(\lambda r)^{2}/2}
 \end{equation}
+%
 What are the first terms in a continued fraction expansion of the Green's
 function $a_{0}$ and $b_{1}$? What is the first vector in the chain $u_{1}$?
 Look up the Laguerre polynomials and right down the general 
-coefficient $a_{n}$ and $b_n$ and $u_{n}$. A convenient unit of 
-energy in this problem is $\frac{\hbar^{2}\lambda^{2}}{2m}$.
+coefficients $a_{n}$, $b_n$, and the general state $u_{n}$. 
+(A convenient unit of energy in this problem is $\frac{\hbar^{2}\lambda^{2}}{2m}$).
 
 Evaluate the infinite sum with the results from part 1 to obtain the eigenstate
 of a free electron:
@@ -836,7 +881,11 @@ of a free electron:
 \psi(r) = \sum_{n=0}^{\infty}P_{n}(E)u_{n}
 \end{equation}
 %
-What type of function then represents the eigenstate of a free electron?
+What type of function represents the eigenstate of a free electron?
+
+\item (Kelly:Surface Reactivity by Coordination Number) Given a body centered cubic crystal with an on site energy $a$ and a nearest neighbour hopping integral
+      $b$, what, using a single hop in the recursion method, will be the relative magnitudes of the local density of states 
+      at the Fermi energy for an atom on a $[001]$, $[110]$, and a $[111]$ surface?
 
 \end{itemize}
 %\begin{figure}
@@ -896,6 +945,11 @@ What type of function then represents the eigenstate of a free electron?
 %UV Photoemission
 %R. K. C. McLean and R. Haydock, J. Phys. C 10, 1929 (1977)
 %https://materialscience.uoregon.edu/wp-content/uploads/2016/02/tightbind.pdf
+%
+%Wannier Functions
+%J. R. Smith and J. G. Gay Phys. Rev. Lett. 32, 774 (1974),
+%Self-Consistent Tight Binding Orbitals
+%Philos. Mag [8] 35, 845 (1977) #
 %
 %Perturbations:
 %Haydock J. Phys. A Vol. 10, No. 4 (1977)
