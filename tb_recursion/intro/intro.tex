@@ -23,10 +23,10 @@ Rome: [Mariano Vasi]. 1813, de Beer Itb 1815 V.}.
 This concrete was manufactured without any specific knowledge of the microstructure and 
 chemistry of the concrete. How it even came to be discovered is somewhat mysterious.
 
-Equally crafty we have mediaeval blacksmith's who learned to manipulate the 
+Equally crafty we have the blacksmiths who over the centuries learned to manipulate the 
 hardness of swords and shields by the alloying of metals and precise control of heat. 
-Again the theoretical model they worked with in there heads had no conception of 
-the atomic composition of the weapons or the size and character of the metallic grains within them. 
+Again the theoretical model they worked with lacked the modern conception of 
+atomic composition and specific microstructure.
 
 In each case the material practitioner's expertise was not accumulated based on reasoning 
 from first principles but based on experience, trial and error, and craft.
@@ -38,11 +38,13 @@ means the possibility of constructing accurate models of materials
 systems beginning from the arrangment of the constituent atoms has
 progressed giving rise to the large field of first principles or {\it ab initio} modelling.
 
-The extent to which theoretical materials science as a discipline has evolved over this period of time is worth examining. 
-It is important because the character of this evolution dictates which directions of research may prove most
-immediately fruitful. It is also important because it allows researchers to identify the avenues
-of research that are inefficient, that are potentially obscuring knowledge, and convoluting 
-what is already understood. 
+The extent to which theoretical materials science as a discipline has evolved 
+over this period of time is worth examining. 
+It is important because the character of this evolution dictates which 
+directions of research may prove most immediately fruitful. It is also important 
+because it allows researchers to identify the avenues
+of research that are inefficient, that are potentially obscuring knowledge, 
+and convoluting what is already understood. 
 
 To chart this evolution we may begin from Ehrenreich's survey of the field from 30 years ago.
 
@@ -52,14 +54,15 @@ that a satisfactory theory of materials must uphold:
 %
 \begin{enumerate}[i)]
 \item Theory must be closely linked to experiment.
-\item Ab initio calculations without approximations are virtually impossible except in model systems.
-\item Approximations are frequently based on prior experience rather than on theoretical justification.
+\item Ab initio calculations without approximations are virtually impossible 
+      except in model systems.
+\item Approximations are frequently based on prior experience rather 
+      than on theoretical justification.
 \item The study of trends in the properties of homologous materials 
       is a crucial ingredient of a credible theoretical framework.
 \end{enumerate}
 %
-Based on these four observations provide a useful framework to 
-analyze the current state of the field.
+These four observations provide a useful framework to analyze the current state of the field.
 
 \section{The Rise of the Computer}
 \label{sec:riseofcomp}
@@ -69,42 +72,47 @@ and the inherent difficulties in performing them.
 
 The intervening thirty years has seen an enormous extension of computing capacity. 
 To demonstrate this we may contrast the machines available at the time
-he was writing to those that are available at the present time of writing (2017). 
+he was writing to those that are widely available at the present time of writing (2017). 
 
 In 1987 an example of a state of the art computer would be the Connection Machine.
 \footnote{One of the employees at Thinking Machines Corporation,
 the company building the connection machine, was Richard Feynman.
 For an interesting discussion of the work they
 did at Thinking Machines and Feynman's time there see W. Daniel
-Hillis' article in Physics Today 42, 2, 78 (1989).
-There was a strong focus on design at the company. Some of that
-work can be found at Tamiko Thiel's page}%; \url{http://www.tamikothiel.com/theory/cm_txts/di-frames.html}}
-The CM-2 was launched in 1987 It was configured with up to 512 MB of RAM and 25 GB of RAID
+Hillis' article in Physics Today 42, 2, 78 (1989).}
+%There was a strong focus on design at the company. Some of that
+%work can be found at Tamiko Thiel's page}%; \url{http://www.tamikothiel.com/theory/cm_txts/di-frames.html}}
+The CM-2 was launched in 1987 it was configured with up to 512 MB of RAM and 25 GB of RAID
 hard disk space. It had 65K microprocessors (each with 600 bytes of memory). 
-%Support for 32 bit floating point operations meant just over 2048 processors in practice per machine.
+%Support for 32 bit floating point operations meant just over 
+%2048 processors in practice per machine.
 
 By contrast the HPC machine presently accessible to the author 
 is more easily measured in nodes. Each node in a machine has 2x12 core Intel Broadwell processors.
 Each node has 128 GB RAM and 120 GB static storage. The machine has in total 720 nodes. 
 The processors themselves have up to 10 cores with clock speeds (roughly the speed the
-processor can execute instructions) on the order of 3 GHz a clock speed of 12.5 MHz would be representative in 1987. 
-Each processor has abundant cache space of 10x 256 KiB L2 Cache, and 25 MiB of L3 cache 
-(compared to 600 bytes in the connection machine). 
-There could be on the order of 3 billion transistors in a single microprocessor now;
+processor can execute instructions) on the order of 3 GHz. A clock speed of 12.5 MHz 
+would be representative in 1987. 
+Each processor, on the modern machine, has abundant cache space of 10x 256 KiB L2 Cache, and 25 MiB of L3 cache,
+this is to be compared with 600 bytes in the connection machine. 
+Nowadays there could be on the order of 3 billion transistors in a single microprocessor;
 in 1987 that number would be closer to 100,000. 
 
 Listing specifications doesn't necessarily clarify how much more powerful machines have become, 
-but it is striking that in terms of speed, storage, and transistor density there are 3-5 orders of magnitude 
-improvements in each category. The stability and optimization of compilers and the ease of programmability
+but it is striking that in terms of speed, storage, and transistor density 
+there are 3-5 orders of magnitude improvements in each category. 
+The stability and optimization of compilers and the ease of programmability
 of the machines has also improved.
 
-This constant development of computing capacity has played an important component in enabling
-{\it ab initio} calculations. 
+It is this constant development of computing capacity that 
+has played an important component in enabling {\it ab initio} calculations. 
 
 \subsection{Scales of Materials Modelling}
 What are the scales involved in connecting atomic systems where quantum mechanics is important
 to macroscopic systems? Chemists arrived at the mol as a convenient unit for describing
-quantities of atoms which is on the order of $10^{23}$ atoms. This is clearly impractical.
+quantities of atoms. A mol is on the order of $10^{23}$ atoms. Setting up a single 
+system of equations to describe the motion of and mutual interactions of 
+this number of particles is not practical.
 
 More realisitically a suitably macroscopic specimen might be considered to be on the 
 order of 200 nm$^{3}$ of material. A sample of material of this size is of the 
@@ -127,26 +135,36 @@ quantum mechanical simulations of systems of millions of atoms should be feasibl
 within a similar amount of computing time. 
 
 If dynamical properties are of interest the atoms motion must be propagated forward. 
-If a time step of a femtosecond $(10^{-15}s)$ is taken between evaluations of the 
-forces generating a picosecond of data $(10^{-12}s)$ would require about 5 months 
+If a time step of a femtosecond ($(10^{-15})$s) is taken between evaluations of the 
+forces generating a picosecond of data ($(10^{-12})$s) would require about 5 months 
 computing time. Another 12 orders of magnitude efficiency would remain to be found to 
-simulate the motion of particles on time scales more familiar to everyday experience.
+simulate the motion of particles on time scales more familiar to everyday experience
+in the same period.
 
 These considerations are artificial for two important reasons. The first
 is I strongly suspect computational power will not continue developing at the rate
 seen over the previous 30 years. 
 
 The second is that even if computational resources did continue growing 
-at an equivalent rate; simulations of the nature might be of little value.
+at an equivalent rate; simulations of this nature might be of little value.
 The objective of {\it ab initio} modeling is to extract meaningful information
 about trends and characteristic properties of different classes of materials. 
 Massive simulations generate such a quantity of data they may obscure 
 reasoning and consume resources without providing insight and general principles.
 
-If studying trends in homologous materials is truly a necessary component of a satisfactory
-theory then these simulations would have to be repeated over and over again.
-Furthermore macroscopic materials mechanics does not require a quantum description.
-Thermodynamics and continuum mechanics provides a suitable description of the physics of these systems. 
+If, as Ehrenreich suggests, studying trends in homologous materials is truly a necessary component of a satisfactory
+theory then these simulations would have to be repeated over and over again, for every element in a group,
+for each compound in a series, etc... The ``one-off" character of numerical calculations makes them unsuitable
+as the basis for an actual theory of trends in the measurable properties of materials.
+
+There is also the observation that many of the macroscopic properties of materials do not require a quantum description.
+For instance many mechanical properties of materials can be describe by a scalar, like Youngs modulus, poisson ratios, 
+or small tensors to describe the elasticity. Even some electronic properties can be described using a single number
+like the dielectric constant of a material.
+All these properties of systems are made up of many tiny degrees of freedom.
+The point at which quantum dynamical variables merge into macroscopic parameters 
+should also be incorporated into a satisfactory theory.
+%{this seems like it might require some additivity element similar to in entropy}
 
 The development in computing hardware is in some ways the easy part to chart. 
 Clock speeds, transistor density, and the proliferation of high 
@@ -161,19 +179,14 @@ code development, testing, and sharing. All of which can be binned in the
 category computers and computing culture.
 
 The important theoretical advances, i.e., the physical principles and
-mathematical techniques that enable material's science are more difficult to quantify. 
-Difficult to quantify in what exactly they are and what they have enabled. In the
+mathematical techniques that enable theoretical materials science 
+are more difficult to quantify. Difficult to quantify in what exactly 
+they are and what they have enabled. In the
 next section we try and identify the major pillars of materials modelling.
 
 \section{Computational Craft}
-%Given a really good computer what would you like to do with it?
-%Write documents and send them to people? Create a system where the computers share files
-%with each other? Listen to music? Watch films? Learn Things? Compute things? The latter is in some
-%ways becoming a niche application of computers.
-
 What sort of things should a computer compute? A theoretical material scientist
-can answer this question definitively. One would like to:
-"... compute groundstate properties such as cohesive energies, interatomic forces, 
+wishes to ``compute groundstate properties such as cohesive energies, interatomic forces, 
 charge transfer, and magnetic moments, and also excitation spectra described 
 by the one-electron Green's function."\cite{anderson75} 
 
@@ -200,53 +213,76 @@ Inhomogeneous Electron Gas \cite{hohenberg64} & 20,527 & Ground state energy of 
 Self-Consistent Equations Including Exchange and Correlation Effects & 26,273 & Self-consistent set of equations for varying electron density. & Theory \\
 Linear methods in band theory \cite{andersen75}& 4,822 & Describes LAPW and LMTO approach to electronic structure calculations. & Theory/Implementation \\
 Norm-Conserving Pseudopotentials \cite{hamann79} & 2,156 & Nodeless eigenfunctions that match atomic eigenvalues.  & Pseudopotentials \\
-Soft self-consistent pseudopotentials in a generalized eigenvalue formalism \cite{vanderbilt90} & 11,560 & Effective pseudopotentials for first row and transition-metal systems  & Pseudopotentials \\
+Soft self-consistent pseudopotentials in a generalized eigenvalue formalism \cite{vanderbilt90} & 11,560 & Effective pseudopotentials for
+first row and transition-metal systems.  & Pseudopotentials \\
 Projector augmented-wave method \cite{blochl94paw} & 19,194 & Generalizes pseudopotential and LAPW methods; allows reconstruction of wavefunctions at nucleus.  & Pseudopotentials \\
-Efficacious Form for Model Pseudopotentials \cite{kleinman82} & 3,709 & Reduces number of integrals which need to be calculated & Pseudopotentials \\
-Special points for Brillouin-zone integrations \cite{monkhorst76} & 21,361 & Brillouin zone integration & Numerical Integration \\
+Efficacious Form for Model Pseudopotentials \cite{kleinman82} & 3,709 & Reduces number of integrals which need to be calculated in
+pseudopotential calculations. & Pseudopotentials \\
+Special points for Brillouin-zone integrations \cite{monkhorst76} & 21,361 & Brillouin zone integration. & Numerical Integration \\
 Ground State of the Electron Gas by a Stochastic Method \cite{ceperley80} & 8,855 & Calculation of the exchange-correlation energy of an electron gas. & Exchange Correlation \\
-Self-interaction correction to density-functional approximations for many-electron systems \cite{perdew81} & 11,629 & Parameterization of Ceperley-Alder & Exchange Correlation \\
-Accurate and simple analytic representation of the electron-gas correlation energy \cite{perdew91} & 12,296 & Parameterization of exchange correlation functional & Exchange Correlation \\
-Atoms, molecules, solids, and surfaces: Applications of the generalized gradient approximation for exchange and correlation \cite{perdew92} & 11,418 & Generalized gradient expansion& Exchange Correlation \\
+Self-interaction correction to density-functional approximations for many-electron systems \cite{perdew81} & 11,629 & Parameterization of
+Ceperley-Alder data on free electron gas. & Exchange Correlation \\
+Accurate and simple analytic representation of the electron-gas correlation energy \cite{perdew91} & 12,296 & Parameterization of exchange
+correlation functional. & Exchange Correlation \\
+Atoms, molecules, solids, and surfaces: Applications of the generalized gradient approximation for exchange and correlation \cite{perdew92}
+& 11,418 & Incorporates information from the gradient of the density. & Exchange Correlation \\
 New Method for Calculating the One-Particle Green's Function with Application to the Electron-Gas Problem & 2,599 & A calculation scheme for
-obtaining progressively more accurate approximations to the one-electron Green's function \cite{hedin65} & Theory\\
-Electron correlation in semiconductors and insulators: Band gaps and quasiparticle energies \cite{hybertsen86} & 1,929 & Extension of electronic structure calculations to excited states& Theory/Implementation \\
-Unified Approach for Molecular Dynamics and Density-Functional Theory \cite{car85} & 5,940 & Combined molecular dynamics and density functional theory & Theory/Implementation \\
-High-precision sampling for Brillouin-zone integration in metals \cite{methfessel89} & 2,908 & Brillouin zone integration & Numerical Integration Technique \\
-Improved tetrahedron method for Brillouin-zone integrations \cite{blochl94} &  2,986 & Brillouin zone integration & Numerical Integration Technique\\
-A new mixing of Hartree–Fock and local density‐functional theories \cite{becke93} & 7,143 & Combining Hartree-Fock and DFT & Exchange Correlation \\
+obtaining progressively more accurate approximations to the one-electron Green's function. \cite{hedin65} & Theory\\
+Electron correlation in semiconductors and insulators: Band gaps and quasiparticle energies \cite{hybertsen86} & 1,929 & Extension of
+electronic structure calculations to excited states. & Theory/Implementation \\
+Unified Approach for Molecular Dynamics and Density-Functional Theory \cite{car85} & 5,940 & Combined molecular dynamics and density
+functional theory. & Theory/Implementation \\
+High-precision sampling for Brillouin-zone integration in metals \cite{methfessel89} & 2,908 & Brillouin zone integration. & Numerical Integration Technique \\
+Improved tetrahedron method for Brillouin-zone integrations \cite{blochl94} &  2,986 & Brillouin zone integration. & Numerical Integration Technique\\
+A new mixing of Hartree–Fock and local density‐functional theories \cite{becke93} & 7,143 & Combining Hartree-Fock and DFT. & Exchange Correlation \\
 Generalized Gradient Approximation Made Simple \cite{perdew96} & 47,029 & GGA functionals improved.& Exchange Correlation \\
 \end{tabular}
 }
 \caption{Citations are relevant up to Nov. 2017. Citations are according to the journals in which they appear, the actual number of
 citations are much higher. These selections have been chosen as representative of the important theoretical and algorithmic developments
 which have enabled subsequent research. In some cases there are a number of contemporary papers which
-treat the same problems but failed to "catch on" or describe techniques which differ in an incremental way to the works cited here. 
+treat the same problems but failed to "catch on", or describe techniques which differ in an incremental way to the works cited here. 
 \label{tab:foundation}}
 \end{table}
 
-This table is biased towards a "plane wave" conception of electronic structure. 
+Table~\ref{tab:foundation} is biased towards a "plane wave" conception of electronic structure. 
 These methods are suitable for crystalline systems with periodicity and can be pushed 
-to describe more disordered systems on the order, as discussed in Sec.\ref{sec:riseofcomp}, of 1000 atoms.. 
+to describe more disordered systems on the order, as discussed in Sec.\ref{sec:riseofcomp}, 
+of 1000 atoms.
 
 To broadly categorize the workers we can say a material scientist 
-is interested in crystals, alloys, ceramics, glasses, and possibly elastic materials. They
+is interested in crystals, alloys, ceramics, glasses, and, possibly, rubbers and elastomers. They
 worry about energy differences on the order of 100 meV. Chemists are interested in molecules, 
 tend to use localized basis sets and exploit Monte Carlo methods to obtain energy 
-bounds on the order of a few meV. Physicists are interested in lasers and hubbard models and the 
-general positions of resonances and asymptotes in very cold materials and wont be discussed further.
+bounds on the order of a few meV. Physicists are interested in lasers, Ising and Hubbard models, and the 
+general positions of resonances and asymptotes in very cold materials and won't be discussed further.
 
-\section{Point 3: Justification by Utility}
+\section{Justification by Utility}
 The observation that materials processing has evolved in the manner 
 of a craft appears to have been imitated in the development of the 
-theory of materials science.
+theory of materials science. Much of first principles modelling is reliant on
+the realization that certain approximations work well. The first is 
+the separatation of degrees of freedom. That is that some electrons in a solid are
+tightly bound to a nucleus and behave similarly to how they might behave in an atom.
+This allows these "core electrons" to be frozen out of a calculation, via some transformation,
+and only valence electrons need to be considered. This is an important realization in
+chemistry as well where it has been long recognized that chemical trends are dominated by
+the valence electrons of atoms and chemical elements are grouped together in the table 
+by their valency. 
+The second approximation which works quite well is mean field treatments of 
+electron-electron interactions: the treatment of exchange and correlation. 
+
+
+\subsection{Core Electrons and Valence Electrons}
+Another successful theoretical development is pseudopotentials. Focusing on the valence electrons 
+has worked for chemistry.
 
 \subsection{Exchange and Correlation}
 If we look at the work done based on parameterization of the exchange correlation functional 
 we see the number of citations approaches 100,000. Naturally that figure includes significant 
 double counting of citing work but we have also not included cross citations between journals in many of the 
 figures quoted so the number is probably representative. This parameterization is based on 
-what I consider a highly abstract question. "What might happen if we start squeezing electrons into an imaginary box?".
+what I consider a highly abstract question: ``What might happen if we start squeezing electrons into an imaginary box?".
 
 This imaginary box has been pondered for close to a century now. The practical utility of these considerations is unreasonable. 
 The outcome of these considerations have resulted in a family of unremarkable curves that describe some energy relationship between
@@ -256,14 +292,6 @@ structural, electronic, and vibrational properties of an enormous class of mater
 How creditable this approach is returns again to point three. The theoretical justifications for the success of the approach are
 secondary to the fact that prior experience suggests these techniques work, and the rate of their acceptance and adoption
 seems to have tracked their usage in a positive feedback loop. 
-%For instance an article from 12 years ago 
-%If you remain unconvinced of the accuracy of the method one can at least acknowledge the social benefit. 
-%The sheer number of hours people have been engaged in this harmless occupation, dreaming of 
-%electrons in an imaginary box, means they have a hobby that keeps them off the streets and out of trouble.
-%The computational price paid to obtain these quantities should be considered. If the amount of numerical
-%work required to compute the quantities is excessive it becomes difficult to discuss trends in homologous series of materials, perform
-%necessary thermal averages to describe distributions, and even in some cases reproduce exactly the calculation.
-
 
 If you look through a typical electronic structure code it is interesting to look at the routine
 responsible for calculating the local exchange correlation potential. The input required is the 
@@ -291,9 +319,6 @@ etc. with varying degrees of success.
 Yet in all manner of crystalline systems this functional enables the theoretical
 prediction of very accurate ground state properties and structures. 
 
-\subsection{Core Electrons and Valence Electrons}
-Another successful theoretical development is pseudopotentials. Focusing on the valence electrons 
-has worked for chemistry.
 
 \section{Bayesian Materials Science}
 The ubiquity of access to {\it ab initio} data has had a significant impact on 
@@ -354,15 +379,13 @@ Models (hypotheses) of material systems can then be ranked according to Eq.~\ref
 
 \section{Prospective}
 The purpose of these notes are to establish a comprehensive framework 
-for incorporating knowledge about material systems into models that can be rapidly
-instantiated.
+for incorporating knowledge about material systems into transparent models 
+which can be used to compute the properties of materials that may interest engineers.
 
 The general procedure is to use ab initio data to map 
 to rigorous local models of the atomic environment. The local models
-of atomic interaction become easier to store, physical intuition is clarified
-and the knowledge obtained becomes persistent. Finally the quality of the models
-can be quantified and improved systematically with reference to experiment using
-inference techniques.
+of atomic interaction become easier to store, physical intuition is clarified,
+and the computational workload is reduced. 
 
 Subsequent chapters will discuss the theory underlying each of these planks; a
 theory of the local atomic environment, a theory of electronic excitations, long
@@ -372,13 +395,8 @@ them into a single place still seems a worthwhile endeavour.
 
 In chapter \ref{chap:odlr} the passage from discrete atomic models to continuum mechanics
 where collective variables, for instance stress and strain tensors, arise is discussed. 
-In Chapter \ref{chap:bayes} the criterion for assessing the quality of {\it ab initio} 
+Finally, in Chapter \ref{chap:bayes} the criterion for assessing the quality of {\it ab initio} 
 models is discussed which ranks models positively according to their ability to 
-describe target experimental data and penalizes them for the number of 
-adjustable parameters that enter their description.
-
-While the quantum paradigm is well establish the amount of normal science it motivates
-essentially charting and calculating the properties of normal matter means there is 
-an indeterminate scope for puzzle solving. The process of setting up and solving Schr\"odingers
-equation over and over for increasingly complex systems would seem tedious if it weren't so enjoyable.
+describe target experimental data, and penalizes them for the number of 
+adjustable parameters they require.
 

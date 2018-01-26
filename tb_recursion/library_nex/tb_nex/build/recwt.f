@@ -1,4 +1,4 @@
-            FUNCTION RECWT(E,A,B2,LL,EPS,N,P,NS)
+      FUNCTION RECWT(E,A,B2,LL,EPS,N,P,NS)
 
       DIMENSION A(LL),B2(LL),P(2,3)
 

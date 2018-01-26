@@ -1,0 +1,4 @@
+This program computes the recursion coefficients for the local 
+DOS for the 3 P-orbitals on a surface atom of a small FCC cluster
+of atoms interacting via their D-electrons.
+

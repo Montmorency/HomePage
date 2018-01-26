@@ -118,6 +118,7 @@ def interesting_stuff():
                           "Learn You a Haskell For Great Good":"http://learnyouahaskell.com",
                           "Racing Post": "http://www.racingpost.com",
                           "Sir David Mackay FRS":"http://www.inference.phy.cam.ac.uk/mackay/",
+                          "E. T. Jaynes: Physical Basis of Music":"http://bayes.wustl.edu/etj/music.html",
                           "Anno Urbis: Facts and Information About The Roman Empire": "http://www.annourbis.com/",
                           "Wolfson DVD Library":"http://wolfdvd.harlambert.co.uk",
                           "Money Is The Way":"http://moneyistheway.blogspot.co.uk"}

@@ -19,8 +19,21 @@ def pull_rec_coeffs():
       rec_mat[num_orbital, num_coeff, :] = map(float, ab.split())
   print rec_mat
 
+def pull_dos():
+  dos_table_re = re.compile(r'#DOS(.*?)ENDDOS', re.S|re.M)
+  with open('exproc.out','r') as f:
+    exproc_file = f.read()
+  dos_table = dos_table_re.findall(exproc_file)[0]
+#for gnuplot
+  with open('dos.gnu','w') as f:
+    print >> f, dos_table
+  dos_table = dos_table.split('\n')
+  dos_table_array = np.zeros([len(dos_table[2:-1]),5])
+  for i, dt in  enumerate(dos_table[2:-1]):
+    dos_table_array[i,:] = map(float, dt.split())
+  print dos_table_array
 
 if __name__=='__main__':
   pull_rec_coeffs()
-
+  pull_dos()
 

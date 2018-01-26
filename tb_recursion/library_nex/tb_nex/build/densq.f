@@ -1,4 +1,4 @@
-            FUNCTION DENSQ(E,A,B2,LL,EI)
+      FUNCTION DENSQ(E,A,B2,LL,EI)
 
       DIMENSION A(LL),B2(LL),EI(2),P(2),Q(2)
 
