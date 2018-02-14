@@ -17,5 +17,41 @@ on the local atomic environment.
 For a hubbard U model of cohesion energies in FCC and HCP metal using the Project density of transitions
 \cite{haydock14}.
 
-%For an application to Heisenberg chains where electrons are fixed and can only exchange
-%spin with neighbours see \cite{haydock00}.
+\section{Random Alloys}
+Lattice periodicity allows for the use of Bloch's theorem. The Fourier transform
+is well defined and the eigenstates can be grouped according the their Bloch vector.
+%
+\begin{equation}
+H_{nm} = e_{n}\delta_{nm} + V_{nm}
+\end{equation}
+%
+It is also possible to consider the Fourier transform from a Bayesian perspective
+where we are picking out features of a distribution with varying amounts of noise.
+
+Mookerjee and Haydock extended the recursion method to the case of random alloys.
+The developement of the recursion method to handle random material systems is 
+itself quite ingenious \cite{mookerjee , haydock74}. The Hamiltonian is extended
+so that tight binding hops on a real lattice are made along with potential hops
+on a "field" lattice. The field lattice can be cast in tridiagonal form to represent
+the underlying statistical distribution of the random alloy. Different graphs are available
+to represent rectangular random distributions, binary distributions, Gaussian distributions
+etc. Fig.~\ref{fig:fieldsite.png} gives an example of the first few hops on a "field-site" 
+lattice to obtain the averaged value of a Green's function. The hopping of the recursion method
+is now coupling lattice sites and taking into account the underlying distribution of 
+the underlying parameters.
+%
+%\begin{figure}
+%\caption{Field-Site lattice to directly compute the average quantities in a tight binding formalism}
+%\end{figure}
+%
+Despite its elegance the number of paths now emanating from an initial orbital are
+considerable and simplifying approximations need to be found due to the difficulty of 
+enumerating all the possible paths through the lattice and the along the field vectors.
+
+\section{Embrittlement of Metallic Surfaces}
+Haydock has also introduced a mechanism analogous to the polaron model for describing the
+"covalentization" of metallic bonds that is a potential mechanism for the embrittlement
+of metals \cite{haydock82}.
+
+\section{Mechanics}
+For a study of the effect of impurity concentration on the velocity of dislocations in semiconductors see \cite{frisch67}.
