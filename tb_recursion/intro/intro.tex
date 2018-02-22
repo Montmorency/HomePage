@@ -20,8 +20,8 @@ This concrete was particularly resistant to degradation in the presence of moist
 \footnote{For a description of roman concrete and its use at the port at Pouzol see: Mariano Vasi, 
 Itineraire Instructif de Rome à Naples, ou, Description Generale des Monumens Anciens et Modernes, 
 Rome: [Mariano Vasi]. 1813, de Beer Itb 1815 V.}. 
-This concrete was manufactured without any specific knowledge of the microstructure and 
-chemistry of the concrete. How it even came to be discovered is somewhat mysterious.
+This concrete was manufactured without any specific knowledge of microstructure and 
+chemistry. How it even came to be discovered is somewhat mysterious.
 
 Equally crafty we have the blacksmiths who over the centuries learned to manipulate the 
 hardness of swords and shields by the alloying of metals and precise control of heat. 
@@ -36,7 +36,8 @@ and the techniques to solve these equations has only arisen in the last 100 year
 Over the past 40 years the combination of the theory and access to computers 
 means the possibility of constructing accurate models of materials 
 systems beginning from the arrangment of the constituent atoms has
-progressed giving rise to the large field of first principles or {\it ab initio} modelling.
+progressed giving rise to the large field of "first principles" or {\it ab initio}
+\footnote{ab initio (latin): from the beginning.} modelling.
 
 The extent to which theoretical materials science as a discipline has evolved 
 over this period of time is worth examining. 
@@ -158,16 +159,16 @@ for each compound in a series, etc... The ``one-off" character of numerical calc
 as the basis for an actual theory of trends in the measurable properties of materials.
 
 There is also the observation that many of the macroscopic properties of materials do not require a quantum description.
-For instance many mechanical properties of materials can be describe by a scalar, like Youngs modulus, poisson ratios, 
-or small tensors to describe the elasticity. Even some electronic properties can be described using a single number
-like the dielectric constant of a material.
+Many properties of materials can be described by a scalar, like Young's modulus, Poisson ratios, 
+or small tensors to describe the elasticity. Even some electronic properties 
+can be described using a single number like the dielectric constant of a material.
 All these properties of systems are made up of many tiny degrees of freedom.
 The point at which quantum dynamical variables merge into macroscopic parameters 
 should also be incorporated into a satisfactory theory.
 %{this seems like it might require some additivity element similar to in entropy}
 
 The development in computing hardware is in some ways the easy part to chart. 
-Clock speeds, transistor density, and the proliferation of high 
+Clock speed, transistor density, storage, and the proliferation of high 
 performance computing clusters with fast interconnects have greatly extended 
 the range of problems that can be treated with numerical simulations
 simply by providing more horse power.
@@ -175,30 +176,34 @@ simply by providing more horse power.
 Along with advances in hardware there has been contemporaneous methodological developments.
 These include compiler optimization, development of modern programming languages, 
 shared libraries, object orientation, and stable open source platforms for 
-code development, testing, and sharing. All of which can be binned in the 
-category computers and computing culture.
+code development, testing, and sharing. 
 
 The important theoretical advances, i.e., the physical principles and
 mathematical techniques that enable theoretical materials science 
 are more difficult to quantify. Difficult to quantify in what exactly 
-they are and what they have enabled. In the
-next section we try and identify the major pillars of materials modelling.
+they are and what they have enabled. In the next section 
+we try and identify the major pillars of materials modelling.
 
 \section{Computational Craft}
-What sort of things should a computer compute? A theoretical material scientist
-wishes to ``compute groundstate properties such as cohesive energies, interatomic forces, 
+What sort of computations might a theoretical material scientist
+wish to compute? One wish list has been provided by Andersen, a materials scientist
+may wish to ``compute groundstate properties such as cohesive energies, interatomic forces, 
 charge transfer, and magnetic moments, and also excitation spectra described 
-by the one-electron Green's function."\cite{anderson75} 
+by the one-electron Green's function."\cite{anderson75} To obtain these quantities a
+number of intermediate calculations must be performed.
 
 The theoretical engines driving progress in numerical simulations of materials systems are
-largely based on density functional theory, effective separation and treatment of the problem
-of treating core-valence electronic interactions, and the various numerical algorithms for 
-computing the eigenstates of electrons in material systems, and solving the coupled systems of linear equations which arise 
+largely based on obtaining descriptions of the electronic eigenstates via mean field theories
+like density functional theory or Hartree-Fock. The effective separation
+of core and valence electronic interactions, and the various numerical algorithms for 
+computing the eigenstates of electrons in material systems, 
+and solving the coupled systems of linear equations which arise 
 again and again when doing self-consistent electronic structure calculations.
 
-Looking at the citation metrics, foundational papers in theoretical materials science
+As a guide to which developments are considered important we may
+look at the citation metrics. The foundational papers in theoretical materials science
 number their citations in the tens of thousands. Table~\ref{tab:foundation} lists some of the papers in the field which, as
-their citation count suggests, have enabled subsequent research. These techniques fall into
+their citation count suggests, have enabled subsequent research. These techniques are divided into
 three categories, they are either theoretical justification for a calculation scheme, the description of
 a technique that allows for more expedient and/or accurate calculations to be performed, 
 or parameterizations of the exchange-correlation functional.
@@ -245,15 +250,16 @@ treat the same problems but failed to "catch on", or describe techniques which d
 \label{tab:foundation}}
 \end{table}
 
-Table~\ref{tab:foundation} is biased towards a "plane wave" conception of electronic structure. 
+A criticism of Table~\ref{tab:foundation} is biased towards a "plane wave" conception of electronic structure. 
 These methods are suitable for crystalline systems with periodicity and can be pushed 
 to describe more disordered systems on the order, as discussed in Sec.\ref{sec:riseofcomp}, 
-of 1000 atoms.
+of 1000 atoms. These sorts of techniques are also most favoured by workers studying metallurgical
+systems from first principles and materials with potential electronic applications.
 
 To broadly categorize the workers we can say a material scientist 
 is interested in crystals, alloys, ceramics, glasses, and, possibly, rubbers and elastomers. They
 worry about energy differences on the order of 100 meV. Chemists are interested in molecules, 
-tend to use localized basis sets and exploit Monte Carlo methods to obtain energy 
+tend to use localized basis sets and exploit Monte Carlo and related methods to obtain energy 
 bounds on the order of a few meV. Physicists are interested in lasers, Ising and Hubbard models, and the 
 general positions of resonances and asymptotes in very cold materials and won't be discussed further.
 
@@ -267,23 +273,24 @@ tightly bound to a nucleus and behave similarly to how they might behave in an a
 This allows these "core electrons" to be frozen out of a calculation, via some transformation,
 and only valence electrons need to be considered. This is an important realization in
 chemistry as well where it has been long recognized that chemical trends are dominated by
-the valence electrons of atoms and chemical elements are grouped together in the table 
+the valence electrons of atoms. Accordingly, chemical elements are grouped together in the table 
 by their valency. 
-The second approximation which works quite well is mean field treatments of 
-electron-electron interactions: the treatment of exchange and correlation. 
-
 
 \subsection{Core Electrons and Valence Electrons}
 Another successful theoretical development is pseudopotentials. Focusing on the valence electrons 
 has worked for chemistry.
 
 \subsection{Exchange and Correlation}
+The second approximation which works quite well is mean field treatments of 
+electron-electron interactions: the treatment of exchange and correlation. 
+
 If we look at the work done based on parameterization of the exchange correlation functional 
 we see the number of citations approaches 100,000. Naturally that figure includes significant 
-double counting of citing work but we have also not included cross citations between journals in many of the 
-figures quoted so the number is probably representative. This parameterization is based on 
-what I consider a highly abstract question: ``What might happen if we start squeezing electrons into an imaginary box?".
+double counting of citing work, on the other hand  we have not included cross citations between journals in many of the 
+figures quoted, so with some lucky canceellation the number is probably representative. 
 
+This parameterization is based on what I consider a highly abstract question: ``
+What might happen if we start squeezing electrons into an imaginary box?".
 This imaginary box has been pondered for close to a century now. The practical utility of these considerations is unreasonable. 
 The outcome of these considerations have resulted in a family of unremarkable curves that describe some energy relationship between
 the number density of electrons at a point in space and an energy. The practical consequence is this curve enables the
@@ -293,7 +300,7 @@ How creditable this approach is returns again to point three. The theoretical ju
 secondary to the fact that prior experience suggests these techniques work, and the rate of their acceptance and adoption
 seems to have tracked their usage in a positive feedback loop. 
 
-If you look through a typical electronic structure code it is interesting to look at the routine
+If you look through a typical density functional based electronic structure code it is interesting to look at the routine
 responsible for calculating the local exchange correlation potential. The input required is the 
 electronic density at a point in space and possibly the gradient of the density at a point. This 
 density is inserted as the sole argument in a subroutine and a single number is returned. The curve
@@ -316,9 +323,18 @@ materials composed of elements from across the periodic table. They have been
 used to compute all the properties of interest, cohesive energies, magnetic moments,
 etc. with varying degrees of success.
 
-Yet in all manner of crystalline systems this functional enables the theoretical
+Despite its apparent simplicity in all manner of crystalline systems 
+this functional enables the theoretical
 prediction of very accurate ground state properties and structures. 
-
+There are trends at the moment to reparameterize the exchange-correlation functional
+in order that simulations return a better description of experimental data. The extent
+to which this reparameterization is helpful is debateable. Part of the appeal
+of the simplest local density approximations is that it is universal. Where a calculation
+fails to reproduce an experimental data point, and this failure is attributed to the
+exchange correlation functional, it will be argued that applying a more sophisticated treatment
+is preferred to introducing a complicated reparameterization of the exchange correlation
+function, based on a mixture of theoretical and post hoc experimental 
+justification.
 
 \section{Bayesian Materials Science}
 The ubiquity of access to {\it ab initio} data has had a significant impact on 
@@ -358,8 +374,8 @@ P(\mathbf{w}|D, \mathcal{H}_{i}) =
 \frac{P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H})}{P(D|\mathcal{H}_{i})},
 \end{equation}
 %
-where D, the target data, can constitute a combination of {\it ab initio} and experimental data. 
-Eq.~\ref{eq:bayes} McKay summarises as:
+where D, the target data, should constitute experimental data. 
+Eq.~\ref{eq:bayes} MacKay summarises as:
 %
 \begin{equation}
 {\rm Posterior} = \frac{{\rm Likelihood} \times {\rm Prior}}{{\rm Evidence}}
@@ -375,12 +391,12 @@ P(\mathcal{H}_{i}|D) \propto P(D|\mathcal{H}_{i})P(\mathcal{H}_{i})
 P(D|\mathcal{H}_{i}) = P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H}_{i})d\mathbf{w}
 \end{equation}
 %
-Models (hypotheses) of material systems can then be ranked according to Eq.~\ref{eq:bayesH}.
+Models (hypotheses) of material systems can then be ranked according to Eq.~\ref{eq:bayesH},  
 
 \section{Prospective}
-The purpose of these notes are to establish a comprehensive framework 
-for incorporating knowledge about material systems into transparent models 
-which can be used to compute the properties of materials that may interest engineers.
+The purpose of these notes is to establish a comprehensive framework 
+for incorporating knowledge about material systems into transparent models. 
+These can then be used to compute the properties of materials that may interest engineers.
 
 The general procedure is to use ab initio data to map 
 to rigorous local models of the atomic environment. The local models
@@ -389,14 +405,21 @@ and the computational workload is reduced.
 
 Subsequent chapters will discuss the theory underlying each of these planks; a
 theory of the local atomic environment, a theory of electronic excitations, long
-range order in material systems, and bayesian techniques. All of these techniques
+range order in material systems, and Bayesian techniques. All of these techniques
 have been developed by other workers over a number of years but collecting 
-them into a single place still seems a worthwhile endeavour.
+them into a single place still seems a worthwhile endeavour. Of particular interest
+is providing detailed working of the sometimes tedious algebra that underlies
+important results.
 
-In chapter \ref{chap:odlr} the passage from discrete atomic models to continuum mechanics
-where collective variables, for instance stress and strain tensors, arise is discussed. 
-Finally, in Chapter \ref{chap:bayes} the criterion for assessing the quality of {\it ab initio} 
-models is discussed which ranks models positively according to their ability to 
-describe target experimental data, and penalizes them for the number of 
-adjustable parameters they require.
+%In chapter \ref{chap:odlr} the passage from discrete atomic models to continuum mechanics
+%where collective variables, for instance stress and strain tensors, arise is discussed. 
+%Finally, in Chapter \ref{chap:bayes} the criterion for assessing the quality of {\it ab initio} 
+%models is discussed which ranks models positively according to their ability to 
+%describe target experimental data, and penalizes them for the number of 
+%adjustable parameters they require.
+
+Ideally a formalism will be arrived at where engineers can consult a simple table of coefficients
+and directly perform the necessary computations, ideally with pen and paper, to compute within acceptable
+levels of accuracy, properties of material systems: band gaps, conductivities, superconducting 
+transition temperatures and mechanical properties. The goal is ambitious but well worth a shot.
 

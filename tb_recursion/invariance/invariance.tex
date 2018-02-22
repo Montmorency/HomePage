@@ -1,7 +1,7 @@
 \chapter{Tight Binding Recursion}
 \label{chap:invariance}
 \section{The Local Atomic Environment}
-  Vol.~35 of Solid State Physics is dedicated to electronic structure
+Vol.~35 of Solid State Physics is dedicated to electronic structure
 theory from the point of view of the local environment. This perspective
 has a long tradition in physical and chemical electronic structure theory.
 This chapter is purely a summary of the work developed there.
@@ -79,7 +79,6 @@ n(E) = \sum_{n}\delta(E-E_{n}) \\
 n(E,\r) = \sum_{n} |\psi_{n}(\r)|^{2}\delta(E-E_{n})
 \end{eqnarray}
 %
-
 The local density modes of black-body radiation alternatively can be written:
 %
 \begin{equation}
@@ -100,8 +99,16 @@ n(E,\r) = -\frac{1}{\pi}{\rm Im}~G(\r,\r,E)
 %
 
 \section{Matching Green's Functions}
-First a change of variables is perform from $\r$ to $\r''$ in 4.1 and $\r$ to $\r''$ and $\r'$
-to $\r$ in 4.3:
+The following treatment has been developed by Heine with reference to in particular
+the work of Inglesfield in Refs.~\cite{inglesfield71,inglesfield81}
+and other workers in Refs.~\cite{garcia69, velicky71, garcia71}. 
+The theory of matching Green's functions impacts on pseudopotential theory.
+It is also important for work on QM/MM methods where clusters to be treated
+quantum mechanically are embedded in a medium where continuum mechanics are
+appropriate.
+
+First a change of variables is perform from $\r$ to $\r''$ in 4.1 
+and $\r$ to $\r''$ and $\r'$ to $\r$ in 4.3:
 %
 \begin{equation}
 \label{eq:greentot}
@@ -287,6 +294,210 @@ This relies, again in analogy with black bodies, on the Green's
 function in a certain region of space being independent of the size and shape
 of the container and the boundary conditions.
 
+\section{Slater-Koster Tight Binding}
+  In a crystal if we denote the translation operator $\hat{T}$
+as the one which shifts a the coordinates of a vector by a crystal lattice vector 
+$\R_{i}$ we require firstly that $[\hat{T},\hat{H}]=0$, i.e. that the 
+translation operator commutes with the Hamiltonian. This also
+has the consequence that the eigenvectors of the Hamiltonian
+must be eigenvectors of the translation operator. Bloch's 
+celebrated theorem states that when a translation operator acts 
+on an eigenvector of a crystal the eigenvalue is $e^{i\k\cdot\R}$.
+
+If a basis set of atomic orbitals $\phi_{n}(\r-\R_{i})$
+is placed on each atom in the crystal an un-normalized Bloch sum can be 
+written as $\sum_{\R_{i}} e^{i\k\cdot\R_{i}}\phi_{n}(\r-\R_{i})$. For
+a given $\k$ there will be off diagonal elements between Bloch sums
+for different atomic orbitals.
+
+  Interestingly Slater and Koster state that there are no off-diagonal
+elements of the Hamiltonian, consisting of the kinetic energy and the periodic potential, 
+between Bloch sums with different $\k$'s. This is considered again in Chapter~\ref{chap:odlro}
+where off diagonal elements in the Hamiltonian between different $\k$ values are considered.
+
+The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ are used instead of LCAOs, \cite{lowdin62}) gives:
+%
+\begin{equation}
+\sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \psi^{*}_{n}(\r-\R_{i})H\psi_{m}(\r-\R_{j})dV
+\end{equation}
+%
+The development of computers means the secular equations can be solved 
+at arbitrary $\k$ points. \footnote{The paper explicitly anticipates that the integrals and Bloch 
+sums could be performed with the help of computers: "The possibility is not excluded 
+that eventually ways will be found to do this work by means of high-speed computers, but
+it will certainly be quite out of the question without such help."} 
+
+The work of Slater-Koster demonstrates, in an intuitive fashion, how localized atomic
+states, when modulated by a wave of the form $e^{i\k\cdot\R}$ can interfere 
+(constructively or deconstructively) to allow charge to accumulate in different 
+spatial patterns between atoms, and how the variation in the eigenvalues of $H_{\k}$
+can give rise to band structures.
+
+The determination of the integration constants is a problem unto itself.
+Tight binding parameters for the transition metals can be extracted from 
+a number of places: tight binding parameters that span the transition
+metal range can be found in Refs. \cite{nieminen76}, \cite{pettifor77} and \cite{jepsen75}.
+Each study is a good example of studying homologous trends. 
+
+\section{Transition Metal Tight Binding}
+\label{sec:tmtb}
+Bullet discusses some of the problems with treating d electrons in a tight binding 
+formalism (Sec. IV 13 Solid State Physics Vol. 35). Fig.~\ref{fig:datoms} demonstrates
+one of the main issues arising with d electrons:
+%
+\begin{figure}
+\includegraphics{./invariance/resonant-datoms.pdf}
+\caption{The possibility of free electron states, in the interstitial region, 
+resonating with atom centered localized states. The centrifugal components of the 
+atomic d wave scattering channel can combine with
+the atomic potential to produce a bound electronic state at some energy $E^{0}_{l}$ for an atomic system.
+In a crystal the atomic periodic potential can be such that electrons can be bound in an
+atomic d-like state can have the same energy as tunnel through the barrier localizing 
+them and mix with free electron plane wave states. This dual character of the wave 
+function, with localized components and extended components, requires careful 
+detangling to return to a tight binding description. This difficulty 
+stems from the presence of an energy resonance 
+complicating the process of choosing the coefficients of the tight binding matrix. 
+For the optimal, energy independent, set of coefficients that can be 
+chosen see the work of Pettifor. There is a close parallel with the resonant
+scattering of d-wave electrons in materials and Feshbach resonances Ref.~\cite{chin10}.}
+\end{figure}
+%
+
+From pseudopotentials we are familiar with having to match the logarithmic energy
+derivative at some cutoff radius. Usually found by integrating the radial
+Schr\"odinger equation to find $u_{l}(r,\epsilon)$ and matching the logarithmic derivatives:
+%
+\begin{equation}
+L_{l}(\epsilon) \equiv \frac{u'_{l}(r_{0},\epsilon)}{u_{l}(r_{0},\epsilon)} = \frac{\kappa[j'_{l}
+(\kappa r_{0}) - \tan \eta_{l} n'_{l}(\kappa r_{0})]} {j_{l}(\kappa r_{0}) - \tan \eta_{l} n_{l}'(\kappa r_{0})]},
+\end{equation}
+%
+where
+%
+\begin{equation}
+\label{eq:phaseshift}
+\tan \eta_{l} = \frac{\kappa j'_{l} - L_{l}j_{l}}{\kappa n'_{l} - L_{l}n_{l}}.
+\end{equation}
+
+In terms of the energy and width the l=2 phase shift Eq.~\ref{eq:phaseshift} 
+can be written:
+%
+\begin{equation}
+\label{eq:dshift}
+\tan \eta_{d} = \frac{\frac{1}{2}W(\epsilon)}{\epsilon_{d}-\epsilon}.
+\end{equation}
+%
+The uncertainty principle allows for the estimation of the rest
+time for an electron on an atomic d state to be around $\hbar/W_{d}\approx 10^{-14}$s \cite{friedel73}.
+\footnote{Ref.~\cite{friedel73}, written in 1973, provides us with another example
+of the early impact electronic computers were making in the field. Friedel  compares 
+the relative merits of `muffin tin' type calculations and tight binding approximations.
+The former approach he describes as leading, "to fairly exact if cumbersome
+computations, and has thus had the support of the `computers lobby'".}
+
+The strong centrifugal contribution to the
+atomic scattering potential from higher angular moment channels means the effective potential
+can create a bound atomic state. In a solid the energy of this bound state can match the 
+energy of a free electron state in the interstitial region and there will
+be resonant tunneling between the two states. This results in the hybridization of d states
+and plane waves. 
+
+This means an appropriate model Hamiltonian must account for the various states as
+%
+\begin{eqnarray}
+\label{eq:d-hamiltonian}
+H = d-d  & d-PW \\
+    PW-D & PW-PW \\
+\end{eqnarray}
+%
+where d-d and PW-PW are of the tight-binding and plane-wave 
+pseudopotential form and hybridization occurring in the 
+off diagonal elements. The dual characteristic of transition metals
+tightly bound d-electrons and diffuse s-p orbitals hybridizing 
+accounts for the difficulties in describing their electronic properties.
+
+
+The $dd\sigma$ terms behave roughly as \cite{pettifor71}:
+%
+\begin{equation}
+\label{eq:pettifor}
+dd\sigma \approx \frac{-5W\cos\kappa_{d}R}{\kappa_{d}R}
+\end{equation}
+%
+If we write our basis functions in terms of localized orbitals
+Eq.~\ref{eq:pettifor} suggests our Hamiltonian matrix will be 
+populated by a huge number of off diagonal matrix elements which can't be neglected. If 
+the energy is equal to $k^{2}$ constructive interference occurs and the energy summation
+diverges with off diagonal matrix elements between all d states on remote atoms becoming
+significant. This isn't entirely surprising. We are considering a periodic crystalline solid
+and the eigenfunctions of this crystal are extended throughout. The off diagonal elements
+in a coordinate space representation reflect the long range order of the material and
+preservation of the phase of the electronic wave function as they move from atom to atom. See
+Chapter~\ref{chap:odlro} for further discussion of this and related points.
+
+The `best' approximations to the explicit formulas for $dd\sigma$, $dd\pi$ and $dd\delta$ and the phase
+shift $d_{0}'$ of the diagonal tight-binding elements 
+These difficulty have been addressed in a number of works 
+\cite{hubbard67}, \cite{hubbard68}, \cite{hubbard69} \footnote{Another computational
+snapshot comes from Ref.~\cite{hubbard69}, "...smaller secular 
+equations are used, taking about one second per k point on an IBM  360/65." The
+main storage capacity of those machines was 524 kilobytes. See Fig.~\ref{fig:ibm360}
+for a (grainy) snapshot of what that computer looked like.},
+and J. Hubbard, ibid 2, 1222 (1969). The problem being to define an
+energy independent Hamiltonian, amenable to tight binding for the d electrons.
+
+Deriving an effective, tight binding, energy indepedent parameterization
+of d electron structure  culminated in the work of D. G. Pettifor's \cite{pettifor69}. 
+Pettifor's work produced a justifiable scheme for computing the two center tight binding integrals of Slater
+and Koster, $dd\sigma$, $dd\pi$, $dd\delta$ in terms of the position and halfwidth of the resonance:
+$\epsilon_0$ and $\Gamma$. It is worthwhile considering the achievement of these collected papers.
+With relatively basic computing power the workers determined the positions of atomic eigenvalues,
+band widths, and the effect of atomic scattering potentials. In the course of the work a great deal
+of algebraic manipulation of spherical harmonics and plane waves is required, along with the determination
+of numerical values via graphical methods. All in all a laborious but fruitful task resulting
+in energy independent matrix elements localized to nearest (next nearest ) neighbours real and reciprocal
+space.
+
+The work of Pettifor and colleagues in determining justifiable tight binding parameters for transitional metals, 
+effectively completed by 1969, was an important prerequisite for the subsequent 
+development of the recursion method in the 1970s. Generalized tables for tightbinding parameters 
+across the transition metal series has been produced in Ref.~\cite{harrison80}.
+
+Whether we are able to create a tight binding description of transition metals
+depends on whether a decent, energy independent, approximation to the electronic structure in fcc/bcc metals
+can be achieved with 9x9 matrices describing nearest neighbour interactions of the s, p and d states,
+in the Slater-Koster form or derived from electronic states localized according to some 
+
+\subsection{Kelly Tight Binding}
+
+An example from Kelly helps to make the application of the tightbinding scheme clear:
+%
+\begin{quote}
+As input data we require a convenient local representation of $H$. In simple crystals,
+this is most easily given in terms of interactions with a unit cell and between neighboring cells.
+For a FCC transition metal we have nine orbitals (1 s-orbital, 3 p-orbitals, and 5 d-orbitals) per site, 
+and a diagonal 9x9 matrix for the self-energies of these orbitals. Twelve 9x9 matrices 
+suffice to describe the interaction of any atom with its nearest neighbours.
+\end{quote}
+%
+
+The actual operation of $H|u_{n}\ket$,which has been discussed in a general way so far, 
+can be written as:
+%
+\begin{equation}
+H|u_{n}\ket = \sum_{\alpha l \beta j}a_{n \alpha l}(\bra \beta j |H| \alpha l\ket)|\beta j\ket,
+\end{equation}
+%
+to exploit the sparsity of H we introduce an index $z$ which runs over the neighbors of 
+site l with which the orbitals interact:
+\begin{equation}
+H|u_{n}\ket = \sum_{\alpha l z}a_{n \alpha l}(\bra \beta_{z} j_{z} |H^{z}|\alpha l\ket)|\beta_{z} j_{z}\ket.
+\end{equation}
+There are no restrictions on the number of orbitals per site, or on the range of interactions that can be
+incorporated, these only impact on the efficiency of the method and the validity of the original assumptions
+about the dominance of the local atomic environment.
+
 
 \section{Recursion Method}
 The principle of the recursion method is to obtain a convergent expression 
@@ -329,6 +540,36 @@ usually inquire about the whole of life, but about one particular matrix element
 $u_{0}$ so that Eq.~\ref{eq:greenian} gives us what, to put it crudely, we want.
 \end{quote}
 
+Typically we wish to start with our matrices in a tridiagonal matrix of the form:
+%
+\begin{equation}
+H = \begin{bmatrix}
+a_0 & b_1 & 0 & 0 & 0 &  ...\\
+b_1 & a_1 & b_2 & 0 & 0 &  ...\\
+0 & b_2 & a_2 & b_3 & 0 &  ...\\
+0 & 0 & b_3 & a_3 & b_4 & ...\\
+0 & 0 & 0 & b_4 & a_4 & ...  \\
+0 & 0 & 0 & 0 & b_5 & ... 
+\end{bmatrix}
+\end{equation}
+
+%
+The various determinants and subdeterminants of the matrix can be divided as such:
+%
+$$
+\newcommand*{\temp}{\multicolumn{1}{|c|}{b_1}}
+\newcommand*{\tempa}{\multicolumn{1}{|c|}{b_2}}
+\newcommand*{\tempb}{\multicolumn{1}{|c|}{b_3}}
+\newcommand*{\tempc}{\multicolumn{1}{|c}{0}}
+\begin{array}{|ccccccc}
+\cline{0-5}
+a_0 & b_1 & 0 & 0 & 0 & 0  & D_0 \\ \cline{2-6} 
+\temp & a_1 & b_2 & 0 & 0 & 0 & D_1 \\ \cline{3-6} 
+0 & \tempa & a_2 & b_3 & 0 & 0 & D_2 \\ \cline{4-6}
+0 & \tempc &  \tempb &  a_3 & b_4 & ... & D_3
+\end{array}
+$$
+
 Eq.~\ref{eq:greenian} can be rewritten in terms of its determinants:
 %
 \begin{equation}
@@ -347,256 +588,33 @@ Appeal is then made to Cauchy\footnote{Baron Augustin-Louis Cauchy FRS FRSE (21 
 for the following expansion:
 %
 \begin{equation}
-{\rm det}|D_{0}| = (E-a_{0}){\rm det}|D_{1}| - b^{2}_{1}{\rm det}|D_{2}|
+\label{eq:cauchy}
+{\rm det}|D_{0}| = (E-a_{0}){\rm det}|D_{1}|-b^{2}_{1}{\rm det}|D_{2}|
 \end{equation}
 %
 and when generalized to determinants for $|D_{n}|$, $|D_{n+1}|$, and $|D_{n+2}|$:
 %
 \begin{equation}
-\frac{{\rm det}|D_{n}|}{{\rm det}|D_{n+1}|} = E -a_{n} - \frac{b^{2}_{n+1}}{\frac{{\rm det}|D_{n+1}|}{{\rm det}|D_n+2|}}
+\frac{{\rm det}|D_{n}|}{{\rm det}|D_{n+1}|} = E-a_{n}-\frac{b^{2}_{n+1}}{\frac{{\rm det}|D_{n+1}|}{{\rm det}|D_{n+2}|}}
 \end{equation}
 
-The chain model has been used in numerical work as a way of diagonalizing matrices in a computer 
-C. Lanczos J. Res. Natl. Bur. Stand. 45, 255 (1950) and
-by Chebyshev for approximating functions on an interval
-P. L. Chebyshev, Bull. Acad. Imp. Sci. St. Petersbourg 1, 193 (1859)
+\footnote{C. Lanczos J. Res. Natl. Bur. Stand. 45, 255 (1950) 
+used the chain model in numerical work as a way of diagonalizing matrices
+that could be implemented efficiently in a computer..
+Chebyshev used chain models for approximating functions on an interval
+P. L. Chebyshev, Bull. Acad. Imp. Sci. St. Petersbourg 1, 193 (1859)}
 
 %\begin{equation}
 %b_{n+1}|u_{n+1}\ket = H |u_{n}\ket - a_{n}|u_{n}\ket - b_{n}|u_{n-1}\ket
 %\end{equation}
 
-\section{Integrals of the Density of States}
-%
-Some integrated quantities over the density of states of interest.
 
-The electron occupancy of a specific orbital:
-%
-\begin{equation}
-N_{\alpha l}(E) = \int_{-\infty}^{E_{F}} n_{\alpha l}(E') dE'
-\end{equation}
-%
 
-The total energy in a particular orbital:
-%
-\begin{equation}
-U_{d} = \int_{-\infty}^{E_{F}}E'n_{\alpha l}(E') dE'
-\end{equation}
-%
-
-The energy difference of two structures A and B can also be computed
-to high accuracy:
-%
-\begin{eqnarray}
-\label{eq:Ua}
-U_{A} = \int_{-\infty}^{E_{FA}} E n_{A}(E) dE
-\end{eqnarray}
-%
-\begin{eqnarray}
-\label{eq:Ub}
-U_{B} = \int_{-\infty}^{E_{FB}} E n_{B}(E) dE
-\end{eqnarray}
-%
-\begin{equation}
-\label{eq:totaldos}
-Z = \int_{-\infty}^{E_{FA}} n_{A}(E)dE = \int_{-\infty}^{E_{FB}}n_{B}(E)dE
-\end{equation}
-%
-\begin{equation}
-U_{A}-ZE_{FA}= \int_{-\infty}^{E_{FA}}(E-E_{FA})n_{A}(E)dE
-\end{equation}
-%
-\begin{equation}
-U_{B}-ZE_{FA}= \int_{-\infty}^{E_{FA}}(E-E_{FA})n_{B}(E)dE + \int_{E_{FB}}^{E_{FA}}n_{B}(E)dE
-\end{equation}
-%
-If $n_{B}(E)$ is taken to be constant across that small energy range, the second term, in
-Eq. results in a small squared term that can be dropped. Swapping $E_{FB}$ and $E_{FA}$ gives
-a similar result. This justifies dropping the A index on the Fermi energy to get the
-final expression:
-%
-\begin{equation}
-U_{A}-U_{B} = \int_{-\infty}^{E_{F}}(E-E_{F})[n_{A}(E) -n_{B}(E)]dE.
-\end{equation}
-%
-It is this expression used to separate the Lave phases of transition metals in Ref.~\cite{haydock76}.
-
-\section{Bullet Tight Binding Method}
-\label{sec:bullet}
-Bullet discusses some of the problems with treating d electrons in a tight binding 
-formalism (Sec. IV 13 Solid State Physics Vol. 35). Fig.~\ref{fig:datoms} demonstrates
-one of the main issues arising with d electrons:
-%
-\begin{figure}
-\includegraphics{./invariance/resonant-datoms.pdf}
-\caption{The possibility of free electron states resonating with localized states.
-The centrifugal components of the atomic d wave scattering channel can combine with
-the atomic potential to produce a bound electronic state at some energy $E^{0}_{l}$ for an atomic system.
-In a crystal the atomic periodic potential can be such that electrons can be bound in an
-atomic d-like state can have the same energy as tunnel through the barrier localizing them and mix with free electron 
-plane wave states. This dual character of the wave function, with localized components and extended components, requires careful 
-detangling to return to a tight binding description. This difficulty 
-stems from the presence of an energy resonance 
-complicating the process of choosing the coefficients of the tight binding matrix. 
-For the optimal, energy independent, set of coefficients that can be 
-chosen see the work of Pettifor. There is a close parallel with this resonant 
-scattering of d-waves in materials and Feshbach resonances Ref.~\cite{chin10}.}
-\end{figure}
-%
-
-From pseudopotentials we are familiar with having to match the logarithmic energy
-derivative at some cutoff radius. Usually found by integrating the radial
-Schr\"odinger equation to find $u_{l}(r,\epsilon)$ and matching the logarithmic derivatives:
-%
-\begin{equation}
-L_{l}(\epsilon) \equiv \frac{u'_{l}(r_{0},\epsilon)}{u_{l}(r_{0},\epsilon)} = \frac{\kappa[j'_{l}
-(\kappa r_{0}) - \tan \eta_{l} n'_{l}(\kappa r_{0})]} {j_{l}(\kappa r_{0}) - \tan \eta_{l} n_{l}'(\kappa r_{0})]},
-\end{equation}
-%
-where
-\begin{equation}
-\label{eq:phaseshift}
-\tan \eta_{l} = \frac{\kappa j'_{l} - L_{l}j_{l}}{\kappa n'_{l} - L_{l}n_{l}}.
-\end{equation}
-
-In terms of the energy and width the l=2 phase shift Eq. \ref{eq:phaseshift} 
-can be written:
-%
-\begin{equation}
-\label{eq:dshift}
-\tan \eta_{d} = \frac{\frac{1}{2}W(\epsilon)}{\epsilon_{d}-\epsilon}.
-\end{equation}
-%
-In Ref. \cite{friedel73} he notes the rest time for an electron on an atomic d state 
-can be estimated at around $\hbar/W_{d}\approx 10^{-14}$s. In that paper he also
-compares the relative merits of `muffin tin' calculations and tight binding approximations
-the first approach he describes as leading, "to fairly exact if cumbersome
-computations, and has thus had the support of the `computers lobby'".
-
-The strong centrifugal contribution to the
-atomic scattering potential from higher angular moment channels means the effective potential
-can create a bound atomic state. In a solid the energy of this bound state can match the 
-energy of a free electron state in the interstitial region and there will
-be resonant tunneling between the two states. This results in the hybridization of d states
-and plane waves. 
-
-This means an appropriate model Hamiltonian must account for the various states as
-%
-\begin{eqnarray}
-\label{eq:d-hamiltonian}
-H = d-d  & d-PW \\
-    PW-D & PW-PW \\
-\end{eqnarray}
-%
-where d-d and PW-PW are of the tight-binding and plane-wave 
-pseudopotential form and hybridization occurring in the 
-off diagonal elements. 
-
-These difficulty have been addressed in a number of works 
-see, for example, D.G. Pettifor, J. Phys. C 5 97 (1972).
-J. Hubbard Proc. Phys. Soc. London 92 921 (1967),
-J. Hubbard and N. D. Dalton, J. Phys. C 1 1637 (1968),
-and J. Hubbard, ibid 2, 1222 (1969). The problem being to define an
-energy independent Hamiltonian, amenable to tight binding for the d electrons.
-
-The $dd\sigma$ terms behave roughly as \cite{pettifor71}:
-%
-\begin{equation}
-\label{eq:pettifor}
-dd\sigma \approx \frac{-5W\cos\kappa_{d}R}{\kappa_{d}R}
-\end{equation}
-%
-If we write our basis functions in terms of localized orbitals
-Eq.~\ref{eq:pettifor} suggests our Hamiltonian matrix will be 
-populated by a huge number of off diagonal matrix elements which can't be neglected. If 
-the energy is equal to $k^{2}$ constructive interference occurs and the energy summation
-diverges with off diagonal matrix elements between all d states on remote atoms becoming
-significant. This isn't entirely surprising. We are considering a periodic crystalline solid
-and the eigenfunctions of this crystal are extended throughout. The off diagonal elements
-in a coordinate space representation reflect the long range cohesion of the material. See
-Chapter \ref{chap:yang} for further discussion of this point.
-
-The `best' approximations to the explicit formulas for $dd\sigma$, $dd\pi$ and $dd\delta$ and the phase
-shift $d_{0}'$ of the diagonal tight-binding elements is given in D. G. Pettifor J. Phys. C. 2, 1051 (1969).
-Whether we are able to create a tight binding description of transition metals
-depends on whether a decent, energy independent, approximation to the electronic structure in fcc/bcc metals
-can be achieved with 9x9 matrices describing nearest neighbour interactions of the s, p and d states,
-in the Slater-Koster form.\cite{salter54}
-
-\section{Slater-Koster Tight Binding}
-  In a crystal if we denote the translation operator $\hat{T}$
-as the one which shifts a the coordinates of a vector by a crystal lattice vector 
-$\R_{i}$ we require firstly that $[\hat{T},\hat{H}]=0$, i.e. that the 
-translation operator commutes with the Hamiltonian. This also
-has the consequence that the eigenvectors of the Hamiltonian
-must be eigenvectors of the translation operator. Bloch's 
-celebrated theorem suggests that the eigenvalues of the 
-translation operator acting on the eigenvector of a crystal is $e^{i\k\cdot\R}$.
-If a basis set of atomic orbitals $\phi_{n}(\r-\R_{i})$
-is placed on each atom in the crystal an un-normalized Bloch sum can be 
-written as $\sum_{\R_{i}} e^{i\k\cdot\R_{i}}\phi_{n}(\r-\R_{i})$. For
-a given $\k$ there will be off diagonal elements between Bloch sums
-for different atomic orbitals.
-
-  Interestingly Slater and Koster state that there are no off-diagonal
-elements of the Hamiltonian, consisting of the kinetic energy and the periodic potential, 
-between Bloch sums with different $\k$'s. This is considered again in Chapter~\ref{chap:odlro}
-where off diagonal elements in the Hamiltonian between different $\k$ values are exactly what give
-rise to persistent currents.
-
-The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ are used instead of LCAOs \cite{lowdin62}) gives:
-%
-\begin{equation}
-\sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \psi^{*}_{n}(\r-\R_{i})H\psi_{m}(\r-\R_{j})dV
-\end{equation}
-%
-The development of computers means the secular equations can be solved 
-at arbitrary $\k$ points. \footnote{The paper explicitly anticipates that the integrals and Bloch 
-sums could be performed with the help of computers: "The possibility is not excluded 
-that eventually ways will be found to do this work by means of high-speed computers, but
-it will certainly be quite out of the question without such help."} 
-
-The Slater-Koster work does however demonstrate in an intuitive fashion how localized atomic
-waves, with different phases, can interfere (constructively or deconstructively) in order
-to allow charge to accumulate in different spatial patterns between atoms.
-
-\section{Practical Recursion}
-We can conclude this chapter by putting the above ideas into practice.
-This will help make concrete what has up to this point been quite alot of
-formalism.
-
-An example from Kelly helps to make the application of the scheme clear:
-%
-\begin{quote}
-As input data we require a convenient local representation of $H$. In simple crystals,
-this is most easily given in terms of interactions with a unit cell and between neighboring cells.
-For a fcc transition metal we have nine orbitals (1 s-orbital, 3 p-orbitals, and 5 d-orbitals) per site, 
-and a diagonal 9x9 matrix for the self-energies of these orbitals. Twelve 9x9 matrices 
-suffice to describe the interaction of any atom with its nearest neighbours.
-\end{quote}
-%
-
-The actual operations of $H|u_{n}\ket$ which have been discussed, in a general way so far, 
-can be written as:
-%
-\begin{equation}
-H|u_{n}\ket = \sum_{\alpha l \beta j}a_{n \alpha l}(\bra \beta j |H| \alpha l\ket)|\beta j\ket,
-\end{equation}
-%
-to exploit the sparsity of H we introduce an index $z$ which runs over the neighbors of 
-site l with which the orbitals interact:
-\begin{equation}
-H|u_{n}\ket = \sum_{\alpha l z}a_{n \alpha l}(\bra \beta_{z} j_{z} |H^{z}|\alpha l\ket)|\beta_{z} j_{z}\ket.
-\end{equation}
-There are no restrictions on the number of orbitals per site, or on the range of interactions that can be
-incorporated, these only impact on the efficiency of the method and the validity of the original assumptions
-about the dominance of the local atomic environment.
-
-\section{Recursion in Practice}
-To conclude this section some practical examples of recursion type calculations are discussed.
-
+\section{Analytic Recursion}
 \subsection{The Constant Chain}
 The simplest chain model that can be handled analytically is the constant chain. It is 
-also the paradigmatic model of all the recursion type calculations that will be undertaken.
+serves as the paradigm of all the recursion calculations that will be undertaken. The
+problem is always to determine the coefficients in the expansion of the chain.
 %
 \begin{equation}
 \label{eq:constantchain}
@@ -649,7 +667,7 @@ results for different couplings $b_{1}$ are plotted.
 {\graphicspath{{./invariance/chain_figs/}}\input{./invariance/chain_figs/inband_plot.tex}}
 \caption{State with $a_{0}$ chosen to be within the band and a range of coupling strengths. 
 For well matched systems the density of states splits into two resonances corresponding 
-to bound and antibound states.}
+to bound and antibound states. \label{fig:impurity}}
 \end{center}
 \end{figure}
 %
@@ -675,13 +693,78 @@ This will be discussed more in Chap.\ref{chap:manybodyrec} in the context of sin
 interacting with plasmon bands and the continuum.
 
 \section{The Cambridge Recursion Library}
-Moving from the constant chain to material systems with different atoms requires specification
+Moving from analytic chain models to material systems with different atoms requires specification
 of the Hamiltonian. The choice of the tight binding parameters was discussed in the first half of this
 chapter. For present purposes the Slater-Koster tight binding parameters for the interaction of 
-d-electrons should be sufficient to demonstrate the important features of a typical recursion type calculation.
+d-electrons should be sufficient to demonstrate the important features of typical recursion type calculation.
 In subsequent chapters we will prefer the use of tight binding parameters based on Wannier functions.
 
+\subsection{Integrals of the Density of States}
+%
+As will be seen, and is perhaps already known to the reader, nothing is perfect. The
+recursion method for all its many strengths has an issue: the chain must be terminated
+somewhere. In an extended system only so many moments can be computed in practice.  
+This is not necessarily a defect of the method but a reflection of reality. Though
+this is disappointing there is a silver lining. Integrals over the density of states
+are very stable. As such any time we require an integral over the density of states
+we can be quite confident in the result, similarly integrals over differences
+are quite stable. This property of the recursion chains will be exploited again and again
+to compute the relative stability of different structures.
+
+To compute the difference in energy between inequivalent structures 
+one begins with the electron occupancy of a specific orbital:
+%
+\begin{equation}
+N_{\alpha l}(E) = \int_{-\infty}^{E_{F}} n_{\alpha l}(E') dE'
+\end{equation}
+%
+
+The total energy in a particular orbital:
+%
+\begin{equation}
+U_{d} = \int_{-\infty}^{E_{F}}E'n_{\alpha l}(E') dE'
+\end{equation}
+%
+
+The energy difference of two structures A and B can also be computed
+to high accuracy:
+%
+\begin{eqnarray}
+\label{eq:Ua}
+U_{A} = \int_{-\infty}^{E_{FA}} E n_{A}(E) dE
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:Ub}
+U_{B} = \int_{-\infty}^{E_{FB}} E n_{B}(E) dE
+\end{eqnarray}
+%
+\begin{equation}
+\label{eq:totaldos}
+Z = \int_{-\infty}^{E_{FA}} n_{A}(E)dE = \int_{-\infty}^{E_{FB}}n_{B}(E)dE
+\end{equation}
+%
+\begin{equation}
+U_{A}-ZE_{FA}= \int_{-\infty}^{E_{FA}}(E-E_{FA})n_{A}(E)dE
+\end{equation}
+%
+\begin{equation}
+U_{B}-ZE_{FA}= \int_{-\infty}^{E_{FA}}(E-E_{FA})n_{B}(E)dE + \int_{E_{FB}}^{E_{FA}}n_{B}(E)dE
+\end{equation}
+%
+If $n_{B}(E)$ is taken to be constant across that small energy range, the second term, in
+Eq. results in a small squared term that can be dropped. Swapping $E_{FB}$ and $E_{FA}$ gives
+a similar result. This justifies dropping the A index on the Fermi energy to get the
+final expression:
+%
+\begin{equation}
+U_{A}-U_{B} = \int_{-\infty}^{E_{F}}(E-E_{F})[n_{A}(E) -n_{B}(E)]dE.
+\end{equation}
+%
+It is this expression used to separate the Lave phases of transition metals in Ref.~\cite{johannes76}.
+
 \subsection{Local Density of States}
+\label{sec:fccldos}
 The simplest demonstration of the Cambridge Recursion Library 
 is a computation of the local density of states for an Ni atom located at the center of a small cluster. 
 Fig.~\ref{fig:cuboid} depicts a 75 atom cuboid cluster and the computed local density of states for an 
@@ -698,22 +781,22 @@ set of FCC neighbours, grey atoms are surface atoms of the cluster and a have a 
 \end{center}
 \end{figure}
 %
-The density of states in Fig.~\ref{fig:fcc_dos} is computed using 11 levels of recursion. i.e coefficients
+The density of states in Fig.~\ref{fig:fcc_dos} is computed using 11 levels of recursion: i.e, coefficients
 are computed from $a_{0}$ to $a_{11}$ and $b_{0}$ to $b_11$. The Hamiltonian consists of five d orbitals.
 The Hamiltonian parameters and the coefficients of the continued fraction are given in Table~\ref{tab:reccoeffs}.
 The total DOS in this case is computed by summing up the continued fractions computed for each of the 
-five starting orbitals. Symmetry considerations would allow this to be constraing to the two inequivalent 
-orbitals in 
-
+five starting orbitals. Symmetry considerations would allow this to be constraine to the two inequivalent 
+orbitals $t_{2g}$ and $e_{g}$ however the finite cluster size will disrupt the symmetry of the recursion coefficients.
 %
 \begin{figure}
 \begin{center}
 {\graphicspath{{./invariance/rec_examples/exrecal/}}\input{./invariance/rec_examples/exrecal/recal_dos.tex}}
 \caption{Top panel: the local density of states on the central atom for the Ni cluster in Fig.~\ref{fig:cuboid}
-is computed along with the contribution of the band structure to the cohesive energy and the integrated
+is computed. Bottom panel:  along with the contribution of the band structure to the cohesive energy and the integrated
 density of states.\label{fig:fcc_dos}}
 \end{center}
 \end{figure}
+%
 
 \begin{table}
 \begin{center}
@@ -745,25 +828,257 @@ is determined by the different termination scheme employed. \footnote{See the ro
 for the QuadDOS termination scheme in the Cambridge Recursion Library. 
 The TermDOS scheme is described in NEX C.M.M. Comp. Phys. Comm.  (1985)}
 
-\subsection{Surface Atoms}
-For atoms added to the surface the CamRecLibrary provides an example. 
+\subsection{Surface Electronic Structure}
+Surface catalysis is a topic of immense interest in chemistry and chemical engineering.
+The rate at which reactions proceed is important in industrial processes and biomedical 
+processes. The presence of a surface disrupts the periodicity required to use Bloch's theorem,
+at least in the direction normal to the surface, and the in plane periodicity is likely to 
+be compromised by steps, impurities, etc. along the material surface.
+
+Relevant work on surfaces using the recursion method can be found in 
+Refs.~\cite{haydock72, kelly73, kelly74, kelly74b, burke76, haydock79, haydock82}.
+In particular \cite{haydock79} presents a semi-quantitative treatment of chemisorption of simple
+molecules to transition metal surfaces across the transition metal series, 
+a study which provides a strong positive example of analysis of homologous 
+trends in materials according to Ehrenreich's $4^{\rm th}$ point.
+
+A detailed discussion of surface catalysis is also given in Ref.~\cite{haydock80}
+for the dissociation of hydrogen on a transition metal surface. \footnote{The, 
+somewhat surprising, connection to embrittlement phenomenon will be 
+discussed in detail in Chap.~\ref{chap:metallurgy}}.
+
+The Cambridge Recursion library provides an example of the indirect interaction of adatoms on a surface,
+i.e. adatoms interacting via the metallic substrate \cite{einstein73}. Most of this section is based 
+on the work presented in Ref.~\cite{burke76}. 
+
+The problem reduces to finding the difference in the total energy of the system when
+adatoms are distant (infinitely separated) and when they are close together:
+%
+\begin{equation}
+U_{TOT} = \sum_{i}E_{i} - U_{es},
+\end{equation}
+%
+the first term is the band structure contribution to the energy, integrated
+across all the occupied electronic states, and the second term is the electrostatic
+energy, including the interelectron repulsion (to avoid double counting), and the repulsion
+between the ion cores. It is the first term that is of primary interest in the example
+and corresponds to the energetic contribution coming from the adatoms sharing
+electrons via the d-band substrate.
+
+The calculation proceeds as follows. 
+
+1) First the two atoms are placed at a sufficient
+distance that they do not interact and the energy:
+%
+\begin{equation}
+U_{1} = \int_{-\infty}^{E^{(1)}_{F}}EN_{1}(E)dE,
+\end{equation}
+%
+is computed. 
+
+2) Allow the two adatoms to come together on the surface, recalculate a new
+density of states and the new fermi level.
+\begin{equation}
+U_{2} = \int_{-\infty}^{E^{(2)}_{F}}EN_{2}(E)dE,
+\end{equation}
+
+The integrals of the two density of states up to the two fermi energies is equal.
+This can be understood because no new electrons have entered the system.
+
+The interaction is now given:
+%
+\begin{equation}
+W = \int_{-\infty}^{E_{F}} (E-E_{F})(N_{2}-N_{1}) dE
+\end{equation}
+%
+
+The two reference systems are labeled System 1 and System 2. In Fig.~\ref{fig:burkesurf}
+System 1 consists of two substrates each with an adatom, System 2 is a substrate with
+2 adatoms and the empty substrate giving a Hamiltonian $H_{2}+H_{0}$.
+
+The density of states then become:
+%
+\begin{equation}
+N_{1} = 2{\rm Tr}[EI-H_{1}]^{-1}
+\end{equation}
+%
+\begin{equation}
+N_{2} = {\rm Tr}[EI-H_{2}]^{-1}
+\end{equation}
+
+Finally the identity: 
+%
+\begin{equation}
+{\rm Tr}[EI-H]^{-1} = \frac{\partial}{\partial E} \log \det[EI-H],
+\end{equation}
+%
+is employed to reach an expression for the difference in the density
+of states $\delta N= (N_{2}-N_{1})$.
+
+\begin{equation}
+\delta N = \frac{\partial}{\partial E}\log\frac{\det[EI-H_{2}]}{\det [EI-H_{1}]}\frac{[EI-H_{0}]}{[EI-H_{1}]}
+\end{equation}
+%
+
+What then follows is some consideration of the block structure of the matrices $H_2$, $H_1$ and $H_0$.
+$H_2$ is a partitioned matrix of dimension $5N+10$ and $H_1$ has dimension $5N+5$.
+$H_{0}$ is the substrate Hamiltonian with dimensions $5\times N$ (orbitals times atoms).
+The self energy elements are given in the block $E_A$, $V_{1}$ and $V_{2}$ describe
+the atoms interactions with the substrate and the $V_{12}$ describe the interaction
+between adatoms. Some identities from matrix algebra employed in Ref.~\cite{einstein73}
+and given in the append of Ref.~\cite{burke76} are then used to simplify the
+expression to:
+%
+\begin{equation}
+\delta N = \frac{\partial}{\partial E}\log \frac{\det G_{1}}{\det G_{2}}
+\end{equation}
+%
+
+The physical meaning is that $\log \det G_{2}$ gives the energy required to pull
+one of two adatoms away from the substrate and its paired atom, the $\log \det G_1$
+term is the energy required to put it back on substarte at an isolated site. 
+The difference is then the interaction energy. Formulating the problem
+as a matrix means the determinant van be split into a sum over
+five separate logarithms this is accomplished by "orbital peeling".
+
+\begin{equation}
+det|G2| = \bar{G}_{21}\bar{G}_{22}\bar{G}_{23}\bar{G}_{24}\bar{G}_{25}
+\end{equation}
+
+\begin{equation}
+det|G1| = \bar{G}_{11}\bar{G}_{12}\bar{G}_{13}\bar{G}_{14}\bar{G}_{15}
+\end{equation}
+
+The matrix elements for each $G_{i\alpha}$ should be very familiar at this point:
+%
+\begin{equation}
+G_{i\alpha}=<i,\alpha| [EI-\bar{H}_{i\alpha}] |i, \alpha>
+\end{equation}
+%
+with $i=1,2$ $\alpha=1,5$. The matrix $\bar{H}_{i\alpha}$ is formed by taking 
+$[EI-H_{i}]$, deleting the first $(\alpha-1)$ rows and columns to form $[EI-\bar H_{i\alpha}]$.
+The desired matrix element is now the in the upperleft-most corner of the matrix. 
+Using this representation the difference in the density of states is calculated:
+%
+\begin{equation}
+\Delta N = \sum_{\alpha=1}^{5} \frac{\partial}{\partial E}(\log\bar{G}_{1\alpha} - \log \bar{G}_{2\alpha})
+\end{equation}
+%
+
+The parameters used in Ref.~\cite{burke78} are appropriate to the BCC structure.
+The tightbinding Hamiltonian only considers two center contributions, with the parameters 
+coming from Pettifor\cite{pettifor69} and rescaled they are given in Table~\ref{tab:dsurface} 
+%
+\begin{table}
+\begin{tabular}{ccc}
+SK Parameter & First Neighbour & Second Nearest Neighbour \\
+$dd\sigma$ & -0.02992  & -0.05364 \\
+$dd\pi$    &  0.06652  &  0.01943 \\
+$dd\delta$ &  0.00800  &  0.00196 \\
+\end{tabular}
+\caption{These parameters are difficult to make out from the electronic version of the paper
+due to poor resolution of the scan. \label{tab:dsurface}.}
+\end{table}
+%
+The range of $E_{F}$ is restricted to $-0.068 \ge E_{F} \le 0.12$ Ryd by considerations
+based on the atomic configuration of tungsten as $5d^{4}6s^{2}$, meaning the band 
+should contain a minimum of 4 and a maximum of 6 electrons, with the band being half filled (5 e)
+considered the most plausible.
+
+Fig.~\ref{fig:burkesurface} shows the energy difference as a function of the 
+Fermi energy position. The energy is computed from the three p orbitals of a 
+surface atom adhered to the same cluster studied in Sec.~\ref{sec:fccldos}.
+%
+\begin{figure}
+\begin{center}
+{\graphicspath{{./invariance/rec_examples/exorpeel/}}\input{./invariance/rec_examples/exorpeel/exorpeel.tex}}
+\caption{ Top panel: Adsorbate interaction energy as a function of the Fermi energy for a representative d band
+substrate. Mutual interaction of the adsorbates is mediated by the substrate and the p-d interaction.
+Bottom panel: \label{fig:burkesurface}}
+\end{center}
+\end{figure}
+%
 Surface chemistry using the recursion method was hindered 
-by the arbitrariness in the choice of the Hamiltonian and accessing the 
-charge density in the presence of a surface. 
-
-
-\begin{equation}
-N = \int_{-\infty}^{E_{f}}N(E) dE)
-\end{equation}
-
-\begin{equation}
-U_{1} = \int_{-\infty}^{E_{f}}EN(E)dE
-\end{equation}
+by the necessary arbitrariness in the choice of the tight binding Hamiltonian and accessing the 
+self consistent charge density, and precise atomic structure in the presence of a surface. 
+\footnote{For early work on Wannier functions at surfaces Ref.~\cite{smith74}. Also see 
+\cite{mostoller79} for a treatment of surface effects using the recursion method.}
+First principles work has greatly simplified access to these quantities and should remove 
+some of the ambiguities in mapping ab initio data onto a local picture
+of the electronic structure at surfaces. Meaning the recursion techniques described in 
+Refs.~\cite{burke76, haydock79, haydock81} might be revisited with potentially profitable 
+effect.
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly using the recursion technique.
 Instead of localized orbitals, localized displacements are introduced, and in the place of onsite and hopping
 matrix elements force constants connect nearest and next nearest neighbour displacements. 
+The papers and PHD thesis of Meek describes in detail the application of the recursion method to the
+computation of vibrational spectra \cite{meek76, meek78}. Electron-phonon coupling has also been
+considered in this context\cite{terakura78}. The method is particularly useful for
+computing vibrational spectra in disordered media where a statistical averaging procedure needs to be
+undertaken \cite{mookerjee04}.
+
+The force constant matrix of a crystal can be written as:
+%
+\begin{equation}
+\label{eq:forceconstant}
+\Phi_{\alpha\alpha'}(l\kappa,l\kappa') = \frac{\partial^{2}V}{\partial u_{\alpha}(l\kappa) \partial u_{\alpha'}(l'\kappa')}
+\end{equation}
+%
+
+The equation of motion for atom $i$ becomes:
+%
+\begin{equation}
+m_{k} \frac{\partial^{2} u_\alpha (l\kappa)}{\partial t^{2}} = - \sum_{l'\kappa'\alpha'} \Phi_{\alpha\alpha'}(l\kappa,l'\kappa')u_{\alpha'}(l'\kappa')
+\end{equation}
+%
+The above requires some function $V$ representing the potential energy for the given 
+ionic coordinates. l, $\kappa$, and $\alpha$, represent unit cell, basis atom and 
+cartesian coordinate
+respectively.
+
+If a solution of the form:
+%
+\begin{equation}
+u_{\alpha}(lk) = \frac{1}{\sqrt(m_{k})} U_{\alpha}(\kappa;\k)e^{[i(\k\cdot x(l) - \omega_{\k}t)]} 
+\end{equation}
+%
+where $U_{\alpha}(\kappa;\k)$ is the amplitude of the displacement.
+is considered we arrive at a system of equations:
+%
+\begin{equation}
+\omega^{2}(\k) U_{\alpha}(\kappa, \k) = \sum_{\kappa'\alpha'}D_{\alpha\alpha'}(\kappa\kappa';\k) u_{\alpha'}(\kappa',\k)
+\end{equation}
+%
+and the Fourier transform of the dynamical matrix has been introduced:
+
+\begin{equation}
+D_{\alpha\alpha'}(\kappa\kappa';\k) = \frac{1}{\sqrt(m_{k}m_{k'})} \sum_{l'} \Phi_{\alpha\alpha'}(l\kappa,l'\kappa') e^{[i\k(x(l')-x(l))]}
+\end{equation}
+%
+The vibrational eigenvalues of a cluster or crystal can then be determined from the secular equation:
+%
+\begin{equation}
+{\rm det}|D(k) - \omega^{2}(\k)I| = 0
+\end{equation}
+%
+
+The resolvent for the vibrational problem becomes the project of the
+interaction matrix on to the displacement of atom $i$ in direction $\alpha$.
+%
+\begin{equation}
+G_{i\alpha,i\alpha}(\omega^{2})= \bra i\alpha| \left[D- \omega^{2}I\right]^{-1} |i\alpha \ket
+\end{equation}
+%
+For instance for 2 atoms in a unit cell of a perfect crystal Eq.~\ref{eq:phonon} would only
+need to be computed for 6x6 matrix at every $\k$ point in the Brillouin zone to determine
+the vibration spectrum. In this case there would be little need for employing a recursion method.
+Well developed techniques exist to obtain the force constant matrix at every $\k$ point 
+from first principles \cite{baroni01}, however this again requires an assumption about
+microscopic periodicity which may not be valid. For any amount of disorder at the atomic level,
+for instance in the CRN systems studied by Meeks secular determinants of $3N\times3N$ with
+$N=200-300$ may need to be solved. In these situations recursion type calculation become necessary.
 %
 \begin{figure}
 \begin{center}
@@ -774,24 +1089,110 @@ the masses are chosen to be 0.25 and $0.189$ amu. Two force constants are also
 specified, a bond stretching force constant of 1.0, which is the same for both atomic types
 and two bond bending force constants of 0.5 and 0.25 \label{fig:phonondos}. The phonon DOS relies on the routine
 \texttt{RECSUM} to combine the continued fraction coefficients for the vibration modes computed for each
-site. The six atom systems has the expected 12 vibration modes thus acting as a check on the numerics.}
+site. The six atom system has the expected $3N-6=12$ vibration modes thus acting as a check on the numerics.}
 \end{center}
 \end{figure}
+%
 The phonon density of states and the integrated phonon density of states is depicted in Fig.~\ref{fig:phonondos} 
-for a six atom molecule consisting of two atomic types. 
+for a six atom molecule consisting of two atomic types. The number of sets of continued fraction coefficients
+that needs to be generated is equal to $3*N_{s}$ where $N_{s}$ is the number of atoms that the phonon LDOS
+or ensity of vibrational states (DOVS), is computed for and the factor of 3 is for the 
+displacement in each atomic direction. The expression for the average phonon density of states
+over the different matrix elements of the resolvent is first over the cartesian displacements
+$\alpha$:
+%
+\begin{equation}
+n_{i}(\omega^{2}) = \sum_{\alpha}n_{\alpha,i}(\omega^{2}),
+\end{equation}
+%
+\begin{equation}
+N(\omega) = \frac{2\omega}{N_{s}}\sum_{i}^{N_{s}}n_{i}(\omega^{2}),
+\end{equation}
+%
+its integral gives the total number of vibrational modes.
 
+In Fig.~\ref{fig:phonondos} two sites are used to generate the DOVS, to a depth of $7$ 
+in the continued fraction coefficients. The postprocessing of the continued 
+fraction coefficients is the same as in the case of the surface and bulk DOS calculations. 
+In Meeks work sufficient feature resolution in the DOVS is achieved with a depth of 20 
+in the recursion steps for a cluster of 344 diamond atoms. The force constants entering 
+these models were not ab initio instead being derived from a model due to Born \cite{born14}. 
+It is now possible to obtain highly accurate force 
+constants from first principles. The higher quality force constant matrices that
+can be generated as a result could well be reflected in the quality (with respect to experiment)
+of the features observed in the density of states.
 
-\footnote{For an instructuve derivation of the solution to an infinite chain of spring
-coupled massed using a continued fraction expansion see 
-The Classical Harmonic Chain: Solution via Laplace Transforms and Continued Fractions
-(https://arxiv.org/pdf/1608.00616).
-}
+Direct examination of the routines involved in the computation of the Phonon DOS 
+itself give a good feeling for how the recursion method works. In Table~\ref{tab:phonon} 
+the various routines and the task they accomplish are listed. These routines specify the entire problem
+and with minor adaptations, (the crystal structure, force constants etc.), can 
+be used to compute the DOVS for any system.
+
+\begin{table}
+\begin{small}
+\begin{tabular}{|l|l|}
+\hline
+Routine & Task \\
+\hline
+\texttt{EXPHNDS} & Generate Recursion Coefficients for DOVS \\
+\hline
+\multicolumn{2}{|c|} {Define and Initialize Force Constant Matrix} \\
+\hline
+\texttt{SCAN} & Loop Over Atoms in Cluster Calling \texttt{DMGEN}. \\
+\texttt{DMGEN} & Compute the Dynamical Matrix between Atoms (According to Ref.~\cite{meek}.) \\ 
+\texttt{RECAL} & Compute Chain Coefficients via Recursion Algorithm. Hamiltonian applied using \texttt{DMHOP}. \\
+\texttt{DMHOP} & Satisfies requirements of RECAL calling \texttt{MLT} to apply dynamical matrix at each step. \\
+\texttt{MLT} & Computes and Accumulates Product of Dynamical Matrix at Atom I with a Displacement. \\
+\texttt{EXPHNPLT} & Reads Recursion Coefficients and Tabulates DOVS \\
+\hline
+\multicolumn{2}{|c|} {Tabulate DOVS and Integral of DOVS} \\
+\hline
+\texttt{RECSUM} & Compute Sum of Densities ($N_{S}*3$) and Store the Resulting Recursion Coefficients \\
+\texttt{DENQD} & Evaluate DOVS and Integral of DOVS Using Quadrature\\
+\hline
+\end{tabular}
+\end{small}
+\caption{The subroutines required to perform a typical Local Density of Vibrational 
+States (DOVS) calculation. \label{tab:phonon}}
+\end{table}
+
+For other examples of the computation of vibration spectra the stretching modes 
+in ice have also been studied using the recursion method\cite{mcgra78,bergren82}.
+
+The actual computation of forces using the recursion method is possible. 
+A discussion of the computation of forces in tight binding bond models can be found in
+Ref.~\cite{sutton88} and explicity expression using the recursion method can be found in 
+\cite{boswarva82, boswarva87}. However it should be noted that obtaining ab initio forces
+is now a highly developed technique and populating a force constant matrix for a recursion
+type calculation in novel alloys and chemical environments would be an interesting application
+of the method.
+
+\footnote{For an instructive derivation of the solution to an infinite 
+chain, using classical mechanics, of spring coupled massed using a continued fraction expansion see 
+The Classical Harmonic Chain: Solution via Laplace Transforms and Continued Fractions 
+(https://arxiv.org/pdf/1608.00616).}
 
 \section{Future Work}
-The references in Vol. 35 demonstrate the scope of application of the method 
-already achieved by 1980. A subset of those works have been referenced here. 
-Haydock's conclusion is interesting in he gives prognosis for further work
-along two lines. 
+The references provided here and in Vol. 35 demonstrate the impact of 
+the recursion method already achieved by 1980. Only a small subset of that 
+work have been referenced here. The ability of the tight binding framework 
+to provide an explanatory model for trends in homologous materials is 
+well demonstrated by the work on the crystal structure along the transition
+metal series \cite{pettifor70}, the Chevrel Compounds of Molybdenum Chalcogenides Ref.~\cite{bullet77}.
+The recursion formulation of the tight binding method was used to order
+the structures of the compounds in the Lave phases in Ref.~\cite{johannes76},
+and explaining trends in surface chemistry by determining 
+the heat of adsorption for simple molecules transition metals across 
+the row of the transition series in \cite{haydock78}. 
+
+A perturbation theory built on the recursion method has also been formulated
+making it possible to study photoemission phenomena \cite{mclean77}. 
+The use of the recursion method to compute susceptibilities has also been addressed, 
+see for instance Ref.~\cite{terakura78}, both these applications will be further 
+elaborated on in Chap.~\ref{chap:manybodyrec}.
+
+The conclusion to Haydock's chapter in that volume is interesting in he gives 
+prognosis for further work along two lines. 
 
 The first line of research consists of diffusing quantum processes in disordered
 solids:
@@ -816,21 +1217,22 @@ solutions of the Schrodinger equation.
 \end{quote}
 
 	Since Vol. 35 was published there has been a rise in the accessibility of density functional methods 
-and the access to good single particle approximations to the electronic eigenstates of a crystal
-is routine. Additionally progress on the problem of determining unique approximations to localized
-electronic states, Wannier functions, means tight binding Hamiltonians can be determined unambiguously.
+and access to good single particle approximations to the electronic eigenstates of a crystal
+is routine. Additionally, progress on the problem of determining the localized Wannier functions, 
+means tight binding Hamiltonians can be determined unambiguously.
+
 First principles understanding of Green's function methods and their application to the many body
-problem have also developed. In the following chapters we will look at how the development of these
-methods provides a framework for a computationally tractable toolkit for performing highly 
-accurate calculations of material properties.
+problem have also developed. In the following chapters we will look at how these developments
+coupled with recursion techniques can provide a framework for a computationally tractable 
+toolkit for performing highly accurate calculations of material properties.
 
 \section{Questions}
 \begin{itemize}
 \item (Kwidzinski: Continued Fractions and Classical Vibrations) 
       Let $x_{n}(t)$ be a time dependent function for the position of mass $m$.
       For a one sided infinite chain of coupled harmonic oscillators, with 
-      spring constants $k$ and masses $m$ the equations of motion for the $0^th$ and
-      $n^th$ spring can be shown to be:
+      spring constants $k$ and masses $m$ the equations of motion for the $0^{\rm th}$ and
+      $n^{th}$ spring can be shown to be:
       %
       \begin{equation}
       (s^{2} + \frac{k_{0}}{m_{0}}) x_{0}(s) - \frac{k_{0}}{m_{0}}x_{1}(s) = As 
@@ -842,21 +1244,25 @@ accurate calculations of material properties.
       (s^{2}+\frac{k_{n-1}+k_{n}}{m_{n}})x_{n}(s)-(\frac{k_{n-1}}{m_{n}}x_{n-1}(s) + \frac{k_{n}}{m_{n}}x_{n+1}(s)) = 0
       \end{equation}
       % 
-      where $x_{m}(s) = \int_{0}^{\infty}e^{-st}f(t)dt$ is the Laplace transform of the time dependent position.
-      Write this system of equations as a matrix where the vectors are $[x_{0}(s), 0, 0, 0,...]^{\rm T}$, $[0, x_{1}(s), 0, 0, ...]^{\rm T}$ etc,
-      and use the determinant expansion trick in Eq.~\ref{eq:detexpansion} to find a continued fraction expansion for the $x_{0}$ element.
-      Simplify this continued fraction to obtain an expression for the Laplace transform of the position operator.
+      where $x_{m}(s) = \int_{0}^{\infty}e^{-st}x(t)dt$ is the Laplace transform of the time dependent position.
+      Write this system of equations as a matrix where the vectors 
+      are $[x_{0}(s), 0, 0, 0,...]^{\rm T}$, $[0, x_{1}(s), 0, 0, ...]^{\rm T}$ etc,
+      and use the determinant expansion trick in Eq.~\ref{eq:cauchy} to find a 
+      continued fraction expansion for the $x_{0}$ element.
+      Simplify this continued fraction to obtain an expression for the Laplace 
+      transform of the position operator.
       %
       The time dependence of the position can then be found by performing the inverse Laplace transform
       this can be done most easily by checking a correspondence table
       in an appropriate handbook. (For instance, M. Abramowitz, I. Stegun (1965) 
       Handbook of Mathematical Functions).
-
+      %Should give the first bessel function.
       %For a two sided infinite chain the relevant equations of motion are: 
       %What is the continued fraction expansion for the laplace transform of a mass $n$?
       %What is its form in the time domain?
 
-\item (Haydock: Recursion for a Free Electron) Take the Hamiltonian for a non-relativistic free electron in radial coordinates:
+\item (Haydock: Recursion for a Free Electron) Take the Hamiltonian for a non-relativistic 
+free electron in radial coordinates:
 %
 \begin{equation}
 H = \frac{-\hbar^{2}}{2m}\left[\frac{d}{dr^{2}}+ \frac{2}{r}\frac{d}{dr}\right]
@@ -868,9 +1274,9 @@ Now assume an electron has been prepared in an initial state:
 u_{0}=(\frac{\lambda}{\sqrt{\pi}})^{3/2} e^{-(\lambda r)^{2}/2}
 \end{equation}
 %
-What are the first terms in a continued fraction expansion of the Green's
+What are the first coefficients in a continued fraction expansion of the Green's
 function $a_{0}$ and $b_{1}$? What is the first vector in the chain $u_{1}$?
-Look up the Laguerre polynomials and right down the general 
+Look up the Laguerre polynomials and write down the general 
 coefficients $a_{n}$, $b_n$, and the general state $u_{n}$. 
 (A convenient unit of energy in this problem is $\frac{\hbar^{2}\lambda^{2}}{2m}$).
 
@@ -883,8 +1289,10 @@ of a free electron:
 %
 What type of function represents the eigenstate of a free electron?
 
-\item (Kelly:Surface Reactivity by Coordination Number) Given a body centered cubic crystal with an on site energy $a$ and a nearest neighbour hopping integral
-      $b$, what, using a single hop in the recursion method, will be the relative magnitudes of the local density of states 
+\item (R. Haydock and M.J. Kelly, Surf. Sci. 38, 139 (1973)) Given a body centered cubic crystal with an 
+      on site energy $a$ and a nearest neighbour hopping integral
+      $b$, what, using a single hop in the recursion method, will be the relative 
+      magnitudes of the local density of states 
       at the Fermi energy for an atom on a $[001]$, $[110]$, and a $[111]$ surface?
 
 \end{itemize}
@@ -903,64 +1311,28 @@ What type of function represents the eigenstate of a free electron?
 %Dilute Alloys
 %J Friedel Adv. Phys. 3, 446 (1954)
 %
-%Matching Green's functions:
-%J. E. Inglesfield J. Phys C 4, L14 (1971)
-%B. Velicky and I. Bartos, J. Phys C 4, L104 (1971)
-%F. Garcia-Moliner and J Rubio J Phys C 2, 1789 (1969)
-%F. Garcia-Moliner and J Rubio Proc R. Soc. London, Ser. A 324, 257 (1971)
 %
 %Non-Hermitian Matrices
 %R. Haydock and M.J. Kelly. J. PHys. C 8, L290
 %R. Haydock, J. Phys. A 7, 2120 (1974)
 %
-%Application Recursion Method:
-%R. Haydock and M.J. Kelly, Surf. Sci. 38, 139 (1973) #d-orbitals #Fesurfaces #gallagherthesis
-%M. J. Kelly J. Phys. C 7 L157 (1974)
-%M. J. Kelly Surf. Sci. 43 587 (1974)
-%
-%Perovskites:
-%I. Gyemant and M. J. Kelly, J. Phys. C 11, L193 (1978)
-%
-%Chevrel Compounds:
-%Bullett Phys. Rev. Lett. 39, 664 (1977)
 %
 %Lave Phases:
-%R. L. Johannes, R. Haydock, and Volker Heine Phys. Rev. Lett. 36, 372 1976 #lavephases
 %A. K. Sinha, Prog. Mater. Sci. 15, 81 (1972)
 %
 %Anderson Localization
 %R. Haydock Philos. Mag. [Part] B 37, 97 (1978)
 %R. Haydock and A. Mookerejee, J. Phys. C 7, 3001 (1974)
 %
-%Interfacial Energies
-%C.C. Pei Phys. Rev. B 18, 2583 (1978)
-%
-%GrainBoundaries 
-%Masuda-Jindo ISIJ 28, 843 (1988)
-%
-%Self Consistency
-%J. J. Rehr and C.C. Pei, PRB 16 5506 (1977)
-%M. Mosteller and T. Kaplan,  PRB 19 552 (1979)
 %
 %UV Photoemission
 %R. K. C. McLean and R. Haydock, J. Phys. C 10, 1929 (1977)
 %https://materialscience.uoregon.edu/wp-content/uploads/2016/02/tightbind.pdf
 %
-%Wannier Functions
-%J. R. Smith and J. G. Gay Phys. Rev. Lett. 32, 774 (1974),
 %Self-Consistent Tight Binding Orbitals
 %Philos. Mag [8] 35, 845 (1977) #
 %
-%Perturbations:
-%Haydock J. Phys. A Vol. 10, No. 4 (1977)
-%
-%Susceptibilities
-%K. Terakura, J. Phys. C 11 469 (1978)
 %
 %Binary Alloys 
 %R. L. Jacobs, J. Phys. F 3, 933 (1973)
-%Random Alloys
-%T. Kaplan and L. J. Gray, J. Phys. C 9, L303 and L483 (1976)
-%T. Kaplan and L. J. Gray, Phys. Rev. B 14 3462 (1976)
-%Add Atoms
-%N. R. Burke, Surf. Sci. 58 349 (1976)
+%and stacking in La \cite{duthie77}.
