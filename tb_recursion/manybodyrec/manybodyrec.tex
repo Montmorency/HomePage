@@ -1,7 +1,9 @@
 \chapter{Many Body Recursion}
 \label{chap:manybodyrecursion}
 \section{Introduction}
-As mentioned at the close of Chapter.~\ref{chap:invariance} one of the 
+As mentioned at the close of Chapter.~\ref{chap:invariance} one of the potential
+lines of extension for the recursion method is to move from a single particle 
+description of the electronic structure of materials to a many body formalism.
 
 The most direct extension of the recursion approach to many body Hamiltonians 
 was undertaken In Ref.~\cite{annett94}. The concept of the local density of states (LDOS)
@@ -51,7 +53,6 @@ to be the case so long as either the atomic orbitals $w$ and/or $\Sigma$
 fall off quickly enough. Which, as will become clear when we discuss
 the relationship of this scheme to the GW approximation, requires 
 the Green's function or the screened Coulomb interaction to be sufficiently localized.
-
 %
 The self-consistency in the recursion method relies on the adjustment of the coefficients that
 define the Green's function. If a suitable non interacting Hamiltonian is selected in the first
@@ -60,6 +61,7 @@ place this self-consistency can be treated as a perturbation problem.
 In principle we can now compute any quantity we like that can be expressed
 as a density of states, or an integral over the DOS, with the Many-Body Green's 
 function just as in the non-interacting case discussed in Chap.~\ref{chap:invariance}.
+Explicit schemes for describing multiple bands has been done in Ref.~\cite{haydock10}.
 
 %
 %The link then has to come to Mori for random forces/coherent forces
@@ -70,7 +72,6 @@ function just as in the non-interacting case discussed in Chap.~\ref{chap:invari
 %proof of concept and would clarify the extent to which collective excitations,
 %plasmons etc., can be incorporated in TB recursion. 
 %
-
 
 \section{The Self-Energy From Multiple Greenian Elements}
   A good first order approximation to $\Sigma$ comes from the GW approximation.

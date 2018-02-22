@@ -21,10 +21,43 @@ For a hubbard U model of cohesion energies in FCC and HCP metal using the Projec
 \cite{paidar81}
 
 \section{Alloys}
-
-Early work on DOS of alloys \cite{cubiotti77}. Wannier functions means that the hybridisation problem
-is eliminated. The Wannier functions are chosen to minimize across the band structure range so hybridisation effects
-should be included..
+Early work on DOS of alloys \cite{cubiotti77}. 
+Wannier functions means that the hybridisation problem is eliminated. 
+So that tight binding hopping parameters are always appropriate to the
+hybridized orbitals.
 
 %GrainBoundaries 
 %Masuda-Jindo ISIJ 28, 843 (1988)
+\section{Random Alloys}
+Lattice periodicity allows for the use of Bloch's theorem. The Fourier transform
+is well defined and the eigenstates can be grouped according the their Bloch vector.
+%
+\begin{equation}
+H_{nm} = e_{n}\delta_{nm} + V_{nm}
+\end{equation}
+%
+It is also possible to consider the Fourier transform from a Bayesian perspective
+where we are picking out features of a distribution with varying amounts of noise.
+
+Mookerjee and Haydock extended the recursion method to the case of random alloys.
+The developement of the recursion method to handle random material systems is 
+itself quite ingenious \cite{mookerjee , haydock74}. The Hamiltonian is extended
+so that tight binding hops on a real lattice are made along with potential hops
+on a "field" lattice. The field lattice can be cast in tridiagonal form to represent
+the underlying statistical distribution of the random alloy. Different graphs are available
+to represent rectangular random distributions, binary distributions, Gaussian distributions
+etc. Fig.~\ref{fig:fieldsite.png} gives an example of the first few hops on a "field-site" 
+lattice to obtain the averaged value of a Green's function. The hopping of the recursion method
+is now coupling lattice sites and taking into account the underlying distribution of 
+the underlying parameters.
+
+Despite its elegance the number of paths now emanating from an initial orbital, both
+for electrons to hop from orbital to orbital (lattice hops) and for the hops between 
+statistical configurations (field hops) are considerable and simplifying approximations 
+need to be found due to the difficulty of enumerating all the possible paths.
+
+\section{Embrittlement of Grain Boundaries}
+In this section we describe a proposed mechanism of embrittlement via impurity
+segregation \cite{haydock82}.
+
+\section{Mechanics}

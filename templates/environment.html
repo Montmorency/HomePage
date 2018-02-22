@@ -50,8 +50,8 @@ endif
 </code></pre>
 </p>
 <h3> SSH </h3>
-<p> In your <code>~/.ssh/config</code> file it is a good idea to set up Host aliases. 
-This makes using rsync and scp between machines a lot simpler. The typical pattern is below. </p>
+<p> It is a good idea to set up Host aliases in your <code>~/.ssh/config</code> file. 
+This makes using rsync and scp between machines a lot more efficient. The typical pattern is below.</p>
 <pre><code>
 Host *
 ServerAliveInterval 240
@@ -63,8 +63,8 @@ Port 22
 </code></pre>
 <p>
 General configurations can use pattern matching i.e. <code>Host *</code> to set
-configurations across every server we plan on connecting to. Here we 
-are specifying how often to ping the remote server, <code> ServerAliveInterval 240 </code>,
+configurations across every server where a connection is established. The present example
+specifies how often to ping the remote server, <code> ServerAliveInterval 240 </code>,
 so that the connection stays alive (every 4 minutes in this case).
 By default ssh processes listen on port 22. On OS X El Capitan (v 10.11.6) 
 my ssh_config is located in <samp>/etc/ssh/ssh_config</samp>. If you want to change the default port that
@@ -73,13 +73,14 @@ file as described <a href="https://davidroessli.com/logs/2012/10/how_to_change_t
 you then unload and load the plist with <samp>launchctl</samp> or restart the machine.
 </p>
 <p>
-Should you be consistently accessing a server and getting a message like "WARNING: REMOTE HOSE IDENTIFICATION HAS CHANGED!",
-and you are growing weary of that message, you can append the line:
+Should you be consistently accessing a server and getting a message 
+like "WARNING: REMOTE HOSE IDENTIFICATION HAS CHANGED!", and you are growing 
+weary of that message, you can append the line:
 <pre><code>
 StrictHostKeyChecking no
 </pre></code> to the relevant Host configuration block in your ~/.ssh/config file.
 </p>
-
+<h3> X11 and XQuartz </h3>
 <p>
 If you install Xquartz via Homebrew on Mac Os Sierra the plist file is located here:
 <code>

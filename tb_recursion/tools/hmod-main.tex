@@ -1,0 +1,11 @@
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\fancyhf{}
+\fancyhead{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\slshape The Sternheimer-GW Method} % odd pages: book title
+\fancyhead[RE]{\slshape\leftmark}   % even pages: chapter title
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.0pt}
+\addtolength{\headheight}{2.5pt}  
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
