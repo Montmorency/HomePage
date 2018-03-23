@@ -7,7 +7,7 @@ FCFLAGS = -g -fbounds-check -fdefault-real-8
 %.o: %.f
 	$(FC) $(FCFLAGS) -c $<
 
-all: exphnds.x exphnplt.x exrecal.x exproc.x exorpeel.x expeeled.x
+all: exphnds.x exphnplt.x exrecal.x exproc.x exorpeel.x expeeled.x exbccrecal.x
 
 exorpeel.x: exorpeel.o slkode.o equiv.o recal.o fccbnd.o out.o selfd.o\
             setup.o skpd.o skpp.o selfp.o mmcal.o nncal.o fcclat.o addat.o peel.o orpeel.o slkode.o skdd.o
@@ -35,6 +35,10 @@ exproc.x: exproc.o dencrs.o denqd.o fenval.o recsum.o termgn.o bndest.o bndref.o
 exrecal.x: exrecal.o slkode.o equiv.o recal.o fccbnd.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o fcclat.o
 	$(FC) -o $@ $^ 
 	cp ./exrecal.x ../examples/exrecal/
+
+exbccrecal.x: exbccrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o
+	$(FC) -o $@ $^ 
+	cp ./exbccrecal.x ../examples/exbccrecal/
 
 
 clean:

@@ -36,6 +36,8 @@ COMMENT D ELECTRON HAMILTONIAN CALCULATION
 
       RETURN
 
+C GOTO 3 returns 0s along diagonal of self energy mat.
+
 3     CALL SELFD(I,J,R2,NGBR,EM,5)
 
       RETURN

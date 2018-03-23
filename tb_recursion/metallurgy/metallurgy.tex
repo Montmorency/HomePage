@@ -11,6 +11,33 @@ to a comprehensive framework for a quantum theory of cohesion must come
 from a mathematically rigorous description of electronic structure based
 on the local atomic environment. 
 
+\section{Fe}
+If we seek a quantum theory of metallurgy Fe is the place to start.
+Local descriptions of the electronic description of iron may take two forms. 
+
+The tight binding parameters determined by pettifor, and the Localized 
+Wannier functions studied by \cite{yates06}. 
+
+The parameters they use are as follows 16x16x16 0.02 Ry fermi smearing, obtaining
+a spin magnetic moment of 2.22 $\mu_{b}$. Norm Conserving pseudopotential with KE cutoff
+of 60 Hartree (120 Ry.)
+
+The self consistent potential is then frozen and a uniform nxnxn grid of k points is
+used to compute the Wannier functions. 18 WFs are targeted (s,p and d gives a 9x9 matrix
+and then the two two spins doubles the size), with spin up and 
+down. 28 bands calculated at each k point and any bands above 58 eV are excluded.
+
+In the course of the Wannierization, the initial guess was using s, p, and (eg and t2g)
+type d-like Gaussians of pure spin character transformed the bands into the t2g like 
+Wannier functions and the $e_{g}$, s and p-like states formed six hybrid 
+$sp^{3}d^{2}$-type orbitals. Thus with the initial choice of 6 $sp^{3}d^{2}$ and 3 
+$t_{2g}$  type orbitals a 100 iterations reach a neatly converged spread functional.
+
+The $sp^{3}d^{2}$ orbitals are directed along $\pm x, \pm y, \pm z$ axis 
+slightly shifted off the center of the atoms, the $xy$, $xz$ $yz$ orbitals are
+$t_{2g}$ like and centered on the atoms. An ab initio grid of 8x8x8 was sufficient
+to obtain well localized Wannier functions.
+
 \section{Single Particle Recursion: Lave Phases}
 
 \section{Many Body Recursion: Cohesive Properties}

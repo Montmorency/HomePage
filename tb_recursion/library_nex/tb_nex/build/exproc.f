@@ -10,15 +10,15 @@
 
       ALP=0.5
 
-      LL=6
+      LL=11
 
-      ELO=-0.15
+      ELO=-0.5
 
-      EHI=0.15
+      EHI=0.5
 
       EPS=5.0E-12
 
-      ACC=1.0E-4
+      ACC=1.0E-5
 
       NP=5
 
@@ -81,7 +81,9 @@ C
 
       ERR=ACC
 
-      NBP1=2
+C     NBP1=2
+C For BCC had to up this parameters...
+      NBP1=4
 
       LTR=LL
 
