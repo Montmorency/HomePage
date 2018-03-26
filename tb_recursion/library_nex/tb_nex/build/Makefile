@@ -31,6 +31,7 @@ exproc.x: exproc.o dencrs.o denqd.o fenval.o recsum.o termgn.o bndest.o bndref.o
           taban.o wtmin.o
 	$(FC) -o $@ $^ 
 	cp ./exproc.x ../examples/exrecal/
+	cp ./exproc.x ../examples/exbccHrecal/
 
 exrecal.x: exrecal.o slkode.o equiv.o recal.o fccbnd.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o fcclat.o
 	$(FC) -o $@ $^ 
@@ -40,6 +41,7 @@ exbccHrecal.x: exbccHrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o set
                sksd.o skss.o addat.o selfs.o
 	$(FC) -o $@ $^ 
 	cp ./exbccHrecal.x ../examples/exbccHrecal/
+	cp ./exproc.x ../examples/exbccHrecal/
 
 exbccrecal.x: exbccrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o
 	$(FC) -o $@ $^ 

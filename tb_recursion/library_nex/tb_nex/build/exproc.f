@@ -6,15 +6,15 @@
 
      1,ATR(15),BTR2(15),TABS(201,5),IWK(15),EB(2),IWK2(15)
 
-      NPTS=102
+      NPTS=204
 
       ALP=0.5
 
       LL=11
 
-      ELO=-0.5
+      ELO=-1.0
 
-      EHI=0.5
+      EHI=1.0
 
       EPS=5.0E-12
 
@@ -66,6 +66,8 @@ C
       CALL RECSUM(A,B2,15,LL,NP,AA,BB2,EPS,TABS,375)
 
 C IF LL NEGATIVE THEN RECQD FAILED WITH TOO FEW ROOTS.
+    
+
 
       WRITE(6,2)
 
@@ -81,15 +83,18 @@ C
 
       ERR=ACC
 
-C     NBP1=2
-C For BCC had to up this parameters...
-      NBP1=4
+C     NBP1=2 number of bands
+CHL  For BCC had to up this parameters...
+      NBP1=10
 
       LTR=LL
+
+      WRITE(6,*) "HL: LL", LL
 
       CALL TERMGN(AA,BB2,LTR,EPS,ERR,30,EDGE,WIDTH,WEIGHT,NBP1,ATR,
 
      1 BTR2,IWK,WORK,15,TABS,201,IWK2)
+
 
       WRITE(6,99)EDGE,WIDTH,WEIGHT,ERR,NBP1
 
@@ -107,6 +112,7 @@ C  TABULATE D.O.S. ETC. USING C.P.C. ROUTINES
 
 C
 
+
       WRITE(6,2)
 
       WRITE(6,*)'#DOS'
@@ -119,14 +125,18 @@ C
 
       TABS(I,1)=ELO+FLOAT(I-1)*DE
 
+
 C TERM DOS:
       TABS(I,5)=DENCRS(TABS(I,1),AA,BB2,LL,EDGE,WIDTH,WEIGHT,1,
 
      1 ATR,BTR2)
+
+
 C QUAD DOS:
       TABS(I,2)=DENQD(TABS(I,1),TABS(I,1),AA,BB2,LL,ALP,EPS,WORK,15,
 
      1 NQ,NE,IWK)
+
 
       IF(NE.LE.0)GOTO 13
 
