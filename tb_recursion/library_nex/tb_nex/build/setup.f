@@ -2,7 +2,7 @@
 
      1,IOVPAR,EE,NP,NED,NE,VEC,IW)
 
-C NGBR and IOVPAR are both getting passed in as BCCWAN. HCAL is SLKODE
+C     HCAL is SLKODE, NGBR and IOVPAR are BCCBFE
 
       INTEGER*2 MM(NND,NM),NN(NND,NM),IZP(NAT),IW(2,NED)
 

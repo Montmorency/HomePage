@@ -2,10 +2,10 @@
 
       INTEGER*2 MM,NN,IZERO,IZP,IW
 
-      DIMENSION CRD(3,1500),VEC(3,20),DUM(3),PSI(5,1500),PMN(5,1500)
-     1,A(34), B2(34),IZP(1500),IW(2,20)
+      DIMENSION CRD(3,1500),VEC(3,25),DUM(3),PSI(5,1500),PMN(5,1500)
+     1,A(34), B2(34),IZP(1500),IW(2,25)
 
-      COMMON /BLKREC/NN(1500,20),MM(1500,20),NAT,NP,EE(5,5,20)
+      COMMON /BLKREC/NN(1500,25),MM(1500,25),NAT,NP,EE(5,5,25)
      1,IZERO(1500)
 
       EQUIVALENCE (IZP(1),PMN(1,1))
@@ -56,16 +56,16 @@ C
 
       LL=11
 
-      NED=20
+      NED=25
 
       NNDIM=1500
 
 C      NNMX=15
-      NNMX=20
+      NNMX=25
 
       NP=5
 
-      NTYPE=2
+      NTYPE=1
 
       NX=6
 
@@ -160,11 +160,11 @@ C HERE GOES ADDING ADD ATOMS (COPYING EXORPEEL)
 
       NAT=NAT+1
 
-      CRD(3,NAT)=2.0
+      CRD(3,NAT)=3.5
 
-      CRD(2,NAT)=2.25
+      CRD(2,NAT)=3.0
 
-      CRD(1,NAT)=2.5
+      CRD(1,NAT)=4.0
 
       IZP(NAT)=-2
 
@@ -176,10 +176,12 @@ C HERE GOES ADDING ADD ATOMS (COPYING EXORPEEL)
 
       NHYD = 1
 
+      WRITE(6,*)'HL NM', NM
       CALL ADDAT(CRD,3,NAT,EQUIV,IZP,MM,NN,NNDIM,NM,SADBND,
      1NE,EE,NP,VEC,IW,NED,SADDOV,SADD)
 
 
+      WRITE(6,*)'HL NM', NM
       CALL OUT(6,NAT,NE1,IZP,IW,VEC,NED,NE,NAT,MM,NN,NNDIM,NM,EE,NP)
 
       IZP(NAT)=-IZP(NAT)
@@ -201,11 +203,19 @@ C  COMPUTE CONTINUED FRACTION
 
 C
 
-      DUM(1)=2.0
+C  Start on Fe
+      DUM(1)=3.0
 
-      DUM(2)=2.0
+      DUM(2)=3.0
 
-      DUM(3)=2.0
+      DUM(3)=3.0
+
+C  Start on H
+C     DUM(1)=4.0
+
+C     DUM(2)=3.0
+
+C     DUM(3)=3.5
 
       DO 41 NSTRT=1,NAT
 
@@ -276,6 +286,8 @@ C
       IZERO(NSTRT)=1
 
       CALL RECAL(HOP,PSI,PMN,NAT*NP,A,B2,LL)
+C HL 
+C     CALL RECAL(HOP,PSI,PMN,NAT*5,A,B2,LL)
 
       WRITE(1,12)LL
 
@@ -305,7 +317,7 @@ CH        CALL CLCK3F(IT)
 
       DIMENSION PSI(5,1500),PMN(5,1500),DUM(5)
 
-      COMMON /BLKREC/NN(1500,20),MM(1500,20),NAT,NP,EE(5,5,20)
+      COMMON /BLKREC/NN(1500,25),MM(1500,25),NAT,NP,EE(5,5,25)
      1,IZERO(1500)
 
       COMMON IDUM(1500)
@@ -434,7 +446,7 @@ C
 
       SADBND=0
 
-      IF(R2.GT.0.5)RETURN
+      IF(R2.GT.1.25)RETURN
 
       SADBND=1
 
@@ -473,6 +485,8 @@ C
 
 6     EM(L,M)=0.0
 
+      WRITE(6,*) R2
+
       IF(R2.LT.1.0E-4)GOTO 5
 
       R2I=1.0/R2
@@ -489,21 +503,21 @@ C
 
 2     X2(L+3)=X2(L)
 
-      IF(I.EQ.J)GOTO 4
+C     IF(I.EQ.J)GOTO 4
 
-      IF(J.EQ.1)GOTO 3
+C     IF(J.EQ.1)GOTO 3
 
       CALL SKSD(X,X2,I,J,R2,OVP,E,EM,5)
 
       RETURN
 
-3     CALL SKSD(X,X2,I,J,R2,OVP,EM,E,5)
+C3     CALL SKSD(X,X2,I,J,R2,OVP,EM,E,5)
 
-      RETURN
+C      RETURN
 
-4     CALL SKSS(X,X2,I,J,R2,OVP,EM,5)
+C4     CALL SKSS(X,X2,I,J,R2,OVP,EM,5)
 
-      RETURN
+C      RETURN
 
 5     CALL SELFS(I,J,R2,OVP,EM,5)
 
@@ -541,21 +555,11 @@ C
 
       SADDOV=1
 
-      PAR(8) = -0.2
+      PAR(8) = -0.03
 
-      PAR(10) = -0.5
+      PAR(10) = -0.4
 
-      PAR(13) = -0.5
-
-C     PAR(4)=0.04
-
-C     PAR(5)=-0.003
-
-C     PAR(6)=0.2
-
-C     PAR(7)=-0.002
-
-C     PAR(12)=-0.3
+      PAR(13) = -0.4
 
       RETURN
 

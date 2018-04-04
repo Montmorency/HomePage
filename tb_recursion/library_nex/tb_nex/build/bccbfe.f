@@ -42,6 +42,8 @@ C
       RETURN
 
 5     DD(11)=0.0
+C HL desperate but shifting d band instead of the H position
+C5     DD(11)=0.5
 
       RETURN
 

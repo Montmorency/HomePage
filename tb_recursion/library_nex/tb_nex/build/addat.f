@@ -18,12 +18,13 @@ C     COMMON /BLKNNM/NNMAT
       CALL NNCAL(CRD,ND,NAT,IZP,NN,NND,NM,NGBR)
 
       NE1=1+NE
-      WRITE(6,*) 'THIS IS H:', NM
+      WRITE(6,*) 'THIS IS H NM:', NM
       CALL MMCAL(CRD,ND,NAT,NN,NND,NM,EV,IZP,NE,MM,VEC,IW)
 
       IF(NE1.GT.NE)RETURN
 
-      DO 1 K=NE1,NE
+      WRITE(6,*)'NE1',' NE', NE1, NE
+      DO 1 K = NE1, NE
 
       II=IW(1,K)
 
@@ -56,6 +57,8 @@ C     COMMON /BLKNNM/NNMAT
       DO 6 J=1,3
 
 6     VEC(J,K)=0.0
+
+      WRITE(6,*) 'Doing diagonal part'
 
       IW(1,K)=IT
 
