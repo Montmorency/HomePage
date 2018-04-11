@@ -54,13 +54,13 @@ def fit_tb(features, labels, verbose=True):
   sd_sig = tf.Variable(0.0, trainable=True, name='sd_sig')
   pd_sig = tf.Variable(0.0, trainable=True, name='pd_sig')
   pd_pi = tf.Variable(0.0, trainable=True, name='pd_pi')
-  #dd_sig = tf.Variable(0.0, trainable=True, name='dd_sig')
-  #dd_pi = tf.Variable(0.0, trainable=True, name='dd_pi')
-  #dd_delta = tf.Variable(0.0, trainable=True, name='dd_delta')
+  dd_sig = tf.Variable(0.0, trainable=True, name='dd_sig')
+  dd_pi = tf.Variable(0.0, trainable=True, name='dd_pi')
+  dd_delta = tf.Variable(0.0, trainable=True, name='dd_delta')
   #Fixing for debug?
-  dd_sig = tf.Variable(0.021, trainable=False, name='dd_sig')
-  dd_pi = tf.Variable(-0.027, trainable=False, name='dd_pi')
-  dd_delta = tf.Variable(-0.027, trainable=False, name='dd_delta')
+  #dd_sig = tf.Variable(0.021, trainable=False, name='dd_sig')
+  #dd_pi = tf.Variable(-0.027, trainable=False, name='dd_pi')
+  #dd_delta = tf.Variable(-0.027, trainable=False, name='dd_delta')
 
 
   SK = tf.stack([ss_sig, sp_sig, pp_sig, pp_pi, sd_sig, pd_sig, pd_pi, dd_sig, dd_pi, dd_delta])
@@ -131,6 +131,21 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   l2 = np.square(l)
   m2 = np.square(m)
   n2 = np.square(n)
+  nsqrt2 = 1.0/np.sqrt(2.0)
+  nsqrt3 = 1.0/np.sqrt(3.0)
+  nsqrt6 = 1.0/np.sqrt(6.0)
+  nsqrt12 = 1.0/np.sqrt(12.0)
+
+#Empirical remapping: maybe states don't correspond to users guide? Should wok for 2nd NN.
+  #remap_dict = {'sp3d2-1':'sp3d2-5', 'sp3d2-2':'sp3d2-6','sp3d2-3':'sp3d2-1',
+  #              'sp3d2-4':'sp3d2-2','sp3d2-5':'sp3d2-3','sp3d2-6':'sp3d2-4'}
+  #remap_dict = {'yz': 'zx','zx':'yz'}
+  #if wan_i in remap_dict.keys():
+  #  wan_i = remap_dict[wan_i]
+  #  print 'remap'
+  #if wan_j in remap_dict.keys():
+  #  wan_j = remap_dict[wan_j]
+
   #Diagonal interactions in {xy, xz,yz} subspace
   if (wan_i == 'xy' and wan_j == 'xy'):
     return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.0*l2*m2, l2+m2-4.0*l2*m2, n2+l2*m2]
@@ -164,123 +179,162 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
 #########################################################
 #  Off-Diagonal interactions between 6*{sp3d2} and the {xy,xz,yz} subspace.
   elif (wan_i == 'sp3d2-1' and wan_j == 'xy') or (wan_i=='xy' and wan_j=='sp3d2-2'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*l*m, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-           -np.sqrt(3.0)*l2*m, -m*(1.0-2.0*l2), #pd\sigma  pd\pi #oddparity
-           -np.sqrt(3)*l*m*(n2-0.5*(l2+m2))+(3.0/2.0)*l*m*(l2-m2), #dd\sigma
-            2.0*np.sqrt(3)*l*m*n2 + 2.0*l*m*(m2-l2), #dd\pi
-           -np.sqrt(3.0)/(2.0)*l*m*(1.0+n2)+0.5*l*m*(l2-m2)] #dd\delta
-  elif (wan_i=='xy', wan_j=='sp3d2_1') or (wan_i=='sp3d2_2' and wan_j=='xy'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*l*m, 
-            np.sqrt(3.0)*l2*m, m*(1.0-2.0*l2), #pd\sigma  pd\pi  #oddparity
-           -np.sqrt(3.0)*l*m*(n2-0.5*(l2+m2))+(3.0/2.0)*l*m*(l2-m2), #dd\sigma
-            2.0*np.sqrt(3)*l*m*n2 + 2.0*l*m*(m2-l2), #dd\pi
-           -np.sqrt(3.0)/(2.0)*l*m*(1+n2)+0.5*l*m*(l2-m2)] #dd\delta
-  elif (wan_i == 'sp3d2_1' and wan_j == 'zx') or (wan_i=='zx' and wan_j=='sp3d2_2'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-           -np.sqrt(3.0)*l2*n, -n*(1.0-2.0*l2), #pd\sigma pd\pi #oddparity
-            1.0*(np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2))-(3.0/2.0)*n*l(l2-m2)), #dd\sigma
-            1.0*(np.sqrt(3.0)*l*n*(l2+m2-n2)-n*l*(1.0-2.0*(l2-m2))), #dd\pi
-            1.0*(-0.5*np.sqrt(3.0)*l*n*(l2+m2)+n*l*(1.0-0.5*(l2-m2)))] #dd\delta
-  elif (wan_i == 'zx' and wan_j=='sp3d2_1') or (wan_i == 'sp3d2_2' and wan_j=='zx'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-            np.sqrt(3.0)*l2*n, n*(1.0-2.0*l2), #pd\sigma pd\pi #oddparity
-            1.0*(np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2))-(3.0/2.0)*n*l(l2-m2)), #dd\sigma
-            1.0*(np.sqrt(3.0)*l*n*(l2+m2-n2)-n*l*(1.0-2.0*(l2-m2))), #dd\pi
-            1.0*(-0.5*np.sqrt(3.0)*l*n*(l2+m2)+n*l*(1.0-0.5*(l2-m2)))] #dd\delta
-  elif (wan_i == 'sp3d2_1' and wan_j == 'yz') or (wan_i =='yz' and wan_j== 'sp3d2_2'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-           -np.sqrt(3.0)*l*m*n, -2.0*l*m*n, #pd\sigma  pd\pi #oddparity
-           -np.sqrt(3.0)*m*n*(n2-0.5*(l2+m2)) + (3.0/2.0)*m*n*(l2-m2), #dd\sigma
-           -np.sqrt(3.0)*m*n*(l2+m2-n2) - m*n*(1.0+2.0*(l2-m2)), #dd\pi
-           -0.5*np.sqrt(3.0)*m*n*(l2+m2) + m*n*(1.0+0.5*(l2-m2))] #dd\delta
-  elif (wan_i == 'yz' and wan_j == 'sp3d2_1') or ( wan_j=='sp3d2_2' and wan_i=='yz'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-            np.sqrt(3.0)*l*m*n, 2.0*l*m*n, #pd\sigma  pd\pi #odd parity
-           -np.sqrt(3)*m*n*(n2-0.5*(l2+m2)) + (3.0/2.0)*m*n*(l2-m2), #dd\sigma
-           -np.sqrt(3)*m*n*(l2+m2-n2) - m*n*(1.0+2.0*(l2-m2)), #dd\pi
-           -0.5*np.sqrt(3)*m*n*(l2+m2) + m*n*(1.0+0.5*(l2-m2))] #dd\delta
-  elif (wan_i == 'sp3d2_3' and wan_j == 'xy') or (wan_i=='xy' and wan_j =='sp3d2_4'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*l*m, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-           -np.sqrt(3.0)*m2*l, -l*(1.0-2.0*m2), #pd\sigma  pd\pi #oddparity
-           -np.sqrt(3.0)*l*m*(n2-0.5*(l2+m2)) - (3.0/2.0)*l*m*(l2-m2), #dd\sigma
-            2.0*np.sqrt(3.0)*l*m*n2 - 2.0*l*m*(m2-l2), #dd\pi
-           -np.sqrt(3.0)/(2.0)*l*m*(1.0+n2) - 0.5*l*m*(l2-m2)] #dd\delta
-  elif (wan_i=='xy' and wan_j=='sp3d2_3') or (wan_i=='sp3d2_4' and wan_j=='xy'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*l*m, 
-            np.sqrt(3.0)*m2*l, l*(1.0-2.0*m2), #pd\sigma  pd\pi #oddparity
-           -np.sqrt(3)*l*m*(n2-0.5*(l2+m2)) - (3.0/2.0)*l*m*(l2-m2), #dd\sigma
-            2.0*np.sqrt(3)*l*m*n2 - 2.0*l*m*(m2-l2), #dd\pi
-           -np.sqrt(3.0)/(2.0)*l*m*(1.0+n2) - 0.5*l*m*(l2-m2)] #dd\delta
-  elif (wan_i == 'sp3d2_3' and wan_j == 'zx') or (wan_i=='zx' and wan_j=='sp3d2_4'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-            np.sqrt(3.0)*m*n*l, -2.0*m*n*l, #pd\sigma pd\pi #oddparity
-            1.0*(np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2)) + (3.0/2.0)*n*l(l2-m2)), #dd\sigma
-            1.0*(np.sqrt(3.0)*l*n*(l2+m2-n2) + n*l*(1.0-2.0*(l2-m2))), #dd\pi
-            1.0*(-0.5*np.sqrt(3.0)*l*n*(l2+m2) - n*l*(1.0-0.5*(l2-m2)))] #dd\delta
-  elif (wan_i == 'zx' and wan_j=='sp3d2_3') or (wan_i=='sp3d2_4' and wan_j=='zx'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-            -np.sqrt(3.0)*m*n*l, 2.0*m*n*l, #pd\sigma pd\pi #oddparity
-            1.0*(np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2)) + (3.0/2.0)*n*l(l2-m2)), #dd\sigma
-            1.0*(np.sqrt(3.0)*l*n*(l2+m2-n2) + n*l*(1.0-2.0*(l2-m2))), #dd\pi
-            1.0*(-0.5*np.sqrt(3.0)*l*n*(l2+m2) - n*l*(1.0-0.5*(l2-m2)))] #dd\delta
-  elif (wan_i == 'sp3d2_3' and wan_j == 'yz') or (wan_i =='sp3d2_4' and wan_j=='yz'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-           -np.sqrt(3.0)*m2*n, -n*(1.0-2.0*m2), #pd\sigma  pd\pi #oddparity
-           -np.sqrt(3.0)*m*n*(n2-0.5*(l2+m2)) - (3.0/2.0)*m*n*(l2-m2), #dd\sigma
-           -np.sqrt(3.0)*m*n*(l2+m2-n2) + m*n*(1.0+2.0*(l2-m2)), #dd\pi
-           -0.5*np.sqrt(3.0)*m*n*(l2+m2) - m*n*(1.0+0.5*(l2-m2))] #dd\delta
-  elif (wan_i == 'yz' and wan_j == 'sp3d2_3') or (wan_i =='sp3d2_4'and wan_i =='yz'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-            np.sqrt(3.0)*m2*n, n*(1.0-2.0*m2), #pd\sigma  pd\pi #oddparity
-           -np.sqrt(3.0)*m*n*(n2-0.5*(l2+m2)) - (3.0/2.0)*m*n*(l2-m2), #dd\sigma
-           -np.sqrt(3.0)*m*n*(l2+m2-n2) + m*n*(1.0+2.0*(l2-m2)), #dd\pi
-           -0.5*np.sqrt(3.0)*m*n*(l2+m2) - m*n*(1.0+0.5*(l2-m2))] #dd\delta
-  elif (wan_i == 'sp3d2_5' and wan_j == 'xy') or (wan_i =='xy' and wan_j=='sp3d2_6'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*l*m, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-           -np.sqrt(3.0)*l*m*n, 2.0*n*m*l, #pd\sigma  pd\pi #oddparity
-            np.sqrt(3.0)*l*m*(n2-0.5*(l2+m2)), #dd\sigma
-           -2.0*np.sqrt(3.0)*l*m*n2, #dd\pi
-            0.5*np.sqrt(3.0)*l*m*(1.0+n2)] #dd\delta
-  elif (wan_i == 'sp3d2_6' and wan_j == 'xy') or (wan_i =='xy' and wan_j=='sp3d2_5'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*l*m, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-            np.sqrt(3.0)*l*m*n, -2.0*n*m*l, #pd\sigma  pd\pi #oddparity
-            np.sqrt(3.0)*l*m*(n2-0.5*(l2+m2)), #dd\sigma
-           -2.0*np.sqrt(3.0)*l*m*n2, #dd\pi
-            0.5*np.sqrt(3.0)*l*m*(1.0+n2)] #dd\delta
-  elif (wan_i == 'sp3d2_5' and wan_j == 'zx') or (wan_i =='zx' and wan_j=='sp3d2_6'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-            np.sqrt(3.0)*n2*l, -l*(1.0-2.0*n2), #pd\sigma  pd\pi #oddparity
-            np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2)), #dd\sigma
-            np.sqrt(3.0)*l*n*(l2+m2-n2), #dd\pi
-            -0.5*np.sqrt(3)*l*n*(l2+m2)] #dd\delta
-  elif (wan_i == 'sp3d2_6' and wan_j == 'zx') or (wan_i =='zx' and wan_j=='sp3d2_5'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-            -np.sqrt(3.0)*n2*l, l*(1.0-2.0*n2), #pd\sigma  pd\pi #oddparity
-            np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2)), #dd\sigma
-            np.sqrt(3.0)*l*n*(l2+m2-n2), #dd\pi
-            -0.5*np.sqrt(3)*l*n*(l2+m2)] #dd\delta
-  elif (wan_i == 'sp3d2_5' and wan_j == 'yz') or (wan_i =='yz' and wan_j=='sp3d2_6'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-            -np.sqrt(3)*n2*m, -m*(1.0-2.0*n2), #pd\sigma  pd\pi #oddparity
-            np.sqrt(3.0)*m*n*(n2-0.5*(l2+m2)), #dd\sigma
-            np.sqrt(3.0)*m*n*(l2+m2-n2), #dd\pi
-            -0.5*np.sqrt(3.0)*m*n*(l2+m2)] #dd\delta
-  elif (wan_i == 'sp3d2_6' and wan_j == 'yz') or (wan_i =='yz' and wan_j=='sp3d2_5'):
-    return [0.0, 0.0, 0.0, 0.0, np.sqrt(3.0)*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
-            np.sqrt(3.0)*n2*m, m*(1.0-2.0*n2), #pd\sigma  pd\pi #oddparity
-            np.sqrt(3.0)*m*n*(n2-0.5*(l2+m2)), #dd\sigma
-            np.sqrt(3.0)*m*n*(l2+m2-n2), #dd\pi
-            -0.5*np.sqrt(3.0)*m*n*(l2+m2)] #dd\delta
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*l*m, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+           -nsqrt2*np.sqrt(3.0)*l2*m, -nsqrt2*m*(1.0-2.0*l2), #pd\sigma  pd\pi #oddparity
+           -nsqrt12*np.sqrt(3)*l*m*(n2-0.5*(l2+m2)) + 0.5*(3.0/2.0)*l*m*(l2-m2), #dd\sigma
+            nsqrt12*2.0*np.sqrt(3)*l*m*n2 + 0.5*2.0*l*m*(m2-l2), #dd\pi
+           -nsqrt12*np.sqrt(3.0)/(2.0)*l*m*(1.0+n2) + 0.5*0.5*l*m*(l2-m2)] #dd\delta
+  elif (wan_i=='xy' and wan_j=='sp3d2-1') or (wan_i=='sp3d2-2' and wan_j=='xy'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*l*m, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma, 
+            nsqrt2*np.sqrt(3.0)*l2*m, nsqrt2*m*(1.0-2.0*l2), #pd\sigma  pd\pi #oddparity
+           -nsqrt12*np.sqrt(3)*l*m*(n2-0.5*(l2+m2))+0.5*(3.0/2.0)*l*m*(l2-m2), #dd\sigma
+            nsqrt12*2.0*np.sqrt(3)*l*m*n2 + 0.5*2.0*l*m*(m2-l2), #dd\pi
+           -nsqrt12*np.sqrt(3.0)/(2.0)*l*m*(1.0+n2) + 0.5*0.5*l*m*(l2-m2)] #dd\delta
+  elif (wan_i == 'sp3d2-1' and wan_j == 'zx') or (wan_i=='zx' and wan_j=='sp3d2-2'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+            -1.0*nsqrt2*np.sqrt(3.0)*l2*n, -1.0*nsqrt2*n*(1.0-2.0*l2), #pd\sigma pd\pi #oddparity
+            (nsqrt12*np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2)) - 0.5*(3.0/2.0)*n*l*(l2-m2)), #dd\sigma
+            (nsqrt12*np.sqrt(3.0)*l*n*(l2+m2-n2) - 0.5*n*l*(1.0-2.0*(l2-m2))), #dd\pi
+            (-nsqrt12*0.5*np.sqrt(3.0)*l*n*(l2+m2) + 0.5*n*l*(1.0-0.5*(l2-m2)))] #dd\delta
+  elif (wan_i == 'zx' and wan_j=='sp3d2-1') or (wan_i == 'sp3d2-2' and wan_j=='zx'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+            1.0*nsqrt2*np.sqrt(3.0)*l2*n, 1.0*nsqrt2*n*(1.0-2.0*l2), #pd\sigma pd\pi #oddparity
+            (nsqrt12*np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2)) - 0.5*(3.0/2.0)*n*l*(l2-m2)), #dd\sigma
+            (nsqrt12*np.sqrt(3.0)*l*n*(l2+m2-n2) - 0.5*n*l*(1.0-2.0*(l2-m2))), #dd\pi
+            (-nsqrt12*0.5*np.sqrt(3.0)*l*n*(l2+m2) + 0.5*n*l*(1.0-0.5*(l2-m2)))] #dd\delta
+  elif (wan_i == 'sp3d2-1' and wan_j == 'yz') or (wan_i =='yz' and wan_j== 'sp3d2-2'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+           -nsqrt2*np.sqrt(3.0)*l*m*n, -nsqrt2*2.0*l*m*n, #pd\sigma  pd\pi #oddparity
+           -nsqrt12*np.sqrt(3.0)*m*n*(n2-0.5*(l2+m2)) + 0.5*(3.0/2.0)*m*n*(l2-m2), #dd\sigma
+           -nsqrt12*np.sqrt(3.0)*m*n*(l2+m2-n2) - 0.5*m*n*(1.0+2.0*(l2-m2)), #dd\pi
+           -nsqrt12*0.5*np.sqrt(3.0)*m*n*(l2+m2) + 0.5*m*n*(1.0+0.5*(l2-m2))] #dd\delta
+  elif (wan_i == 'yz' and wan_j == 'sp3d2-1') or ( wan_i=='sp3d2-2' and wan_j=='yz'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+            nsqrt2*np.sqrt(3.0)*l*m*n, nsqrt2*2.0*l*m*n, #pd\sigma  pd\pi #odd parity
+           -nsqrt12*np.sqrt(3)*m*n*(n2-0.5*(l2+m2)) + 0.5*(3.0/2.0)*m*n*(l2-m2), #dd\sigma
+           -nsqrt12*np.sqrt(3)*m*n*(l2+m2-n2) - 0.5*m*n*(1.0+2.0*(l2-m2)), #dd\pi
+           -nsqrt12*0.5*np.sqrt(3)*m*n*(l2+m2) + 0.5*m*n*(1.0+0.5*(l2-m2))] #dd\delta
+  elif (wan_i == 'sp3d2-3' and wan_j == 'xy') or (wan_i=='xy' and wan_j =='sp3d2-4'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*l*m, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+            nsqrt2*np.sqrt(3.0)*m2*l, nsqrt2*l*(1.0-2.0*m2), #pd\sigma  pd\pi #oddparity
+           -nsqrt12*np.sqrt(3.0)*l*m*(n2-0.5*(l2+m2)) - 0.5*0.5*(3.0/2.0)*l*m*(l2-m2), #dd\sigma
+            nsqrt12*2.0*np.sqrt(3.0)*l*m*n2 - 0.5*2.0*l*m*(m2-l2), #dd\pi
+           -nsqrt12*np.sqrt(3.0)/(2.0)*l*m*(1.0+n2) - 0.5*0.5*l*m*(l2-m2)] #dd\delta
+  elif (wan_i=='xy' and wan_j=='sp3d2-3') or (wan_i=='sp3d2-4' and wan_j=='xy'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*l*m, 
+           -nsqrt2*np.sqrt(3.0)*m2*l, -nsqrt2*l*(1.0-2.0*m2), #pd\sigma  pd\pi #oddparity
+           -nsqrt12*np.sqrt(3.0)*l*m*(n2-0.5*(l2+m2)) - 0.5*0.5*(3.0/2.0)*l*m*(l2-m2), #dd\sigma
+            nsqrt12*2.0*np.sqrt(3.0)*l*m*n2 - 0.5*2.0*l*m*(m2-l2), #dd\pi
+           -nsqrt12*np.sqrt(3.0)/(2.0)*l*m*(1.0+n2) - 0.5*0.5*l*m*(l2-m2)] #dd\delta
+  elif (wan_i == 'sp3d2-3' and wan_j == 'zx') or (wan_i=='zx' and wan_j=='sp3d2-4'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+            nsqrt2*np.sqrt(3.0)*m*n*l, -1.0*nsqrt2*2.0*m*n*l, #pd\sigma pd\pi #oddparity
+            (nsqrt12*np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2)) + 0.5*(3.0/2.0)*n*l*(l2-m2)), #dd\sigma
+            (nsqrt12*np.sqrt(3.0)*l*n*(l2+m2-n2) + 0.5*n*l*(1.0-2.0*(l2-m2))), #dd\pi
+            (-nsqrt12*0.5*np.sqrt(3.0)*l*n*(l2+m2) - 0.5*n*l*(1.0-0.5*(l2-m2)))] #dd\delta
+  elif (wan_i == 'zx' and wan_j=='sp3d2-3') or (wan_i=='sp3d2-4' and wan_j=='zx'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+            nsqrt2*np.sqrt(3.0)*m*n*l, 1.0*nsqrt2*2.0*m*n*l, #pd\sigma pd\pi #oddparity
+            (nsqrt12*np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2)) + 0.5*(3.0/2.0)*n*l*(l2-m2)), #dd\sigma
+            (nsqrt12*np.sqrt(3.0)*l*n*(l2+m2-n2) + 0.5*n*l*(1.0-2.0*(l2-m2))), #dd\pi
+            (-nsqrt12*0.5*np.sqrt(3.0)*l*n*(l2+m2) - 0.5*n*l*(1.0-0.5*(l2-m2)))] #dd\delta
+  elif (wan_i == 'sp3d2-3' and wan_j == 'yz') or (wan_i =='yz' and wan_j=='sp3d2-4'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+           -nsqrt2*np.sqrt(3.0)*m2*n, -nsqrt2*n*(1.0-2.0*m2), #pd\sigma  pd\pi #oddparity
+           -nsqrt12*np.sqrt(3.0)*m*n*(n2-0.5*(l2+m2)) - 0.5*(3.0/2.0)*m*n*(l2-m2), #dd\sigma
+           -nsqrt12*np.sqrt(3.0)*m*n*(l2+m2-n2) + 0.5*m*n*(1.0+2.0*(l2-m2)), #dd\pi
+           -nsqrt12*0.5*np.sqrt(3.0)*m*n*(l2+m2) - 0.5*m*n*(1.0+0.5*(l2-m2))] #dd\delta
+  elif (wan_i == 'yz' and wan_j == 'sp3d2-3') or (wan_i =='sp3d2-4' and wan_j=='yz'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+            nsqrt2*np.sqrt(3.0)*m2*n, nsqrt2*n*(1.0-2.0*m2), #pd\sigma  pd\pi #oddparity
+           -nsqrt12*np.sqrt(3.0)*m*n*(n2-0.5*(l2+m2)) - 0.5*(3.0/2.0)*m*n*(l2-m2), #dd\sigma
+           -nsqrt12*np.sqrt(3.0)*m*n*(l2+m2-n2) + 0.5*m*n*(1.0+2.0*(l2-m2)), #dd\pi
+           -nsqrt12*0.5*np.sqrt(3.0)*m*n*(l2+m2) - 0.5*m*n*(1.0+0.5*(l2-m2))] #dd\delta
+  elif (wan_i == 'sp3d2-5' and wan_j == 'xy') or (wan_i =='xy' and wan_j=='sp3d2-6'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*l*m, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+           -nsqrt2*np.sqrt(3.0)*l*m*n, nsqrt2*2.0*n*m*l, #pd\sigma  pd\pi #oddparity
+            nsqrt3*np.sqrt(3.0)*l*m*(n2-0.5*(l2+m2)), #dd\sigma
+           -nsqrt3*2.0*np.sqrt(3.0)*l*m*n2, #dd\pi
+            nsqrt3*0.5*np.sqrt(3.0)*l*m*(1.0+n2)] #dd\delta
+  elif (wan_i =='xy' and wan_j=='sp3d2-5') or (wan_i == 'sp3d2-6' and wan_j == 'xy'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*l*m, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+            nsqrt2*np.sqrt(3.0)*l*m*n, -nsqrt2*2.0*n*m*l, #pd\sigma  pd\pi #oddparity
+            nsqrt3*np.sqrt(3.0)*l*m*(n2-0.5*(l2+m2)), #dd\sigma
+           -nsqrt3*2.0*np.sqrt(3.0)*l*m*n2, #dd\pi
+            nsqrt3*0.5*np.sqrt(3.0)*l*m*(1.0+n2)] #dd\delta
+  elif (wan_i == 'sp3d2-5' and wan_j == 'zx') or (wan_i =='zx' and wan_j=='sp3d2-6'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+           -1.0*nsqrt2*np.sqrt(3.0)*n2*l, nsqrt2*l*(1.0-2.0*n2), #pd\sigma  pd\pi #oddparity
+            nsqrt3*np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2)), #dd\sigma
+            nsqrt3*np.sqrt(3.0)*l*n*(l2+m2-n2), #dd\pi
+           -nsqrt3*0.5*np.sqrt(3)*l*n*(l2+m2)] #dd\delta
+  elif (wan_i == 'sp3d2-6' and wan_j == 'zx') or (wan_i =='zx' and wan_j=='sp3d2-5'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*n*l, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+            nsqrt2*np.sqrt(3.0)*n2*l, -1.0*nsqrt2*l*(1.0-2.0*n2), #pd\sigma  pd\pi #oddparity
+            nsqrt3*np.sqrt(3.0)*l*n*(n2-0.5*(l2+m2)), #dd\sigma
+            nsqrt3*np.sqrt(3.0)*l*n*(l2+m2-n2), #dd\pi
+           -nsqrt3*0.5*np.sqrt(3)*l*n*(l2+m2)] #dd\delta
+  elif (wan_i == 'sp3d2-5' and wan_j == 'yz') or (wan_i =='yz' and wan_j=='sp3d2-6'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+           -nsqrt2*np.sqrt(3)*n2*m, -nsqrt2*m*(1.0-2.0*n2), #pd\sigma  pd\pi #oddparity
+            nsqrt3*np.sqrt(3.0)*m*n*(n2-0.5*(l2+m2)), #dd\sigma
+            nsqrt3*np.sqrt(3.0)*m*n*(l2+m2-n2), #dd\pi
+           -nsqrt3*0.5*np.sqrt(3.0)*m*n*(l2+m2)] #dd\delta
+  elif (wan_i == 'sp3d2-6' and wan_j == 'yz') or (wan_i =='yz' and wan_j=='sp3d2-5'):
+    return [0.0, 0.0, 0.0, 0.0, nsqrt2*m*n, #ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma,
+            nsqrt2*np.sqrt(3.0)*n2*m, nsqrt2*m*(1.0-2.0*n2), #pd\sigma  pd\pi #oddparity
+            nsqrt3*np.sqrt(3.0)*m*n*(n2-0.5*(l2+m2)), #dd\sigma
+            nsqrt3*np.sqrt(3.0)*m*n*(l2+m2-n2), #dd\pi
+           -nsqrt3*0.5*np.sqrt(3.0)*m*n*(l2+m2)] #dd\delta
   else:
-    sys.exit('Invalid Combo')
+    sys.exit('invalid combo')
 
-def load_matels(l,m,n,subspace_matrix):
+def load_matels(l,m,n,subspace_matrix, verbose=True):
   """
   Takes direction cosines, and 3x3 subspace matrix.
   """
   matel_dict = {}
   dxy_subspace = [('xy', 'xy'), ('yz', 'yz'), ('zx', 'zx'), ('xy', 'zx'), ('xy', 'yz'),
                   ('zx', 'xy'), ('zx', 'yz'), ('yz', 'xy'), ('yz', 'zx')]
+
+  sp3d2_dxy = [('sp3d2-1', 'xy'), ('xy', 'sp3d2-1'), 
+               ('sp3d2-2', 'xy'), ('xy', 'sp3d2-2'), 
+               ('sp3d2-1', 'zx'), ('zx', 'sp3d2-1'),
+               ('sp3d2-2', 'zx'), ('zx', 'sp3d2-2'),
+               ('sp3d2-1', 'yz'), ('yz', 'sp3d2-1'),
+               ('sp3d2-2', 'yz'), ('yz', 'sp3d2-2'),
+               ('sp3d2-3', 'xy'), ('xy', 'sp3d2-3'), 
+               ('sp3d2-4', 'xy'), ('xy', 'sp3d2-4'), 
+               ('sp3d2-3', 'zx'), ('zx', 'sp3d2-3'),
+               ('sp3d2-4', 'zx'), ('zx', 'sp3d2-4'),
+               ('sp3d2-3', 'yz'), ('yz', 'sp3d2-3'),
+               ('sp3d2-4', 'yz'), ('yz', 'sp3d2-4'),
+               ('sp3d2-5', 'xy'), ('xy', 'sp3d2-5'), 
+               ('sp3d2-5', 'zx'), ('zx', 'sp3d2-5'),
+               ('sp3d2-5', 'yz'), ('yz', 'sp3d2-5'),
+               ('sp3d2-6', 'xy'), ('xy', 'sp3d2-6'), 
+               ('sp3d2-6', 'zx'), ('zx', 'sp3d2-6'),
+               ('sp3d2-6', 'yz'), ('yz', 'sp3d2-6')]
+
+# matel_dict[('sp3d2-1', 'xy')], matel_dict[('xy', 'sp3d2-1')] = (0,6), (6,0) #
+# matel_dict[('sp3d2-5', 'xy')], matel_dict[('xy', 'sp3d2-5')] = (4,6), (6,4) #
+# matel_dict[('sp3d2-2', 'xy')], matel_dict[('xy', 'sp3d2-2')] = (1,6), (6,1) #
+# matel_dict[('sp3d2-6', 'xy')], matel_dict[('xy', 'sp3d2-6')] = (5,6), (6,5) #
+# matel_dict[('sp3d2-5', 'yz')], matel_dict[('yz', 'sp3d2-5')] = (4,8), (8,4) #
+# matel_dict[('sp3d2-6', 'yz')], matel_dict[('yz', 'sp3d2-6')] = (5,8), (8,5) #
+# matel_dict[('sp3d2-1', 'zx')], matel_dict[('zx', 'sp3d2-1')] = (0,7), (7,0) #
+# matel_dict[('sp3d2-2', 'zx')], matel_dict[('zx', 'sp3d2-2')] = (1,7), (7,1) #
+# matel_dict[('sp3d2-3', 'yz')], matel_dict[('yz', 'sp3d2-3')] = (2,8), (8,2) #
+# matel_dict[('sp3d2-1', 'yz')], matel_dict[('yz', 'sp3d2-1')] = (0,8), (8,0) #
+# matel_dict[('sp3d2-4', 'yz')], matel_dict[('yz', 'sp3d2-4')] = (3,8), (8,3) #
+# matel_dict[('sp3d2-2', 'yz')], matel_dict[('yz', 'sp3d2-2')] = (1,8), (8,1) #
+# matel_dict[('sp3d2-3', 'xy')], matel_dict[('xy', 'sp3d2-3')] = (2,6), (6,2) #
+# matel_dict[('sp3d2-4', 'xy')], matel_dict[('xy', 'sp3d2-4')] = (3,6), (6,3) #
+# matel_dict[('sp3d2-5', 'zx')], matel_dict[('zx', 'sp3d2-5')] = (4,7), (7,4) #
+# matel_dict[('sp3d2-3', 'zx')], matel_dict[('zx', 'sp3d2-3')] = (2,7), (7,2) #
+# matel_dict[('sp3d2-6', 'zx')], matel_dict[('zx', 'sp3d2-6')] = (5,7), (7,5) #
+# matel_dict[('sp3d2-4', 'zx')], matel_dict[('zx', 'sp3d2-4')] = (3,7), (7,3) #
+# This should line up the second nearest neighbours i.e. pdpi bonds should be right?
   #diagonal
   matel_dict[('xy', 'xy')] = (6, 6)
   matel_dict[('zx', 'zx')] = (7, 7)
@@ -293,51 +347,42 @@ def load_matels(l,m,n,subspace_matrix):
   matel_dict[('yz', 'xy')] = (8, 6)
   matel_dict[('yz', 'zx')] = (8, 7)
 
-  sp3d2_dxy = [('sp3d2-1', 'xy'), ('xy', 'sp3d2-1'), 
-               ('sp3d2-1', 'zx'), ('zx', 'sp3d2-1'),
-               ('sp3d2-1', 'yz'), ('yz', 'sp3d2-1'),
-               ('sp3d2-2', 'xy'), ('xy', 'sp3d2-2'), 
-               ('sp3d2-2', 'zx'), ('zx', 'sp3d2-2'),
-               ('sp3d2-2', 'yz'), ('yz', 'sp3d2-2'),
-               ('sp3d2-3', 'xy'), ('xy', 'sp3d2-3'), 
-               ('sp3d2-3', 'zx'), ('zx', 'sp3d2-3'),
-               ('sp3d2-3', 'yz'), ('yz', 'sp3d2-3'),
-               ('sp3d2-4', 'xy'), ('xy', 'sp3d2-4'), 
-               ('sp3d2-4', 'zx'), ('zx', 'sp3d2-4'),
-               ('sp3d2-4', 'yz'), ('yz', 'sp3d2-4'),
-               ('sp3d2-5', 'xy'), ('xy', 'sp3d2-5'), 
-               ('sp3d2-5', 'zx'), ('zx', 'sp3d2-5'),
-               ('sp3d2-5', 'yz'), ('yz', 'sp3d2-5'),
-               ('sp3d2-6', 'xy'), ('xy', 'sp3d2-6'), 
-               ('sp3d2-6', 'zx'), ('zx', 'sp3d2-6'),
-               ('sp3d2-6', 'yz'), ('yz', 'sp3d2-6')]
+  matel_dict[('sp3d2-3', 'xy')], matel_dict[('xy', 'sp3d2-3')] = (0,6), (6,0)
+  matel_dict[('sp3d2-4', 'xy')], matel_dict[('xy', 'sp3d2-4')] = (1,6), (6,1)
+  matel_dict[('sp3d2-5', 'xy')], matel_dict[('xy', 'sp3d2-5')] = (2,6), (6,2)
+  matel_dict[('sp3d2-6', 'xy')], matel_dict[('xy', 'sp3d2-6')] = (3,6), (6,3)
+  matel_dict[('sp3d2-1', 'xy')], matel_dict[('xy', 'sp3d2-1')] = (4,6), (6,4)
+  matel_dict[('sp3d2-2', 'xy')], matel_dict[('xy', 'sp3d2-2')] = (5,6), (6,5)
 
-  matel_dict[('sp3d2-1', 'xy')], matel_dict[('xy', 'sp3d2-1')] = (0,6), (6,0)
-  matel_dict[('sp3d2-1', 'zx')], matel_dict[('zx', 'sp3d2-1')] = (0,7), (7,0)
-  matel_dict[('sp3d2-1', 'yz')], matel_dict[('yz', 'sp3d2-1')] = (0,8), (8,0)
-  matel_dict[('sp3d2-2', 'xy')], matel_dict[('xy', 'sp3d2-2')] = (1,6), (6,1)
-  matel_dict[('sp3d2-2', 'zx')], matel_dict[('zx', 'sp3d2-2')] = (1,7), (7,1)
-  matel_dict[('sp3d2-2', 'yz')], matel_dict[('yz', 'sp3d2-2')] = (1,8), (8,1)
-  matel_dict[('sp3d2-3', 'xy')], matel_dict[('xy', 'sp3d2-3')] = (2,6), (6,2)
-  matel_dict[('sp3d2-3', 'zx')], matel_dict[('zx', 'sp3d2-3')] = (2,7), (7,2)
-  matel_dict[('sp3d2-3', 'yz')], matel_dict[('yz', 'sp3d2-3')] = (2,8), (8,2)
-  matel_dict[('sp3d2-4', 'xy')], matel_dict[('xy', 'sp3d2-4')] = (3,6), (6,3)
-  matel_dict[('sp3d2-4', 'zx')], matel_dict[('zx', 'sp3d2-4')] = (3,7), (7,3)
-  matel_dict[('sp3d2-4', 'yz')], matel_dict[('yz', 'sp3d2-4')] = (3,8), (8,3)
-  matel_dict[('sp3d2-5', 'xy')], matel_dict[('xy', 'sp3d2-5')] = (4,6), (6,4)
-  matel_dict[('sp3d2-5', 'zx')], matel_dict[('zx', 'sp3d2-5')] = (4,7), (7,4)
-  matel_dict[('sp3d2-5', 'yz')], matel_dict[('yz', 'sp3d2-5')] = (4,8), (8,4)
-  matel_dict[('sp3d2-6', 'xy')], matel_dict[('xy', 'sp3d2-6')] = (5,6), (6,5)
-  matel_dict[('sp3d2-6', 'zx')], matel_dict[('zx', 'sp3d2-6')] = (5,7), (7,5)
-  matel_dict[('sp3d2-6', 'yz')], matel_dict[('yz', 'sp3d2-6')] = (5,8), (8,5)
+  matel_dict[('sp3d2-3', 'zx')], matel_dict[('zx', 'sp3d2-3')] = (0,7), (7,0)
+  matel_dict[('sp3d2-4', 'zx')], matel_dict[('zx', 'sp3d2-4')] = (1,7), (7,1)
+  matel_dict[('sp3d2-5', 'zx')], matel_dict[('zx', 'sp3d2-5')] = (2,7), (7,2)
+  matel_dict[('sp3d2-6', 'zx')], matel_dict[('zx', 'sp3d2-6')] = (3,7), (7,3)
+  matel_dict[('sp3d2-1', 'zx')], matel_dict[('zx', 'sp3d2-1')] = (4,7), (7,4)
+  matel_dict[('sp3d2-2', 'zx')], matel_dict[('zx', 'sp3d2-2')] = (5,7), (7,5)
+
+  matel_dict[('sp3d2-3', 'yz')], matel_dict[('yz', 'sp3d2-3')] = (0,8), (8,0)
+  matel_dict[('sp3d2-4', 'yz')], matel_dict[('yz', 'sp3d2-4')] = (1,8), (8,1)
+  matel_dict[('sp3d2-5', 'yz')], matel_dict[('yz', 'sp3d2-5')] = (2,8), (8,2)
+  matel_dict[('sp3d2-6', 'yz')], matel_dict[('yz', 'sp3d2-6')] = (3,8), (8,3)
+  matel_dict[('sp3d2-1', 'yz')], matel_dict[('yz', 'sp3d2-1')] = (4,8), (8,4)
+  matel_dict[('sp3d2-2', 'yz')], matel_dict[('yz', 'sp3d2-2')] = (5,8), (8,5)
+
 
   features = []
   matels = []
   #for pair in dxy_subspace:
+
+  print 'Direction Cosines', l,m,n
   for pair in sp3d2_dxy + dxy_subspace:
+      #print pair[0], pair[1]
       i,j = matel_dict[pair]
+#### xy;xz;yz may change the permutation order on the E x,xy integrals
       feature = matel_coeffs(l,m,n, pair[0], pair[1])
       matel = subspace_matrix[i][j]
+      if verbose:
+        print pair
+        print feature, np.round(matel,4)
       features.append(feature)
       matels.append(matel)
   return features, matels
