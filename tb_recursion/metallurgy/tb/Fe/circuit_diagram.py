@@ -182,8 +182,8 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   pdpi_z_zx = -nsqrt2*l*(1.0-2.0*n2)
 
 
-  ddsig_xy_z2 = nsqrt12*np.sqrt(3)*l*m*(n2-0.5*(l2+m2))
-  ddpi_xy_z2 = nsqrt12*2.0*np.sqrt(3)*l*m*n2 
+  ddsig_xy_z2 = nsqrt12*np.sqrt(3.0)*l*m*(n2-0.5*(l2+m2))
+  ddpi_xy_z2 = nsqrt12*2.0*np.sqrt(3.0)*l*m*n2 
   dddelta_xy_z2 = -nsqrt12*np.sqrt(3.0)/(2.0)*l*m*(1.0+n2) 
 
   ddsig_xy_x2my2 = 0.5*(3.0/2.0)*l*m*(l2-m2)
@@ -236,6 +236,8 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   pppi_x_z = -l*n
   pppi_y_x = -m*l
   pppi_z_x = -n*m
+
+#need the pds and the ds
 
   #Diagonal interactions in {xy, xz,yz} subspace
   if (wan_i == 'xy' and wan_j == 'xy'):
@@ -344,9 +346,9 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   elif (wan_i == 'sp3d2-5' and wan_j == 'xy') or (wan_i =='xy' and wan_j=='sp3d2-6'):
     return [0.0, 0.0, 0.0, 0.0, sdsig_s_xy, 
            -pdsig_z_xy, -pdpi_z_xy, 
-           2.0*ddsig_xy_z2,    
-           2.0*ddpi_xy_z2,    
-           2.0*dddelta_xy_z2]
+            2.0*ddsig_xy_z2,    
+            2.0*ddpi_xy_z2,    
+            2.0*dddelta_xy_z2]
   elif (wan_i =='xy' and wan_j=='sp3d2-5') or (wan_i == 'sp3d2-6' and wan_j == 'xy'):
     return [0.0, 0.0, 0.0, 0.0, sdsig_s_xy, 
             pdsig_z_xy, pdpi_z_xy, 
@@ -354,6 +356,7 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             2.0*ddpi_xy_z2,    
             2.0*dddelta_xy_z2]
   elif (wan_i == 'sp3d2-5' and wan_j == 'zx') or (wan_i =='zx' and wan_j=='sp3d2-6'):
+    print 'test',np.sqrt(12)*ddsig_zx_z2
     return [0.0, 0.0, 0.0, 0.0, sdsig_s_zx, 
            -pdsig_z_zx, -pdpi_z_zx, 
             2.0*ddsig_zx_z2, 
@@ -380,7 +383,7 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   else:
     sys.exit('invalid combo')
 
-  if (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-1') or (wan_j == 'sp3d2-1' and wan_i == 'sp3d2-1'):
+  if (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-1') 
     return [1.0, sssig_s_x, _ , _, sdsig_s_z2 + sdsig_s_x2my2, #ssig, spsig, sdsig
     ]
 
@@ -410,6 +413,13 @@ def load_matels(l,m,n,subspace_matrix, verbose=True):
                ('sp3d2-6', 'xy'), ('xy', 'sp3d2-6'), 
                ('sp3d2-6', 'zx'), ('zx', 'sp3d2-6'),
                ('sp3d2-6', 'yz'), ('yz', 'sp3d2-6')]
+
+  sp3d2_diag = [('sp3d2-1', 'sp3d2-1'), 
+                ('sp3d2-2', 'sp3d2-2'), 
+                ('sp3d2-3', 'sp3d2-3'), 
+                ('sp3d2-4', 'sp3d2-4'), 
+                ('sp3d2-5', 'sp3d2-5'), 
+                ('sp3d2-6', 'sp3d2-6')]
 
 # This should line up the second nearest neighbours i.e. pdpi bonds should be right?
   #diagonal
