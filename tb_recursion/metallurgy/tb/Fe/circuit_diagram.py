@@ -267,33 +267,45 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   norm_s_dz2 = nsqrt12*nsqrt6
   norm_s_dx2y2 = nsqrt2*nsqrt6
   norm_p_p = (1.0/2.0)
-  norm_spxyd2_dz_dz = (1.0/12.0)
+  norm_spxyd2_dz2_dz2 = (1.0/12.0)
   norm_spxyd2_dx2y2_dx2y2 = (1.0/4.0)
-  norm_spxyd2_dz_dx2y2 = nsqrt12*(1.0/2.0)
-#This normalization applied in the conditional part
+  norm_spxyd2_dz2_dx2y2 = nsqrt12
+#This normalization applied in the conditional part below.
   norm_spzd2_dz_dz = (1.0/3.0)
-#Combined terms
-  spxyd2_spxyd2_ddsigma = norm_spxyd2_dz_dz*(n2-0.5*(l2+m2)) + \
-                          norm_spxyd2_dx2y2_dx2y2*(0.75*(l2-m2)**2) + \
-                          norm_spxyd2_dz_dx2y2*(0.5*np.sqrt(3)*(l2-m2)*(n2-0.5*(l2+m2)))
+#Combined terms (1,2), (2,1)
+  spxd2_spxd2_ddsigma = norm_spxyd2_dz2_dz2*(n2-(1.0/2.0)*(l2+m2)**2) + \
+                       -1.0*norm_spxyd2_dz2_dx2y2*(np.sqrt(3.0)/2.0)*(l2-m2)*(n2-0.5*(l2+m2)) + \
+                        norm_spxyd2_dx2y2_dx2y2*((3.0/4.0)*(l2-m2)**2) 
 
-  spxyd2_spxyd2_ddpi = norm_spxyd2_dz_dz*(3.0*n2*(l2+m2)) + \
-                       norm_spxyd2_dx2y2_dx2y2*(l2+m2-(l2-m2)**2) + \
-                       norm_spxyd2_dz_dx2y2*(np.sqrt(3.0)*n2*(m2-l2))
+  spxd2_spxd2_ddpi = norm_spxyd2_dz_dz*(3.0*n2*(l2+m2)) + \
+                -1.0*norm_spxyd2_dz_dx2y2*(np.sqrt(3.0)*n2*(m2-l2)) + \
+                     norm_spxyd2_dx2y2_dx2y2*(l2+m2-(l2-m2)**2) 
 
-  spxyd2_spxyd2_dddelta = norm_spxyd2_dz_dz*(0.75*(l2+m2)) + \
-                          norm_spxyd2_dx2y2_dx2y2*(n2+0.25*(l2-m2)**2) + \
-                          norm_spxyd2_dz_dx2y2*(0.25*np.sqrt(3.0)*(1+n2)*(l2-m2))
+  spxd2_spxd2_dddelta = norm_spxyd2_dz_dz*(3.0/4.0)*(l2+m2) + \
+                   -1.0*norm_spxyd2_dz_dx2y2*((1.0/4.0)*np.sqrt(3.0)*(1.0+n2)*(l2-m2)) +\
+                        norm_spxyd2_dx2y2_dx2y2*(n2+(1.0/4.0)**(l2-m2)**2)  
+#Combined terms (3,4), (4,3) 
+  spyd2_spyd2_ddsigma = norm_spxyd2_dz2_dz2*(n2-(1.0/2.0)*(l2+m2)**2) + \
+                        norm_spxyd2_dz2_dx2y2*(np.sqrt(3.0)/2.0)*(l2-m2)*(n2-0.5*(l2+m2)) + \
+                        norm_spxyd2_dx2y2_dx2y2*((3.0/4.0)*(l2-m2)**2) 
 
+  spyd2_spyd2_ddpi = norm_spxyd2_dz_dz*(3.0*n2*(l2+m2)) + \
+                     norm_spxyd2_dz_dx2y2*(np.sqrt(3.0)*n2*(m2-l2)) + \
+                     norm_spxyd2_dx2y2_dx2y2*(l2+m2-(l2-m2)**2)
 
-  spxyd2_spxyd2_ddsigma_od = norm_spxyd2_dz_dz*(n2-0.5*(l2+m2)) - \
-                             norm_spxyd2_dz_dx2y2*(0.5*np.sqrt(3)*(l2-m2)*(n2-0.5*(l2+m2)))
+  spyd2_spyd2_dddelta = norm_spxyd2_dz_dz*(3.0/4.0)*(l2+m2) + \
+                        norm_spxyd2_dz_dx2y2*((1.0/4.0)*np.sqrt(3.0)*(1.0+n2)*(l2-m2)) +\
+                        norm_spxyd2_dx2y2_dx2y2*(n2+(1.0/4.0)**(l2-m2)**2)
+
+#Combined terms (1,3), (3,1) and (1,4) (4,1) no (dz2|dx2y2) cross terms.
+  spxyd2_spxyd2_ddsigma_od = norm_spxyd2_dz_dz*(n2-0.5*(l2+m2)**2) -\
+                             norm_spxyd2_dx2y2_dx2y2*((3.0/4.0)*(l2-m2)**2)
 
   spxyd2_spxyd2_ddpi_od = norm_spxyd2_dz_dz*(3.0*n2*(l2+m2)) - \
-                          norm_spxyd2_dx2y2_dx2y2*(l2+m2-(l2-m2)**2) 
+                             norm_spxyd2_dx2y2_dx2y2*(l2+m2-(l2-m2)**2)
 
-  spxyd2_spxyd2_dddelta_od = norm_spxyd2_dz_dz*(0.75*(l2+m2)) - \
-                             norm_spxyd2_dx2y2_dx2y2*(n2+0.25*(l2-m2)**2)
+  spxyd2_spxyd2_dddelta_od = norm_spxyd2_dz_dz*((3.0/4.0)*(l2+m2)) - \
+                             norm_spxyd2_dx2y2_dx2y2*(n2+(1.0/4.0)*(l2-m2)**2)
 
   ddsig_z2_z2 = n2-0.5*(l2+m2) 
   ddpi_z2_z2 = 3.0*n2*(l2+m2)  
@@ -304,19 +316,34 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   norm_pxy_dx2y2 = nsqrt2*(0.5)
 
   px_d2_pdsig = norm_pxy_dz2*(l*(n2-0.5*(l2+m2))) + norm_pxy_dx2y2*(0.5*np.sqrt(3.0)*l*(l2-m2))
-  px_d2_pdpi  = -norm_pxy_dz2*(np.sqrt(3.0)*l*n2) + norm_pxy_dx2y2*(l*(1.0-l2+m2))
+  px_d2_pdpi = -norm_pxy_dz2*(np.sqrt(3.0)*l*n2) + norm_pxy_dx2y2*(l*(1.0-l2+m2))
   py_d2_pdsig = norm_pxy_dz2*(m*(n2-0.5*(l2+m2))) + norm_pxy_dx2y2*(0.5*np.sqrt(3.0)*m*(l2-m2))
-  py_d2_pdpi  = -norm_pxy_dz2*(np.sqrt(3.0)*m*n2) - norm_pxy_dx2y2*(m*(1.0+l2-m2))
-  pz_d2_pdsig = norm_pz_dz2*(m*(n2-0.5*(l2+m2)))
+  py_d2_pdpi = -norm_pxy_dz2*(np.sqrt(3.0)*m*n2) - norm_pxy_dx2y2*(m*(1.0+l2-m2))
+  pz_d2_pdsig = norm_pz_dz2*(n*(n2-0.5*(l2+m2)))
   pz_d2_pdpi = -norm_pz_dz2*(np.sqrt(3.0)*m*n2)
 
-#occurs for off diagonal elements
-  px_d2_pdsig_od = norm_pxy_dz2*(l*(n2-0.5*(l2+m2))) - norm_pxy_dx2y2*(0.5*np.sqrt(3.0)*l*(l2-m2))
-  px_d2_pdpi_od  = -norm_pxy_dz2*(np.sqrt(3.0)*l*n2) - norm_pxy_dx2y2*(l*(1.0-l2+m2))
-  py_d2_pdsig_od = -norm_pxy_dz2*(m*(n2-0.5*(l2+m2))) + norm_pxy_dx2y2*(0.5*np.sqrt(3.0)*m*(l2-m2))
-  py_d2_pdpi_od  = norm_pxy_dz2*(np.sqrt(3.0)*m*n2) - norm_pxy_dx2y2*(m*(1.0+l2-m2))
+#p/d terms occurring for off diagonal elements (1,3), (1,4) py have odd terms.
+  px_d2_pdsig_od = norm_pxy_dz2*(l*(n2-0.5*(l2+m2))) + norm_pxy_dx2y2*((1.0/2.0)*np.sqrt(3.0)*l*(l2-m2))
+  px_d2_pdpi_od = -norm_pxy_dz2*(np.sqrt(3.0)*l*n2) + norm_pxy_dx2y2*(l*(1.0-l2+m2))
 
-#need the pds and the ds
+  py_d2_pdsig_od = -norm_pxy_dz2*(m*(n2-0.5*(l2+m2))) + norm_pxy_dx2y2*(0.5*np.sqrt(3.0)*m*(l2-m2))
+  py_d2_pdpi_od = norm_pxy_dz2*(np.sqrt(3.0)*m*n2) - norm_pxy_dx2y2*(m*(1.0+l2-m2))
+
+#(1,5) and (1,6) pd terms.
+#"cool" normalization factor:
+  cool_norm = (np.sqrt(2.0)*(2.0-np.sqrt(12.0)))/(4.0*np.sqrt(12.0))
+
+  pxz_dz2_pdsig = (-1.0)/(np.sqrt(2)*np.sqrt(3))*(l*(n2-0.5*(l2+m2))) + cool_norm*(n*(n2-0.5*l2+m2))
+  pxz_dz2_pdpi = -0.5*l*n2 + cool_norm*np.sqrt(3) 
+  
+  sp3d2xz_d2_ddsig = -1.0/(nsqrt3*nsqrt12)*(n2-0.5*(l2+m2)**2) + \
+                     (1.0/(2.0*nsqrt(3.0)))*((3.0/4.0)*(l2-m2)**2)
+
+  sp3d2xz_d2_ddpi = -1.0/(nsqrt3*nsqrt12)*(3.0*n2*(l2+m2)) + \
+                   (1.0/(2.0*nsqrt(3.0)))*(l2+m2-(l2-m2)**2)
+
+  sp3d2xz_d2_dddelta = -1.0/(nsqrt3*nsqrt12)*((3.0/4.0)*(l2+m2)) + \
+                     (1.0/(2.0*nsqrt(3.0)))*(n2+(1.0/4.0)*(l2-m2)**2)
 
   #Diagonal interactions in {xy, xz,yz} subspace
   if (wan_i == 'xy' and wan_j == 'xy'):
@@ -494,49 +521,111 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             norm_spzd2_dz_dz*ddsig_z2_z2,
             norm_spzd2_dz_dz*ddpi_z2_z2,
             norm_spzd2_dz_dz*dddelta_z2_z2]
-  elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-2') or (wan_i=='sp3d2-2' and wan_j =='sp3d2-1'):
+  elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-2'):
     return [1.0*norm_s_s, 2.0*norm_s_p*spsig_s_x, -norm_p_p*ppsig_x_x, -norm_p_p*pppi_x_x, -2.0*(norm_s_dz2*sdsig_s_z2 + norm_s_dx2y2*sdsig_s_x2my2), 
             2.0*(px_d2_pdsig), 2.0*(px_d2_pdpi),
-            spxyd2_spxyd2_ddsigma,
-            spxyd2_spxyd2_ddpi,
-            spxyd2_spxyd2_dddelta]
-  elif (wan_i == 'sp3d2-3' and wan_j == 'sp3d2-4') or (wan_i=='sp3d2-4' and wan_j =='sp3d2-3'):
+            spxd2_spxd2_ddsigma,
+            spxd2_spxd2_ddpi,
+            spxd2_spxd2_dddelta]
+  elif (wan_i=='sp3d2-2' and wan_j =='sp3d2-1'):
+    return [1.0*norm_s_s, -2.0*norm_s_p*spsig_s_x, -norm_p_p*ppsig_x_x, -norm_p_p*pppi_x_x, -2.0*(norm_s_dz2*sdsig_s_z2 + norm_s_dx2y2*sdsig_s_x2my2), 
+            -2.0*(px_d2_pdsig), -2.0*(px_d2_pdpi),
+            spxd2_spxd2_ddsigma,
+            spxd2_spxd2_ddpi,
+            spxd2_spxd2_dddelta]
+  elif (wan_i == 'sp3d2-3' and wan_j == 'sp3d2-4'): 
     return [1.0*norm_s_s, 2.0*norm_s_p*spsig_s_y, -norm_p_p*ppsig_y_y, -norm_p_p*pppi_y_y, -2.0*(norm_s_dz2*sdsig_s_z2 + norm_s_dx2y2*sdsig_s_x2my2), 
             2.0*(py_d2_pdsig), 2.0*(py_d2_pdpi),
-            spxyd2_spxyd2_ddsigma,
-            spxyd2_spxyd2_ddpi,
-            spxyd2_spxyd2_dddelta]
-  elif (wan_i == 'sp3d2-5' and wan_j == 'sp3d2-6') or (wan_i=='sp3d2-6' and wan_j =='sp3d2-5'):
+            spyd2_spyd2_ddsigma,
+            spyd2_spyd2_ddpi,
+            spyd2_spyd2_dddelta]
+  elif (wan_i=='sp3d2-4' and wan_j =='sp3d2-3'):
+    return [1.0*norm_s_s, -2.0*norm_s_p*spsig_s_y, -norm_p_p*ppsig_y_y, -norm_p_p*pppi_y_y, -2.0*(norm_s_dz2*sdsig_s_z2 + norm_s_dx2y2*sdsig_s_x2my2), 
+            -2.0*(py_d2_pdsig), -2.0*(py_d2_pdpi),
+            spyd2_spyd2_ddsigma,
+            spyd2_spyd2_ddpi,
+            spyd2_spyd2_dddelta]
+  elif (wan_i == 'sp3d2-5' and wan_j == 'sp3d2-6'):
     return [1.0*norm_s_s, 2.0*norm_s_p*spsig_s_z, -norm_p_p*ppsig_z_z, -norm_p_p*pppi_z_z, -2.0*(nsqrt2*nsqrt3**sdsig_s_z2), 
             2.0*(pz_d2_pdsig), 2.0*(pz_d2_pdpi),
             norm_spzd2_dz_dz*ddsig_z2_z2,
             norm_spzd2_dz_dz*ddpi_z2_z2,
             norm_spzd2_dz_dz*dddelta_z2_z2]
-  elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-3') or (wan_i=='sp3d2-4' and wan_j =='sp3d2-1'):
-    return [1.0*norm_s_s, -norm_s_p*(spsig_s_y-spsig_s_x), norm_p_p*ppsig_x_y, norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
+  elif (wan_i=='sp3d2-6' and wan_j =='sp3d2-5'):
+    return [norm_s_s, -2.0*norm_s_p*spsig_s_z, -norm_p_p*ppsig_z_z, -norm_p_p*pppi_z_z, -2.0*(nsqrt2*nsqrt3**sdsig_s_z2), 
+           -2.0*(pz_d2_pdsig), -2.0*(pz_d2_pdpi),
+            norm_spzd2_dz_dz*ddsig_z2_z2,
+            norm_spzd2_dz_dz*ddpi_z2_z2,
+            norm_spzd2_dz_dz*dddelta_z2_z2]
+  elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-3'):
+    return [norm_s_s, norm_s_p*(spsig_s_x-spsig_s_y), norm_p_p*ppsig_x_y, norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
             px_d2_pdsig_od + py_d2_pdsig_od,
-            px_d2_pdpi_od + py_d2_pdpi_od,  
-            spxyd2_spxyd2_ddsigma_od, 
-            spxyd2_spxyd2_ddpi_od,        
+            px_d2_pdpi_od + py_d2_pdpi_od,
+            spxyd2_spxyd2_ddsigma_od,
+            spxyd2_spxyd2_ddpi_od,
             spxyd2_spxyd2_dddelta_od]
-  elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-4') or (wan_i=='sp3d2-3' and wan_j =='sp3d2-1'):
-    return [1.0*norm_s_s, norm_s_p*(spsig_s_y-spsig_s_x), norm_p_p*ppsig_x_y, norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
-           -1.0*(px_d2_pdsig_od + py_d2_pdsig_od),
-           -1.0*(px_d2_pdpi_od + py_d2_pdpi_od),  
-            spxyd2_spxyd2_ddsigma_od, 
-            spxyd2_spxyd2_ddpi_od,        
+  elif (wan_i == 'sp3d2-3' and wan_j == 'sp3d2-1'):
+    return [norm_s_s, -norm_s_p*(spsig_s_x-spsig_s_y), norm_p_p*ppsig_x_y, norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
+            -1.0*(px_d2_pdsig_od + py_d2_pdsig_od),
+            -1.0*(px_d2_pdpi_od + py_d2_pdpi_od),
+            spxyd2_spxyd2_ddsigma_od,
+            spxyd2_spxyd2_ddpi_od,
             spxyd2_spxyd2_dddelta_od]
+  elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-4'):
+    return [norm_s_s, norm_s_p*(spsig_s_x +  spsig_s_y), -norm_p_p*ppsig_x_y, -norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
+            px_d2_pdsig_od - py_d2_pdsig_od,
+            px_d2_pdpi_od - py_d2_pdpi_od,
+            spxyd2_spxyd2_ddsigma_od,
+            spxyd2_spxyd2_ddpi_od,
+            spxyd2_spxyd2_dddelta_od]
+  elif (wan_i == 'sp3d2-4' and wan_j == 'sp3d2-1'):
+    return [norm_s_s, -norm_s_p*(spsig_s_x +  spsig_s_y), -norm_p_p*ppsig_x_y, -norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
+            1.0*(px_d2_pdsig_od - py_d2_pdsig_od),
+            1.0*(px_d2_pdpi_od - py_d2_pdpi_od),
+            spxyd2_spxyd2_ddsigma_od,
+            spxyd2_spxyd2_ddpi_od,
+            spxyd2_spxyd2_dddelta_od]
+  elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-5'):
+    return [norm_s_s, norm_s_p*(sspsig_s_x + sspsig_s_z), norm_p_p*ppsig_x_z, norm_p_p*pppi_x_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + nsqrt2*nsqrt6*(sdsig_s_x2my2),
+            pxz_dz2_pdsig,
+            pxz_dz2_pdpi,
+            sp3d2xz_d2_ddsig,
+            sp3d2xz_d2_ddpi, 
+            sp3d2xz_d2_dddelta
+            ]
+  elif (wan_i == 'sp3d2-5' and wan_j == 'sp3d2-1'):
+    return [norm_s_s, -norm_s_p*(sspsig_s_x + sspsig_s_z), norm_p_p*ppsig_x_z, norm_p_p*pppi_x_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + nsqrt2*nsqrt6*(sdsig_s_x2my2),
+            -pxz_dz2_pdsig,
+            -pxz_dz2_pdpi,
+            sp3d2xz_d2_ddsig,
+            sp3d2xz_d2_ddpi, 
+            sp3d2xz_d2_dddelta]
+  elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-6'):
+    return [norm_s_s, norm_s_p*(sspsig_s_x - sspsig_s_z), -norm_p_p*ppsig_x_z, -norm_p_p*pppi_x_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + nsqrt2*nsqrt6*(sdsig_s_x2my2),
+            pxz_dz2_pdsig,
+            pxz_dz2_pdpi,
+            sp3d2xz_d2_ddsig,
+            sp3d2xz_d2_ddpi, 
+            sp3d2xz_d2_dddelta
+            ]
+
   else:
     sys.exit('invalid combo')
+
+
+
 #  norm_p_p = (1.0/2.0)
 #  norm_spzd2_dz_dz = (1.0/3.0)
 #  norm_spxyd2_dz_dz = (1.0/12.0)
 #  norm_spxyd2_dz_dx2y2 = nsqrt12*nsqrt3
-#  [ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma, #
-#   pd\sigma, pd\pi,                               #
-#   dd\sigma,                                      #
-#   dd\pi,                                         #
-#   dd\delta]                                      #
+# [ss\sigma, sp\sigma, pp\sigma, pp\pi, sd\sigma, #
+#  pd\sigma, pd\pi,                               #
+#  dd\sigma,                                      #
+#  dd\pi,                                         #
+#  dd\delta]                                      #
 
 def load_matels(l,m,n,subspace_matrix, verbose=True):
   """
