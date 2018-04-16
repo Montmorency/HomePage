@@ -1,11 +1,9 @@
 import sys
-
 import pickle
 import numpy  as np
 import tensorflow as tf
 
 from ase import units
-
 from pandas import DataFrame
 
 def direction_cosine(vec):
@@ -297,7 +295,7 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
                         norm_spxyd2_dz_dx2y2*((1.0/4.0)*np.sqrt(3.0)*(1.0+n2)*(l2-m2)) +\
                         norm_spxyd2_dx2y2_dx2y2*(n2+(1.0/4.0)**(l2-m2)**2)
 
-#Combined terms (1,3), (3,1) and (1,4) (4,1) no (dz2|dx2y2) cross terms.
+#Combined terms (1,3), (3,1) and (1,4) (4,1). No (dz2|dx2y2) cross terms appear.
   spxyd2_spxyd2_ddsigma_od = norm_spxyd2_dz_dz*(n2-0.5*(l2+m2)**2) -\
                              norm_spxyd2_dx2y2_dx2y2*((3.0/4.0)*(l2-m2)**2)
 
@@ -322,7 +320,7 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   pz_d2_pdsig = norm_pz_dz2*(n*(n2-0.5*(l2+m2)))
   pz_d2_pdpi = -norm_pz_dz2*(np.sqrt(3.0)*m*n2)
 
-#p/d terms occurring for off diagonal elements (1,3), (1,4) py have odd terms.
+#p/d terms occurring for off diagonal elements (1,3), (1,4) py has odd terms.
   px_d2_pdsig_od = norm_pxy_dz2*(l*(n2-0.5*(l2+m2))) + norm_pxy_dx2y2*((1.0/2.0)*np.sqrt(3.0)*l*(l2-m2))
   px_d2_pdpi_od = -norm_pxy_dz2*(np.sqrt(3.0)*l*n2) + norm_pxy_dx2y2*(l*(1.0-l2+m2))
 
@@ -330,20 +328,54 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   py_d2_pdpi_od = norm_pxy_dz2*(np.sqrt(3.0)*m*n2) - norm_pxy_dx2y2*(m*(1.0+l2-m2))
 
 #(1,5) and (1,6) pd terms.
-#"cool" normalization factor:
   cool_norm = (np.sqrt(2.0)*(2.0-np.sqrt(12.0)))/(4.0*np.sqrt(12.0))
-
-  pxz_dz2_pdsig = (-1.0)/(np.sqrt(2)*np.sqrt(3))*(l*(n2-0.5*(l2+m2))) + cool_norm*(n*(n2-0.5*l2+m2))
-  pxz_dz2_pdpi = -0.5*l*n2 + cool_norm*np.sqrt(3) 
-  
+#(1,5) and (5,1)* -pz term.
+  sp3d2px_sp3d2pz_pdsig_15 = -nsqrt3*nsqrt2*(l*(n2-(1.0/2.0)*(l2+m2))) + nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
+                             -(1.0/2.0)*nsqrt((1.0/2.0)*np.sqrt(3.0)*(l2-m2))
+  sp3d2px_sp3d2pz_pdpi_15 = -nsqrt2*l*n2 - np.sqrt(3)*nsqrt2*nsqrt12*(n*l2+m2) + (1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2)
+#(1,6) and (6,1)* +pz term i.e. (px|dz2) + (pz|dz2) + (pz|dx2my2).
+  sp3d2px_sp3d2pz_pdsig_16 = -nsqrt3*nsqrt2*(l*(n2-(1.0/2.0)*(l2+m2))) -nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
+                          +(1.0/2.0)*nsqrt((1.0/2.0)*np.sqrt(3.0)*(l2-m2))
+  sp3d2px_sp3d2pz_pdpi_16 = -nsqrt2*l*n2 + np.sqrt(3)*nsqrt2*nsqrt12*(n*l2+m2) - (1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2)
+#(2,5) and (5,2)* -pz term.
+  sp3d2px_sp3d2pz_pdsig_25 = nsqrt3*nsqrt2*(l*(n2-(1.0/2.0)*(l2+m2))) + nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
+                          -(1.0/2.0)*nsqrt((1.0/2.0)*np.sqrt(3.0)*(l2-m2))
+  sp3d2px_sp3d2pz_pdpi_25 = nsqrt2*l*n2 - np.sqrt(3)*nsqrt2*nsqrt12*(n*l2+m2) + (1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2)
+#(2,6) and (6,2)* pz term.
+  sp3d2px_sp3d2pz_pdsig_26 = nsqrt3*nsqrt2*(l*(n2-(1.0/2.0)*(l2+m2))) -nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
+                          +(1.0/2.0)*nsqrt((1.0/2.0)*np.sqrt(3.0)*(l2-m2))
+  sp3d2px_sp3d2pz_pdpi_26 =  nsqrt2*l*n2 + np.sqrt(3)*nsqrt2*nsqrt12*(n*l2+m2) - (1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2)
+#(1,5),(1,6),(5,1),(6,1),(2,6),(6,2),(2,5),(5,2) ddsig, ddpi, dddelta terms:
   sp3d2xz_d2_ddsig = -1.0/(nsqrt3*nsqrt12)*(n2-0.5*(l2+m2)**2) + \
                      (1.0/(2.0*nsqrt(3.0)))*((3.0/4.0)*(l2-m2)**2)
-
   sp3d2xz_d2_ddpi = -1.0/(nsqrt3*nsqrt12)*(3.0*n2*(l2+m2)) + \
-                   (1.0/(2.0*nsqrt(3.0)))*(l2+m2-(l2-m2)**2)
-
+                    (1.0/(2.0*nsqrt(3.0)))*(l2+m2-(l2-m2)**2)
   sp3d2xz_d2_dddelta = -1.0/(nsqrt3*nsqrt12)*((3.0/4.0)*(l2+m2)) + \
-                     (1.0/(2.0*nsqrt(3.0)))*(n2+(1.0/4.0)*(l2-m2)**2)
+                       (1.0/(2.0*nsqrt(3.0)))*(n2+(1.0/4.0)*(l2-m2)**2)
+#(3,5) and (5,3)* -pz term. -(py|dz2) - (pz|dz2) - (pz|dx2my2)
+  sp3d2py_sp3d2pz_pdsig_35 = -nsqrt3*nsqrt2*(m*(n2-(1.0/2.0)*(l2+m2))) - nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
+                             -(1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2))
+  sp3d2py_sp3d2pz_pdpi_35 = nsqrt2*m*n2 - np.sqrt(3.0)*nsqrt2*nsqrt12*(n*(l2+m2)) + (1.0/2.0)*nsqrt2*(n*(l2-m2))
+#(3,6) and (6,3)* -pz term. -(py|dz2) - (pz|dz2) - (pz|dx2my2)
+  sp3d2py_sp3d2pz_pdsig_36 = -nsqrt3*nsqrt2*(m*(n2-(1.0/2.0)*(l2+m2))) + nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
+                             +(1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2))
+  sp3d2py_sp3d2pz_pdpi_36 = nsqrt2*m*n2 + np.sqrt(3.0)*nsqrt2*nsqrt12*(n*(l2+m2)) - (1.0/2.0)*nsqrt2*(n*(l2-m2))
+#(4,5) and (5,4)* -pz term.  (py|dz2) - (pz|dz2) - (pz|dx2my2)
+  sp3d2py_sp3d2pz_pdsig_45 = nsqrt3*nsqrt2*(m*(n2-(1.0/2.0)*(l2+m2))) - nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
+                             -(1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2))
+  sp3d2py_sp3d2pz_pdpi_45 = -nsqrt2*m*n2 - np.sqrt(3.0)*nsqrt2*nsqrt12*(n*(l2+m2)) + (1.0/2.0)*nsqrt2*(n*(l2-m2))
+#(4,6) and (6,4)* -pz term. -(py|dz2) - (pz|dz2) - (pz|dx2my2)
+  sp3d2py_sp3d2pz_pdsig_46 = -nsqrt3*nsqrt2*(m*(n2-(1.0/2.0)*(l2+m2))) + nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
+                             +(1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2))
+  sp3d2py_sp3d2pz_pdpi_46 = nsqrt2*m*n2 + np.sqrt(3.0)*nsqrt2*nsqrt12*(n*(l2+m2)) - (1.0/2.0)*nsqrt2*(n*(l2-m2))
+
+#(3,5),(3,6),(5,3),(6,3),(4,6),(6,4),(4,5),(5,4) ddsig, ddpi, dddelta terms:
+  sp3d2py_sp3d2pz_ddsig   = -1.0/(nsqrt3*nsqrt12)*(n2-0.5*(l2+m2)**2) - \
+                            (1.0/(2.0*nsqrt(3.0)))*((3.0/4.0)*(l2-m2)**2)
+  sp3d2py_sp3d2pz_ddpi    = -1.0/(nsqrt3*nsqrt12)*(3.0*n2*(l2+m2)) - \
+                            (1.0/(2.0*nsqrt(3.0)))*(l2+m2-(l2-m2)**2)
+  sp3d2py_sp3d2pz_dddelta = -1.0/(nsqrt3*nsqrt12)*((3.0/4.0)*(l2+m2)) - \
+                            (1.0/(2.0*nsqrt(3.0)))*(n2+(1.0/4.0)*(l2-m2)**2)
 
   #Diagonal interactions in {xy, xz,yz} subspace
   if (wan_i == 'xy' and wan_j == 'xy'):
@@ -571,6 +603,20 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             spxyd2_spxyd2_ddsigma_od,
             spxyd2_spxyd2_ddpi_od,
             spxyd2_spxyd2_dddelta_od]
+  elif (wan_i == 'sp3d2-2' and wan_j == 'sp3d2-3'):
+    return [norm_s_s, norm_s_p*(-1.0*spsig_s_x-spsig_s_y), -1.0*norm_p_p*ppsig_x_y, -1.0*norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
+            -px_d2_pdsig_od + py_d2_pdsig_od,
+            -px_d2_pdpi_od + py_d2_pdpi_od,
+            spxyd2_spxyd2_ddsigma_od,
+            spxyd2_spxyd2_ddpi_od,
+            spxyd2_spxyd2_dddelta_od]
+  elif (wan_i == 'sp3d2-3' and wan_j == 'sp3d2-2'):
+    return [norm_s_s, -1.0*norm_s_p*(-1.0*spsig_s_x-spsig_s_y), -1.0*norm_p_p*ppsig_x_y, -1.0*norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
+            px_d2_pdsig_od - py_d2_pdsig_od,
+            px_d2_pdpi_od - py_d2_pdpi_od,
+            spxyd2_spxyd2_ddsigma_od,
+            spxyd2_spxyd2_ddpi_od,
+            spxyd2_spxyd2_dddelta_od]
   elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-4'):
     return [norm_s_s, norm_s_p*(spsig_s_x +  spsig_s_y), -norm_p_p*ppsig_x_y, -norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
             px_d2_pdsig_od - py_d2_pdsig_od,
@@ -585,33 +631,148 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             spxyd2_spxyd2_ddsigma_od,
             spxyd2_spxyd2_ddpi_od,
             spxyd2_spxyd2_dddelta_od]
+  elif (wan_i == 'sp3d2-2' and wan_j == 'sp3d2-4'):
+    return [norm_s_s, norm_s_p*(-spsig_s_x +  spsig_s_y), norm_p_p*ppsig_x_y, norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
+            -px_d2_pdsig_od - py_d2_pdsig_od,
+            -px_d2_pdpi_od - py_d2_pdpi_od,
+            spxyd2_spxyd2_ddsigma_od,
+            spxyd2_spxyd2_ddpi_od,
+            spxyd2_spxyd2_dddelta_od]
+  elif (wan_i == 'sp3d2-4' and wan_j == 'sp3d2-2'):
+    return [norm_s_s, -1.0*norm_s_p*(-spsig_s_x +  spsig_s_y), norm_p_p*ppsig_x_y, norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
+            px_d2_pdsig_od + py_d2_pdsig_od,
+            px_d2_pdpi_od + py_d2_pdpi_od,
+            spxyd2_spxyd2_ddsigma_od,
+            spxyd2_spxyd2_ddpi_od,
+            spxyd2_spxyd2_dddelta_od]
   elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-5'):
     return [norm_s_s, norm_s_p*(sspsig_s_x + sspsig_s_z), norm_p_p*ppsig_x_z, norm_p_p*pppi_x_z, 
-           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + nsqrt2*nsqrt6*(sdsig_s_x2my2),
-            pxz_dz2_pdsig,
-            pxz_dz2_pdpi,
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            sp3d2px_sp3d2pz_pdsig_15,
+            sp3d2px_sp3d2pz_pdpi_15,
             sp3d2xz_d2_ddsig,
             sp3d2xz_d2_ddpi, 
-            sp3d2xz_d2_dddelta
-            ]
+            sp3d2xz_d2_dddelta]
   elif (wan_i == 'sp3d2-5' and wan_j == 'sp3d2-1'):
     return [norm_s_s, -norm_s_p*(sspsig_s_x + sspsig_s_z), norm_p_p*ppsig_x_z, norm_p_p*pppi_x_z, 
-           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + nsqrt2*nsqrt6*(sdsig_s_x2my2),
-            -pxz_dz2_pdsig,
-            -pxz_dz2_pdpi,
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+           -sp3d2px_sp3d2pz_pdsig_15,
+           -sp3d2px_sp3d2pz_pdpi_15,
+            sp3d2xz_d2_ddsig,
+            sp3d2xz_d2_ddpi, 
+            sp3d2xz_d2_dddelta]
+  elif (wan_i == 'sp3d2-2' and wan_j == 'sp3d2-5'):
+    return [norm_s_s, norm_s_p*(-1.0*sspsig_s_x + sspsig_s_z), -norm_p_p*ppsig_x_z, -norm_p_p*pppi_x_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            sp3d2px_sp3d2pz_pdsig_25,
+            sp3d2px_sp3d2pz_pdpi_25,
+            sp3d2xz_d2_ddsig,
+            sp3d2xz_d2_ddpi, 
+            sp3d2xz_d2_dddelta]
+  elif (wan_i == 'sp3d2-5' and wan_j == 'sp3d2-2'):
+    return [norm_s_s, -norm_s_p*(-1.0*sspsig_s_x + sspsig_s_z), -norm_p_p*ppsig_x_z, -norm_p_p*pppi_x_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            -sp3d2px_sp3d2pz_pdsig_25,
+            -sp3d2px_sp3d2pz_pdpi_25,
             sp3d2xz_d2_ddsig,
             sp3d2xz_d2_ddpi, 
             sp3d2xz_d2_dddelta]
   elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-6'):
     return [norm_s_s, norm_s_p*(sspsig_s_x - sspsig_s_z), -norm_p_p*ppsig_x_z, -norm_p_p*pppi_x_z, 
-           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + nsqrt2*nsqrt6*(sdsig_s_x2my2),
-            pxz_dz2_pdsig,
-            pxz_dz2_pdpi,
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            sp3d2px_sp3d2pz_pdsig_16,
+            sp3d2px_sp3d2pz_pdpi_16,
             sp3d2xz_d2_ddsig,
             sp3d2xz_d2_ddpi, 
-            sp3d2xz_d2_dddelta
-            ]
-
+            sp3d2xz_d2_dddelta]
+  elif (wan_i == 'sp3d2-6' and wan_j == 'sp3d2-1'):
+    return [norm_s_s, norm_s_p*(sspsig_s_x - sspsig_s_z), -norm_p_p*ppsig_x_z, -norm_p_p*pppi_x_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+           -sp3d2px_sp3d2pz_pdsig_16,
+           -sp3d2px_sp3d2pz_pdpi_16,
+            sp3d2xz_d2_ddsig,
+            sp3d2xz_d2_ddpi, 
+            sp3d2xz_d2_dddelta]
+  elif (wan_i == 'sp3d2-2' and wan_j == 'sp3d2-6'):
+    return [norm_s_s, norm_s_p*(-1.0*sspsig_s_x - sspsig_s_z), norm_p_p*ppsig_x_z, norm_p_p*pppi_x_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            sp3d2px_sp3d2pz_pdsig_26,
+            sp3d2px_sp3d2pz_pdpi_26,
+            sp3d2xz_d2_ddsig,
+            sp3d2xz_d2_ddpi, 
+            sp3d2xz_d2_dddelta]
+  elif (wan_i == 'sp3d2-6' and wan_j == 'sp3d2-2'):
+    return [norm_s_s, -norm_s_p*(-1.0*sspsig_s_x-sspsig_s_z), norm_p_p*ppsig_x_z, norm_p_p*pppi_x_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+           -sp3d2px_sp3d2pz_pdsig_26,
+           -sp3d2px_sp3d2pz_pdpi_26,
+            sp3d2xz_d2_ddsig,
+            sp3d2xz_d2_ddpi, 
+            sp3d2xz_d2_dddelta]
+  elif (wan_i == 'sp3d2-3' and wan_j == 'sp3d2-5'):
+    return [norm_s_s, norm_s_p*(sspsig_s_y-sspsig_s_z), norm_p_p*ppsig_y_z, norm_p_p*pppi_y_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            sp3d2py_sp3d2pz_pdsig_35,
+            sp3d2py_sp3d2pz_pdpi_35,
+            sp3d2py_sp3d2pz_ddsig,   
+            sp3d2py_sp3d2pz_ddpi,    
+            sp3d2py_sp3d2pz_dddelta]
+  elif (wan_i == 'sp3d2-5' and wan_j == 'sp3d2-3'):
+    return [norm_s_s, -norm_s_p*(sspsig_s_y-sspsig_s_z), norm_p_p*ppsig_y_z, norm_p_p*pppi_y_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            -sp3d2py_sp3d2pz_pdsig_35,
+            -sp3d2py_sp3d2pz_pdpi_35,
+            sp3d2py_sp3d2pz_ddsig,   
+            sp3d2py_sp3d2pz_ddpi,    
+            sp3d2py_sp3d2pz_dddelta]
+  elif (wan_i == 'sp3d2-4' and wan_j == 'sp3d2-5'):
+    return [norm_s_s, norm_s_p*(-1.0*sspsig_s_y-sspsig_s_z), -norm_p_p*ppsig_y_z, -norm_p_p*pppi_y_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            sp3d2py_sp3d2pz_pdsig_45,
+            sp3d2py_sp3d2pz_pdpi_45,
+            sp3d2py_sp3d2pz_ddsig,   
+            sp3d2py_sp3d2pz_ddpi,    
+            sp3d2py_sp3d2pz_dddelta]
+  elif (wan_i == 'sp3d2-5' and wan_j == 'sp3d2-4'):
+    return [norm_s_s, -norm_s_p*(-1.0*sspsig_s_y-sspsig_s_z), -norm_p_p*ppsig_y_z, -norm_p_p*pppi_y_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            -sp3d2py_sp3d2pz_pdsig_45,
+            -sp3d2py_sp3d2pz_pdpi_45,
+            sp3d2py_sp3d2pz_ddsig,   
+            sp3d2py_sp3d2pz_ddpi,    
+            sp3d2py_sp3d2pz_dddelta]
+  elif (wan_i == 'sp3d2-3' and wan_j == 'sp3d2-6'):
+    return [norm_s_s, norm_s_p*(sspsig_s_y+sspsig_s_z), -norm_p_p*ppsig_y_z, -norm_p_p*pppi_y_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            sp3d2py_sp3d2pz_pdsig_36,
+            sp3d2py_sp3d2pz_pdpi_36,
+            sp3d2py_sp3d2pz_ddsig,   
+            sp3d2py_sp3d2pz_ddpi,    
+            sp3d2py_sp3d2pz_dddelta]
+  elif (wan_i == 'sp3d2-6' and wan_j == 'sp3d2-3'):
+    return [norm_s_s, -norm_s_p*(sspsig_s_y+sspsig_s_z), -norm_p_p*ppsig_y_z, -norm_p_p*pppi_y_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            -sp3d2py_sp3d2pz_pdsig_36,
+            -sp3d2py_sp3d2pz_pdpi_36,
+            sp3d2py_sp3d2pz_ddsig,   
+            sp3d2py_sp3d2pz_ddpi,    
+            sp3d2py_sp3d2pz_dddelta]
+  elif (wan_i == 'sp3d2-4' and wan_j == 'sp3d2-6'):
+    return [norm_s_s, norm_s_p*(-sspsig_s_y+sspsig_s_z), norm_p_p*ppsig_y_z, norm_p_p*pppi_y_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            sp3d2py_sp3d2pz_pdsig_46,
+            sp3d2py_sp3d2pz_pdpi_46,
+            sp3d2py_sp3d2pz_ddsig,   
+            sp3d2py_sp3d2pz_ddpi,    
+            sp3d2py_sp3d2pz_dddelta]
+  elif (wan_i == 'sp3d2-6' and wan_j == 'sp3d2-4'):
+    return [norm_s_s, -norm_s_p*(-sspsig_s_y+sspsig_s_z), norm_p_p*ppsig_y_z, norm_p_p*pppi_y_z, 
+           (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6(sdsig_s_x2my2),
+            -sp3d2py_sp3d2pz_pdsig_46,
+            -sp3d2py_sp3d2pz_pdpi_46,
+            sp3d2py_sp3d2pz_ddsig,   
+            sp3d2py_sp3d2pz_ddpi,    
+            sp3d2py_sp3d2pz_dddelta]
   else:
     sys.exit('invalid combo')
 
