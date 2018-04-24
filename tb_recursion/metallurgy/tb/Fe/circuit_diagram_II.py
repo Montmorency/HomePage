@@ -6,7 +6,8 @@ import tensorflow as tf
 from ase import units
 from pandas import DataFrame
 
-from matel_mod import full_matrix, matel_dict
+from matel_mod import full_matrix, matel_dict, sp3d2_sp3d2_xy,\
+                      dxy_subspace, sp3d2_sp3d2_od, sp3d2_sp3d2_diag
 
 def direction_cosine(vec):
   """
@@ -142,10 +143,11 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   nsqrt6 = 1.0/np.sqrt(6.0)
   nsqrt12 = 1.0/np.sqrt(12.0)
 
+############################################################################
 #trying to address sign problem when I permute the SK table
 #similar to the xy,zx matrix elements derived in the table for dxy subspace
 #still don't fully understand this. (swapping n/l?)
-###########################################
+############################################################################
 
   pdsig_x_yz = nsqrt2*np.sqrt(3.0)*l*m*n
   pdsig_y_zx = nsqrt2*np.sqrt(3.0)*m*n*l
@@ -156,24 +158,24 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   pdpi_z_xy = -nsqrt2*2.0*n*l*m
 
   pdsig_x_zx = nsqrt2*np.sqrt(3.0)*l2*n
-###########################################
   pdsig_y_xy = nsqrt2*np.sqrt(3.0)*m2*l
   pdsig_z_yz = nsqrt2*np.sqrt(3)*n2*m
-###########################################
 
   pdpi_x_zx = nsqrt2*n*(1.0-2.0*l2)
-###########################################
   pdpi_y_xy = nsqrt2*l*(1.0-2.0*m2)
   pdpi_z_yz = nsqrt2*m*(1.0-2.0*n2)
-###########################################
 
   pdsig_x_xy = nsqrt2*np.sqrt(3.0)*l2*m
   pdsig_y_yz = nsqrt2*np.sqrt(3.0)*m2*n 
-  pdsig_z_zx = nsqrt2*np.sqrt(3.0)*n2*l
+###########################################
+  pdsig_z_zx = -nsqrt2*np.sqrt(3.0)*n2*l
+###########################################
 
   pdpi_x_xy = nsqrt2*m*(1.0-2.0*l2)
   pdpi_y_yz = nsqrt2*n*(1.0-2.0*m2)
-  pdpi_z_zx = nsqrt2*l*(1.0-2.0*n2)
+###########################################
+  pdpi_z_zx = -nsqrt2*l*(1.0-2.0*n2)
+###########################################
 
   ddsig_xy_z2 = nsqrt12*np.sqrt(3.0)*l*m*(n2-0.5*(l2+m2))
   ddpi_xy_z2 = -nsqrt12*2.0*np.sqrt(3.0)*l*m*n2 
@@ -260,7 +262,7 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
 
   spxd2_spxd2_dddelta = norm_spxyd2_dz2_dz2*(3.0/4.0)*(l2+m2)**2 + \
                         -2.0*norm_spxyd2_dz2_dx2y2*((1.0/4.0)*np.sqrt(3.0)*(1.0+n2)*(l2-m2)) +\
-                        norm_spxyd2_dx2y2_dx2y2*(n2+(1.0/4.0)**(l2-m2)**2)  
+                        norm_spxyd2_dx2y2_dx2y2*(n2+(1.0/4.0)*(l2-m2)**2)  
 #Combined terms (3,4), (4,3) 
   spyd2_spyd2_ddsigma = norm_spxyd2_dz2_dz2*(n2-(1.0/2.0)*(l2+m2)**2)**2 + \
                         2.0*norm_spxyd2_dz2_dx2y2*(np.sqrt(3.0)/2.0)*(l2-m2)*(n2-0.5*(l2+m2)) + \
@@ -272,7 +274,7 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
 
   spyd2_spyd2_dddelta = norm_spxyd2_dz2_dz2*(3.0/4.0)*(l2+m2)**2 + \
                         2.0*norm_spxyd2_dz2_dx2y2*((1.0/4.0)*np.sqrt(3.0)*(1.0+n2)*(l2-m2)) +\
-                        norm_spxyd2_dx2y2_dx2y2*(n2+(1.0/4.0)**(l2-m2)**2)
+                        norm_spxyd2_dx2y2_dx2y2*(n2+(1.0/4.0)*(l2-m2)**2)
 
 #Combined terms (1,3), (3,1) and (1,4) (4,1). No (dz2|dx2y2) cross terms appear.
   spxyd2_spxyd2_ddsigma_od = norm_spxyd2_dz2_dz2*(n2-0.5*(l2+m2)**2)**2 -\
@@ -289,22 +291,19 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
   dddelta_z2_z2 = (3.0/4.0)*(l2+m2)**2
 
   norm_pxy_dz2 = nsqrt2*nsqrt12
-  norm_pz_dz2 = nsqrt2*nsqrt3
   norm_pxy_dx2y2 = nsqrt2*(1.0/2.0)
 
-  px_d2_pdsig = norm_pxy_dz2*(l*(n2-0.5*(l2+m2))) + norm_pxy_dx2y2*(0.5*np.sqrt(3.0)*l*(l2-m2))
-  px_d2_pdpi = -norm_pxy_dz2*(np.sqrt(3.0)*l*n2) + norm_pxy_dx2y2*(l*(1.0-l2+m2))
-  py_d2_pdsig = norm_pxy_dz2*(m*(n2-0.5*(l2+m2))) + norm_pxy_dx2y2*(0.5*np.sqrt(3.0)*m*(l2-m2))
-  py_d2_pdpi = -norm_pxy_dz2*(np.sqrt(3.0)*m*n2) - norm_pxy_dx2y2*(m*(1.0+l2-m2))
-  pz_d2_pdsig = norm_pz_dz2*(n*(n2-0.5*(l2+m2)))
-  pz_d2_pdpi = norm_pz_dz2*(np.sqrt(3.0)*n*(l2+m2))
+  norm_pz_dz2 = nsqrt2*nsqrt3
 
-#p/d terms for first off diagonals (1,2), (2,1) and (3,4) (4,3)
-  px_d2_pdsig_od = norm_pxy_dz2*(l*(n2-0.5*(l2+m2))) - norm_pxy_dx2y2*((1.0/2.0)*np.sqrt(3.0)*l*(l2-m2))
-  px_d2_pdpi_od = -norm_pxy_dz2*(np.sqrt(3.0)*l*n2) - norm_pxy_dx2y2*(l*(1.0-l2+m2))
+#p/d terms for first off diagonals (1,2), (2,1), (3,4), (4,3), (5,6), (6,5)
+  px_d2_pdsig_12 = norm_pxy_dz2*(l*(n2-0.5*(l2+m2))) - norm_pxy_dx2y2*((1.0/2.0)*np.sqrt(3.0)*l*(l2-m2))
+  px_d2_pdpi_12 = -norm_pxy_dz2*(np.sqrt(3.0)*l*n2) - norm_pxy_dx2y2*(l*(1.0-l2+m2))
 
-  py_d2_pdsig_od = norm_pxy_dz2*(m*(n2-0.5*(l2+m2))) + norm_pxy_dx2y2*(0.5*np.sqrt(3.0)*m*(l2-m2))
-  py_d2_pdpi_od = -norm_pxy_dz2*(np.sqrt(3.0)*m*n2) - norm_pxy_dx2y2*(m*(1.0+l2-m2))
+  py_d2_pdsig_34 = norm_pxy_dz2*(m*(n2-0.5*(l2+m2))) + norm_pxy_dx2y2*(0.5*np.sqrt(3.0)*m*(l2-m2))
+  py_d2_pdpi_34 = -norm_pxy_dz2*(np.sqrt(3.0)*m*n2) - norm_pxy_dx2y2*(m*(1.0+l2-m2))
+
+  pz_d2_pdsig_56 = norm_pz_dz2*(n*(n2-0.5*(l2+m2)))
+  pz_d2_pdpi_56 = norm_pz_dz2*(np.sqrt(3.0)*n*(l2+m2))
 
 #(1,3) (3,1)
   px_d2_pdsig_13 = norm_pxy_dz2*(l*(n2-0.5*(l2+m2))) + norm_pxy_dx2y2*((1.0/2.0)*np.sqrt(3.0)*l*(l2-m2))
@@ -344,38 +343,39 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
                          +(1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2))
 
   spxd2_spzd2_pdpi_15 =  nsqrt2*l*n2\
-                        +np.sqrt(3.0)*nsqrt2*nsqrt12*(n*l2+m2)\
+                        -np.sqrt(3.0)*nsqrt2*nsqrt12*n*(l2+m2)\
                         -(1.0/2.0)*nsqrt2*(np.sqrt(3.0)*n*(l2-m2))
-#(1,6) and (6,1)* +pz term i.e. (px|dz2) + (pz|dz2) + (pz|dx2my2).
+#(1,6) and (6,1)* +pz term i.e. (px|dz2) + (pz|dz2) - (pz|dx2my2).
   spxd2_spzd2_pdsig_16 = -nsqrt3*nsqrt2*(l*(n2-(1.0/2.0)*(l2+m2)))\
                          +nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
                          -(1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2))
 
   spxd2_spzd2_pdpi_16 =  nsqrt2*l*n2\
-                        -np.sqrt(3.0)*nsqrt2*nsqrt12*(n*l2+m2)\
+                        +np.sqrt(3.0)*nsqrt2*nsqrt12*n*(l2+m2)\
                         +(1.0/2.0)*nsqrt2*(np.sqrt(3.0)*n*(l2-m2))
 
 #(2,5) and (5,2)* -pz term.
-  spxd2_spzd2_pdsig_25 = nsqrt3*nsqrt2*(l*(n2-(1.0/2.0)*(l2+m2)))\
+  spxd2_spzd2_pdsig_25 = +nsqrt3*nsqrt2*(l*(n2-(1.0/2.0)*(l2+m2)))\
                          -nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
                          +(1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2))
 
   spxd2_spzd2_pdpi_25 = -nsqrt2*l*n2\
-                        +np.sqrt(3.0)*nsqrt2*nsqrt12*(n*l2+m2)\
+                        -np.sqrt(3.0)*nsqrt2*nsqrt12*n*(l2+m2)\
                         -(1.0/2.0)*nsqrt2*(np.sqrt(3.0)*n*(l2-m2))
 
 #(2,6) and (6,2)* pz term.
-  spxd2_spzd2_pdsig_26 =  nsqrt3*nsqrt2*(l*(n2-(1.0/2.0)*(l2+m2)))\
+  spxd2_spzd2_pdsig_26 = +nsqrt3*nsqrt2*(l*(n2-(1.0/2.0)*(l2+m2)))\
                          +nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
                          -(1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2))
 
   spxd2_spzd2_pdpi_26 = -nsqrt2*l*n2\
-                        -np.sqrt(3.0)*nsqrt2*nsqrt12*(n*l2+m2)\
+                        +np.sqrt(3.0)*nsqrt2*nsqrt12*n*(l2+m2)\
                         +(1.0/2.0)*nsqrt2*(np.sqrt(3.0)*n*(l2-m2))
+
 
 #(1,5),(5,1),(1,6),(6,1),(2,5),(5,2),(2,6),(6,2) ddsig, ddpi, dddelta terms:
   spxd2_spzd2_ddsig = -(nsqrt3*nsqrt12)*(n2-0.5*(l2+m2)**2)**2\
-                      +(1.0/(2.0))*nsqrt3*(0.5*np.sqrt(3.0)*(n2-(1.0/2.0)*(l2+m2))*(l2-m2))
+                      +(1.0/2.0)*nsqrt3*(0.5*np.sqrt(3.0)*(n2-(1.0/2.0)*(l2+m2))*(l2-m2))
 
   spxd2_spzd2_ddpi = -(nsqrt3*nsqrt12)*(3.0*n2*(l2+m2)) \
                      +(1.0/(2.0))*nsqrt3*(np.sqrt(3.0)*(m2-l2)*n**2)
@@ -389,13 +389,13 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
                              -(1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2))
 
   sp3d2py_sp3d2pz_pdpi_35 = nsqrt2*m*n2\
-                          - np.sqrt(3.0)*nsqrt2*nsqrt12*(n*(l2+m2))\
-                          + (1.0/2.0)*nsqrt2*(n*(l2-m2))
+                           -np.sqrt(3.0)*nsqrt2*nsqrt12*(n*(l2+m2))\
+                           +(1.0/2.0)*nsqrt2*(n*(l2-m2))
 
 #(3,6) and (6,3)* -pz term. -(py|dz2) - (pz|dz2) - (pz|dx2my2)
-  sp3d2py_sp3d2pz_pdsig_36 = -nsqrt3*nsqrt2*(m*(n2-(1.0/2.0)*(l2+m2)))\
-                             +nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
-                             +(1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2))
+  sp3d2py_sp3d2pz_pdsig_36 =-nsqrt3*nsqrt2*(m*(n2-(1.0/2.0)*(l2+m2)))\
+                            +nsqrt2*nsqrt12*(n*(n2-(1.0/2.0)*(l2+m2)))\
+                            +(1.0/2.0)*nsqrt2*((1.0/2.0)*np.sqrt(3.0)*n*(l2-m2))
 
   sp3d2py_sp3d2pz_pdpi_36 = nsqrt2*m*n2\
                            +np.sqrt(3.0)*nsqrt2*nsqrt12*(n*(l2+m2))\
@@ -504,15 +504,13 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
            -ddsig_xy_z2 - ddsig_xy_x2my2, 
            -ddpi_xy_z2 - ddpi_xy_x2my2, 
            -dddelta_xy_z2 - ddelta_xy_x2my2]
-    #print feat
     return feat
   elif (wan_i=='xy' and wan_j=='sp3d2-3') or (wan_i=='sp3d2-4' and wan_j=='xy'):
     feat = [0.0, 0.0, 0.0, 0.0, sdsig_s_xy, 
             -pdsig_y_xy, -pdpi_y_xy, 
-           -ddsig_xy_z2 - ddsig_xy_x2my2, 
-           -ddpi_xy_z2 - ddpi_xy_x2my2, 
-           -dddelta_xy_z2 - ddelta_xy_x2my2]
-    #print feat
+            -ddsig_xy_z2 - ddsig_xy_x2my2, 
+            -ddpi_xy_z2 - ddpi_xy_x2my2, 
+            -dddelta_xy_z2 - ddelta_xy_x2my2]
     return feat
   elif (wan_i == 'sp3d2-3' and wan_j == 'zx') or (wan_i=='zx' and wan_j=='sp3d2-4'):
     return [0.0, 0.0, 0.0, 0.0, sdsig_s_zx, 
@@ -527,17 +525,23 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
            -ddpi_zx_z2 - ddpi_zx_x2my2, 
            -dddelta_zx_z2 - dddelta_zx_x2my2]
   elif (wan_i == 'sp3d2-3' and wan_j == 'yz') or (wan_i =='yz' and wan_j=='sp3d2-4'):
-    return [0.0, 0.0, 0.0, 0.0, sdsig_s_yz, 
+    feat = [0.0, 0.0, 0.0, 0.0, sdsig_s_yz, 
            -pdsig_y_yz, -pdpi_y_yz, 
            -ddsig_yz_z2 - ddsig_yz_x2my2, 
            -ddpi_yz_z2 - ddpi_yz_x2my2, 
            -dddelta_yz_z2 - dddelta_yz_x2my2] 
+    #print wan_i, wan_j
+    #print feat
+    return feat
   elif (wan_i == 'yz' and wan_j == 'sp3d2-3') or (wan_i =='sp3d2-4' and wan_j=='yz'):
-    return [0.0, 0.0, 0.0, 0.0, sdsig_s_yz, 
+    feat = [0.0, 0.0, 0.0, 0.0, sdsig_s_yz, 
             pdsig_y_yz, pdpi_y_yz, 
            -ddsig_yz_z2 - ddsig_yz_x2my2, 
            -ddpi_yz_z2 - ddpi_yz_x2my2 , 
            -dddelta_yz_z2 - dddelta_yz_x2my2] 
+    #print wan_i, wan_j
+    #print feat
+    return feat
   elif (wan_i == 'sp3d2-5' and wan_j == 'xy') or (wan_i =='xy' and wan_j=='sp3d2-6'):
     return [0.0, 0.0, 0.0, 0.0, sdsig_s_xy, 
             -pdsig_z_xy, -pdpi_z_xy, 
@@ -552,30 +556,36 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             2.0*dddelta_xy_z2]
   elif (wan_i == 'sp3d2-5' and wan_j == 'zx') or (wan_i =='zx' and wan_j=='sp3d2-6'):
     return [0.0, 0.0, 0.0, 0.0, sdsig_s_zx, 
-            pdsig_z_zx, pdpi_z_zx, 
+            -pdsig_z_zx, -pdpi_z_zx, 
             2.0*ddsig_zx_z2, 
             2.0*ddpi_zx_z2, 
             2.0*dddelta_zx_z2]
   elif (wan_i == 'zx' and wan_j == 'sp3d2-5') or (wan_i =='sp3d2-6' and wan_j=='zx'):
     return [0.0, 0.0, 0.0, 0.0, sdsig_s_zx, 
-           -pdsig_z_zx, -pdpi_z_zx, 
+            pdsig_z_zx, pdpi_z_zx, 
             2.0*ddsig_zx_z2, 
             2.0*ddpi_zx_z2, 
             2.0*dddelta_zx_z2]
   elif (wan_i == 'sp3d2-5' and wan_j == 'yz') or (wan_i =='yz' and wan_j=='sp3d2-6'):
-    return [0.0, 0.0, 0.0, 0.0, sdsig_s_yz, 
+    feat = [0.0, 0.0, 0.0, 0.0, sdsig_s_yz, 
             -pdsig_z_yz, -pdpi_z_yz, 
             2.0*ddsig_yz_z2,   
             2.0*ddpi_yz_z2,    
             2.0*dddelta_yz_z2] 
+    #print wan_i, wan_j
+    #print feat
+    return feat
   elif (wan_i == 'yz' and wan_j == 'sp3d2-5') or (wan_i =='sp3d2-6' and wan_j=='yz'):
-    return [0.0, 0.0, 0.0, 0.0, sdsig_s_yz, 
+    feat= [0.0, 0.0, 0.0, 0.0, sdsig_s_yz, 
             pdsig_z_yz, pdpi_z_yz, 
             2.0*ddsig_yz_z2,   
             2.0*ddpi_yz_z2,    
             2.0*dddelta_yz_z2] 
+    #print wan_i, wan_j
+    #print feat
+    return feat
   elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-1'):
-    return [1.0*norm_s_s, 0.0, norm_p_p*ppsig_x_x, norm_p_p*pppi_x_x, -2.0*(norm_s_dz2*sdsig_s_z2 + norm_s_dx2y2*sdsig_s_x2my2), 
+    return [norm_s_s, 0.0, norm_p_p*ppsig_x_x, norm_p_p*pppi_x_x, -2.0*(norm_s_dz2*sdsig_s_z2 + norm_s_dx2y2*sdsig_s_x2my2), 
             0.0, 0.0,
             spxd2_spxd2_ddsigma,
             spxd2_spxd2_ddpi,
@@ -599,70 +609,88 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             spyd2_spyd2_ddpi,
             spyd2_spyd2_dddelta]
   elif (wan_i == 'sp3d2-5' and wan_j == 'sp3d2-5'):
-    return [1.0*norm_s_s, 0.0, norm_p_p*ppsig_z_z, norm_p_p*pppi_z_z, 4.0*(norm_s_dz2*sdsig_s_z2), 
+    return [norm_s_s, 0.0, norm_p_p*ppsig_z_z, norm_p_p*pppi_z_z, 4.0*(norm_s_dz2*sdsig_s_z2), 
             0.0,0.0,
-            spyd2_spyd2_ddsigma,
-            spyd2_spyd2_ddpi,
-            spyd2_spyd2_dddelta]
-            #norm_spzd2_dz_dz*ddsig_z2_z2,
-            #norm_spzd2_dz_dz*ddpi_z2_z2,
-            #norm_spzd2_dz_dz*dddelta_z2_z2]
+            #spyd2_spyd2_ddsigma,
+            #spyd2_spyd2_ddpi,
+            #spyd2_spyd2_dddelta]
+            norm_spzd2_dz_dz*ddsig_z2_z2,
+            norm_spzd2_dz_dz*ddpi_z2_z2,
+            norm_spzd2_dz_dz*dddelta_z2_z2]
   elif (wan_i == 'sp3d2-6' and wan_j == 'sp3d2-6'):
-    return [1.0*norm_s_s, 0.0, norm_p_p*ppsig_z_z, norm_p_p*pppi_z_z, 4.0*(norm_s_dz2*sdsig_s_z2), 
+    return [norm_s_s, 0.0, norm_p_p*ppsig_z_z, norm_p_p*pppi_z_z, 4.0*(norm_s_dz2*sdsig_s_z2), 
             0.0,0.0,
-            spyd2_spyd2_ddsigma,
-            spyd2_spyd2_ddpi,
-            spyd2_spyd2_dddelta]
-            #norm_spzd2_dz_dz*ddsig_z2_z2,
-            #norm_spzd2_dz_dz*ddpi_z2_z2,
-            #norm_spzd2_dz_dz*dddelta_z2_z2]
+            #spyd2_spyd2_ddsigma,
+            #spyd2_spyd2_ddpi,
+            #spyd2_spyd2_dddelta]
+            norm_spzd2_dz_dz*ddsig_z2_z2,
+            norm_spzd2_dz_dz*ddpi_z2_z2,
+            norm_spzd2_dz_dz*dddelta_z2_z2]
   elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-2'):
-    return [1.0*norm_s_s, 2.0*norm_s_p*spsig_s_x, -norm_p_p*ppsig_x_x, -norm_p_p*pppi_x_x, -2.0*(norm_s_dz2*sdsig_s_z2 - norm_s_dx2y2*sdsig_s_x2my2), 
-            2.0*(px_d2_pdsig), 2.0*(px_d2_pdpi),
+    feat = [norm_s_s, 2.0*norm_s_p*spsig_s_x, -norm_p_p*ppsig_x_x, -norm_p_p*pppi_x_x, -2.0*(norm_s_dz2*sdsig_s_z2 - norm_s_dx2y2*sdsig_s_x2my2), 
+            2.0*px_d2_pdsig_12, 2.0*px_d2_pdpi_12,
             spxd2_spxd2_ddsigma,
             spxd2_spxd2_ddpi,
             spxd2_spxd2_dddelta]
+    print wan_i, wan_j
+    print feat
+    return feat
   elif (wan_i=='sp3d2-2' and wan_j =='sp3d2-1'):
-    return [1.0*norm_s_s, -2.0*norm_s_p*spsig_s_x, -norm_p_p*ppsig_x_x, -norm_p_p*pppi_x_x, -2.0*(norm_s_dz2*sdsig_s_z2 - norm_s_dx2y2*sdsig_s_x2my2), 
-            -2.0*(px_d2_pdsig), -2.0*(px_d2_pdpi),
+    feat = [norm_s_s, -2.0*norm_s_p*spsig_s_x, -norm_p_p*ppsig_x_x, -norm_p_p*pppi_x_x, -2.0*(norm_s_dz2*sdsig_s_z2 - norm_s_dx2y2*sdsig_s_x2my2), 
+           -2.0*px_d2_pdsig_12, -2.0*px_d2_pdpi_12,
             spxd2_spxd2_ddsigma,
             spxd2_spxd2_ddpi,
             spxd2_spxd2_dddelta]
+    print wan_i, wan_j
+    print feat
+    return feat
   elif (wan_i == 'sp3d2-3' and wan_j == 'sp3d2-4'): 
-    return [1.0*norm_s_s, 2.0*norm_s_p*spsig_s_y, -norm_p_p*ppsig_y_y, -norm_p_p*pppi_y_y, -2.0*(norm_s_dz2*sdsig_s_z2 + norm_s_dx2y2*sdsig_s_x2my2), 
-            2.0*(py_d2_pdsig), 2.0*(py_d2_pdpi),
+    feat = [norm_s_s, 2.0*norm_s_p*spsig_s_y, -norm_p_p*ppsig_y_y, -norm_p_p*pppi_y_y, -2.0*(norm_s_dz2*sdsig_s_z2 + norm_s_dx2y2*sdsig_s_x2my2), 
+            2.0*py_d2_pdsig_34, 2.0*py_d2_pdpi_34,
             spyd2_spyd2_ddsigma,
             spyd2_spyd2_ddpi,
             spyd2_spyd2_dddelta]
+    print wan_i, wan_j
+    print feat
+    return feat
   elif (wan_i=='sp3d2-4' and wan_j =='sp3d2-3'):
-    return [1.0*norm_s_s, -2.0*norm_s_p*spsig_s_y, -norm_p_p*ppsig_y_y, -norm_p_p*pppi_y_y, -2.0*(norm_s_dz2*sdsig_s_z2 + norm_s_dx2y2*sdsig_s_x2my2), 
-            -2.0*(py_d2_pdsig), -2.0*(py_d2_pdpi),
+    feat = [norm_s_s, -2.0*norm_s_p*spsig_s_y, -norm_p_p*ppsig_y_y, -norm_p_p*pppi_y_y, -2.0*(norm_s_dz2*sdsig_s_z2 + norm_s_dx2y2*sdsig_s_x2my2), 
+           -2.0*py_d2_pdsig_34, -2.0*py_d2_pdpi_34,
             spyd2_spyd2_ddsigma,
             spyd2_spyd2_ddpi,
             spyd2_spyd2_dddelta]
+    print wan_i, wan_j
+    print feat
+    return feat
   elif (wan_i == 'sp3d2-5' and wan_j == 'sp3d2-6'):
-    return [1.0*norm_s_s, 2.0*norm_s_p*spsig_s_z, -norm_p_p*ppsig_z_z, -norm_p_p*pppi_z_z, -2.0*(nsqrt2*nsqrt3*sdsig_s_z2), 
-            2.0*(pz_d2_pdsig), 2.0*(pz_d2_pdpi),
+    feat = [norm_s_s, 2.0*norm_s_p*spsig_s_z, -norm_p_p*ppsig_z_z, -norm_p_p*pppi_z_z, -2.0*(nsqrt2*nsqrt3*sdsig_s_z2), 
+            2.0*(pz_d2_pdsig_56), 2.0*(pz_d2_pdpi_56),
             norm_spzd2_dz_dz*ddsig_z2_z2,
             norm_spzd2_dz_dz*ddpi_z2_z2,
             norm_spzd2_dz_dz*dddelta_z2_z2]
+    print wan_i, wan_j
+    print feat
+    return feat
   elif (wan_i=='sp3d2-6' and wan_j =='sp3d2-5'):
-    return [norm_s_s, -2.0*norm_s_p*spsig_s_z, -norm_p_p*ppsig_z_z, -norm_p_p*pppi_z_z, -2.0*(nsqrt2*nsqrt3*sdsig_s_z2), 
-           -2.0*(pz_d2_pdsig), -2.0*(pz_d2_pdpi),
+    feat = [norm_s_s, -2.0*norm_s_p*spsig_s_z, -norm_p_p*ppsig_z_z, -norm_p_p*pppi_z_z, -2.0*(nsqrt2*nsqrt3*sdsig_s_z2), 
+           -2.0*(pz_d2_pdsig_56), -2.0*(pz_d2_pdpi_56),
             norm_spzd2_dz_dz*ddsig_z2_z2,
             norm_spzd2_dz_dz*ddpi_z2_z2,
             norm_spzd2_dz_dz*dddelta_z2_z2]
+    print wan_i, wan_j
+    print feat
+    return feat
   elif (wan_i == 'sp3d2-1' and wan_j == 'sp3d2-3'):
     return [norm_s_s, norm_s_p*(spsig_s_x-spsig_s_y), norm_p_p*ppsig_x_y, norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
-            (-px_d2_pdsig_23 + py_d2_pdsig_23),
-            (-px_d2_pdpi_23 + py_d2_pdpi_23),
+            (px_d2_pdsig_13 + py_d2_pdsig_13),
+            (px_d2_pdpi_13 + py_d2_pdpi_13),
             spxyd2_spxyd2_ddsigma_od,
             spxyd2_spxyd2_ddpi_od,
             spxyd2_spxyd2_dddelta_od]
   elif (wan_i == 'sp3d2-3' and wan_j == 'sp3d2-1'):
     return [norm_s_s, -norm_s_p*(spsig_s_x-spsig_s_y), norm_p_p*ppsig_x_y, norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
-            -1.0*(-px_d2_pdsig_23 + py_d2_pdsig_23),
-            -1.0*(-px_d2_pdpi_23 + py_d2_pdpi_23),
+            -1.0*(px_d2_pdsig_13 + py_d2_pdsig_13),
+            -1.0*(px_d2_pdpi_13 + py_d2_pdpi_13),
             spxyd2_spxyd2_ddsigma_od,
             spxyd2_spxyd2_ddpi_od,
             spxyd2_spxyd2_dddelta_od]
@@ -721,8 +749,8 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             spxyd2_spxyd2_ddsigma_od,
             spxyd2_spxyd2_ddpi_od,
             spxyd2_spxyd2_dddelta_od]
-    print wan_i, wan_j
-    print feat
+    #print wan_i, wan_j
+    #print feat
     return feat
   elif (wan_i == 'sp3d2-3' and wan_j == 'sp3d2-2'):
     return [norm_s_s, -1.0*norm_s_p*(-spsig_s_x-spsig_s_y), -1.0*norm_p_p*ppsig_x_y, -1.0*norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
@@ -738,8 +766,8 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             spxyd2_spxyd2_ddsigma_od,
             spxyd2_spxyd2_ddpi_od,
             spxyd2_spxyd2_dddelta_od]
-    print wan_i, wan_j
-    print feat
+    #print wan_i, wan_j
+    #print feat
     return feat
   elif (wan_i == 'sp3d2-4' and wan_j == 'sp3d2-2'):
     return [norm_s_s, -1.0*norm_s_p*(-spsig_s_x +  spsig_s_y), norm_p_p*ppsig_x_y, norm_p_p*pppi_x_y, -2.0*(norm_s_dz2*sdsig_s_z2),
@@ -756,8 +784,8 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             spxd2_spzd2_ddsig,
             spxd2_spzd2_ddpi, 
             spxd2_spzd2_dddelta]
-    print wan_i, wan_j
-    print feat
+    #print wan_i, wan_j
+    #print feat
     return feat
   elif (wan_i == 'sp3d2-5' and wan_j == 'sp3d2-2'):
     return [norm_s_s, -norm_s_p*(-1.0*spsig_s_x - spsig_s_z), -norm_p_p*ppsig_x_z, -norm_p_p*pppi_x_z, 
@@ -775,8 +803,8 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             spxd2_spzd2_ddsig,
             spxd2_spzd2_ddpi, 
             spxd2_spzd2_dddelta]
-    print wan_i, wan_j
-    print feat
+    #print wan_i, wan_j
+    #print feat
     return feat
   elif (wan_i == 'sp3d2-6' and wan_j == 'sp3d2-2'):
     return [norm_s_s, -norm_s_p*(-spsig_s_x+spsig_s_z), norm_p_p*ppsig_x_z, norm_p_p*pppi_x_z, 
@@ -803,7 +831,7 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             spyd2_spzd2_ddpi,    
             spyd2_spzd2_dddelta]
   elif (wan_i == 'sp3d2-4' and wan_j == 'sp3d2-5'):
-    return [norm_s_s, norm_s_p*(-1.0*spsig_s_y-spsig_s_z), -norm_p_p*ppsig_y_z, -norm_p_p*pppi_y_z, 
+    return [norm_s_s, norm_s_p*(-spsig_s_y-spsig_s_z), -norm_p_p*ppsig_y_z, -norm_p_p*pppi_y_z, 
            (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6*(sdsig_s_x2my2),
             sp3d2py_sp3d2pz_pdsig_45,
             sp3d2py_sp3d2pz_pdpi_45,
@@ -811,7 +839,7 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
             spyd2_spzd2_ddpi,    
             spyd2_spzd2_dddelta]
   elif (wan_i == 'sp3d2-5' and wan_j == 'sp3d2-4'):
-    return [norm_s_s, -norm_s_p*(-1.0*spsig_s_y-spsig_s_z), -norm_p_p*ppsig_y_z, -norm_p_p*pppi_y_z, 
+    return [norm_s_s, -norm_s_p*(-spsig_s_y-spsig_s_z), -norm_p_p*ppsig_y_z, -norm_p_p*pppi_y_z, 
            (nsqrt3*nsqrt6-nsqrt6*nsqrt12)*sdsig_s_z2 + (1.0/2.0)*nsqrt6*(sdsig_s_x2my2),
             -sp3d2py_sp3d2pz_pdsig_45,
             -sp3d2py_sp3d2pz_pdpi_45,
@@ -862,12 +890,10 @@ def matel_coeffs(l,m,n,wan_i,wan_j):
 #  dd\sigma,                                      #
 #  dd\pi,                                         #
 #  dd\delta]                                      #
-
-def load_matels(l,m,n, subspace_matrix, verbose=True):
+def load_matels(l,m,n,subspace_matrix, verbose=True):
   """
   Takes direction cosines, and 3x3 subspace matrix.
   """
-  matel_dict = {}
   dxy_subspace = [('xy', 'xy'), ('yz', 'yz'), ('zx', 'zx'), ('xy', 'zx'), ('xy', 'yz'),
                   ('zx', 'xy'), ('zx', 'yz'), ('yz', 'xy'), ('yz', 'zx')]
 
@@ -927,96 +953,15 @@ def load_matels(l,m,n, subspace_matrix, verbose=True):
                       ('sp3d2-6', 'sp3d2-4'), 
                       ('sp3d2-5', 'sp3d2-6'), 
                       ('sp3d2-6', 'sp3d2-5')] 
-
-# This should line up the second nearest neighbours i.e. pdpi bonds should be right?
-  #diagonal
-  matel_dict[('xy', 'xy')] = (6, 6)
-  matel_dict[('zx', 'zx')] = (7, 7)
-  matel_dict[('yz', 'yz')] = (8, 8)
-  #off diagonal
-  matel_dict[('xy', 'yz')] = (6, 8)
-  matel_dict[('xy', 'zx')] = (6, 7)
-  matel_dict[('zx', 'xy')] = (7, 6)
-  matel_dict[('zx', 'yz')] = (7, 8)
-  matel_dict[('yz', 'xy')] = (8, 6)
-  matel_dict[('yz', 'zx')] = (8, 7)
-
-#These chosen to make pdsigma work
-# sp3d2-1 => 4
-# sp3d2-2 => 5
-# sp3d2-3 => 0
-# sp3d2-4 => 1
-# sp3d2-5 => 2
-# sp3d2-6 => 3
-  matel_dict[('sp3d2-3', 'xy')], matel_dict[('xy', 'sp3d2-3')] = (0,6), (6,0)
-  matel_dict[('sp3d2-4', 'xy')], matel_dict[('xy', 'sp3d2-4')] = (1,6), (6,1)
-  matel_dict[('sp3d2-5', 'xy')], matel_dict[('xy', 'sp3d2-5')] = (2,6), (6,2)
-  matel_dict[('sp3d2-6', 'xy')], matel_dict[('xy', 'sp3d2-6')] = (3,6), (6,3)
-  matel_dict[('sp3d2-1', 'xy')], matel_dict[('xy', 'sp3d2-1')] = (4,6), (6,4)
-  matel_dict[('sp3d2-2', 'xy')], matel_dict[('xy', 'sp3d2-2')] = (5,6), (6,5)
-
-  matel_dict[('sp3d2-3', 'zx')], matel_dict[('zx', 'sp3d2-3')] = (0,7), (7,0)
-  matel_dict[('sp3d2-4', 'zx')], matel_dict[('zx', 'sp3d2-4')] = (1,7), (7,1)
-  matel_dict[('sp3d2-5', 'zx')], matel_dict[('zx', 'sp3d2-5')] = (2,7), (7,2)
-  matel_dict[('sp3d2-6', 'zx')], matel_dict[('zx', 'sp3d2-6')] = (3,7), (7,3)
-  matel_dict[('sp3d2-1', 'zx')], matel_dict[('zx', 'sp3d2-1')] = (4,7), (7,4)
-  matel_dict[('sp3d2-2', 'zx')], matel_dict[('zx', 'sp3d2-2')] = (5,7), (7,5)
-
-  matel_dict[('sp3d2-3', 'yz')], matel_dict[('yz', 'sp3d2-3')] = (0,8), (8,0)
-  matel_dict[('sp3d2-4', 'yz')], matel_dict[('yz', 'sp3d2-4')] = (1,8), (8,1)
-  matel_dict[('sp3d2-5', 'yz')], matel_dict[('yz', 'sp3d2-5')] = (2,8), (8,2)
-  matel_dict[('sp3d2-6', 'yz')], matel_dict[('yz', 'sp3d2-6')] = (3,8), (8,3)
-  matel_dict[('sp3d2-1', 'yz')], matel_dict[('yz', 'sp3d2-1')] = (4,8), (8,4)
-  matel_dict[('sp3d2-2', 'yz')], matel_dict[('yz', 'sp3d2-2')] = (5,8), (8,5)
-#sp3d2 subspace
-  matel_dict[('sp3d2-3', 'sp3d2-3')] = (0,0)
-  matel_dict[('sp3d2-4', 'sp3d2-4')] = (1,1)
-  matel_dict[('sp3d2-5', 'sp3d2-5')] = (2,2)
-  matel_dict[('sp3d2-6', 'sp3d2-6')] = (3,3)
-  matel_dict[('sp3d2-1', 'sp3d2-1')] = (4,4)
-  matel_dict[('sp3d2-2', 'sp3d2-2')] = (5,5)
-
-  matel_dict[('sp3d2-1', 'sp3d2-2')] = (4,5)
-  matel_dict[('sp3d2-1', 'sp3d2-3')] = (4,0)
-  matel_dict[('sp3d2-1', 'sp3d2-4')] = (4,1)
-  matel_dict[('sp3d2-1', 'sp3d2-5')] = (4,2)
-  matel_dict[('sp3d2-1', 'sp3d2-6')] = (4,3)
-  matel_dict[('sp3d2-2', 'sp3d2-1')] = (5,4)
-  matel_dict[('sp3d2-3', 'sp3d2-1')] = (0,4)
-  matel_dict[('sp3d2-4', 'sp3d2-1')] = (1,4)
-  matel_dict[('sp3d2-5', 'sp3d2-1')] = (2,4)
-  matel_dict[('sp3d2-6', 'sp3d2-1')] = (3,4)
-  matel_dict[('sp3d2-2', 'sp3d2-3')] = (5,0)
-  matel_dict[('sp3d2-2', 'sp3d2-4')] = (5,1)
-  matel_dict[('sp3d2-2', 'sp3d2-5')] = (5,2)
-  matel_dict[('sp3d2-2', 'sp3d2-6')] = (5,3)
-  matel_dict[('sp3d2-3', 'sp3d2-2')] = (0,5)
-  matel_dict[('sp3d2-4', 'sp3d2-2')] = (1,5)
-  matel_dict[('sp3d2-5', 'sp3d2-2')] = (2,5)
-  matel_dict[('sp3d2-6', 'sp3d2-2')] = (3,5)
-  matel_dict[('sp3d2-3', 'sp3d2-4')] = (0,1)
-  matel_dict[('sp3d2-3', 'sp3d2-5')] = (0,2)
-  matel_dict[('sp3d2-3', 'sp3d2-6')] = (0,3)
-  matel_dict[('sp3d2-4', 'sp3d2-3')] = (1,0)
-  matel_dict[('sp3d2-5', 'sp3d2-3')] = (2,0)
-  matel_dict[('sp3d2-6', 'sp3d2-3')] = (3,0)
-  matel_dict[('sp3d2-4', 'sp3d2-5')] = (1,2)
-  matel_dict[('sp3d2-4', 'sp3d2-6')] = (1,3)
-  matel_dict[('sp3d2-5', 'sp3d2-4')] = (2,1)
-  matel_dict[('sp3d2-6', 'sp3d2-4')] = (3,1)
-  matel_dict[('sp3d2-5', 'sp3d2-6')] = (2,3)
-  matel_dict[('sp3d2-6', 'sp3d2-5')] = (3,2)
-
   features = []
   matels = []
   pair_list = []
-
   print 'Direction Cosines', l,m,n
   #for pair in sp3d2_dxy:
-  full_matrix = sp3d2_sp3d2_od + dxy_subspace + sp3d2_dxy + sp3d2_sp3d2_diag 
-  #for pair in full_matrix:
-  for pair in dxy_subspace + sp3d2_dxy + sp3d2_sp3d2_diag + sp3d2_sp3d2_od:
-  #for pair in dxy_subspace: #+sp3d2_dxy: 
+  #full_matrix = sp3d2_sp3d2_od + dxy_subspace + sp3d2_dxy + sp3d2_sp3d2_diag 
+  for pair in full_matrix:
+  #for pair in sp3d2_sp3d2_xy + dxy_subspace:
+  #for pair in sp3d2_sp3d2_diag + sp3d2_sp3d2_od:
       i,j = matel_dict[pair]
       feature = matel_coeffs(l,m,n, pair[0], pair[1])
       matel = subspace_matrix[i][j]
@@ -1164,6 +1109,7 @@ if __name__ == "__main__":
       print 'Spin Up 1NN Matrix (without spin/spin):'
       print NN
       cart = cell_latt.dot(np.array(NN))
+      #cart_int = cart/alat
       cart_int = cart/alat
       print 'Cartesian:', cart
       print 'Cartesian (Int):', cart_int
@@ -1188,6 +1134,7 @@ if __name__ == "__main__":
     for NN in NN_1s:
       print NN
       cart = cell_latt.dot(np.array(NN))
+      #cart_int = cart/alat
       cart_int = cart/alat
       print 'Cartesian:', cart
       print 'Cartesian (Int):', cart_int
@@ -1198,6 +1145,9 @@ if __name__ == "__main__":
       print '\n'
       print 'TB-NN:'
       pred_ham = predicted_hamiltonian(sk_coeffs, full_matrix, cart_int, matel_dict)
+      #tmp_mat = sp3d2_sp3d2_xy+dxy_subspace
+      #tmp_mat = sp3d2_sp3d2_diag + sp3d2_sp3d2_od
+      #pred_ham = predicted_hamiltonian(sk_coeffs, tmp_mat, cart_int, matel_dict)
       print pred_ham.round(4)
       print '\n'
       print 'Diff. (TB-NN-Pred):'
@@ -1208,6 +1158,7 @@ if __name__ == "__main__":
     combined_labels = []
     combined_pairs = []
     NN_2s = [(-1,1,0), (1,-1,0), (0,-1,1), (0,1,-1), (-1,0,-1), (1,0,1)] 
+    #NN_2s = [(0,1,-1), (-1,0,-1), (1,0,1),(-1,1,0), (1,-1,0), (0,-1,1)] 
     
     print 'Spin Up 2nd NN Hopping Matrix (with spin/spin):'
     Fe_11 = atom_dict[(-1,1,0)]
@@ -1220,6 +1171,7 @@ if __name__ == "__main__":
       print NN
       #cart = cell_latt.T.dot(np.array(NN))
       cart = cell_latt.dot(np.array(NN))
+      #cart_int = cart/alat
       cart_int = cart/alat
       print 'Cartesian:', cart
       print 'Cartesian (Int):', cart_int
@@ -1237,6 +1189,7 @@ if __name__ == "__main__":
     for NN in NN_2s:
       print NN
       cart = cell_latt.dot(np.array(NN))
+      #cart_int = cart/alat
       cart_int = cart/alat
       print 'Cartesian:', cart
       print 'Cartesian (Int):', cart_int
@@ -1247,6 +1200,9 @@ if __name__ == "__main__":
       print '\n'
       print 'TB-NN:'
       pred_ham = predicted_hamiltonian(sk_coeffs, full_matrix, cart_int, matel_dict)
+      #tmp_mat = sp3d2_sp3d2_xy+dxy_subspace
+      #tmp_mat = sp3d2_sp3d2_diag + sp3d2_sp3d2_od
+      #pred_ham = predicted_hamiltonian(sk_coeffs, tmp_mat, cart_int, matel_dict)
       print pred_ham.round(4)
       print '\n'
       print 'Diff. (TB-NN-Pred):'
