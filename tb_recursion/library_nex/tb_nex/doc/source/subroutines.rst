@@ -45,6 +45,51 @@ Specification of Subroutines
 
 	Note that this routine uses RECQD, CFGEN, RECRTS, NUMC, NUMD.
 
+.. f:subroutine:: TERMGN (A,B2,LL,EPS,ERR,ITMX,AA,RNG,WB,NBP1,AM,BM2,IC,WK,NW,BWK,NBD,IWK)
+
+    Generates an analytic terminator to a given continued fraction. The form of the
+    terminator is a sum of square roots of quadratics, F(E), as in :f:subr:`DENCRS`, 
+    with parameters to be adjusted to match the apparent bands gaps in the given
+    continued fraction. The local weight (as calculated in :f:subr:`RECWT` of F(E)
+    is matched to that of the given continued fraction (A(I), B2(I)) at E values
+    in the Neighbourhood of band edges and local minima. This routine may
+    serve as an example for the matching of other forms of terminating function
+    or matching algoirithms.
+
+    A    DIAGONAL RECURSION COEFFICIENTS I=1,LL-1
+    B2   OFF-DIAGONAL RECURSION COEFFICIENTS I=1,LL
+    LL*  LENGTH OF GIVEN RECURSION . ON OUTPUT CONTAINS THE LENGTH
+         OF THE COMPUTED CONTINUED FRACTION WHICH IF DIFFERENT
+         FROM INPUT INDICATES FAILURE OF CFGPGN
+
+    EPS  MACHINE ACCURACY
+    ERR* ACCURACY REQUIRED IN LOCATION OF BAND EDGES ,
+        ON OUTPUT THE ESTIMATED ACCURACY, SUBJECT TO
+
+    ITMX MAXIMUM NUMBER OF ITERATIONS IN LOCATION
+    AA*  LIST OF BAND LEFT EXTREMA
+    RNG* LIST OF BAND WIDTHS
+    WB*  LIST OF BAND WEIGHTS
+    NBP1* 1+NUMBER OF BANDS ,MAXIMUM ON INPUT AND
+          ON OUTPUT CONTAINS THE 1+NUMBER COMPUTED UNLESS THIS
+          EXCEEDS THE INPUT NUMBER WHEN A NEGATIVE VALUE
+          INDICATES THE NUMBER OF BANDS IDENTIFIED BUT NOT
+          COMPUTED. A ZERO VALUE INDICATES A FAILURE IN THE
+          SEARCH PROCEDURE.(INCREASING NW MAY HELP)
+    AM*  DIAGONAL C.F. COEFFICIENTS OF MATCHING FUNCTION
+    BM2* OFF-DIAGONAL C.F. COEFFICIENTS OF MATCHING FUNCTION
+    IC*  WORK ARRAY OF LENGTH AT LEAST NW
+    WK*  WORK ARRAY OF LENGTH AT LEAST LL*2*MAX(3,NBP1)
+    NW   FIRST DIMENSION OF WK. NO.OF POINTS USED IN INITIAL
+         SCAN FOR BAND EXTREMA
+    BWK* WORK ARRAY OF MATCHING POINTS OF DIMENSION AT LEAST 8*NBP1
+    NBD  FIRST DIMENSION OF BWK : AT LEAST 2*NBP1
+    IWK* INTEGER WORK ARRAY OF LENGTH AT LEAST LL
+
+
+
+
+
 .. f:subroutine:: SETUP(CRD,ND,NAT,EV,NTYPE,IZP,MM,NN,NND,NM,HCAL,NGBR,IOVPAR,EE,NP,NED,NE,VEC,IW)
 
   Assembles the Hamiltonian matrix from the user supplied routines EV, HCAL, NGBR, IOVPAR and

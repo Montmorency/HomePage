@@ -138,8 +138,26 @@ followed by a program variable to store the results of the read e.g.:
 
 </pre></code>
 
+
 The format identifier in the example, 21, is the label of the <samp>FORMAT</samp> statement in the same program unit.
 A <samp>FORMAT</samp> statement specifies the layout of input/output to be read or printed to the connected unit.
-
 </p>
+
+<h3> The Arithmetic IF</h3>
+<p>
+Finding documentation for this took a while. It brought me to this interesting <a href="https://www.obliquity.com/"> domain </a>.
+The idea here is that we can save time by exploiting the arithmetic IF:
+
+<pre><code>
+    IF (arithmetic-expression) label-1, label0, label1
+</pre></code>
+
+If the arithmetic-expression evaluates to less than 0 it will go to label-1, if it evaluates to 0,
+it goes to label0, and if it is greater than 0 it goes to label 1.
+
+This form of IF statement is obscure and its use is strongly discouraged. But are you going to let public 
+opinion makers tell you how to write your fortran 77? Isn't the only reason you are writing f77 code is
+because you are pretty much Skywalker?  
+</p>
+
 {% endblock body %}
