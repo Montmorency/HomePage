@@ -4,6 +4,7 @@
 
 C
 
+      WRITE(6,*) "ADDING SKSS TERM?"
       ID=IOVPAR(I,J,R2,PARM)
 
       EM(1,1)=PARM(10)

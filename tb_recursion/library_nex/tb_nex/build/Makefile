@@ -7,7 +7,7 @@ FCFLAGS = -g -fbounds-check -fdefault-real-8
 %.o: %.f
 	$(FC) $(FCFLAGS) -c $<
 
-all: exphnds.x exphnplt.x exrecal.x exproc.x exorpeel.x expeeled.x
+all: exphnds.x exphnplt.x exrecal.x exproc.x exorpeel.x expeeled.x exbccrecal.x exbccHrecal.x exprocS.x exbccHSrecal.x 
 
 exorpeel.x: exorpeel.o slkode.o equiv.o recal.o fccbnd.o out.o selfd.o\
             setup.o skpd.o skpp.o selfp.o mmcal.o nncal.o fcclat.o addat.o peel.o orpeel.o slkode.o skdd.o
@@ -31,10 +31,35 @@ exproc.x: exproc.o dencrs.o denqd.o fenval.o recsum.o termgn.o bndest.o bndref.o
           taban.o wtmin.o
 	$(FC) -o $@ $^ 
 	cp ./exproc.x ../examples/exrecal/
+	cp ./exproc.x ../examples/exbccHrecal/
+	cp ./exproc.x ../examples/exbccHSrecal/
 
 exrecal.x: exrecal.o slkode.o equiv.o recal.o fccbnd.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o fcclat.o
 	$(FC) -o $@ $^ 
 	cp ./exrecal.x ../examples/exrecal/
+
+exbccHrecal.x: exbccHrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o\
+               sksd.o skss.o addat.o selfs.o
+	$(FC) -o $@ $^ 
+	cp ./exbccHrecal.x ../examples/exbccHrecal/
+	cp ./exproc.x ../examples/exbccHrecal/
+
+exbccrecal.x: exbccrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o
+	$(FC) -o $@ $^ 
+	cp ./exbccrecal.x ../examples/exbccrecal/
+
+exprocS.x: exprocS.o dencrs.o denqd.o fenval.o recsum.o termgn.o bndest.o bndref.o\
+          bndwt.o bndcrd.o cfgen.o cfgpgn.o plyval.o recqd.o recrts.o recwt.o numc.o numd.o\
+          taban.o wtmin.o
+	$(FC) -o $@ $^ 
+	cp ./exprocS.x ../examples/exbccHSrecal/
+
+exbccHSrecal.x: exbccHSrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o\
+               sksd.o skss.o addat.o selfs.o
+	$(FC) -o $@ $^ 
+	cp ./exbccHSrecal.x ../examples/exbccHSrecal/
+	cp ./exprocS.x ../examples/exbccHSrecal/
+
 
 
 clean:

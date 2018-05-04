@@ -12,6 +12,7 @@ C
 
       DIMENSION DD(13)
 
+
       IF(R2-4.5)1,3,3
 
 3     BCCBFE=0
@@ -41,6 +42,8 @@ C
       RETURN
 
 5     DD(11)=0.0
+C HL desperate but shifting d band instead of the H position
+C5     DD(11)=0.5
 
       RETURN
 

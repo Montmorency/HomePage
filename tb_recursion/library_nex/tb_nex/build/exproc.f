@@ -6,21 +6,26 @@
 
      1,ATR(15),BTR2(15),TABS(201,5),IWK(15),EB(2),IWK2(15)
 
-      NPTS=102
+      NPTS=201
 
       ALP=0.5
 
-      LL=6
+      LL=11
 
-      ELO=-0.15
+      ELO=-1.0
 
-      EHI=0.15
+      EHI=1.0
 
       EPS=5.0E-12
 
-      ACC=1.0E-4
+      ACC=1.0E-5
 
       NP=5
+
+C     NP=1
+
+C  HL trying to get hydrogen working increasing NW may allow for more structure in DOS.
+      NW = 15
 
       DE=(EHI-ELO)/FLOAT(NPTS-1)
 
@@ -63,9 +68,10 @@ C  COMPUTE THE SUM OF THE INPUT DENSITIES AND STORE THE RESULTING
 C  COEFFICIENTS IN AA AND BB2
 
 C
-      CALL RECSUM(A,B2,15,LL,NP,AA,BB2,EPS,TABS,375)
+      CALL RECSUM(A,B2,NW,LL,NP,AA,BB2,EPS,TABS,201)
 
 C IF LL NEGATIVE THEN RECQD FAILED WITH TOO FEW ROOTS.
+
 
       WRITE(6,2)
 
@@ -81,13 +87,18 @@ C
 
       ERR=ACC
 
-      NBP1=2
+C     NBP1=2 number of bands
+CHL  For BCC had to up this parameters...
+      NBP1=5
 
       LTR=LL
 
+      WRITE(6,*) "HL: LL", LL
+
       CALL TERMGN(AA,BB2,LTR,EPS,ERR,30,EDGE,WIDTH,WEIGHT,NBP1,ATR,
 
-     1 BTR2,IWK,WORK,15,TABS,201,IWK2)
+     1 BTR2,IWK,WORK,NW,TABS,201,IWK2)
+
 
       WRITE(6,99)EDGE,WIDTH,WEIGHT,ERR,NBP1
 
@@ -105,6 +116,7 @@ C  TABULATE D.O.S. ETC. USING C.P.C. ROUTINES
 
 C
 
+
       WRITE(6,2)
 
       WRITE(6,*)'#DOS'
@@ -117,14 +129,18 @@ C
 
       TABS(I,1)=ELO+FLOAT(I-1)*DE
 
+
 C TERM DOS:
       TABS(I,5)=DENCRS(TABS(I,1),AA,BB2,LL,EDGE,WIDTH,WEIGHT,1,
 
      1 ATR,BTR2)
+
+
 C QUAD DOS:
-      TABS(I,2)=DENQD(TABS(I,1),TABS(I,1),AA,BB2,LL,ALP,EPS,WORK,15,
+      TABS(I,2)=DENQD(TABS(I,1),TABS(I,1),AA,BB2,LL,ALP,EPS,WORK,NW,
 
      1 NQ,NE,IWK)
+
 
       IF(NE.LE.0)GOTO 13
 
@@ -173,7 +189,7 @@ C
 
       IFT=60
 
-      EF=FENVAL(AN,AA,BB2,15,LL,1,ACC,EPS,EB,WORK,15,IWK,IFT)
+      EF=FENVAL(AN,AA,BB2,NW,LL,1,ACC,EPS,EB,WORK,NW,IWK,IFT)
 
       IFT=60
 
@@ -181,7 +197,7 @@ C
 
       EB(1)=DUM
 
-      EFAC=FENVAL(AN,A,B2,15,LL,NP,ACC,EPS,EB,WORK,15,IWK,IFT)
+      EFAC=FENVAL(AN,A,B2,NW,LL,NP,ACC,EPS,EB,WORK,NW,IWK,IFT)
 
       WRITE(6,10)M,EF,EFAC
 

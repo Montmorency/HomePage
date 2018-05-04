@@ -11,7 +11,7 @@ def pull_rec_coeffs():
   #exclude first line.
   N_orbitals = len(rec_coeffs[1:])
 
-  rec_mat = np.zeros([5, 11, 2])
+  rec_mat = np.zeros([5, 15, 2])
   for num_orbital, line in enumerate(rec_coeffs[1:]):
   #each orbital has N pairs (a,b) recursion coefficients.
     for num_coeff, ab in enumerate(line.split('\n')[:-1]):
@@ -25,7 +25,7 @@ def pull_dos():
     exproc_file = f.read()
   dos_table = dos_table_re.findall(exproc_file)[0]
 #for gnuplot
-  with open('dos.gnu','w') as f:
+  with open('dos.dat','w') as f:
     print >> f, dos_table
   dos_table = dos_table.split('\n')
   dos_table_array = np.zeros([len(dos_table[2:-1]),5])

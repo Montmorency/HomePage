@@ -970,14 +970,36 @@ The tightbinding Hamiltonian only considers two center contributions, with the p
 coming from Pettifor\cite{pettifor69} and rescaled they are given in Table~\ref{tab:dsurface} 
 %
 \begin{table}
-\begin{tabular}{ccc}
+\begin{tabular}{|c|c|c|}
+\hline
 SK Parameter & First Neighbour & Second Nearest Neighbour \\
+\hline
 $dd\sigma$ & -0.02992  & -0.05364 \\
 $dd\pi$    &  0.06652  &  0.01943 \\
 $dd\delta$ &  0.00800  &  0.00196 \\
+\hline
 \end{tabular}
-\caption{These parameters are difficult to make out from the electronic version of the paper
+\caption{These parameters are difficult to make out from the electronic version of Ref.
 due to poor resolution of the scan. \label{tab:dsurface}.}
+\end{table}
+%
+\begin{table}
+\begin{tabular}{|c|c|c|}
+\multicolumn{3}{|c|} {FCC TB Parameters} \\
+Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
+\hline
+$dd\sigma$ & -0.027784 & - \\
+$dd\pi$    &  0.012535 & - \\
+$dd\delta$ & -0.001554 & - \\
+\multicolumn{3}{|c|} {BCC TB Parameters} \\
+Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
+$dd\sigma$ & -0.06560  & -0.03195 \\
+$dd\pi$    &  0.04373  & 0.02130\\
+$dd\delta$ & -0.010934 & -0.00537\\
+\hline
+\end{tabular}
+\caption{The tight binding parameters used for the electronic DOS example calculations in this chapter,
+in the FCC lattice only nearest neighbours are included.}
 \end{table}
 %
 The range of $E_{F}$ is restricted to $-0.068 \ge E_{F} \le 0.12$ Ryd by considerations
@@ -992,9 +1014,11 @@ surface atom adhered to the same cluster studied in Sec.~\ref{sec:fccldos}.
 \begin{figure}
 \begin{center}
 {\graphicspath{{./invariance/rec_examples/exorpeel/}}\input{./invariance/rec_examples/exorpeel/exorpeel.tex}}
-\caption{ Top panel: Adsorbate interaction energy as a function of the Fermi energy for a representative d band
-substrate. Mutual interaction of the adsorbates is mediated by the substrate and the p-d interaction.
-Bottom panel: \label{fig:burkesurface}}
+\caption{Top panel: Adsorbate interaction energy as a function of the Fermi energy for a representative d band
+substrate. Mutual interaction of the adsorbates is mediated by the substrate and the p-d surface interaction.
+Interaction goes to zero when the substrate band is completely filled. 
+Bottom panel: Difference in the total energy for the two adsorbate configurations as a function of
+d-band filling (position of the Fermi energy). See Ref.~\cite{burke76} for details. \label{fig:burkesurface}}
 \end{center}
 \end{figure}
 %
@@ -1035,13 +1059,12 @@ m_{k} \frac{\partial^{2} u_\alpha (l\kappa)}{\partial t^{2}} = - \sum_{l'\kappa'
 %
 The above requires some function $V$ representing the potential energy for the given 
 ionic coordinates. l, $\kappa$, and $\alpha$, represent unit cell, basis atom and 
-cartesian coordinate
-respectively.
+cartesian coordinate respectively.
 
 If a solution of the form:
 %
 \begin{equation}
-u_{\alpha}(lk) = \frac{1}{\sqrt(m_{k})} U_{\alpha}(\kappa;\k)e^{[i(\k\cdot x(l) - \omega_{\k}t)]} 
+u_{\alpha}(lk) = \frac{1}{\sqrt{m_{k}}} U_{\alpha}(\kappa;\k)e^{[i(\k\cdot x(l) - \omega_{\k}t)]} 
 \end{equation}
 %
 where $U_{\alpha}(\kappa;\k)$ is the amplitude of the displacement.
@@ -1089,7 +1112,7 @@ the masses are chosen to be 0.25 and $0.189$ amu. Two force constants are also
 specified, a bond stretching force constant of 1.0, which is the same for both atomic types
 and two bond bending force constants of 0.5 and 0.25 \label{fig:phonondos}. The phonon DOS relies on the routine
 \texttt{RECSUM} to combine the continued fraction coefficients for the vibration modes computed for each
-site. The six atom system has the expected $3N-6=12$ vibration modes thus acting as a check on the numerics.}
+site. The six atom system has $3N-6=12$ vibration modes and the DOVS integrates to 12 as expected.}
 \end{center}
 \end{figure}
 %

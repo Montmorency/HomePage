@@ -1,5 +1,4 @@
 \chapter{Metallurgy}
-
 \section{Introduction}
   Cottrell noted that metallurgy would require a "theory... which explains
 the properties of metallic solids and the explanation of the origin of this
@@ -12,12 +11,38 @@ and finally the extent of bond mobility in metals in the presence of impurity
 segregants. The final part treats the problem of embrittlement which is of considerable
 interest in the metallurgical community.
 
-\section{Cohesion and Structure: Lave Phases and Transition Metals}
 %\section{Many Body Recursion: Cohesive Properties}
 %Similarly Heine noted "What we lack is a fundamental quantum 
 %theory of the cohesion and structure of a wide diversity of solids." 
 %For a hubbard U model of cohesion energies in FCC and HCP metal using the Project density of transitions
 %\cite{haydock14}.
+
+\section{Transition Metals: Fe}
+If we seek a quantum theory of metallurgy Fe is the place to start.
+Local descriptions of the electronic description of iron may take two forms. 
+
+The tight binding parameters determined by pettifor, and the Localized 
+Wannier functions studied by \cite{yates06}. 
+
+The parameters they use are as follows 16x16x16 0.02 Ry fermi smearing, obtaining
+a spin magnetic moment of 2.22 $\mu_{b}$. Norm Conserving pseudopotential with KE cutoff
+of 60 Hartree (120 Ry.)
+
+The self consistent potential is then frozen and a uniform nxnxn grid of k points is
+used to compute the Wannier functions. 18 WFs are targeted (s,p and d gives a 9x9 matrix
+and then the two two spins doubles the size), with spin up and 
+down. 28 bands calculated at each k point and any bands above 58 eV are excluded.
+
+In the course of the Wannierization, the initial guess was using s, p, and (eg and t2g)
+type d-like Gaussians of pure spin character transformed the bands into the t2g like 
+Wannier functions and the $e_{g}$, s and p-like states formed six hybrid 
+$sp^{3}d^{2}$-type orbitals. Thus with the initial choice of 6 $sp^{3}d^{2}$ and 3 
+$t_{2g}$  type orbitals a 100 iterations reach a neatly converged spread functional.
+
+The $sp^{3}d^{2}$ orbitals are directed along $\pm x, \pm y, \pm z$ axis 
+slightly shifted off the center of the atoms, the $xy$, $xz$ $yz$ orbitals are
+$t_{2g}$ like and centered on the atoms. An ab initio grid of 8x8x8 was sufficient
+to obtain well localized Wannier functions.
 
 \section{Recursion for Dislocations}
 For the BCC Metals \cite{terakura84} used the recursion method to compute the elastic constants.
