@@ -10,10 +10,10 @@ Theoretical Materials Science remains to be invented as a discipline, and for go
 
 The reason he supplies is that materials processing, historically, was a craft. 
 
-As a striking example of materials science as a craft we consider Roman concrete.
-Sometime over two millenia ago Roman engineers learned to manufacture concrete 
-from a mixture of volcanic sands called pozzolana,
-which take its name from Pozzuoli near Naples, mixed with quicklime, an aggregate, and seawater.
+Roman concrete presents a suitable example of craftsmanship.
+Roman engineers learned to manufacture concrete from a 
+particular mixture of volcanic sands called pozzolana,
+taking its name from Pozzuoli near Naples, mixed with quicklime, an aggregate, and seawater.
 This concrete was of striking quality. The pantheon today remains standing 
 built with the same concrete poured centuries before.
 This concrete was particularly resistant to degradation in the presence of moisture.
@@ -32,7 +32,7 @@ In each case the material practitioner's expertise was not accumulated based on 
 from first principles but based on experience, trial and error, and craft.
 
 A comprehensive atomic theory describing the way atoms bind, the forces acting on them, 
-and the techniques to solve these equations has only arisen in the last 100 years. 
+and the techniques to solve the equations which arise, has only arisen in the last 100 years. 
 Over the past 40 years the combination of the theory and access to computers 
 means the possibility of constructing accurate models of materials 
 systems beginning from the arrangment of the constituent atoms has
@@ -289,20 +289,29 @@ we see the number of citations approaches 100,000. Naturally that figure include
 double counting of citing work, on the other hand  we have not included cross citations between journals in many of the 
 figures quoted, so with some lucky canceellation the number is probably representative. 
 
-This parameterization is based on what I consider a highly abstract question: ``
-What might happen if we start squeezing electrons into an imaginary box?".
-This imaginary box has been pondered for close to a century now. The practical utility of these considerations is unreasonable. 
-The outcome of these considerations have resulted in a family of unremarkable curves that describe some energy relationship between
-the number density of electrons at a point in space and an energy. The practical consequence is this curve enables the
-structural, electronic, and vibrational properties of an enormous class of materials to be calculated with highly creditable accuracy.
+This parameterization is based on what may be considered an abstract question,
+``What might happen if we start squeezing electrons into an imaginary box?".
+This imaginary box has been pondered for close to a century now. 
+The practical utility of these considerations is unreasonable. 
+The outcome of these considerations have resulted in a family of 
+unremarkable curves that describe some energy relationship between
+the density of electrons at a point in space and an energy. 
+The practical consequence is this curve enables the
+structural, electronic, and vibrational properties of an 
+enormous class of materials to be calculated with creditable accuracy.
 
-How creditable this approach is returns again to point three. The theoretical justifications for the success of the approach are
-secondary to the fact that prior experience suggests these techniques work, and the rate of their acceptance and adoption
-seems to have tracked their usage in a positive feedback loop. 
+Just how creditable this approach is returns again to point three. 
+The theoretical justifications for the success of the approach are
+secondary to the fact that prior experience suggests these techniques work, 
+and the rate of their acceptance and adoption seems to have 
+tracked their usage in a positive feedback loop. 
 
 If you look through a typical density functional based electronic structure code it is interesting to look at the routine
 responsible for calculating the local exchange correlation potential. The input required is the 
-electronic density at a point in space and possibly the gradient of the density at a point. This 
+electronic density at a point in space \footnote{Beyond the local density
+approximation there a range of increasingly complex parameterizations and
+approximations to the exchange-correlation functional. For instance some functionals
+require the gradient of the density at a point in space.} This 
 density is inserted as the sole argument in a subroutine and a single number is returned. The curve
 returned has little more structure than that given in Fig.~\ref{fig:ldapz}. 
 %
@@ -323,18 +332,18 @@ materials composed of elements from across the periodic table. They have been
 used to compute all the properties of interest, cohesive energies, magnetic moments,
 etc. with varying degrees of success.
 
-Despite its apparent simplicity in all manner of crystalline systems 
+Despite its apparent simplicity, in all manner of crystalline systems, 
 this functional enables the theoretical
-prediction of very accurate ground state properties and structures. 
+prediction of accurate ground state properties and structures entirely from first principles. 
 There are trends at the moment to reparameterize the exchange-correlation functional
 in order that simulations return a better description of experimental data. The extent
-to which this reparameterization is helpful is debateable. Part of the appeal
-of the simplest local density approximations is that it is universal. Where a calculation
-fails to reproduce an experimental data point, and this failure is attributed to the
+to which this reparameterization is helpful is debateable. 
+
+Part of the appeal of the simplest local density approximations is that it is universal. 
+Where a calculation fails to reproduce an experimental data point, and this failure is attributed to the
 exchange correlation functional, it will be argued that applying a more sophisticated treatment
 is preferred to introducing a complicated reparameterization of the exchange correlation
-function, based on a mixture of theoretical and post hoc experimental 
-justification.
+function, based on a mixture of theoretical and post hoc experimental justification.
 
 \section{Bayesian Materials Science}
 The ubiquity of access to {\it ab initio} data has had a significant impact on 
@@ -344,7 +353,7 @@ appearance of publications which contain no original experimental work.
 
 This is partly down to the high level of specialization of contemporary 
 researchers and research groups. Previously, the distinction between
-an experimental materials scientist and a theoretical one was not so dramatic. 
+an experimental materials scientist and a theoretical one was not so clear cut. 
 In addition many important theoretical developments came 
 from the context of attempting to explain a new set of experimental data.
 %This paragraph needs research:
