@@ -33,6 +33,7 @@ exproc.x: exproc.o dencrs.o denqd.o fenval.o recsum.o termgn.o bndest.o bndref.o
 	cp ./exproc.x ../examples/exrecal/
 	cp ./exproc.x ../examples/exbccHrecal/
 	cp ./exproc.x ../examples/exbccHSrecal/
+	cp ./exproc.x ../examples/exbccrecal/
 
 exrecal.x: exrecal.o slkode.o equiv.o recal.o fccbnd.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o fcclat.o
 	$(FC) -o $@ $^ 
@@ -42,12 +43,10 @@ exbccHrecal.x: exbccHrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o set
                sksd.o skss.o addat.o selfs.o
 	$(FC) -o $@ $^ 
 	cp ./exbccHrecal.x ../examples/exbccHrecal/
-	cp ./exproc.x ../examples/exbccHrecal/
 
-exbccrecal.x: exbccrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o
+exbccrecal.x: exbccrecal.o slkode.o equiv.o recal.o bcclam.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o
 	$(FC) -o $@ $^ 
 	cp ./exbccrecal.x ../examples/exbccrecal/
-	cp ./exproc.x ../examples/exbccrecal/
 
 exprocS.x: exprocS.o dencrs.o denqd.o fenval.o recsum.o termgn.o bndest.o bndref.o\
           bndwt.o bndcrd.o cfgen.o cfgpgn.o plyval.o recqd.o recrts.o recwt.o numc.o numd.o\
@@ -59,9 +58,6 @@ exbccHSrecal.x: exbccHSrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o s
                sksd.o skss.o addat.o selfs.o
 	$(FC) -o $@ $^ 
 	cp ./exbccHSrecal.x ../examples/exbccHSrecal/
-	cp ./exprocS.x ../examples/exbccHSrecal/
-
-
 
 clean:
 	rm -f *.o *.x
