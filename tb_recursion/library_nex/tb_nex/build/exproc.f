@@ -2,9 +2,9 @@
 
       IMPLICIT REAL*8(A-H,O-Z)
 
-      DIMENSION A(15,5),B2(15,5),AA(15),BB2(15),WORK(15,6)
+      DIMENSION A(20,5),B2(20,5),AA(20),BB2(20),WORK(20,6)
 
-     1,ATR(15),BTR2(15),TABS(301,5),IWK(15),EB(2),IWK2(15)
+     1,ATR(20),BTR2(20),TABS(301,5),IWK(20),EB(2),IWK2(20)
 
       NPTS=301
 
@@ -25,7 +25,7 @@
 C     NP=1
 
 C  HL trying to get hydrogen working increasing NW may allow for more structure in DOS.
-      NW = 15
+      NW = 20
 
       DE=(EHI-ELO)/FLOAT(NPTS-1)
 
@@ -43,7 +43,7 @@ C
 
       READ(5,21)IWK
 
-21    FORMAT(15A4)
+21    FORMAT(20A4)
 
       WRITE(6,21)IWK
 
@@ -58,6 +58,8 @@ C
 2     FORMAT(5X,2E14.6)
 
 3     FORMAT(' INPUT CONTINUED FRACTION CFTS.',50(/1X,10F8.4))
+
+      WRITE(6,*) 'HL', LLIN
 
       WRITE(6,3)((A(I,J),B2(I,J),J=1,NP),I=1,LLIN)
 

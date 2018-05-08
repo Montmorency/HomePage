@@ -54,24 +54,23 @@ C DIFFERENT FROM THOSE IN THE BULK.
 
 C
 
-      LL=11
+      LL=15
 
       NED=25
 
       NNDIM=1500
 
-C      NNMX=15
       NNMX=25
 
       NP=5
 
       NTYPE=1
 
-      NX=6
+      NX=18
 
-      NY=6
+      NY=18
 
-      NZ=6
+      NZ=18
 
 C
 
@@ -160,11 +159,11 @@ C HERE GOES ADDING ADD ATOMS (COPYING EXORPEEL)
 
       NAT=NAT+1
 
-      CRD(3,NAT)=3.5
+      CRD(3,NAT)=9.5
 
-      CRD(2,NAT)=3.0
+      CRD(2,NAT)=9.0
 
-      CRD(1,NAT)=4.0
+      CRD(1,NAT)=10.0
 
       IZP(NAT)=-2
 
@@ -204,11 +203,11 @@ C  COMPUTE CONTINUED FRACTION
 C
 
 C  Start on Fe
-      DUM(1)=3.0
+      DUM(1)=9.0
 
-      DUM(2)=3.0
+      DUM(2)=9.0
 
-      DUM(3)=3.0
+      DUM(3)=9.0
 
 C  Start on H
 C     DUM(1)=4.0
@@ -463,7 +462,7 @@ C
 
 C
 
-C  COMPUTES THE OVERLAP MATRICES FOR THE ADD ATOM : P-D AND PP
+C  COMPUTES THE OVERLAP MATRICES FOR THE ADD ATOM : S-D AND SS
 
 C  ELECTRONS . SATISFIES THE SPEC OF HCAL FOR SETUP  AND ADDAT.
 
@@ -537,9 +536,9 @@ C HL ADAPATED FROM EXORPEEL
 
 C
 
-C  PAR(8) is this sd\sigma i think so?
+C  PAR(8) S D Sigma
 
-C  PAR(10) looks like ss selfenergy.
+C  PAR(10) SELF ENERGY OF S ELECTRON
 
 C  PAR(4)= P D SIGMA
 
