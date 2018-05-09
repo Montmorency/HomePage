@@ -44,7 +44,7 @@ exbccHrecal.x: exbccHrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o set
 	$(FC) -o $@ $^ 
 	cp ./exbccHrecal.x ../examples/exbccHrecal/
 
-exbccrecal.x: exbccrecal.o slkode.o equiv.o recal.o bcclam.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o
+exbccrecal.x: exbccrecal.o slkode.o equiv.o recal.o bccpet.o bcclam.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o
 	$(FC) -o $@ $^ 
 	cp ./exbccrecal.x ../examples/exbccrecal/
 

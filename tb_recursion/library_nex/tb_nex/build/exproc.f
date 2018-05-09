@@ -12,13 +12,13 @@
 
       LL=15
 
-      ELO=-0.5
+      ELO=-0.2
 
-      EHI=0.25
+      EHI=0.2
 
       EPS=5.0E-12
 
-      ACC=1.0E-5
+      ACC=1.0E-6
 
       NP=5
 
@@ -91,7 +91,7 @@ C
 
 C     NBP1=2 number of bands
 CHL  For BCC had to up this parameters...
-      NBP1=5
+      NBP1=15
 
       LTR=LL
 
