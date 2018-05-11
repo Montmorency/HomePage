@@ -26,7 +26,7 @@ C ATOMS.
 
 C
 
-      LL=15
+      LL=20
 
       NED=20
 

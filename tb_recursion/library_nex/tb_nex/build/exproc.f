@@ -2,6 +2,10 @@
 
       IMPLICIT REAL*8(A-H,O-Z)
 
+C     DIMENSION A(15,5),B2(15,5),AA(15),BB2(15),WORK(15,6)
+
+C    1,ATR(15),BTR2(15),TABS(201,5),IWK(15),EB(2),IWK2(15)
+
       DIMENSION A(15,5),B2(15,5),AA(15),BB2(15),WORK(15,6)
 
      1,ATR(15),BTR2(15),TABS(201,5),IWK(15),EB(2),IWK2(15)
@@ -10,7 +14,7 @@
 
       ALP=0.5
 
-      LL=15
+      LL=20
 
       ELO=-1.0
 
