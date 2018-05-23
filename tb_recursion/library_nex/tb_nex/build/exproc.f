@@ -2,34 +2,30 @@
 
       IMPLICIT REAL*8(A-H,O-Z)
 
-C     DIMENSION A(15,5),B2(15,5),AA(15),BB2(15),WORK(15,6)
+      DIMENSION A(20,5),B2(20,5),AA(20),BB2(20),WORK(20,6)
+ 
+     1,ATR(20),BTR2(20),TABS(301,5),IWK(20),EB(2),IWK2(20)
 
-C    1,ATR(15),BTR2(15),TABS(201,5),IWK(15),EB(2),IWK2(15)
-
-      DIMENSION A(15,5),B2(15,5),AA(15),BB2(15),WORK(15,6)
-
-     1,ATR(15),BTR2(15),TABS(201,5),IWK(15),EB(2),IWK2(15)
-
-      NPTS=201
+      NPTS=301
 
       ALP=0.5
 
       LL=20
 
-      ELO=-1.0
+      ELO=-0.5
 
-      EHI=1.0
+      EHI=0.2
 
       EPS=5.0E-12
 
-      ACC=1.0E-5
+      ACC=1.0E-6
 
       NP=5
 
 C     NP=1
 
 C  HL trying to get hydrogen working increasing NW may allow for more structure in DOS.
-      NW = 15
+      NW = 20
 
       DE=(EHI-ELO)/FLOAT(NPTS-1)
 
@@ -47,7 +43,7 @@ C
 
       READ(5,21)IWK
 
-21    FORMAT(15A4)
+21    FORMAT(20A4)
 
       WRITE(6,21)IWK
 
@@ -63,6 +59,8 @@ C
 
 3     FORMAT(' INPUT CONTINUED FRACTION CFTS.',50(/1X,10F8.4))
 
+      WRITE(6,*) 'HL', LLIN
+
       WRITE(6,3)((A(I,J),B2(I,J),J=1,NP),I=1,LLIN)
 
 C
@@ -72,7 +70,7 @@ C  COMPUTE THE SUM OF THE INPUT DENSITIES AND STORE THE RESULTING
 C  COEFFICIENTS IN AA AND BB2
 
 C
-      CALL RECSUM(A,B2,NW,LL,NP,AA,BB2,EPS,TABS,201)
+      CALL RECSUM(A,B2,NW,LL,NP,AA,BB2,EPS,TABS,301)
 
 C IF LL NEGATIVE THEN RECQD FAILED WITH TOO FEW ROOTS.
 
@@ -93,7 +91,7 @@ C
 
 C     NBP1=2 number of bands
 CHL  For BCC had to up this parameters...
-      NBP1=5
+      NBP1=15
 
       LTR=LL
 
@@ -101,7 +99,7 @@ CHL  For BCC had to up this parameters...
 
       CALL TERMGN(AA,BB2,LTR,EPS,ERR,30,EDGE,WIDTH,WEIGHT,NBP1,ATR,
 
-     1 BTR2,IWK,WORK,NW,TABS,201,IWK2)
+     1 BTR2,IWK,WORK,NW,TABS,301,IWK2)
 
 
       WRITE(6,99)EDGE,WIDTH,WEIGHT,ERR,NBP1

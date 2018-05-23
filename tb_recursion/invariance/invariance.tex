@@ -615,23 +615,23 @@ P. L. Chebyshev, Bull. Acad. Imp. Sci. St. Petersbourg 1, 193 (1859)}
 
 \section{Analytic Recursion}
 \subsection{The Constant Chain}
-The simplest chain model that can be handled analytically is the constant chain. It is 
-serves as the paradigm of all the recursion calculations that will be undertaken. The
-problem is always to determine the coefficients in the expansion of the chain.
+The simplest chain model that can be handled analytically is the constant chain and it
+serves as the paradigm of all the recursion calculations that will be undertaken. 
+The constant chain corresponds to the general continued fraction written:
 %
 \begin{equation}
 \label{eq:constantchain}
 G_{0}(E) = \cfrac{1}{E-a_{0}-\cfrac{b_{1}^2}{E-a_{1}-\cfrac{b_{2}^{2}}{E-a_{2}-\cfrac{b_{3}^{2}}{...}}}},
 \end{equation}
 %
-where $a_{0}=a_{1}=...=a_{n}$ and similarly for the coefficients $b_{n}^{2}$. In this chain an electron
-experiences the same pull to every site on the chain the $a$ coefficients, and can hop from one site to 
-the next with the same hopping amplitude $b^{2}_{n}$. That all the coefficients are the same means a closed form solution
-can easily be found by recognizing that Eq.~\ref{eq:constantchain} can be written as:
+where $a_{0}=a_{1}=...=a_{n}$ and $b_{0}=b_{1}=...=b_{n}$. In this chain an electron
+experiences the same pull to every site on the chain, and can hop from one site to 
+the next with the same hopping amplitude $b^{2}_{n}$. That all the coefficients are the same 
+means a closed form solution can easily be found by recognizing that Eq.~\ref{eq:constantchain} can be written as:
 \begin{equation}
 G_{0}(E) = \frac{1}{E-a-b^{2}G_{0}(E)},
 \end{equation}
-and finally solved:
+and rearranged to give:
 \begin{equation}
 G_{0}(E) = (\frac{E-a}{2b^{2}}) \pm \sqrt{\frac{1}{4}(\frac{E-a}{b^{2}})^{2} - \frac{1}{b^{2}}}.
 \end{equation}
@@ -647,6 +647,7 @@ and imaginary part of the Green's function plotted in Fig.~\ref{fig:gfconstchain
 \end{center}
 \end{figure}
 %
+
 A great deal of interesting physics can be obtained directly from the chain model. In particular with reference 
 to the inclusion of an impurity or vacancy state in the bulk, or an atom added to the surface. To couple 
 an impurity to a constant chain we allow the first two coefficients $a_{0}$ and $b_{1}$ to vary, 
@@ -777,7 +778,7 @@ The contribution of the electronic states to the total energy are also plotted.
 \begin{figure}
 \begin{center}
 \includegraphics[width=\columnwidth]{./invariance/rec_examples/exrecal/combined.png}
-\caption{(a) 75 atom cuboid cluster of FCC. Green atoms are in an FCC environment, and have a complete
+\caption{(a) 75 atom cuboid cluster of face centered cubic (FCC) crystal. Green atoms are in an FCC environment, and have a complete
 set of FCC neighbours, grey atoms are surface atoms of the cluster and a have a lower coordination number.
 (b) Same cluster with an extra Ni atom and two additional atoms placed on the surface at two different sites. 
 \label{fig:cuboid}}

@@ -1,0 +1,43 @@
+      INTEGER FUNCTION BCCPET(I,J,R2,DD)
+
+C     PETTIFOR D PARAMETERS AS REPORTED IN HAYDOCK KELLY SURFACE SCIENCE 38 (1973) 139-148  
+
+      REAL LSDA
+
+      DIMENSION DD(13)
+    
+      LSDA = 1.00
+
+      IF(R2-4.5)1,3,3
+
+3     BCCPET=0
+
+      RETURN
+
+1     BCCPET=1
+
+      IF(R2-3.5)2,4,4
+
+4     DD(1)=-0.01341
+
+      DD(2)=0.00487
+
+      DD(3)=-0.00049
+
+      RETURN
+
+2     IF(R2.LT.1.0E-4)GOTO 5
+
+      DD(1)=-0.03248
+
+      DD(2)=0.01538
+
+      DD(3)=-0.002
+
+      RETURN
+
+5     DD(11)=0.0
+
+      RETURN
+
+      END
