@@ -12,24 +12,20 @@
 
       LL=15
 
-      ELO=-1.0
+      ELO=-0.5
 
-      EHI=1.0
+      EHI=0.1
 
       EPS=5.0E-12
 
-      ACC=1.0E-5
-
-C     NP=5
+      ACC=1.0E-6
 
       NP=1
 
 C  HL trying to get hydrogen working increasing NW may allow for more structure in DOS.
-      NW = 15
+      NW=15
 
       DE=(EHI-ELO)/FLOAT(NPTS-1)
-
-C
 
 C  LL IS THE LENGTH OF THE C.F. , NP IS THE NUMBER OF DIFFERENT C.F.S
 
@@ -38,8 +34,6 @@ C  ELO-EHI IS THE RANGE OF ENERGIES OF INTEREST,
 C  NPTS IS THE NUMBER OF POINTS TO BE USED IN PLOTTING
 
 C  EPS IS THE ACCURACY REQUIRED
-
-C
 
       READ(5,21)IWK
 
@@ -63,19 +57,19 @@ C
 
 C
 
-C  COMPUTE THE SUM OF THE INPUT DENSITIES AND STORE THE RESULTING
+C COMPUTE THE SUM OF THE INPUT DENSITIES AND STORE THE RESULTING
 
-C  COEFFICIENTS IN AA AND BB2
+C COEFFICIENTS IN AA AND BB2
 
-C
-C     CALL RECSUM(A,B2,NW,LL,NP,AA,BB2,EPS,TABS,301)
-C HL NO NEED TO SUM FOR Single S orbital.
+C CALL RECSUM(A,B2,NW,LL,NP,AA,BB2,EPS,TABS,301)
+C HL NO NEED TO SUM MULTIPLE CFs FOR SINGLE S ORBITAL.
 
 C IF LL NEGATIVE THEN RECQD FAILED WITH TOO FEW ROOTS.
+      DO 23 I=1,LL
+      AA(I) = A(I,1)
+23    BB2(I) = B2(I,1)
 
-      AA(:) = A(:,1)
-      BB2(:) = B2(:,1)
-
+      WRITE(6,*) AA, BB2
       WRITE(6,2)
 
       WRITE(6,12)LL
@@ -92,7 +86,7 @@ C
 
 C     NBP1=2 number of bands
 CHL  For BCC had to up this parameters...
-      NBP1=5
+      NBP1=3
 
       LTR=LL
 

@@ -10,7 +10,7 @@
 
       ALP=0.5
 
-      LL=15
+      LL=20
 
       ELO=-0.2
 
@@ -20,9 +20,9 @@
 
       ACC=1.0E-6
 
-      NP=5
+C     NP=5
 
-C     NP=1
+      NP=1
 
 C  HL trying to get hydrogen working increasing NW may allow for more structure in DOS.
       NW = 20
@@ -59,17 +59,14 @@ C
 
 3     FORMAT(' INPUT CONTINUED FRACTION CFTS.',50(/1X,10F8.4))
 
-      WRITE(6,*) 'HL', LLIN
-
       WRITE(6,3)((A(I,J),B2(I,J),J=1,NP),I=1,LLIN)
-
-C
 
 C  COMPUTE THE SUM OF THE INPUT DENSITIES AND STORE THE RESULTING
 
 C  COEFFICIENTS IN AA AND BB2
 
-C
+C  NO NEED TO SUM DIFFERENT CONTINUE FRACTIONS
+
       CALL RECSUM(A,B2,NW,LL,NP,AA,BB2,EPS,TABS,301)
 
 C IF LL NEGATIVE THEN RECQD FAILED WITH TOO FEW ROOTS.
@@ -91,7 +88,7 @@ C
 
 C     NBP1=2 number of bands
 CHL  For BCC had to up this parameters...
-      NBP1=15
+      NBP1=3
 
       LTR=LL
 
