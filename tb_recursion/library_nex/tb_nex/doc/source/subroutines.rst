@@ -3,100 +3,102 @@ Specification of Subroutines
 
 .. f:subroutine:: RECAL(HOP,PSI,PMN,M,A,B2,LL)
 
-  Computes the tri-diagonalization of a large sparse symmetric matrix
-  using the recursion (or Lanczos or Paige's) method:
+Computes the tri-diagonalization of a large sparse symmetric matrix
+using the recursion (or Lanczos or Paige's) method:
 
-  DIMENSION PSI(M), PMN(M), A(LL), B2(LL)
+DIMENSION PSI(M), PMN(M), A(LL), B2(LL)
 
-  .. math::
+.. math::
+  a_n = <\psi_{n},H \psi_{n}> \\
+  b_{n+1}\psi_{n+1} = (H-a_{n})\psi_{n} - b_{n}\psi_{n-1}\\
+  <\psi_{n+1},\psi_{n+1}> = 1
 
-    a_n = <\psi_{n},H \psi_{n}> \\
-    b_{n+1}\psi_{n+1} = (H-a_{n})\psi_{n} - b_{n}\psi_{n-1}\\
-    <\psi_{n+1},\psi_{n+1}> = 1
-
-
-  This routine must be accompanied by a routine segment hop to carry
-  out the steps of this process.
+This routine must be accompanied by a routine segment hop to carry
+out the steps of this process.
 
 .. f:subroutine:: RECSUM(AC,BC,NA,LL,NP,A,B2,EPS,WK,NW)
 
-	Computes the tridiagonalisation (continued fraction, Jacobi matrix)
-	corresponding to the sum of NP tridiagonalisations :math:`w_{m}(x)`.
+Computes the tridiagonalisation (continued fraction, Jacobi matrix)
+corresponding to the sum of NP tridiagonalisations :math:`w_{m}(x)`.
 
-	.. math::
+.. math::
+  \sqrt{b_{n+1,m}} P_{n+1,m}(x) = (x-a_{n,m})P_{n,m}(x)-\sqrt(b_{n,m})P_{n-1,m}(x)
+  w(x) = \sum_{m=1}^{NC} b(0,m) w_{m}(x)
 
-     \sqrt{b_{n+1,m}} P_{n+1,m}(x) = (x-a_{n,m})P_{n,m}(x)-\sqrt(b_{n,m})P_{n-1,m}(x)
-     w(x) = \sum_{m=1}^{NC} b(0,m) w_{m}(x)
+::
 
-	DIMENSION AC(NA,NP),BC(NA,NP),WK(NW),A(NA),B(NA)
+  DIMENSION AC(NA,NP),BC(NA,NP),WK(NW),A(NA),B(NA)
   AC    AC(N,M) = A(N-1,M),  N=1,M,  M=1,NP
   BC    BC(N,M) = B(N-1,M)**2,  N=1,LL,  M=1,NP
   NA    FIRST DIMENSION OF ARRAYS AC AND BC IN CALLING PROGRAM
   LL*   ON INPUT : THE ABSOLUTE VALUE GIVES LENGTH +1 OF EACH
-               TRIDIAGONALISATION. IF >0 M=LL-1 ;  IF <0 M=LL
+        TRIDIAGONALISATION. IF >0 M=LL-1 ;  IF <0 M=LL
         ON OUTPUT: LENGTH OF OUTPUT TRIDIAGONALISATION ,
-          IF NEGATIVE THEN RECQD FAILED WITH TOO FEW ROOTS
+        IF NEGATIVE THEN RECQD FAILED WITH TOO FEW ROOTS
   NP    NUMBER OF CONTINUED FRACTIONS
-  A*    A(I) = A(I-1), I=1,M, IN TRIDIAGONALISATION CORRESPONDING TO W(X)
-  B2*   B2(I) = B(I-1)**2, I=1,LL, IN TRIDIAGONALISATION CORRESPONDING TO W(X)
+  A*    A(I) = A(I-1), I=1,M, IN TRIDIAGONALISATION 
+        CORRESPONDING TO W(X)
+  B2*   B2(I) = B(I-1)**2, I=1,LL, IN TRIDIAGONALISATION 
+        CORRESPONDING TO W(X)
   EPS   ACCURACY REQUIRED IN COMPUTATION
   WK*   REAL WORK ARRAY OF LENGTH AT LEAST 5*LL*NP
-	NW    LENGTH OF ARRAY WK
+  NW    LENGTH OF ARRAY WK
 
-	Note that this routine uses RECQD, CFGEN, RECRTS, NUMC, NUMD.
+Note that this routine uses RECQD, CFGEN, RECRTS, NUMC, NUMD.
 
 .. f:subroutine:: TERMGN (A,B2,LL,EPS,ERR,ITMX,AA,RNG,WB,NBP1,AM,BM2,IC,WK,NW,BWK,NBD,IWK)
 
-    Generates an analytic terminator to a given continued fraction. The form of the
-    terminator is a sum of square roots of quadratics, F(E), as in :f:subr:`DENCRS`, 
-    with parameters to be adjusted to match the apparent bands gaps in the given
-    continued fraction. The local weight (as calculated in :f:subr:`RECWT` of F(E)
-    is matched to that of the given continued fraction (A(I), B2(I)) at E values
-    in the Neighbourhood of band edges and local minima. This routine may
-    serve as an example for the matching of other forms of terminating function
-    or matching algoirithms.
+Generates an analytic terminator to a given continued fraction. The form of the
+terminator is a sum of square roots of quadratics, F(E), as in :f:subr:`DENCRS`, 
+with parameters to be adjusted to match the apparent bands gaps in the given
+continued fraction. The local weight (as calculated in :f:subr:`RECWT` of F(E)
+is matched to that of the given continued fraction (A(I), B2(I)) at E values
+in the Neighbourhood of band edges and local minima. This routine may
+serve as an example for the matching of other forms of terminating function
+or matching algorithms.
 
-    A    DIAGONAL RECURSION COEFFICIENTS I=1,LL-1
-    B2   OFF-DIAGONAL RECURSION COEFFICIENTS I=1,LL
-    LL*  LENGTH OF GIVEN RECURSION . ON OUTPUT CONTAINS THE LENGTH
-         OF THE COMPUTED CONTINUED FRACTION WHICH IF DIFFERENT
-         FROM INPUT INDICATES FAILURE OF CFGPGN
+::
 
-    EPS  MACHINE ACCURACY
-    ERR* ACCURACY REQUIRED IN LOCATION OF BAND EDGES ,
-        ON OUTPUT THE ESTIMATED ACCURACY, SUBJECT TO
-
-    ITMX MAXIMUM NUMBER OF ITERATIONS IN LOCATION
-    AA*  LIST OF BAND LEFT EXTREMA
-    RNG* LIST OF BAND WIDTHS
-    WB*  LIST OF BAND WEIGHTS
-    NBP1* 1+NUMBER OF BANDS ,MAXIMUM ON INPUT AND
-          ON OUTPUT CONTAINS THE 1+NUMBER COMPUTED UNLESS THIS
-          EXCEEDS THE INPUT NUMBER WHEN A NEGATIVE VALUE
-          INDICATES THE NUMBER OF BANDS IDENTIFIED BUT NOT
-          COMPUTED. A ZERO VALUE INDICATES A FAILURE IN THE
-          SEARCH PROCEDURE.(INCREASING NW MAY HELP)
-    AM*  DIAGONAL C.F. COEFFICIENTS OF MATCHING FUNCTION
-    BM2* OFF-DIAGONAL C.F. COEFFICIENTS OF MATCHING FUNCTION
-    IC*  WORK ARRAY OF LENGTH AT LEAST NW
-    WK*  WORK ARRAY OF LENGTH AT LEAST LL*2*MAX(3,NBP1)
-    NW   FIRST DIMENSION OF WK. NO.OF POINTS USED IN INITIAL
-         SCAN FOR BAND EXTREMA
-    BWK* WORK ARRAY OF MATCHING POINTS OF DIMENSION AT LEAST 8*NBP1
-    NBD  FIRST DIMENSION OF BWK : AT LEAST 2*NBP1
-    IWK* INTEGER WORK ARRAY OF LENGTH AT LEAST LL
-
-
-
+  A    DIAGONAL RECURSION COEFFICIENTS I=1,LL-1
+  B2   OFF-DIAGONAL RECURSION COEFFICIENTS I=1,LL
+  LL*  LENGTH OF GIVEN RECURSION . ON OUTPUT CONTAINS THE LENGTH
+       OF THE COMPUTED CONTINUED FRACTION WHICH IF DIFFERENT
+       FROM INPUT INDICATES FAILURE OF CFGPGN
+  
+  EPS  MACHINE ACCURACY
+  ERR* ACCURACY REQUIRED IN LOCATION OF BAND EDGES ,
+      ON OUTPUT THE ESTIMATED ACCURACY, SUBJECT TO
+  
+  ITMX MAXIMUM NUMBER OF ITERATIONS IN LOCATION
+  AA*  LIST OF BAND LEFT EXTREMA
+  RNG* LIST OF BAND WIDTHS
+  WB*  LIST OF BAND WEIGHTS
+  NBP1* 1+NUMBER OF BANDS ,MAXIMUM ON INPUT AND
+        ON OUTPUT CONTAINS THE 1+NUMBER COMPUTED UNLESS THIS
+        EXCEEDS THE INPUT NUMBER WHEN A NEGATIVE VALUE
+        INDICATES THE NUMBER OF BANDS IDENTIFIED BUT NOT
+        COMPUTED. A ZERO VALUE INDICATES A FAILURE IN THE
+        SEARCH PROCEDURE.(INCREASING NW MAY HELP)
+  AM*  DIAGONAL C.F. COEFFICIENTS OF MATCHING FUNCTION
+  BM2* OFF-DIAGONAL C.F. COEFFICIENTS OF MATCHING FUNCTION
+  IC*  WORK ARRAY OF LENGTH AT LEAST NW
+  WK*  WORK ARRAY OF LENGTH AT LEAST LL*2*MAX(3,NBP1)
+  NW   FIRST DIMENSION OF WK. NO.OF POINTS USED IN INITIAL
+       SCAN FOR BAND EXTREMA
+  BWK* WORK ARRAY OF MATCHING POINTS OF DIMENSION AT LEAST 8*NBP1
+  NBD  FIRST DIMENSION OF BWK : AT LEAST 2*NBP1
+  IWK* INTEGER WORK ARRAY OF LENGTH AT LEAST LL
 
 
 .. f:subroutine:: SETUP(CRD,ND,NAT,EV,NTYPE,IZP,MM,NN,NND,NM,HCAL,NGBR,IOVPAR,EE,NP,NED,NE,VEC,IW)
 
-  Assembles the Hamiltonian matrix from the user supplied routines EV, HCAL, NGBR, IOVPAR and
-  the library routines :f:subr:`NNCAL` and :f:subr:`MMCAL`.
+Assembles the Hamiltonian matrix from the user supplied routines EV, HCAL, NGBR, IOVPAR and
+the library routines :f:subr:`NNCAL` and :f:subr:`MMCAL`.
+
+::
 
   ARGUMENTS OF SETUP : (* INDICATES OVERWRITTEN BY THE ROUTINE)
-  
+
   CRD   LATTICE COORDINATES
   ND    FIRST DIMENSION OF CRD
   NAT   NO.OF ATOMS IN THE CLUSTER
@@ -111,7 +113,7 @@ Specification of Subroutines
   NND   FIRST DIMENSION OF ARRAYS MM & NN
   NM*   MAX NO. OF ATOMS CONNECTED BY INTERACTIONS.  ON OUTPUT
         CONTAINS ACTUAL MAX NO. GENERATED
-
+  
   HCAL  NAME OF A SUBROUTINE TO CALCULATE THE  INTERACTION BETWEEN
         TWO ATOMS. ARGUMENTS ARE
             V     VECTOR POSITION(I) - POSTITION(J)
@@ -120,7 +122,7 @@ Specification of Subroutines
             E*    OUTPUT INTERACTION MATRIX
                       H OPERATING ON PSI(J) EFFECT AT I
          IOVPAR    NAME OF FUNCTION SUPPLING INFORMATION TO HCAL
-
+  
   NGBR  NAME OF A FUNCTION TO SUPPLY INTERACTION INFORMATION TO NNCAL
         ARGUMENTS ARE :
             II    'TYPE' OF ATOM I
@@ -129,7 +131,7 @@ Specification of Subroutines
             DD    DUMMY ARGUMENT
             NGBR  TAKES THE VALUE 1 IF I & J ARE NEIGHBOURS
                   AND 0 OTHERWISE
-
+  
   EE    LIST OF INTERACTION MATRICES
   NP    FIRST 2 DIMENSIONS OF ARRAY EE
   NED   LAST DIMENSION OF ARRAYS EE,IW,VEC
@@ -140,13 +142,16 @@ Specification of Subroutines
 
 .. f:subroutine:: NNCAL(CRD,NDIM,NAT,IZP,NN,ND,NM,NGBR)
   
-  Calculates the 'NEAREST NEIGHBOUR' map of a lattice, given
-  a subroutine defining 'neighbour'. It also extends a map
-  generated by a previous call, in which case added atoms
-  are indicated by a negative value of IZP.
+Calculates the 'NEAREST NEIGHBOUR' map of a lattice, given
+a subroutine defining 'neighbour'. It also extends a map
+generated by a previous call, in which case added atoms
+are indicated by a negative value of IZP.
+
+
+::
 
   ARGUMENTS: (* INDICATES OVERWRITING BY THE SUBROUTINE)
-
+  
   CRD(I,J)  LATTICE COORDINATES (I=1,3),J=1,NAT
   NDIM      FIRST DIMENSION OF ARRAY CRD >OR= 3
   NAT       NUMBER OF LATTICE POINTS
@@ -154,11 +159,11 @@ Specification of Subroutines
             IF IZP(I) IS NEGATIVE THE ABSOLUTE VALUE IS TAKEN
             AND ONLY THOSE ATOMS WITH NEGATIVE IZP ARE CONSIDERED
             FOR MODIFICATIONS TO NN
-
+  
   NN*       'NEAREST NEIGHBOUR MAP' :
              NN(I,1) = 1+NUMBER OF NEIGHBOURS OF SITE I
              NN(I,J),J=2,NN(I,1) LIST OF SITES CONNECTED TO SITE I
-
+  
   ND        FIRST DIMENSION OF ARRAY NN
   NM*       SECOND DIMENSION OF ARRAY NN (MAX. NO. OF NEIGHBOURS +1)
             ON OUTPUT CONTAINS ACTUAL MAX.NO. OF NEIGHBOURS +1
@@ -166,23 +171,25 @@ Specification of Subroutines
 
 .. f:subroutine:: ADDAT(CRD,ND,NAT,EV,IZP,MM,NN,NND,NM,NGBR,NE,EE,NP,VEC,IW,NED,OVPAR,HCAL)
 
-  Extends the Hamiltonian matrix from the user supplied rouines EV, HCAL, NGBR and IOVPAR,
-  and the library routines :f:subr:`NNCAL` and :f:subr:`MMCAL`. This assumes it has already
-  been set up by subroutine :f:subr:`SETUP` in the arrays, MM, NN, EE, VEC, and IW.
+Extends the Hamiltonian matrix from the user supplied routines EV, HCAL, NGBR and IOVPAR,
+and the library routines :f:subr:`NNCAL` and :f:subr:`MMCAL`. This assumes it has already
+been set up by subroutine :f:subr:`SETUP` in the arrays, MM, NN, EE, VEC, and IW.
+
+::
 
   ARGUMENTS OF ADDAT : (* INDICATES OVERWRITTEN BY THE ROUTINE)
-
+  
   CRD  LATTICE COORDINATES
   ND   FIRST DIMENSION OF CRD
   NAT  NO.OF ATOMS IN THE CLUSTER
   EV   LOGICAL FUNCTION OF 2 ARGUMENTS, BOTH REAL ARRAYS OF LENGTH 3
        RETURNING THE VALUE .TRUE. IF THE ARRAYS ARE EQUIVALENT
        AND .FALSE. IF NOT.
-
+  
   IZP  THE ABSOLUTE VALUE GIVES 'TYPE' OF EACH ATOM
           IF THE SIGN IS + THEN THE ATOM IS ASSUMED PART OF THE ORIGINAL CLUSTER
           IF THE SIGN IS - THEN THE ATOM  HAS ITS CONNECTIVITY AND INTERACTIONS COMPUTED
-
+  
   MM*  IS THE INTERACTION MAP GENERATED BY MMCAL
   NN*  IS THE NEIGHBOUR MAP GENERATED BY NNCAL
   NND  FIRST DIMENSION OF ARRAYS MM & NN
@@ -194,10 +201,10 @@ Specification of Subroutines
             JJ    'TYPE' OF ATOM J
             R2    SQUARE OF DISTANCE FROM I TO J
             DD    DUMMY ARGUMENT
-
+  
          NGBR  TAKES THE VALUE 1 IF I & J ARE NEIGHBOURS
                AND 0 OTHERWISE
-
+  
   NE*   NO. OF DISTINCT DISPLACEMENT VECTORS (MATRICES) ALREADY FOUND
         ON OUTPUT CONTAINS THE NEW TOTAL NUMBER FOUND
   EE*   LIST OF INTERACTION MATRICES
@@ -225,7 +232,7 @@ Specification of Subroutines
                 DD(10)  SS SIGMA
                 DD(11)  D SELF ENERGY
                 DD(12)  P SELF ENERGY
-
+  
   HCAL  NAME OF A SUBROUTINE TO CALCULATE THE  INTERACTION BETWEEN
     TWO ATOMS. ARGUMENTS ARE
       V    VECTOR POSITION(I) - POSTITION(J)
@@ -238,90 +245,93 @@ Specification of Subroutines
 
 .. f:subroutine:: MMCAL(CRD,NDIM,NAT,NN,ND,NM,EV,IZP,NMAT,MM,VEC,IW)
 
-  Computes an index of distinct vectors linking neighbouring sites
-  in a given lattice. The vectors are computed and indexed according to
-  the 'type' (as defined by IZP) of the terminal atoms as well as by the
-  vector components. Thus if there are 3 types of atoms linked in all
-  pair combinations by equivalent vectors, all combinations will occur
-  in the index. (i.e. 12 entries including both senses of the vector)
-  if any of the 'types' in IZP are negative, it is assumed that
-  MMCAL has already been called for a subcluster of the current cluster
-  and that those atoms with negative izp are new additions whose
-  interactions are to be computed (see :f:subr:`ADDAT` for an example of this
-  usage).
+Computes an index of distinct vectors linking neighbouring sites
+in a given lattice. The vectors are computed and indexed according to
+the 'type' (as defined by IZP) of the terminal atoms as well as by the
+vector components. Thus if there are 3 types of atoms linked in all
+pair combinations by equivalent vectors, all combinations will occur
+in the index. (i.e. 12 entries including both senses of the vector)
+if any of the 'types' in IZP are negative, it is assumed that
+MMCAL has already been called for a subcluster of the current cluster
+and that those atoms with negative izp are new additions whose
+interactions are to be computed (see :f:subr:`ADDAT` for an example of this
+usage).
 
-  Arguments: 
-    INTEGER*2 NN(ND,NM),MM(ND,NM),IZP(NAT),IW(2,NMAT)
-    DIMENSION CRD(NDIM,NAT),VEC(NDIM,NMAT)
-    LOGICAL EV
-    COMMON /BLKNNM/NNMAT
+::
 
-    CRD(I,J)  COORDINATES OF THE LATTICE (I=1,NDIM) ,J=1,NAT
-    NDIM    FIRST DIMENSION OF ARRAYS CRD AND VEC
-    NAT     NUMBER OF SITES IN THE LATTICE
-    NN      NEAREST NEIGHBOUR MAP AS CALCULATED BY NNCAL :
-            NN(I,1)=1+NO.OF NEIGHBOURS OF SITE I
-            NN(I,J),J=2,NN(I,1) LISTS THE NEIGHBOURS OF SITE I
+  INTEGER*2 NN(ND,NM),MM(ND,NM),IZP(NAT),IW(2,NMAT)
+  DIMENSION CRD(NDIM,NAT),VEC(NDIM,NMAT)
+  LOGICAL EV
+  COMMON /BLKNNM/NNMAT
 
-    ND      FIRST DIMENSION OF ARRAY NN
-    NM      SECOND DIMENSION OF ARRAY NN
-    EV      LOGICAL FUNCTION (DECLARED EXTERNAL IN THE CALLING ROUTINE)
-            WITH 2 ARGUMENTS ,EACH A REAL ARRAY OF LENGTH NDIM, RETURNING
-            THE VALUE .TRUE. IF ITS ARGUMENTS ARE THE 'SAME'
-            AND  .FALSE. IF NOT. THE ARGUMENTS MUST BE UNCHANGED.
+  CRD(I,J)  COORDINATES OF THE LATTICE (I=1,NDIM) ,J=1,NAT
+  NDIM    FIRST DIMENSION OF ARRAYS CRD AND VEC
+  NAT     NUMBER OF SITES IN THE LATTICE
+  NN      NEAREST NEIGHBOUR MAP AS CALCULATED BY NNCAL :
+          NN(I,1)=1+NO.OF NEIGHBOURS OF SITE I
+          NN(I,J),J=2,NN(I,1) LISTS THE NEIGHBOURS OF SITE I
 
-    IZP     IZP(I) ABSOLUTE VALUE GIVES 'TYPE' OF I TH LATTICE SITE
-            IF ATOMS ARE BEING ADDED TO AN EXISTING CLUSTER THEN A
-            NEGATIVE SIGN INDICATES AN ADDED ATOM.
+  ND      FIRST DIMENSION OF ARRAY NN
+  NM      SECOND DIMENSION OF ARRAY NN
+  EV      LOGICAL FUNCTION (DECLARED EXTERNAL IN THE CALLING ROUTINE)
+          WITH 2 ARGUMENTS ,EACH A REAL ARRAY OF LENGTH NDIM, RETURNING
+          THE VALUE .TRUE. IF ITS ARGUMENTS ARE THE 'SAME'
+          AND  .FALSE. IF NOT. THE ARGUMENTS MUST BE UNCHANGED.
 
-    NMAT*   ON  A FIRST CALL THE MAXIMUM NUMBER OF DISTINCT VECTORS
-            ALLOWED. SUBSEQUENTLY THE NUMBER PREVIOUSLY CALCULATED(AS O/P)
-            ON OUTPUT THE ACTUAL NUMBER OF VECTORS CALCULATED
-              IF 0 THEN NOT ENOUGH STORE HAS BEEN ALLOWED
-              AND NMAT MUST BE INCREASED.
+  IZP     IZP(I) ABSOLUTE VALUE GIVES 'TYPE' OF I TH LATTICE SITE
+          IF ATOMS ARE BEING ADDED TO AN EXISTING CLUSTER THEN A
+          NEGATIVE SIGN INDICATES AN ADDED ATOM.
 
-    MM*     INDEX OF VECTORS LINKING NEIGHBOURING SITES:
-            MM(I,J)= K, THE INDEX OF THE VECTOR STORED IN VEC SUCH
-            THAT VEC(K)=SITE VECTOR(NN(I,J)) - SITE VECTOR(I)  ,J=2,NN(I,1)
+  NMAT*   ON  A FIRST CALL THE MAXIMUM NUMBER OF DISTINCT VECTORS
+          ALLOWED. SUBSEQUENTLY THE NUMBER PREVIOUSLY CALCULATED(AS O/P)
+          ON OUTPUT THE ACTUAL NUMBER OF VECTORS CALCULATED
+            IF 0 THEN NOT ENOUGH STORE HAS BEEN ALLOWED
+            AND NMAT MUST BE INCREASED.
 
-    VEC(R,K)* LIST OF DISTINCT VECTORS  ,(R=1,NDIM) , K=1,NMAT
-    IW(1,K)*  'TYPE' OF ATOM I AT ONE END OF THE K TH VECTOR
-    IW(2,K)*  'TYPE' OF ATOM J AT THE OTHER END OF THE K TH VECTOR
+  MM*     INDEX OF VECTORS LINKING NEIGHBOURING SITES:
+          MM(I,J)= K, THE INDEX OF THE VECTOR STORED IN VEC SUCH
+          THAT VEC(K)=SITE VECTOR(NN(I,J)) - SITE VECTOR(I)  ,J=2,NN(I,1)
+
+  VEC(R,K)* LIST OF DISTINCT VECTORS  ,(R=1,NDIM) , K=1,NMAT
+  IW(1,K)*  'TYPE' OF ATOM I AT ONE END OF THE K TH VECTOR
+  IW(2,K)*  'TYPE' OF ATOM J AT THE OTHER END OF THE K TH VECTOR
 
 
 .. f:function:: DENQD(E,EMX,A,B2,LL,ALP,EPS,TB,NT,NQ,NE,IWK)
   
-  Evaluates the density of states, :math:`N(E)`, corresponding to a given
-  continued fraction (J-Matrix) at a given point :math:`E` and returns that value
-  and also quadrature nodes and weights at a set of points bounded above by
-  EMX. The table of values TB is output so that the integrated density of states,
-  density of states, and similar functions may be evaluated at each E(I) not greater
-  than EMX.
+Evaluates the density of states, :math:`N(E)`, corresponding to a given
+continued fraction (J-Matrix) at a given point :math:`E` and returns that value
+and also quadrature nodes and weights at a set of points bounded above by
+EMX. The table of values TB is output so that the integrated density of states,
+density of states, and similar functions may be evaluated at each E(I) not greater
+than EMX.
 
 .. f:function:: DENCRS(E,A,B2,LL,AA,RNG,WB,NB,AM,BM2)
 
-  Computes the value of a continued fraction using a terminator
-  based on the number, weights and positions of separate bands using
-  a general prescription. The matching continued fraction with square 
-  root band edges may be generated using :f:subr:`CFGPGN` or :f:subr:`TERGEN`
-  and should be of the same length as the original.
+Computes the value of a continued fraction using a terminator
+based on the number, weights and positions of separate bands using
+a general prescription. The matching continued fraction with square 
+root band edges may be generated using :f:subr:`CFGPGN` or :f:subr:`TERGEN`
+and should be of the same length as the original.
 
-  The function:
-  .. math::
-    
-    F(E) = \sum_{K}8.0*\frac{WB(K)}{RNG(K)^{2}}*(E-{AA(K)+RNG(K)*0.5}-\sqrt{E-AA(K)}\sqrt{AA(K)+RNG(K)-E}
+The function:
 
-  is assumed to correspond to the supplied coefficients AM(I) and BM2(I).
+.. math::
+  F(E) = \sum_{K}8.0*\frac{WB(K)}{RNG(K)^{2}}*(E-{AA(K)+RNG(K)*0.5}-\sqrt{E-AA(K)}\sqrt{AA(K)+RNG(K)-E}
 
-  .. math::
+is assumed to correspond to the supplied coefficients AM(I) and BM2(I).
 
-    T(E) = {S(E,N-1)-F(E)*R(E,N)}/{S(E,N-2)-F(E)*R(E,N-1)}/BM2(N)
-    N(E) = \frac{-1}{\pi}*{\rm Im}[Q(E,N-1)-\frac{B2(N)*T(E)*Q(E,N-2)}{P(E,N)-B2(N)*T(E)*P(E,N-1)}]
+.. math::
+  T(E) = {S(E,N-1)-F(E)*R(E,N)}/{S(E,N-2)-F(E)*R(E,N-1)}/BM2(N)
+  N(E) = \frac{-1}{\pi}*{\rm Im}[Q(E,N-1)-\frac{B2(N)*T(E)*Q(E,N-2)}{P(E,N)-B2(N)*T(E)*P(E,N-1)}]
 
-  where N=LL and P,Q and R,S are the orthogonal polynomials of the first and second kinds 
-  corresponding to A,B2 and AM,BM2 respectively.
+where N=LL and P,Q and R,S are the orthogonal polynomials of the first and second kinds 
+corresponding to A,B2 and AM,BM2 respectively.
+
+::
+
   ARGUMENTS : (* INDICATES AN OVERWRITTEN ARGUMENT)
-
+  
   DENCRS TAKES THE REQUIRED VALUE
   E    ARGUMENT OF CONTINUED FRACTION
   A    DENOMINATOR COEFFICIENTS OF CONTINUED FRACTION I=1,LL-1
@@ -338,15 +348,16 @@ Specification of Subroutines
 
 .. f:function:: RECWT(E,A,B2,LL,EPS,N,P,NS)
 
-  Computes the value of the weight at the fixed point in a 1-fixed
-  point Gaussian quadrature, given the corresponding 3-term recurrence
-  relation:
+Computes the value of the weight at the fixed point in a 1-fixed
+point Gaussian quadrature, given the corresponding 3-term recurrence
+relation:
 
-  .. math::
+.. math::
+  P(E,J)= (E-A(J))*P(E,J-1) - B2(J)*P(E,J-2)
 
-    P(E,J)= (E-A(J)) * P(E,J-1) - B2(J) * P(E,J-2)
+::
 
-	ARGUMENTS : (* INDICATES AN OVERWRITTEN ARGUMENT)
+  ARGUMENTS : (* INDICATES AN OVERWRITTEN ARGUMENT)
   DIMENSION A(LL),B2(LL),P(2,3)
   E    REQUIRED FIXED POINT IN QUADRATURE. IT MAY BE A NODE OF
        THE LL-1 OR LL QUADRATURE IF A(LL) IS APPROPRIATELY DEFINED
@@ -361,7 +372,7 @@ Specification of Subroutines
        -1   A(LL) TO BE OVERWRITTEN. N CHANGED TO 0 IF SUCCESSFUL, UNCHANGED OTHERWISE
         0   A(LL) GIVEN (NOT OVERWRITTEN)
         1   A(LL) NOT COMPUTED EXPLICITLY (NOT OVERWRITTEN)
-
+  
   P* FINAL POLYNOMIAL VALUES USED IN CALCULATION OF WEIGHT TO BE USED 
      UNCHANGED IF ROUTINE IS RE-ENTERED WITH NS=LL
        IF N=LL-IABS(N)
@@ -369,63 +380,64 @@ Specification of Subroutines
             P(2,2)=P'(E,N)      P(1,2)=P'(E,N-1)
             P(2,3)=Q(E,N-1)     P(1,3)=Q(E,N-2)
        Q(E,M) IS THE POLYNOMIAL OF THE SECOND KIND OF DEGREE M
-
+  
   NS POINT AT WHICH RECURRENCE IS INITIATED . THIS SHOULD BE
      1 INITIALLY , BUT FOR A SUBSEQUENT CALL, WITH E UNCHANGED AND LARGER LL, 
      SHOULD BE SET TO THE CURRENT VALUE OF LL
 
-  This routine may be called repeatedly with increasing number
-  of levels such that it does not recompute earlier polynomial
-  values. If required the value of the last coefficient, A(LL),
-  may be computed, or it may be assumed that this has already been
-  done and that value used in the calculation of the weight.
-  The expression for the weight used is (with N=LL).
+This routine may be called repeatedly with increasing number
+of levels such that it does not recompute earlier polynomial
+values. If required the value of the last coefficient, A(LL),
+may be computed, or it may be assumed that this has already been
+done and that value used in the calculation of the weight.
+The expression for the weight used is (with N=LL).
 
-  .. math::
+.. math::
+  \frac{P(E,N-1)*Q(E,N-1)-P(E,N)*Q(E,N-2)}{P(E,N-1)*P'(E,N)-P'(E,N-1)*P(E,N)+P(E,N)**2/B2(N)}
 
-    \frac{P(E,N-1)*Q(E,N-1)-P(E,N)*Q(E,N-2)}{P(E,N-1)*P'(E,N)-P'(E,N-1)*P(E,N)+P(E,N)**2/B2(N)}
-
-  As this form is independent of the normalisation of the polynomials. P and Q are the monic
-  polynomials of the first and second kinds.
+As this form is independent of the normalisation of the polynomials. P and Q are the monic
+polynomials of the first and second kinds.
 
 .. f:subroutine:: SCAN(NN,ND,NNMX,N0,NAT,NON,SUB)
 
-  Generates all neighbours (0th, 1st, and 2nd if required) of a subcluster of atoms
-  (consecutively numbered) of a given cluster. Input is the 'nearest neighbour' map
-  of the whole cluster and output is via a user supplied subroutine which is called for
-  each possible neighbour.
+Generates all neighbours (0th, 1st, and 2nd if required) of a subcluster of atoms
+(consecutively numbered) of a given cluster. Input is the 'nearest neighbour' map
+of the whole cluster and output is via a user supplied subroutine which is called for
+each possible neighbour.
+
+::
 
   NN   NEAREST NEIGHBOUR MAP. (N.B. INTEGER*2 ARRAY)
        NN(I,1) CONTAINS 1+ NO. OF NEIGHOURS OF ATOM I
        NN(I,J),J=2,..,NN(I,1) IS THE LIST OF ATOM NUMBERS
        OF THE NEIGHBOURS OF ATOM I
-
+  
   ND    FIRST DIMENSION OF ARRAY NN
   NNMX  SECOND DIMENSION OF ARRAY NN
   N0    FIRST ATOM OF THE SUBCLUSTER WHOSE NEIGHBOURS ARE TO
         BE GENERATED
   NAT   LAST ATOM OF THAT SUBCLUSTER
-
+  
   NON   'ORDER' OF NEIGHBOURS REQUIRED  I.E.
         1 IF FIRST NEIGHBOURS ONLY
         2 IF FIRST & SECOND NEIGHBOURS
-
+  
   SUB   NAME OF A USER SUPPLIED SUBROUTINE (DECLARED EXTERNAL IN
         THE CALLING ROUTINE)TO PROCESS THE INFORMATION GENERATED.
         ITS ARGUMENTS , WHICH MUST NOT BE MODIFIED, ARE :
         ......... (IA,NA,NOP)
         DIMENSION IA(NOP),NA(NOP)
-
+  
    NOP  CONTAINS THE CODE AS FOLLOWS:
          1   FOR THE SELF INTERACTION
          2   FOR A 1ST. NEIGHBOUR INTERACTION
          3   FOR A 2ND. (NEIGHBOUR OF NEIGHBOUR) INTERACTION
-
+  
    IA(NOP) IS THE INDEX OF THE NEIGHBOUR GENERATED I.E.
        IA(1)=I
        IA(2)=INDEX OF FIRST NEIGHBOUR OF I (IF NOP>OR= 2)
        IA(3)=INDEX OF 2ND. NEIGHBOUR OF I (VIA ATOM IA(2)) IF NOP=3
-
+  
    NA(I) IS THE SUBSCRIPT IN THE NEIGHBOUR MAP NN OF THE
          GENERATED NEIGHBOUR. I.E.
          NA(1)=1
@@ -434,20 +446,23 @@ Specification of Subroutines
 
 .. f:subroutine:: RECPER(HOP,VOP,W1,W0,A,B,NW,LLIM,NA,NL,AMAT)
 
-  For a discussion of perturbation theory and the recursion method see
-  J. Phys. A Vol. 10, No. 4 (1977) and R. Haydock, Philos. Mag. [Part] B 37, 97 (1978).
-  See 283 in SSPV 35 for a discussion of perturbation to the chain model. 
-  
-  ARGUMENTS (* INDICATES OVERWRITTEN BY THE ROUTINE)
+For a discussion of perturbation theory and the recursion method see
+`J. Phys. A Vol. 10, No. 4 (1977) <http://iopscience.iop.org/article/10.1088/0305-4470/10/4/009>`_ 
+and `R. Haydock, Philos. Mag. [Part] B 37, 97 (1978) <https://doi.org/10.1080/13642817808245310>`_.
+See 283 in SSPV 35 for a discussion of perturbation to the chain model. 
 
+::
+
+  ARGUMENTS (* INDICATES OVERWRITTEN BY THE ROUTINE)
+  
   HOP      NAME OF A SUBROUTINE SUPPLIED BY THE USER (AND DECLARED
            EXTERNAL IN THE CALLING ROUTINE) TO CALCULATE HX+Y
            AND Y(TRANSPOSED)HX, FOR ARBITRARY MATRICES X AND Y.THE
            ARGUMENTS OF HOP MUST BE AS FOLLOWS:
-
+  
              SUBROUTINE HOP(X,Y,A,NW,NA,LL)
              DIMENSION X(NW,LL),Y(NW,LL),A(NA,LL)
-
+  
              X   AN NW BY LL ARRAY TO BE PROCESSED
              Y*  AN NW BY LL ARRAY TO BE PROCESSED CONTAINING Y
                  ON INPUT AND HX+Y ON OUTPUT.
@@ -455,9 +470,9 @@ Specification of Subroutines
              NW  FIRST DIMENSION OF MATRICES X AND Y
              NA  FIRST DIMENSION OF ARRAY A
              LL  NO. OF COLUMNS IN MATRICES X AND Y
-
+  
          NOTE THAT ONLY THE STARRED (*) ITEMS ARE TO BE SET BY THE USER.
-
+  
   VOP    NAME OF A SUBROUTINE  SATISFYING THE SAME CONDITIONS AS HOP
          BUT WITH V REPLACING H.
   W1*    SQRT(B(0,0))*W0 : THE STARTING VECTORS OF THE
@@ -479,8 +494,10 @@ Specification of Subroutines
 
 .. f:subroutine:: BCCLAT(CRD,NDIM,IZP,NAT,NX,NY,NZ,NTYPE)
 
-  Generates a BCC lattice on a positive integer grid, enclosed by
-  a cuboid of a given size.
+Generates a BCC lattice on a positive integer grid, enclosed by
+a cuboid of a given size.
+
+::
 
   ARGUMENTS:( * INDICATES AN OVERWRITTEN ARGUMENT)
   CRD*    LATTICE COORDINATES ((I,J),I=1,3),J=1,NAT
@@ -494,11 +511,13 @@ Specification of Subroutines
 
 .. f:function:: BCCBFE(I,J,R2,DD)
 
-  Determines whether a distance is a 'nearest neighbour' or 'next nearest neighbour'
-  distance in the BCC lattice generated by :f:subr:`BCCLAT`, and if so outputs the DD 
-  parameters for iron according to D.G. Pettifor. 
+Determines whether a distance is a 'nearest neighbour' or 'next nearest neighbour'
+distance in the BCC lattice generated by :f:subr:`BCCLAT`, and if so outputs the DD 
+parameters for iron according to D.G. Pettifor. 
 
-  ARGUMENTS :
+::
+
+  ARGUMENTS:
   I   'TYPE' OF ONE LATTICE SITE
   J   'TYPE' OF THE OTHER LATTICE
   R2   SQUARE OF THE DISTANCE BETWEEN THE TWO LATTICE SITES

@@ -65,8 +65,9 @@ neighbours) or a different lattice.
 
 Once the neighbour map is set up, the non-equivalent interactions 
 may be set up using `MMCAL`. The 'equivalence' of two interactions 
-is defined in a routine `EQUIV` which again may be replaced by a user with specific
-requirements. `MMCAL` generates a list of non-equivalent vectors
+is defined in a routine `EQUIV` which again may be replaced by a 
+user with specific requirements. `MMCAL` generates a list of 
+non-equivalent vectors
 which may then be used to set up the 'interaction blocks' of the
 Hamiltonian matrix, for instance as in `SLKODE` to give the Slater-
 Koster interaction matrices for the 5 d-orbitals. Subroutines
