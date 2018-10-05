@@ -1058,46 +1058,48 @@ The force constant matrix of a crystal can be written as:
 The equation of motion for atom $i$ becomes:
 %
 \begin{equation}
-m_{k} \frac{\partial^{2} u_\alpha (l\kappa)}{\partial t^{2}} = - \sum_{l'\kappa'\alpha'} \Phi_{\alpha\alpha'}(l\kappa,l'\kappa')u_{\alpha'}(l'\kappa')
+m_{k} \frac{\partial^{2} u_\alpha (l\kappa)}{\partial t^{2}} = - \sum_{l'\kappa'\alpha'}
+\Phi_{\alpha\alpha'}(l\kappa,l'\kappa')u_{\alpha'}(l'\kappa'),
 \end{equation}
 %
-The above requires some function $V$ representing the potential energy for the given 
-ionic coordinates. l, $\kappa$, and $\alpha$, represent unit cell, basis atom and 
-cartesian coordinate respectively.
+l, $\kappa$, and $\alpha$, represent the unit cell index, basis atom, and 
+cartesian coordinate of the displacement respectively.
 
-If a solution of the form:
+A solution of the form:
 %
 \begin{equation}
-u_{\alpha}(lk) = \frac{1}{\sqrt{m_{k}}} U_{\alpha}(\kappa;\k)e^{[i(\k\cdot x(l) - \omega_{\k}t)]} 
+u_{\alpha}(lk) = \frac{1}{\sqrt{m_{k}}} U_{\alpha}(\kappa;\k)e^{[i(\k\cdot x(l) - \omega_{\k}t)]},
 \end{equation}
 %
-where $U_{\alpha}(\kappa;\k)$ is the amplitude of the displacement.
-is considered we arrive at a system of equations:
+is assumed where $U_{\alpha}(\kappa;\k)$ is the amplitude of the displacement.
 %
 \begin{equation}
-\omega^{2}(\k) U_{\alpha}(\kappa, \k) = \sum_{\kappa'\alpha'}D_{\alpha\alpha'}(\kappa\kappa';\k) u_{\alpha'}(\kappa',\k)
+\omega^{2}(\k) U_{\alpha}(\kappa, \k) = \sum_{\kappa'\alpha'}D_{\alpha\alpha'}(\kappa\kappa';\k) U_{\alpha'}(\kappa',\k)
 \end{equation}
 %
 and the Fourier transform of the dynamical matrix has been introduced:
 
 \begin{equation}
-D_{\alpha\alpha'}(\kappa\kappa';\k) = \frac{1}{\sqrt(m_{k}m_{k'})} \sum_{l'} \Phi_{\alpha\alpha'}(l\kappa,l'\kappa') e^{[i\k(x(l')-x(l))]}
+D_{\alpha\alpha'}(\kappa\kappa';\k) = \frac{1}{\sqrt{m_{k}m_{k'}}} \sum_{l'} \Phi_{\alpha\alpha'}(l\kappa,l'\kappa') e^{[i\k(x(l')-x(l))]}
 \end{equation}
 %
-The vibrational eigenvalues of a cluster or crystal can then be determined from the secular equation:
+The vibrational frequencies of the normal modes of a cluster or crystal can then be determined 
+from the secular equation:
 %
 \begin{equation}
-{\rm det}|D(k) - \omega^{2}(\k)I| = 0
+{\rm det}|D(\k) - \omega^{2}(\k)I| = 0
 \end{equation}
 %
 
-The resolvent for the vibrational problem becomes the project of the
-interaction matrix on to the displacement of atom $i$ in direction $\alpha$.
+The Green's function matrix elements for the vibrational problem 
+becomes the projection of the interaction matrix on to the 
+displacement of atom $i$ in direction $\alpha$.
 %
 \begin{equation}
 G_{i\alpha,i\alpha}(\omega^{2})= \bra i\alpha| \left[D- \omega^{2}I\right]^{-1} |i\alpha \ket
 \end{equation}
 %
+
 For instance for 2 atoms in a unit cell of a perfect crystal Eq.~\ref{eq:phonon} would only
 need to be computed for 6x6 matrix at every $\k$ point in the Brillouin zone to determine
 the vibration spectrum. In this case there would be little need for employing a recursion method.

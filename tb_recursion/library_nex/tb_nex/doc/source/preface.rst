@@ -48,7 +48,7 @@ magnitude.
 
 References
 ------------
-1. Heine, Haydock, Kelly & Bullett Solid State Physics Vol. 35 (1979)
-2. Nex C.M.M. J. Phys. A Vol. 11, 653 et seq. (1978)
-3. Nex C.M.M. Comp. Phys. Comm. (1980) 
-4. Nex C.M.M. Comp. Phys. Comm. (1984) `https://doi.org/10.1016/0010-4655(84)90163-2`
+[1] Heine, Haydock, Kelly & Bullett Solid State Physics Vol. 35 (1979)
+[2] Nex C.M.M. J. Phys. A Vol. 11, 653 et seq. (1978)
+[3] Nex C.M.M. Comp. Phys. Comm. (1980) 
+[4] `Nex C.M.M. Comp. Phys. Comm. (1984) <https://doi.org/10.1016/0010-4655(84)90163-2>`_
