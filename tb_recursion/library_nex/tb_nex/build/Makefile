@@ -39,7 +39,7 @@ exrecal.x: exrecal.o slkode.o equiv.o recal.o fccbnd.o out.o selfd.o setup.o skd
 	$(FC) -o $@ $^ 
 	cp ./exrecal.x ../examples/exrecal/
 
-exbccHrecal.x: exbccHrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o\
+exbccHrecal.x: exbccHrecal.o slkode.o equiv.o recal.o bccbfe.o bcclam.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o\
                sksd.o skss.o addat.o selfs.o
 	$(FC) -o $@ $^ 
 	cp ./exbccHrecal.x ../examples/exbccHrecal/
@@ -54,7 +54,7 @@ exprocS.x: exprocS.o dencrs.o denqd.o fenval.o recsum.o termgn.o bndest.o bndref
 	$(FC) -o $@ $^ 
 	cp ./exprocS.x ../examples/exbccHSrecal/
 
-exbccHSrecal.x: exbccHSrecal.o slkode.o equiv.o recal.o bccbfe.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o\
+exbccHSrecal.x: exbccHSrecal.o slkode.o equiv.o recal.o bcclam.o out.o selfd.o setup.o skdd.o mmcal.o nncal.o bcclat.o\
                sksd.o skss.o addat.o selfs.o
 	$(FC) -o $@ $^ 
 	cp ./exbccHSrecal.x ../examples/exbccHSrecal/

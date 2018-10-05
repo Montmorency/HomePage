@@ -3,16 +3,16 @@
       IMPLICIT REAL*8(A-H,O-Z)
 
       DIMENSION A(20,5),B2(20,5),AA(20),BB2(20),WORK(20,6)
-
+ 
      1,ATR(20),BTR2(20),TABS(301,5),IWK(20),EB(2),IWK2(20)
 
       NPTS=301
 
       ALP=0.5
 
-      LL=20
+      LL=9
 
-      ELO=-0.2
+      ELO=-0.3
 
       EHI=0.2
 
@@ -67,7 +67,16 @@ C  COEFFICIENTS IN AA AND BB2
 
 C  NO NEED TO SUM DIFFERENT CONTINUE FRACTIONS
 
+      IF (NP.GT.1) THEN 
+
       CALL RECSUM(A,B2,NW,LL,NP,AA,BB2,EPS,TABS,301)
+
+      ELSE
+
+      AA(:) = A(:,1)
+      BB2(:) = B2(:,1)
+
+      ENDIF
 
 C IF LL NEGATIVE THEN RECQD FAILED WITH TOO FEW ROOTS.
 
@@ -88,7 +97,7 @@ C
 
 C     NBP1=2 number of bands
 CHL  For BCC had to up this parameters...
-      NBP1=3
+      NBP1=5
 
       LTR=LL
 

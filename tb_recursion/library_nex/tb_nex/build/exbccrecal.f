@@ -189,8 +189,9 @@ C
 
 10    FORMAT('DOS FOR A ', I6, ' ATOM BCC CLUSTER')
 
-      DO 15 III=1,NP
-
+C     DO 15 III=1,NP
+      DO 15 III=1,1
+C ZEROING VECTORS
       DO 11 I=1,NAT
 
       IZERO(I)=0
@@ -200,12 +201,19 @@ C
       PSI(J,I)=0.0
 
 11    PMN(J,I)=0.0
+C END ZEROING VECTORS
 
+C     B2(1)=1.0
       B2(1)=1.0
 
       A(LL)=0.0
 
-      PSI(III,NSTRT)=1.0
+C     PSI(III,NSTRT)=1.0
+C     PSI(1,NSTRT)=1.0
+C     PSI(2,NSTRT)=1.0
+C     PSI(3,NSTRT)=1.0
+C     PSI(4,NSTRT)=1.0
+      PSI(5,NSTRT)=1.0
 
       IZERO(NSTRT)=1
 

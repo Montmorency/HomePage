@@ -2,9 +2,9 @@
 
       IMPLICIT REAL*8(A-H,O-Z)
 
-      DIMENSION A(15,5),B2(15,5),AA(15),BB2(15),WORK(15,6)
+      DIMENSION A(20,5),B2(20,5),AA(20),BB2(20),WORK(20,6)
 
-     1,ATR(15),BTR2(15),TABS(301,5),IWK(15),EB(2),IWK2(15)
+     1,ATR(20),BTR2(20),TABS(301,5),IWK(20),EB(2),IWK2(20)
 
       NPTS=301
 
@@ -12,18 +12,18 @@
 
       LL=15
 
-      ELO=-0.5
+      ELO=-0.6
 
-      EHI=0.1
+      EHI=-0.3
 
       EPS=5.0E-12
 
-      ACC=1.0E-6
+      ACC=1.0E-5
 
       NP=1
 
 C  HL trying to get hydrogen working increasing NW may allow for more structure in DOS.
-      NW=15
+      NW = 20
 
       DE=(EHI-ELO)/FLOAT(NPTS-1)
 
@@ -37,7 +37,7 @@ C  EPS IS THE ACCURACY REQUIRED
 
       READ(5,21)IWK
 
-21    FORMAT(15A4)
+21    FORMAT(20A4)
 
       WRITE(6,21)IWK
 
@@ -86,11 +86,9 @@ C
 
 C     NBP1=2 number of bands
 CHL  For BCC had to up this parameters...
-      NBP1=3
+      NBP1=5
 
       LTR=LL
-
-      WRITE(6,*) "HL: LL", LL
 
       CALL TERMGN(AA,BB2,LTR,EPS,ERR,30,EDGE,WIDTH,WEIGHT,NBP1,ATR,
 
