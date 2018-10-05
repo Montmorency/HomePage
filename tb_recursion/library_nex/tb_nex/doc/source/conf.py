@@ -52,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'RecLib'
+project = u'CamRecLib'
 copyright = u'2017, C. M. M. Nex, R. Haydock'
 author = u'C. M. M. Nex, R. Haydock'
 

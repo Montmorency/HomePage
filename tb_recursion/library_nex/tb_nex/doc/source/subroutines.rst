@@ -16,7 +16,95 @@ using the recursion (or Lanczos or Paige's) method:
   <\psi_{n+1},\psi_{n+1}> = 1
 
 This routine must be accompanied by a routine segment hop to carry
-out the steps of this process.
+out the steps of this process:
+
+::
+      SUBROUTINE HOP(X,Y,A)
+      DIMENSION X( ),Y( )
+
+which, with input :math:`X=X`, :math:`Y=Y`, will produce :math:`Y = H.X+Y` AND 
+:math:`A = X.H.X = \langle X,HX\rangle`.
+
+::
+  ARGUMENTS : (* DENOTES OVERWRITTEN ARGUMENT)
+  HOP   NAME OF SUBROUTINE SEGMENT
+  PSI*  INPUT B(0)*PSI(0)  OUTPUT B(LL)*PSI(LL)
+  PMN*  INPUT -B(0)*PSI(-1)  OUTPUT -B(LL)*PSI(LL-1) WHERE
+        THE NORMS OF ALL VECTORS, PSI(I), ARE EQUAL TO UNITY
+  M     DIMENSION OF MATRIX
+  A*    OUTPUT A(I) = A(I-1), I=1,LL-1
+  B2*   INPUT  B2(1) = B(0)**2
+        OUTPUT B2(I) = B(I-1)**2, I=1,LL
+  LL    1+LENGTH OF TRIDIAGONALISATION REQUIRED > OR = 2
+
+
+.. f:subroutine RECNO(HOP,SOP,U,M,NIT,LS,LL,A,B2,PSI,PMN,EMACH)
+
+::
+
+  DIMENSION U(M),PSI(M),PMN(M),A(LL),B2(LL)
+
+
+.. f:subroutine:: PLYVAL(E,A,B2,LM1,P,Q)
+
+::
+
+  DIMENSION A(LM1),B2(LM1),P(2),Q(2)
+
+Computes relative values of last two polynomials of each
+kind of an orthogonal sequence defined by a three-term recurrence
+relation.
+    
+with :math:`P(x,-1)=Q(X,-1) = 0.0`, :math:`P(X,0)=1.0`, and 
+:math:`Q(X,1)=B2(1)`
+
+.. math::
+    P(X,I) = (X-A(I))P(X,I-1)-B2(I)P(X,I-2)\\
+    Q(X,I-1)  = (X-A(I))Q(X,I-2) - B2(I)Q(X,I-3)
+
+The same normalization is used for P and Q, but its value varies
+with X in order to maintain accuracy in the relative values of 
+the functions.
+
+::
+
+  E    ARGUMENT OF POLYNOMIALS
+  A    DIAGONAL RECURRENCE COEFFICIENTS I=1,LM1
+  B2   OFF-DIAGONAL RECURRENCE COEFFICIENTS I=1,LM1
+  LM1  MAXIMUM DEGREE OF POLYNOMIALS
+  P*   P(I) CONTAINS VALUES OF THE POLYNOMIALS OF THE FIRST
+       KIND P(E,LM1+I-2) ,I=1,2 , WITH ARBITRARY NORMALISATION
+  Q*   Q(I) CONTAINS VALUES OF THE POLYNOMIALS OF THE SECOND
+        KIND Q(E,LM1+I-3) ,I=1,2 , WITH ARBITRARY NORMALISATION
+
+
+.. f:subroutine:: RECQD(A,B2,LM1,X,WT,M,EPS,WK,MU)
+
+::
+
+    DIMENSION A(LM1),B2(LM1),X(LM1),WT(LM1),WK(LM1),MU(LM1)
+
+Calculates the coefficients of the Gaussian quadrature corresponding to a
+given J-matrix or three-term recurrence relation. The Sturm sequence property
+is used to locate the nodes of the quadrature and the expression given
+in :f:subr:`RECWTS` to calculate the weights. (Cheney)
+
+This routine calls, :f:subr:`RECWT`, :f:subr:`RECRTS`, :f:subr:`NUMC` &  
+:f:subr:`NUMD`.
+
+::
+  A    DIAGONAL ELEMENTS OF THE J-MATRIX I=1,LM1
+  B2   SQUARES OF THE OFF-DIAGONAL ELEMENTS OF THE J-MATRIX I=2,LM1
+         B2(1) GIVES THE NORMALISATION OF THE QUADRATURE
+  LM1  DIMENSION OF THE J-MATRIX
+  X*   NODES OF GAUSSIAN QUADRATURE
+  WT*  WEIGHTS OF GAUSSIAN QUADRATURE
+  M*   NUMBER OF QUADRATURE NODES . IF DIFFERENT FROM LM1 THEN
+       THE ROUTINE HAS FAULTED.
+  EPS  ACCURACY REQUIRED IN NODE CALCULATION
+  WK*  WORK ARRAY OF LENGTH AT LEAST LM1
+  MU*  WORK ARRAY OF LENGTH AT LEAST LM1 (O/P FROM RECRTS)
+
 
 .. f:subroutine:: RECSUM(AC,BC,NA,LL,NP,A,B2,EPS,WK,NW)
 
@@ -24,7 +112,7 @@ Computes the tridiagonalisation (continued fraction, Jacobi matrix)
 corresponding to the sum of NP tridiagonalisations :math:`w_{m}(x)`.
 
 .. math::
-  \sqrt{b_{n+1,m}} P_{n+1,m}(x) = (x-a_{n,m})P_{n,m}(x)-\sqrt{b_{n,m}}P_{n-1,m}(x)
+  \sqrt{b_{n+1,m}} P_{n+1,m}(x) = (x-a_{n,m})P_{n,m}(x)-\sqrt{b_{n,m}}P_{n-1,m}(x)\\
   w(x) = \sum_{m=1}^{NP} b(0,m) w_{m}(x)
 
 ::
@@ -46,7 +134,8 @@ corresponding to the sum of NP tridiagonalisations :math:`w_{m}(x)`.
   WK*   REAL WORK ARRAY OF LENGTH AT LEAST 5*LL*NP
   NW    LENGTH OF ARRAY WK
 
-Note that this routine uses RECQD, CFGEN, RECRTS, NUMC, NUMD.
+Note that this routine uses :f:subr:`RECQD`, :f:subr:`CFGEN`, :f:subr:`RECRTS`, 
+:f:subr:`NUMC`, :f:subr:`NUMD`.
 
 .. f:subroutine:: TERMGN (A,B2,LL,EPS,ERR,ITMX,AA,RNG,WB,NBP1,AM,BM2,IC,WK,NW,BWK,NBD,IWK)
 
@@ -244,6 +333,37 @@ been set up by subroutine :f:subr:`SETUP` in the arrays, MM, NN, EE, VEC, and IW
       E*   OUTPUT INTERACTION MATRIX
            H OPERATING ON PSI(J) EFFECT AT I
       IOVPAR    NAME OF FUNCTION SUPPLING INFORMATION TO HCAL
+
+
+.. f:subroutine:: RECRTS(A,B2,LM1,EPS,XLIM,N,X,MULT,BI,NI)
+
+::
+
+  DIMENSION A(LM1),B2(LM1),X(LM1),MULT(LM1),BI(LM1),NI(LM1)
+
+Computes some or all of the eigenvalues of a symmetric tridiagonal
+matrix with no zero sub-diagonal elements (i.e. B2(I)>0). The method
+used is bisection based on the sturm sequence property followed by Newton's
+method for isolated roots. [Wilkinson]. 
+
+This routine uses :f:subr:`NUMC` and :f:subr:`NUMD`.
+
+::
+
+  ARGUMENTS : (* INDICATES AN OVERWRITTEN ARGUMENT)
+  A    DIAGONAL MATRIX ELEMENTS I=1,LM1
+  B2   SQUARES OF SUB-DIAGONAL MATRIX ELEMENTS I=2,LM1
+  LM1  DIMENSION OF MATRIX
+  EPS  ABSOLUTE ACCURACY REQUIRED IN EIGENVALUES
+  XLIM UPPER BOUND ON EIGENVALUES TO BE FOUND (IF RELEVANT)
+  N*   IF 0 ON INPUT : ONLY EIGENVALUES LESS THAN XLIM ARE FOUND
+       ON OUTPUT : NUMBER OF DISTINCT EIGENVALUES FOUND
+  X*   EIGENVALUES IN ASCENDING ORDER
+  MULT* MULTIPLICITY OF EACH EIGENVALUE
+       IF NEGATIVE THEN THE CORRESPONDING EIGENVALUE WAS FOUND
+       WITH LESS ACCURACY THAN EPS
+  BI*  REAL WORK ARRAY OF LENGTH AT LEAST LM1
+  NI*  INTEGER WORK ARRAY OF LENGTH AT LEAST LM1
 
 
 .. f:subroutine:: MMCAL(CRD,NDIM,NAT,NN,ND,NM,EV,IZP,NMAT,MM,VEC,IW)
