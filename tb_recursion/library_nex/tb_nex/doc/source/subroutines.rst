@@ -6,7 +6,9 @@ Specification of Subroutines
 Computes the tri-diagonalization of a large sparse symmetric matrix
 using the recursion (or Lanczos or Paige's) method:
 
-DIMENSION PSI(M), PMN(M), A(LL), B2(LL)
+::
+
+  DIMENSION PSI(M), PMN(M), A(LL), B2(LL)
 
 .. math::
   a_n = <\psi_{n},H \psi_{n}> \\
@@ -22,8 +24,8 @@ Computes the tridiagonalisation (continued fraction, Jacobi matrix)
 corresponding to the sum of NP tridiagonalisations :math:`w_{m}(x)`.
 
 .. math::
-  \sqrt{b_{n+1,m}} P_{n+1,m}(x) = (x-a_{n,m})P_{n,m}(x)-\sqrt(b_{n,m})P_{n-1,m}(x)
-  w(x) = \sum_{m=1}^{NC} b(0,m) w_{m}(x)
+  \sqrt{b_{n+1,m}} P_{n+1,m}(x) = (x-a_{n,m})P_{n,m}(x)-\sqrt{b_{n,m}}P_{n-1,m}(x)
+  w(x) = \sum_{m=1}^{NP} b(0,m) w_{m}(x)
 
 ::
 
@@ -136,7 +138,8 @@ the library routines :f:subr:`NNCAL` and :f:subr:`MMCAL`.
   NP    FIRST 2 DIMENSIONS OF ARRAY EE
   NED   LAST DIMENSION OF ARRAYS EE,IW,VEC
   NE*   NO. OF DISTINCT DISPLACEMENT VECTORS (MATRICES) FOUND
-  VEC*  LIST OF DISTINCT DISPLACEMENT VECTORS FOUND (POSN. J - POSN.I)
+  VEC*  LIST OF DISTINCT DISPLACEMENT VECTORS FOUND 
+        (POSN. J - POSN.I)
   IW*   LIST OF ATOM TYPES AT THE ENDS OF THE VECTORS IN VEC
         IW(1,.) IS TYPE OF I IW(2,.) IS TYPE OF J
 
@@ -274,8 +277,8 @@ usage).
   ND      FIRST DIMENSION OF ARRAY NN
   NM      SECOND DIMENSION OF ARRAY NN
   EV      LOGICAL FUNCTION (DECLARED EXTERNAL IN THE CALLING ROUTINE)
-          WITH 2 ARGUMENTS ,EACH A REAL ARRAY OF LENGTH NDIM, RETURNING
-          THE VALUE .TRUE. IF ITS ARGUMENTS ARE THE 'SAME'
+          WITH 2 ARGUMENTS, EACH A REAL ARRAY OF LENGTH NDIM, 
+          RETURNING THE VALUE .TRUE. IF ITS ARGUMENTS ARE THE 'SAME'
           AND  .FALSE. IF NOT. THE ARGUMENTS MUST BE UNCHANGED.
 
   IZP     IZP(I) ABSOLUTE VALUE GIVES 'TYPE' OF I TH LATTICE SITE
@@ -285,8 +288,8 @@ usage).
   NMAT*   ON  A FIRST CALL THE MAXIMUM NUMBER OF DISTINCT VECTORS
           ALLOWED. SUBSEQUENTLY THE NUMBER PREVIOUSLY CALCULATED(AS O/P)
           ON OUTPUT THE ACTUAL NUMBER OF VECTORS CALCULATED
-            IF 0 THEN NOT ENOUGH STORE HAS BEEN ALLOWED
-            AND NMAT MUST BE INCREASED.
+          IF 0 THEN NOT ENOUGH STORE HAS BEEN ALLOWED
+          AND NMAT MUST BE INCREASED.
 
   MM*     INDEX OF VECTORS LINKING NEIGHBOURING SITES:
           MM(I,J)= K, THE INDEX OF THE VECTOR STORED IN VEC SUCH
@@ -297,36 +300,191 @@ usage).
   IW(2,K)*  'TYPE' OF ATOM J AT THE OTHER END OF THE K TH VECTOR
 
 
+.. f:subroutine:: ONION(NN,ND,NM,IZERO,NAT,IST,NNS,IW)
+
+::
+      INTEGER*2 NN(ND,NM),IZERO(NAT),IST(NNS),IW(NAT)
+
+Assigns each site in a lattice (defined by a 'connectivity map')
+to a shell defined by a 'topological' (number of 'hops') distance from
+a given group of sites. The given group is labelled 'SHELL 1'.
+
+
+::
+
+  NN     NEIGHBOUR MAP AS DEFINED BY NNCAL
+  ND     FIRST DIMENSION OF ARRAY NN
+  NM     SECOND DIMENSION OF ARRAY NN
+  IZERO* INTEGER*2 ARRAY RETURNING THE SHELL NUMBER OF EACH SITE
+  NAT    NUMBER OF LATTICE SITES
+  IST    INTEGER*2 ARRAY INDEXING THE 'CENTRAL' SITE(S)
+  NNS    NUMBER OF CENTRAL SITES
+  IW     INTEGER*2 WORK ARRAY OF LENGTH AT LEAST NAT
+
+
+.. f:subroutine:: ORPEEL(NSTRT,NORB,NO,MM,NN,ND,ID,EE,NP,NE,NED,MEM)
+
+Implements orbital peeling as specified in the PHD thesis
+of N.R. Burke. An equivalent (functional) definition is that
+the subroutine deletes a row and column of a sparse matrix
+as set up using :f:subr:`NNCAL` and :f:subr:`MMCAL`. The matrix
+is assumed to be partitioned into NP by NP blocks, of which there 
+are only relatively few distinct ones in the overall matrix. To
+delete a row and colum, therefore, a copy is made of the blocks 
+involved and the list of submatrices modified accordingly.
+It is assumed that the overall purpose is to delete rows and 
+columns defined by a given diagonal submatrix.
+
+::
+
+  NSTRT THE STARTING ATOM .(DIAGONAL SUBMATRIX TO BE DELETED)
+  NORB  ORBITAL TO BE PEELED (ROW & COL. OF SUBMATRX TO BE DELETED)
+  NO    CODE :
+        IF = 1  THE INTERACTION MATRICES ARE COPIED AND EE EXTENDED
+               (I.E.FIRST CALL FOR A GIVEN PEELING SEQUENCE)
+        IF BETWEEN 1 & NP THE COPIED INTERACTION MATRICES ARE MODIFIED
+        BY DELETION OF THE APPROPRIATE ROW OR COLUMN (THE NORBTH)
+        IF = NP THE INTERACTION MATRICES ARE RESTORED TO THOSE
+        ORIGINALLY OPERATIVE.(I.E. THE LAST CALL OF A
+        SEQUENCE)
+  MM*   THE INDEX OF SUBMATRICES CORRESPONDING TO NN
+        MM(I,J)  INDEX OF INTERACTION MATRIX BETWEEN ATOM NN(I,J)
+        AND ATOM I ; J.NE.1 . IF J=1 THEN = INDEX OF THE SELF
+        INTERACTION MATRIX OF ATOM I.
+  NN      THE INDEX OF NEIGHBOURS
+            NN(I,1) = 1+ NO. OF NEIGHBOURS OF ATOM I
+            NN(I,J), J=2,NN(I,1) LIST OF NEIGHBOURS OF ATOM I
+  ND      FIRST DIMENSION OF ARRAYS NN & MM
+  ID      SECOND DIMENSION OF ARRAYS NN & MM
+  EE*     LIST OF INTERACTION MATRICES
+  NP      FIRST 2 DIMENSIONS OF ARRAY EE
+  NE*     NO. OF INTERACTION MATRICES SO FAR COMPUTED
+  NED     MAX NO. OF INTERACTION MATRICES ALLOWED( LAST DIMENSION OF EE)
+  MEM*    STORAGE SPACE TO ENABLE RESTORATION OF THE ORIGINAL MATRIX
+
+
 .. f:function:: DENQD(E,EMX,A,B2,LL,ALP,EPS,TB,NT,NQ,NE,IWK)
+
+::
+
+  DIMENSION A(LL), B2(LL), TB(NT,4), IWK(LL)
   
 Evaluates the density of states, :math:`N(E)`, corresponding to a given
 continued fraction (J-Matrix) at a given point :math:`E` and returns that value
 and also quadrature nodes and weights at a set of points bounded above by
 EMX. The table of values TB is output so that the integrated density of states,
-density of states, and similar functions may be evaluated at each E(I) not greater
-than EMX.
+densiyt of states, and similar function may be evaluated
+at each E(I) not greater than EMX.
+e.g. The integral to TB(I,1) of F(x)N(x)dx 
+is approximated by the sum J=1,I (last term times alpha)
+
+.. math::
+
+  F(TB(J,1))TB(J,2)
+
+The expressions defining the approximation are as follows
+(with N=LL):
+
+.. math::
+  A(N) = E- B2(N) \frac{P(E,N-1)}{P(E,N)}
+  W(I) = \frac{Q(E(I),N)}{P'(E(I),N+1)}
+
+The term :math:`\frac{DW(I)}{DA(LL)}` is equal to the following expression
+evaluated at E(I):
+
+.. math::
+  \frac{Q'(N)P(N)-P'(N+1)Q(N-1)+W(I)P'(N)P'(N+1)-P''(N+1)P(N)}{P'(N+1)^{2}}
+
+.. math::
+  N(E) = P(E,N+1)/P(E,N){\sum I<NE DW(I)/DA(LL) + ALP*\frac{DW(NE)}{DA(LL)}}
+
+P and Q are the monic orthogonal polynomials of the first 
+and second kind associated with the weight function
+N(E) (see :f:subr:`PLYVAL` for explicit definition of P),
+and the E(I) are the eigenvalues of the given Jacobi
+matrix with A(LL) appended so that E(NE)=E.
+In the actual calculation the values of the polynomials
+are renormalised to maintain numerical stability
+(only ratios of polynomials appear in the above expressions).
+
+This routines uses :f:subr:`RECWT`, :f:subr:`RECRTS`,
+:f:subr:`NUMC`, :f:subr:`NUMD`.
+
+::
+
+  DENQD TAKES THE COMPUTED VALUE OF THE DENSITY OF STATES AT E
+  E    VALUE AT WHICH DENSITY OF STATES REQUIRED
+  EMX  UPPER LIMIT OF RANGE OF QUADRATURE NODAL VALUES REQUIRED > E
+  A*   DIAGONAL J-MATRIX ELEMENTS (A(LL) OVERWRITTEN) I=1,LL-1
+  B2   SQUARES OF SUB-DIAGONAL J-MATRIX ELEMENTS I=2,LL
+       B2(1) IS THE TOTAL WEIGHT OF THE DENSITY OF STATES
+  LL   LENGTH OF TRIDIAGONALISATION
+  ALP  PROPORTION OF WEIGHT AT LAST NODE, 0<ALP<1 ,USUALLY =0.5
+  EPS  ACCURACY REQUIRED IN ROOT-FINDING
+  TB*  TABLE OF QUADRATURE NODES AND DIFFERENTIALS :
+       TB(I,1)   NODAL POINTS : E(I)
+       TB(I,2)   NODAL WEIGHTS : W(I)
+       TB(I,3)   DW(I)/DA(LL)
+       TB(I,4)   P'(E(I),LL+1) / P(E(I),LL)
+  NT   FIRST DIMENSION OF ARRAY TB IN CALLING SEGMENT
+  NQ*  NUMBER OF NODAL VALUES CALCULATED
+  NE*  IABS(NE) GIVES INDEX OF NODE CORRESPONDING TO E :TB(NE,1)=E
+       IF NEGATIVE THE ACCURACY IS INADEQUATE
+       IF = 0 A MULTIPLE ROOT WAS IDENTIFIED IN RECRTS
+  IWK* INTEGER WORK SPACE OF LENGTH AT LEAST LL (O/P FROM RECRTS)
+
+
+.. f:function:: DENSQ(E,A,B2,LL,EI)
+
+::
+
+  DIMENSION A(LL),B2(LL),EI(2),P(2),Q(2)
+
+Computes the value of the local density of states
+corresponding to a continue fraction, using the 
+square root terminator.(Haydock)
+
+.. math::
+  N(E) = \frac{-1}{\pi}{\rm Im}[\frac{Q(E,N-1)-B2(N)T(E)Q(E,N-2)}{P(E,N)-B2(N)T(E)P(E,N-1)}]\\
+  T(E) = 0.5E - {EI(1)+EI(2)}*0.5-\sqrt{E-EI(1)}\frac{\sqrt{EI(2)-E}}{B2(LL)}
+
+P and Q are the corresponding orthogonal polynomials of the first
+and second kinds.
+
+::
+  DENSQ TAKES THE REQUIRED VALUE
+  E    ARGUMENT OF CONTINUED FRACTION
+  A    DENOMINATOR COEFFICIENTS OF CONTINED FRACTION I=1,LL-1
+  B2   NUMERATOR COEFFICIENTS OF CONTINED FRACTION I=1,LL
+  LL   LENGTH OF CONTINED FRACTION
+  EI   BAND EDGES
+
 
 .. f:function:: DENCRS(E,A,B2,LL,AA,RNG,WB,NB,AM,BM2)
 
 Computes the value of a continued fraction using a terminator
 based on the number, weights and positions of separate bands using
-a general prescription. The matching continued fraction with square 
+a general prescription (Haydock and Nex- To Appear). 
+The matching continued fraction with square 
 root band edges may be generated using :f:subr:`CFGPGN` or :f:subr:`TERGEN`
 and should be of the same length as the original.
 
 The function:
 
 .. math::
-  F(E) = \sum_{K}8.0*\frac{WB(K)}{RNG(K)^{2}}*(E-{AA(K)+RNG(K)*0.5}-\sqrt{E-AA(K)}\sqrt{AA(K)+RNG(K)-E}
+  F(E) = \sum_{K}8.0\frac{WB(K)}{RNG(K)^{2}}(E-(AA(K)+ 0.5\cdot RNG(K))-\sqrt{E-AA(K)}\sqrt{AA(K)+RNG(K)-E}
 
 is assumed to correspond to the supplied coefficients AM(I) and BM2(I).
 
 .. math::
-  T(E) = {S(E,N-1)-F(E)*R(E,N)}/{S(E,N-2)-F(E)*R(E,N-1)}/BM2(N)
-  N(E) = \frac{-1}{\pi}*{\rm Im}[Q(E,N-1)-\frac{B2(N)*T(E)*Q(E,N-2)}{P(E,N)-B2(N)*T(E)*P(E,N-1)}]
+  T(E) = \frac{S(E,N-1)-F(E)R(E,N)}{S(E,N-2)-F(E)R(E,N-1)}\frac{1}{BM2(N)} \\
+
+  N(E) = \frac{-1}{\pi}{\rm Im}[Q(E,N-1)-\frac{B2(N)T(E)Q(E,N-2)}{P(E,N)-B2(N)T(E)P(E,N-1)}]
 
 where N=LL and P,Q and R,S are the orthogonal polynomials of the first and second kinds 
-corresponding to A,B2 and AM,BM2 respectively.
+corresponding to A,B2 and AM,BM2 respectively. 
+
+This routine uses :f:subr:`PLYVAL`.
 
 ::
 
@@ -344,7 +502,81 @@ corresponding to A,B2 and AM,BM2 respectively.
   AM   LL-1 DENOMINATOR COEFFICIENTS OF MATCHING CONTINUED FRACTION
   BM2  LL NUMERATOR COEFFICIENTS OF MATCHING CONTINUED FRACTION
 
+
+.. f:function:: DENINT(E,A,B2,NA,NP,LL,ALP,EPS,WK,IWK,ICODE)
+
+::
+
+  DIMENSION A(NA,NP),B2(NA,NP),WK(LL,4),IWK(LL)
+
+Evaluates the integrated density of states, N(E), 
+corresponding to a given sum of continued fractions
+(J-matrices) at a given point E and returns that value,
+using the 'quadrature' approach. This routine
+uses :f:subr:`DENQD`, :f:subr:`RECWT`,
+:f:subr:`RECRTS`, :f:subr:`NUMC`, :f:subr:`NUMD`.
+
+::
+
+  DENINT TAKES THE COMPUTED VALUE OF THE INTEGRATED DENSITY OF STATES AT E
+  E      VALUE AT WHICH INTEGRATED DENSITY OF STATES REQUIRED
+  A*     DIAGONAL J-MATRIX ELEMENTS (A(LL,K) OVERWRITTEN) I=1,LL-1
+  B2     SQUARES OF SUB-DIAGONAL J-MATRIX ELEMENTS I=2,LL
+         B2(1,K) IS THE WEIGHT IN THE K TH BAND
+  NA     FIRST DIMENSION OF ARRAYS A AND B2 >= LL
+  NP     NUMBER OF DENSITY OF STATES TO BE SUMMED
+  LL     LENGTH OF TRIDIAGONALISATIONS
+  ALP    PROPORTION OF WEIGHT AT LAST NODE, 0<ALP<1 ,USUALLY =0.5
+  EPS    ACCURACY REQUIRED IN ROOT-FINDING
+  WK*    WORK ARRAY OF LENGTH AT LEAST 4*LL
+  IWK*   INTEGER WORK SPACE OF LENGTH AT LEAST LL (O/P FROM RECRTS)
+  ICODE* 0 ON A SUCCESSFUL OUTPUT
+  NEGATIVE  IF A FAILURE IN DENQD
+
+
+
 .. f:subroutine:: DENCRQ(E,A,B2,LL,AA,RNG,WB,NB,AM,BM2)
+
+Computes the value of a Greenian represented by a continued fraction
+using a terminator based on the number, weights, and positions of
+separate bands using a general prescription 
+(Haydock and Nex to appear). The matching continued fraction with
+square root band edges may be generated using 
+:f:subr:`CFGPGN` or :f:subr:`TERGEN`
+and should be of the same length as the original.
+
+The function:
+
+.. math::
+  F(E) = \sum 8.0 \frac{WB(K)}{RNG(K)^{2}} E-AA(K) + 0.5RNG(K)
+        - \sqrt{E-AA(K)}\sqrt{AA(K)+RNG(K)-E},
+
+is assumed to correspond to the supplied coefficients AM(I),
+BM2(I).
+
+.. math::
+  T(E) = \frac{S(E,N-1)-F(E)R(E,N)}{S(E,N-2)-F(E)R(E,N-1)}\frac{1}{BM2(N)} \\
+  N(E) = \frac{-1}{\pi}Im[G(E)] \\
+  G(E) = Q(E,N-1)-B2(N)T(E)Q(E,N-2)/P(E,N)-B2(N)T(E)P(E,N-1),
+
+where N=LL and P,Q and R,S are the orthogonal polynomials of the first and 
+second kinds corresponding to A,B2 and AM,BM2 respectively. 
+
+This routine uses :f:subr:`PLYVAL`.
+
+::
+  DENCRQ TAKES THE REQUIRED VALUE
+  E    ARGUMENT OF CONTINUED FRACTION
+  A    DENOMINATOR COEFFICIENTS OF CONTINUED FRACTION I=1,LL-1
+  B2   NUMERATOR COEFFICIENTS OF CONTINUED FRACTION I=1,LL
+  LL   LENGTH OF CONTINUED FRACTION
+  AA   LIST OF BAND LEFT EXTREMA
+  RNG  LIST OF BAND WIDTHS
+  WB   LIST OF WEIGHTS OF BANDS
+  NB   NUMBER OF BANDS (GREATER THAN 0)
+  AM   LL-1 DENOMINATOR COEFFICIENTS OF MATCHING CONTINUED FRACTION
+  BM2  LL NUMERATOR COEFFICIENTS OF MATCHING CONTINUED FRACTION
+
 
 .. f:function:: RECWT(E,A,B2,LL,EPS,N,P,NS)
 
@@ -449,7 +681,8 @@ each possible neighbour.
 For a discussion of perturbation theory and the recursion method see
 `J. Phys. A Vol. 10, No. 4 (1977) <http://iopscience.iop.org/article/10.1088/0305-4470/10/4/009>`_ 
 and `R. Haydock, Philos. Mag. [Part] B 37, 97 (1978) <https://doi.org/10.1080/13642817808245310>`_.
-See 283 in SSPV 35 for a discussion of perturbation to the chain model. 
+See pg. 283 in SSPV 35 for a formal discussion of perturbations to the chain model and the 
+change in the coefficients of the continued fraction. 
 
 ::
 
@@ -491,11 +724,10 @@ See 283 in SSPV 35 for a discussion of perturbation to the chain model.
   NL     NO. OF 'LEVELS' IN THE RECURRENCE
   AMAT*  WORK ARRAY OF AT LEAST LLIM*LLIM ELEMENTS
 
-
 .. f:subroutine:: BCCLAT(CRD,NDIM,IZP,NAT,NX,NY,NZ,NTYPE)
 
-Generates a BCC lattice on a positive integer grid, enclosed by
-a cuboid of a given size.
+Generates a BCC lattice on a positive integer grid, 
+enclosed by a cuboid of a given size.
 
 ::
 

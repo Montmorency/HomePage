@@ -11,7 +11,7 @@ Cambridge Recursion Library
    :caption: Contents:
 
    preface.rst
-   introduction.rst
+   overview.rst
    initialization_routines.rst
    coefficient_processors.rst
    subroutines.rst
