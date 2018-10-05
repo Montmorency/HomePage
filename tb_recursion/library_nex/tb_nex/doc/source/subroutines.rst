@@ -46,7 +46,112 @@ corresponding to the sum of NP tridiagonalisations :math:`w_{m}(x)`.
   WK*   REAL WORK ARRAY OF LENGTH AT LEAST 5*LL*NP
   NW    LENGTH OF ARRAY WK
 
-Note that this routine uses RECQD, CFGEN, RECRTS, NUMC, NUMD.
+Note that this routine uses :f:subr:`RECQD`, 
+:f:subr:`CFGEN`, :f:subr:`RECRTS`, :f:subr:`NUMC`, :f:subr:`NUMD`.
+
+.. f:subroutine:: RECNO(HOP,SOP,U,M,NIT,LS,LL,A,B2,PSI,PMN,EMACH)
+
+::
+
+  DIMENSION U(M),PSI(M),PMN(M),A(LL),B2(LL)
+
+  DOUBLE PRECISION SUM
+
+  COMMON /BLKNNN/SUM
+
+Implements the 'non-orthogonal basis' recursion method
+where the eigen-problem takes the form
+
+.. math::
+  MX = ESX
+
+S is assumed to have unit diagonal elements and both M and S
+to be real symmetric. The inverse of S times a vector is
+estimated by taking 'NIT' applications of Gauss=Seidel iteration. If NIT
+is set to be zero the routine performs the usual recursion
+assuming S is the identity. The number of vectors needed is kept to a minimum
+(3) by asking the user to write the S multiplication routine in 
+a particular way, so PLEASE NOTE THE SPECIFICATIONS CAREFULLY. 
+If S is the identity then NIT should be set to zero and the vectors
+U and PSI set to refer to the same real array. The Greenian calculated may
+be thought of as 
+
+.. math::
+  U^{T}S(SE-M)S^{-1}U,
+
+where U is the starting vector. The vectors
+PSI and PMN are in fact S times the usual recursion basis
+vectors. The vector SU may be specified rather than U and
+this indicated by replacing NIT by -NIT and storing
+that vector in PSI on the first call to RECNO.
+
+The routine may be restarted to extend the number of levels
+as U,PSI and PMN and the NORM sum are all retained (the latter
+in the common block /BLKNNN/.
+
+The actual algorithm is as follows:
+
+::
+
+  PMN(0) = 0
+
+  PSI(0) = S U(0)
+
+   B2(1) = U(0)(TRANSPOSED) PSI(0)
+
+   UP TO NUMBER OF LEVELS (LL) DO :
+
+      A(N)   =  U(N)TRANSPOSED M U(N) / U(N)TRANSPOSED PSI(N)
+
+      PSI(N+1) = M U(N) -A(N) PSI(N) - B2(N) PSI(N-1)
+
+      U(N+1) =  S(INVERSE) PSI(N+1)
+
+Here :math:`S^{-1}PSI(N+1)` is calculated by NIT applications
+of the formula (I is the iteration number):
+
+.. math::
+  U(N+1)(I) = PSI(N+1) - LU(N+1)(I) - RU(N+1)(I-1)
+
+where L and R are the strict left and right triangular parts
+of S
+
+with a renormalisation of the vectors for numerical stability.
+
+::
+
+  ARGUMENTS : (* INDICATES AN OVERWRITTEN ARGUMENT)
+
+  HOP    NAME OF A SUBROUTINE TO PERFORM THE MATRIX MULTIPLICATION
+         BY M . ITS SPECIFICATIONS MUST BE AS FOLLOWS:
+
+              SUBROUTINE HOP(X,Y,A)
+
+              DIMENSION X( ),Y( )
+
+        WITH INPUT X=X, Y=Y, WILL PRODUCES Y = M.X+Y AND
+        A = X.M.X = <X,MX>
+
+
+  SOP   NAME OF A SUBROUTINE TO EVALUATE THE PRODUCT OF THE OFF-
+        DIAGONAL ELEMENTS OF S WITH A VECTOR. THE SPECIFICATION
+        IS AS FOLLOWS
+
+            SUBROUTINE SOP(U,V,W)
+
+            DIMENSION U( ),V( ),W( )
+
+      CALCULATES W = V - OFF-DIAGONAL(S) U
+
+      THIS IS CALLED WITH U AND W REFERRING TO THE SAME ARRAY TO
+      ACHIEVE A GAUSS-SEIDEL STEP AND WITH V AND W REFERRING TO THE SAME
+      ARRAY TO PERFORM A MORE USUAL MATRIX MULTIPLICATION.
+      N.B. NOTE THE MINUS SIGN
+
+      THE IMPLICATION FOR THE USER IS THAT THE ELEMENTS OF THE
+      PRODUCT MUST BE EVALUATED AND OVERWRITTEN IN INCREASING
+      ORDER, NOT BY A GLOBAL ACCUMULATION TECHNIQUE.
+
 
 .. f:subroutine:: TERMGN (A,B2,LL,EPS,ERR,ITMX,AA,RNG,WB,NBP1,AM,BM2,IC,WK,NW,BWK,NBD,IWK)
 
