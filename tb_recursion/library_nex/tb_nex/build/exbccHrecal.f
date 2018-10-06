@@ -187,16 +187,16 @@ C     IN ADDAT -VE Index denotes newly added atom.
 
       IZP(NAT)=-IZP(NAT)
 
-C     WRITE(1,10)NAT,NPOSN,NORP
+C      WRITE(1,10)NAT,NPOSN,NORP
 
-C  10    FORMAT(' 1S ORBITAL IN A ',I6,' ATOM BCC CLUSTER',/I4
-
-C    1,' POSTIONS',I3,' ORBITALS PER POSITION')
-
+C10    FORMAT(' 1S ORBITAL IN A ',I6,' ATOM BCC CLUSTER',/I4
 C
+C     1,' POSTIONS',I3,' ORBITALS PER POSITION')
+
+ 
 
 
-C
+ 
 
 C  CONSTRUCT INITIAL WAVE FUNCTION NONZERO ON ATOM 4,3,3 AND
 
@@ -282,7 +282,12 @@ C
 
       A(LL)=0.0
 
-      PSI(III,NSTRT)=1.0
+C     PSI(III,NSTRT)=1.0
+C     PSI(1,NSTRT)=1.0
+C     PSI(2,NSTRT)=1.0
+C     PSI(3,NSTRT)=1.0
+C     PSI(4,NSTRT)=1.0
+      PSI(5,NSTRT)=1.0
 
       IZERO(NSTRT)=1
 
@@ -555,12 +560,16 @@ C  PAR(12) = SELF ENERGY  OF P ELECTRON
 C
 
       SADDOV=1
-
-      PAR(8) = -0.025
-
-      PAR(10) = -0.42
-
-      PAR(13) = 0.0
+C     PAR(8) = -0.011
+      PAR(8) = -0.021
+C     PAR(8) = -0.032
+C     PAR(8) = -0.044
+C     PAR(8) = -0.088
+C     PAR(10) = -0.4
+C     PAR(13) = -0.4
+C     PAR(8) = 0.0
+C     PAR(10) = 0.0
+C     PAR(13) = 0.0
 
       RETURN
 
