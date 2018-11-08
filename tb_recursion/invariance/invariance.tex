@@ -286,7 +286,7 @@ Heine's ambition turns on this:
 \begin{quote}
 We see now that the trick in the new formulation of quantum 
 mechanics is not just to express measurable quantities in terms of 
-G, {\emph but in terms of some appropriate small parts of G that can be solved 
+G, {\it but in terms of some appropriate small parts of G that can be solved 
 for and computed separately from all the unwanted remainder of G.}
 \end{quote}
 %
@@ -326,7 +326,7 @@ The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ are u
 %
 The development of computers means the secular equations can be solved 
 at arbitrary $\k$ points. \footnote{The paper explicitly anticipates that the integrals and Bloch 
-sums could be performed with the help of computers: "The possibility is not excluded 
+sums could be performed with the help of computers: ``The possibility is not excluded 
 that eventually ways will be found to do this work by means of high-speed computers, but
 it will certainly be quite out of the question without such help."} 
 
@@ -396,8 +396,11 @@ time for an electron on an atomic d state to be around $\hbar/W_{d}\approx 10^{-
 \footnote{Ref.~\cite{friedel73}, written in 1973, provides us with another example
 of the early impact electronic computers were making in the field. Friedel  compares 
 the relative merits of `muffin tin' type calculations and tight binding approximations.
-The former approach he describes as leading, "to fairly exact if cumbersome
-computations, and has thus had the support of the `computers lobby'".}
+The former approach he describes as leading, ``to fairly exact if cumbersome
+computations, and has thus had the support of the `computers lobby'". The conclusion
+puts forward a number of points in favour of tight binding approaches as 
+being suitable for studying complex phases and lattice defects,
+latent heats of phase changes, elastic constants and electron-phonon couplings.}
 
 The strong centrifugal contribution to the
 atomic scattering potential from higher angular moment channels means the effective potential
@@ -456,13 +459,15 @@ Pettifor's work produced a justifiable scheme for computing the two center tight
 and Koster, $dd\sigma$, $dd\pi$, $dd\delta$ in terms of the position and halfwidth of the resonance:
 $\epsilon_0$ and $\Gamma$. It is worthwhile considering the achievement of these collected papers.
 With relatively basic computing power the workers determined the positions of atomic eigenvalues,
-band widths, and the effect of atomic scattering potentials. In the course of the work a great deal
-of algebraic manipulation of spherical harmonics and plane waves is required, along with the determination
+band widths, and the effect of atomic scattering potentials. In 
+the course of the work a great deal of algebraic manipulation of spherical 
+harmonics and plane waves is required, along with the determination
 of numerical values via graphical methods. All in all a laborious but fruitful task resulting
-in energy independent matrix elements localized to nearest (next nearest ) neighbours real and reciprocal
-space.
+in energy independent matrix elements localized to nearest (next nearest ) 
+neighbours real and reciprocal space.
 
-The work of Pettifor and colleagues in determining justifiable tight binding parameters for transitional metals, 
+The work of Pettifor and colleagues in determining justifiable tight 
+binding parameters for transitional metals, 
 effectively completed by 1969, was an important prerequisite for the subsequent 
 development of the recursion method in the 1970s. Generalized tables for tightbinding parameters 
 across the transition metal series has been produced in Ref.~\cite{harrison80}.
@@ -624,21 +629,31 @@ The constant chain corresponds to the general continued fraction written:
 G_{0}(E) = \cfrac{1}{E-a_{0}-\cfrac{b_{1}^2}{E-a_{1}-\cfrac{b_{2}^{2}}{E-a_{2}-\cfrac{b_{3}^{2}}{...}}}},
 \end{equation}
 %
-where $a_{0}=a_{1}=...=a_{n}$ and $b_{0}=b_{1}=...=b_{n}$. In this chain an electron
-experiences the same pull to every site on the chain, and can hop from one site to 
-the next with the same hopping amplitude $b^{2}_{n}$. That all the coefficients are the same 
-means a closed form solution can easily be found by recognizing that Eq.~\ref{eq:constantchain} can be written as:
+where $a_{0}=a_{1}=...=a_{n}$ and $b_{0}=b_{1}=...=b_{n}$. 
+%
+In this chain an electron experiences the same pull to 
+every site on the chain, and can hop from one site to 
+the next with the same hopping amplitude $b^{2}_{n}$. 
+%
+That all the coefficients are the same means a closed 
+form solution can easily be found by recognizing that 
+Eq.~\ref{eq:constantchain} can be written as:
+%
 \begin{equation}
 G_{0}(E) = \frac{1}{E-a-b^{2}G_{0}(E)},
 \end{equation}
+%
 and rearranged to give:
+%
 \begin{equation}
 G_{0}(E) = (\frac{E-a}{2b^{2}}) \pm \sqrt{\frac{1}{4}(\frac{E-a}{b^{2}})^{2} - \frac{1}{b^{2}}}.
 \end{equation}
 
-The argument of the Green's function is $E + i\delta$, for positive energies the negative root is chosen
-and for negative energies the positive root is chosen. This gives the real
-and imaginary part of the Green's function plotted in Fig.~\ref{fig:gfconstchain}.
+The argument of the Green's function is $E + i\delta$, for positive 
+energies the negative root is chosen and for negative energies 
+the positive root is chosen. This gives the real
+and imaginary part of the Green's function plotted 
+in Fig.~\ref{fig:gfconstchain}.
 %
 \begin{figure}
 \begin{center}
@@ -647,10 +662,14 @@ and imaginary part of the Green's function plotted in Fig.~\ref{fig:gfconstchain
 \end{center}
 \end{figure}
 %
+The constant chain yields an analytic solution. All the coefficients of the continued
+fraction are known and the recursion relation can be solved exactly. In practice
+the computation of the $a_{n}$ and $b_{n}$ terms is truncated after some number.
+The function chosen to approximate the remaining coefficients is discussed in
+Refs.~\cite{haydock84, haydock85}.
 
-A great deal of interesting physics can be obtained directly from the chain model. In particular with reference 
-to the inclusion of an impurity or vacancy state in the bulk, or an atom added to the surface. To couple 
-an impurity to a constant chain we allow the first two coefficients $a_{0}$ and $b_{1}$ to vary, 
+A great deal of interesting physics can be obtained directly from the chain model. 
+For instance, to couple an impurity to a constant chain we allow the first two coefficients $a_{0}$ and $b_{1}$ to vary, 
 and the rest of the chain remains constant. This leads to the expression:
 %
 \begin{equation}
@@ -969,23 +988,40 @@ Using this representation the difference in the density of states is calculated:
 \end{equation}
 %
 
-The parameters used in Ref.~\cite{burke78} are appropriate to the BCC structure.
-The tightbinding Hamiltonian only considers two center contributions, with the parameters 
-coming from Pettifor\cite{pettifor69} and rescaled they are given in Table~\ref{tab:dsurface} 
+%The parameters used in Ref.~\cite{burke78} are appropriate to the BCC structure.
+%The tightbinding Hamiltonian only considers two center contributions, with the parameters 
+%coming from Pettifor\cite{pettifor69} and rescaled to produce the observed
+%bandwidth of tungsten. The parameters are given in Table~\ref{tab:dsurface}.
+
+The SK parameters used for fcc, bcc, and hcp crystals in Ref.~\cite{haydock72} are
+given in Table \ref{tab:pettiparams}.
 %
 \begin{table}
-\begin{tabular}{|c|c|c|}
-\hline
-SK Parameter & First Neighbour & Second Nearest Neighbour \\
-\hline
-$dd\sigma$ & -0.02992  & -0.05364 \\
-$dd\pi$    &  0.06652  &  0.01943 \\
-$dd\delta$ &  0.00800  &  0.00196 \\
-\hline
+\begin{tabular}{ccccc} 
+Structure & $dd\sigma$ & $dd\pi$  & $dd\delta$ &  Band-limits \\
+fcc       & -0.027784  & 0.012535 & -0.001554  & -0.131 to 0.085 \\ 
+hcp       & -0.027784  & 0.012535 & -0.001554  & -0.119 to 0.081 \\
+bcc       & -0.03248   & 0.01538  & -0.00200   & -0.119 to 0.097 \\
+          & -0.01341   & 0.00487  & -0.00049   &              \\
 \end{tabular}
-\caption{These parameters are difficult to make out from the electronic version of Ref.
-due to poor resolution of the scan. \label{tab:dsurface}.}
+\caption{Slater-Koster parameters from Pettifor \cite{pettifor69}, 
+along with band edges in Ry. First and second nearest neighbour 
+parameters are given for BCC crystals. \label{tab:pettiparams}.}
 \end{table}
+%
+%\begin{table}
+%\begin{tabular}{|c|c|c|}
+%\hline
+%SK Parameter & First Neighbour & Second Nearest Neighbour \\
+%\hline
+%$dd\sigma$ & -0.02992  & -0.05364 \\
+%$dd\pi$    &  0.06652  &  0.01943 \\
+%$dd\delta$ &  0.00800  &  0.00196 \\
+%\hline
+%\end{tabular}
+%\caption{These parameters are difficult to make out from the electronic version of Ref.
+%due to poor resolution of the scan. \label{tab:dsurface}.}
+%\end{table}
 %
 \begin{table}
 \begin{tabular}{|c|c|c|}
@@ -1036,6 +1072,49 @@ some of the ambiguities in mapping ab initio data onto a local picture
 of the electronic structure at surfaces. Meaning the recursion techniques described in 
 Refs.~\cite{burke76, haydock79, haydock81} might be revisited with potentially profitable 
 effect.
+
+\subsection{Off-Diagonal elements}
+The off diagonal elements of the Green's function contain a lot of useful information as well.
+
+Of particular interest are response functions \cite{terakura78} and Bond Orders \cite{tersoff86, pettifor89} 
+are built out of the off diagonal elements.
+
+%
+\begin{equation}
+\phi_{+} = \frac{1}{\sqrt{2}}(\phi_{A} + \phi_{B})
+\phi_{-} = \frac{1}{\sqrt{2}}(\phi_{A} - \phi_{B})
+\end{equation}
+%
+for a self-adjoint H, and real $\phi_{A}$ and $\phi_{B}$ the off-diagonal element of the resolvent
+gives:
+%
+\begin{equation}
+R_{AB}(E) = \frac{1}{2}[R_{++}(E)-R_{--}(E)]
+\end{equation}
+
+Pettifor defined the bond order as the integrated energy difference between a symmetric
+and anti-symmetric combination of nearest neighbour orbitals \cite{pettifor89}.
+%
+\begin{equation}
+\Theta_{ij} = - \frac{2}{\pi} {\rm Im} \int^{E_{F}}\left[G^{+}_{00}(E)-G_{00}^{-}(E)\right]dE
+\end{equation}
+
+\begin{equation}
+G^{\pm}_{00}(E) = \bra u_{0}^{\pm}|\left[E-H\right]^{-1}|u_{0}^{\pm}\ket
+\end{equation}
+%
+$|u^{\pm}_{0}\ket = (\frac{1}{\sqrt{2}})|\phi_{i} \pm \phi_{j}\ket$.
+
+The Green functions can be evaluated using the recursion techniques.
+
+The susceptibility is defined:
+%
+\begin{equation}
+\chi_{0m,n0}(E_{F})=\frac{1}{\pi}{\rm Im}\int^{E_{F}}G^{0}_{0m}(E)G_{n0}^{0}(E)dE
+\end{equation}
+%
+
+See also Finnis \cite{finnis84} for a discussion of susceptibilties.
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly using the recursion technique.
@@ -1200,6 +1279,59 @@ of the method.
 chain, using classical mechanics, of spring coupled massed using a continued fraction expansion see 
 The Classical Harmonic Chain: Solution via Laplace Transforms and Continued Fractions 
 (https://arxiv.org/pdf/1608.00616).}
+
+\section{Chains and Moments}
+Before concluding this chapter there are a few 
+pictorial and heuristics comments on the recursion method
+and related methods.
+
+The recursion method produces the eigenvalue spectrum
+for a given Hamiltonian. The idea of a particle exploring
+the space around it according to the rules of the Hamiltonian
+can be formulated as excursions from a starting orbital localized
+on some atom. As the electron (or phonon) hops from atom to atom
+new eigenstates of the system are uncovered.
+
+The second trend in the literature for producing the density of states
+from a locally defined Hamiltonian was to expand the density of
+states in terms of its moments. This can be seen by expanding the
+Green's function as a geometric series in the energy and the Hamiltonian.
+The comparison is valuable because it leads to the interpretation of 
+the recursion method as producing a density of states by closed walks
+from a starting point.\cite{ducastelle70} 
+Expanding the Green's function gives:
+%
+\begin{equation}
+[E-H]^{-1} = \sum_{n=0}^{\infty} \frac{H^{n}}{E^{n+1}}.
+\end{equation}
+%
+
+The $r^{\rm th}$ moment of the local density of states can be written:
+%
+\begin{equation}
+\mu^{r} = \int E^{r}N(E)dE = -\frac{1}{\pi}{\rm Im}\sum_{n=0}^{\infty}\int E^{r}\bra 0|\frac{H^{n}}{E^{n+1}}|0\ket dE.
+\end{equation}
+%
+
+When $H$ is a strictly local Hamiltonian the only non-zero matrix elements 
+will be immediate neighbours of the starting orbital $0$. The means
+the matrix element can be written as a over closed paths of length $r$:
+%
+\begin{equation}
+\label{eq:circuit}
+\bra 0|H^{n}|0 \ket = \sum_{i,j,k,...}\bra 0|H|i\ket\bra i|H|j\ket\bra j|H|...\ket\bra 1|H|0\ket,
+\end{equation}
+%
+0ijk...10 is a closed circuit through the lattice. Any circuit that takes hops between sites 
+that aren't connected by the Hamiltonian won't make any contribution to the matrix element
+in Eq.~\ref{eq:circuit}.
+
+Detailed workings of the application of the recursion method to a surface atom in Cubium
+are presented in Ref.~\cite{haydock75}. 
+
+
+
+
 
 \section{Future Work}
 The references provided here and in Vol. 35 demonstrate the impact of 

@@ -1,4 +1,4 @@
-\chapter{The $GW$ approximation}
+\chapter{The Workhorses of Electronic Structure Theory}
 \label{chap:gw}
 \noindent
 \section{Introduction}
@@ -227,7 +227,16 @@ of the quasiparticle equation presented in Refs.~\cite{schwinger51, hedin65}:
 %
 Here the quantity $\Sigma(\r,\r';\omega)$ is a non-local and energy dependent,
 operator which encodes all the electronic correlations
-present in the system. Calculating this quantity is a formidable challenge. We have
+present in the system. 
+
+In terms of total energy of the system we can write:
+%
+\begin{equation}
+U = U_{NN} + \sum_{n} E_{n} - \frac{1}{2}\int V_{N}(\r)\rho(\r)d^{3}\r
+-\frac{1}{2}\int\int\sum_{n} \psi_{n}^{*}(r)V_{xc}(\r,\r';E_{n})\psi_{n}(\r')d^{3}\r d^{3}\r'
+\end{equation}
+%
+Calculating this quantity is a formidable challenge. We have
 introduced this quantity here because it will arise again
 in the discussion of the $GW$ approximation, and provides a natural connection 
 between DFT and the Green's functions methods. A formal connection between DFT

@@ -1,0 +1,23 @@
+Thu  8 Nov 2018 16:13:43 GMT
+Have a nice shape to the introduction now which will hopefully shape 
+the rest of the book. Adding Wannier's after DFT chapter which will mainly
+be the TB-NN work. The GW chapter should now be merged or followed by 
+a simple GW as recursive perturbation theory with hermitian Sigma chapter. 
+
+Need to tidy up the superconductivity discussion
+and add the integrations. The recursion sketch there will be computing
+$\lambda$ and $\mu$ using recursion theory maybe for Tungsten?
+
+Same with the metallurgy chapter I think elasticity, phonon anomalies 
+or defect calculations should be plenty in the way of examples.
+
+Then we can move on to decorating and finalizing: 
+
+I would like a figure of Avogadro.
+Some nice path hopping pictures for the recursion method.
+
+Some Nice TB/DFT images
+GW self-energy operator.
+
+References in the text with links to CamRecLibPy examples should also be made.
+

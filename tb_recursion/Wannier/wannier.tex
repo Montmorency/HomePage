@@ -1,0 +1,162 @@
+\chapter{Whistlestop Tour of Wannier Functions}
+\label{chap:wannierfunctions}
+\section{Local Wave Packets}
+For an isolated set N of Bloch bands, in the Maximally Localised Wannier Functions 
+(MLWF) formalism, the Wannier function is defined as:
+%
+\begin{equation}
+|w_{n\R}\ket = \frac{V}{(2\pi)^{3}}\int_{\rm BZ} \left[ \sum_{m=1}^{N} U^{\k}_{mn}|\psi_{mk}\ket \right]e^{-i\k\cdot\R}d\k,
+\end{equation}
+%
+where $U_{mn}^{\k}$ rotates the Bloch states at each $\k$-point.
+
+The Maximally Localised Wannier Scheme proceeds by minimizing a spread functional:
+%
+\begin{equation}
+\Omega = \sum_{n}^{N} \left[ \bra r^{2} \ket_{n} - |\bar{\r}|^{2} \right].
+\end{equation}
+%
+
+Using Blount's relations it can be shown that 
+the spread functional can be minimized by rotations of the overlap matrices defined as: 
+%\cite{marzari97, mostofi08} 
+%
+\begin{equation}
+M_{mn}^{\k,\bf{b}} = \bra u_{m\k}|u_{n,\k+\bf{b}} \ket.
+\end{equation}
+%
+
+\subsection{Disentangling Bands}
+When we aren't dealing with an isolated set of bands, i.e.
+there are broad overlapping bands, e.g. an s-state that crosses in energy
+across a group of $d$-like orbitals the procedure of Ref.~\cite{souza02}.
+Two windows in energy are defined. An inner energy window of states are frozen 
+and a wider set of states in an outer energy window (which contains the smaller
+energy window) are projected down into a $N$ vector subspace:
+%
+\begin{equation}
+|u^{\rm opt}_{n\k}\ket = \sum_{m \in N_{\rm win}^{\k}} U_{mn}^{{\rm dis}(\k)}|u_{m\k}\ket
+\end{equation}
+%
+
+$U^{{\rm dis}(\k)}$ is a rectangular $N_{\rm win}^{\k} \times N$ matrix. 
+The subspace is selected by minimising the quantity $\Omega_{I}$ with respect to $U^{{\rm dis}(\k)}$.
+Where $\Omega_{I}$ is essentially the variation between neighbouring $\k$-points. 
+%
+\begin{equation}
+\Omega_{I} = \frac{1}{N_{kp}} \sum_{\k, \mathbf{b}} \omega_{b} {\rm tr} \left[\hat{P}_{\k}\hat{Q}_{\k+\mathbf{b}}\right]
+\end{equation}
+
+$\hat{P}$ and $\hat{Q}$ are the projection operators: 
+$\hat{P}_{\k}=\sum_{n=1}^{N}|u_{n\k}\ket \bra u_{n\k}|$ and $\hat{Q}_{\k} = 1-\hat{P}_{\k}$
+minimizing this quantity corresponds to maximizing the overlap between rotated Bloch
+states at neighbouring $\k$-points.
+
+Once the optimal subspace has been determined the N vectors are then rotated in the same
+was as an isolated set of bands to determine the Wannier function.
+
+\subsection{Hamiltonian in the Wannier Gauge}
+In the basis of Bloch wave vectors the Hamiltonian matrix is diagonal at each $\k$ point
+with the diagonal element corresponding to the eigenvalue. To rotate to the 
+Wannier gauge the optimal rotaion matrix can be used directly:
+
+\begin{equation}
+\label{eq:HWan}
+H^{W}(\k) = (U^{\k})^{\dagger}(U^{{\rm dis}(\k)})^{\dagger}H(\k)U^{({\rm dis}(\k))}U^{(\k)}.
+\end{equation}
+
+$H^{W}$ refers to the Hamiltonian in the Wannier gauge. Eq.~\ref{eq:HWan} can then be contracted
+over the $\k$ points to obtain:
+%
+\begin{equation}
+\label{eq:Htb}
+H_{nm}(\R) = \frac{1}{N_{\k}} \sum_{\k} e^{-i\k\cdot\R}H_{nm}^{W}(\k).
+\end{equation}
+%
+$H_{nm}(\R)$ corresponds to the matrix elements between Wannier functions at different centers $\R$. 
+The matrix elements are generated for the entire grid of supercell vectors $R$ that
+are dual to the chosen kpoint. The inverse transform of \ref{eq:Htb} can be used to obtain a
+dense $k$-point interpolation of the band structure Ref.~\cite{yates07}.
+
+It is the matrix elements of Eq.~\ref{eq:Htb} that we wish to approximate using a tight binding scheme.
+For a tight binding scheme to be valid these elements must decay relatively quickly 
+as a function of $\R$ and transform according to the same symmetry operations as spherical harmonics
+centered on the atomic sites. 
+
+\subsection{Wanner Practical Procedure}
+To carry out the procedure in practice an initial set of orbitals 
+${g_{i}(\r)}$ is chosen and the matrix elements:
+%
+\begin{equation}
+\label{eq:overlap}
+A^{(\k)}_{mn} = \bra u_{m\k}|g_{n} \ket,
+\end{equation}
+%
+are formed. $A^{\k}_{mn}$ is an $N^{(\k)}_{win} \times N$ matrix. 
+
+A set of N functions at each $\k$ point in the Brillouin zone is given:
+
+\begin{equation}
+|\phi_{n\k} \ket = \sum_{m=1}^{N^{(\k)}_{win}} A^{(\k)_{mn}} |u_{m\k}\ket.
+\end{equation}
+
+The N functions are then L\"owdin orthogonalized to form an 
+initial guess at the projected subspace:
+%
+\begin{equation}
+|u^{\rm opt}_{n\k} \ket = \sum_{m=1}^{N^{\k}_{win}}(AS^{-1/2})_{mn}|u_{m\k}\ket
+\end{equation}
+%
+The initial guess for $U^{\rm dis (\k)}$ is $\mathbf{A}\mathbf{S}^{-1/2}$ 
+where $S_{mn}=(A^{\dagger}A)_{mn}$.
+
+Though the minimization is robust a good guess at $g_{i}(\r)$ can speed the process.
+For instance for $\alpha$-Fe the appropriate combination of initial states is a combination of 
+$d_{xy}$, $d_{zx}$, and $d_{yz}$ orbitals along with 6 $sp^{3}d^{2}$ hybrid orbitals oriented along the 
+cubic axes of the crystal. The final MLWFs bear a strong resemblance to these initial states.
+
+The $U^{{\rm dis}(\k)}_{mn}$ matrix evolves from this guess in the course of the 
+minimization so that the final rotation matrices at different k-points will have no 
+obvious connection with the initial guess. Nor are the Wannier functions diagonal in the basis 
+of the trial orbitals. If they were the trial orbitals themselves would be the Wannier functions. 
+
+\section{Symmetry properties of the Wannier Functions}
+The appendix of the Slater-Koster paper deals with the issue of whether L\"owdin type
+orbitals, which are orthogonalized to their neighbours, transform according to the same
+symmetry operations as the spherical harmonics.
+
+\section{BCC Structure}
+
+\section{Diamond Structure TB}
+The choice of appropriate basis for a diamond tight binding model requires a little thinking.
+The structure itself can be considered a Face Centered Cubic structure with two atoms per unit cell.
+The lattice then has atoms at $a(p\bf{i} + q\bf{j} + r\bf{k})$ wherever $p+q+r$ is an even number
+as well as at identical points shifted by $\frac{1}{2}a(i+j+k)$. Slater and Koster choose to proceed
+by setting up $s,p_{x},p_{y},p_{z}$ orbitals on each of the two sites in a unit cell resulting in 8 
+Bloch sums which need to be fit and including interactions between nearest and next nearest neighbours.
+The nearest neighbours of one atom consist of a tetrahedral arrangement of atoms belonging to the 
+second FCC lattice $a(1/2,1/2,1/2), a(1/2,-1/2,-1/2), a(-1/2,1/2,-1/2), a(-1/2,-1/2,1/2)$,
+and 12 second nearest neighbours all located at $a(110)$ positions.
+
+With the Wannier Functions we can choose a different basis. If we choose the origin of our coordinate
+system as the center of a nearest neighbour bond between two atoms and set up a face centered cubic lattice
+we can choose the eight sp3 wannier functions as a basis and infer the parameters
+of their interactions with the 12 nearest neighbour cells of the type a(110). Then instead
+of assigning the two center integrals $(ss\sigma)$ etc. to a particular atom, 
+i.e. $(ss\sigma)_1$, we assign the two groups to the valence manifold and low lying conduction manifold 
+$(ss\sigma)_{v}$. The fitting procedure then seek to fit the disposable constants to the W
+annierized Hamiltonian matrix elements. Again a two center approximation can be used in the first pass
+resulting in 8 neurons in the hidden layer, and then a second fit which makes use of 
+all the disposable constants. The hope is that the MLWF basis will provide an optimal one in the
+sense of the rapid spatial decay of the matrix elements between neighbouring unit cells 
+(which for sp3 semi-conductors is pracitcally assured), and that the contributions of the three center
+integrals will be negligible in this basis. Slater-Koster found that the two center approximation in their
+basis was not a particularly good one and unable to interpolate the results obtained
+from an orthogonalized plane wave calculation, however the atom centered spherical harmonic orbitals is likely 
+to suffer from this deficiency, the requirement that neighbouring orbitals are orthogonal would lead to 
+the formation of actual orbitals with non-zero components on neighbouring shells of atoms. Choosing
+the Wannier Basis results in orthogonal orbitals that remain well localized. This approach is similar to
+that made by Hall \cite{hall52} who uses symmetric  combinations of directed orbitals
+on adjacent pairs of atoms and constructs the bloch sums from these orbitals.
+
+The second nearest neighbour s-interaction is found to have the opposite sign.
