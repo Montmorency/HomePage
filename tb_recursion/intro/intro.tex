@@ -8,22 +8,19 @@ with what might now be considered a bold statement:
 Theoretical Materials Science remains to be invented as a discipline, and for good reason.
 \end{quote}
 
-The reason he supplies is that materials processing, historically, was a craft.
-%What is the reason for this delayed maturity? 
-%Ehrenreich suggests an historical one. That is 
-%the human study and manipulation of materials has traditionally
-%been considered as a craft. 
+The reason he supplies for this delayed maturity is that materials processing, 
+historically, was a craft.
 
 It will serve our purposes to consider what exactly constitutes a craft. 
 There is some sense that the word craft in its common usage 
 is to be distinguished from both science and art.
 The word occupies a space somewhere between those two realms. 
 A craft may bear an element of science in its application. 
-Perhaps the worker possesses a set of precision tools or 
-established practices. However the process remains fundamentally informed by 
-the individual choices of the craftsman. These choices are necessarily personal.
-It is in the course of making these choices where some aspect of the craftsmen's 
-character is conferred to the final product. 
+The craftsman may possess a set of precision tools or 
+established practices. However the process remains fundamentally shaped by 
+the individual's choices. These choices are necessarily personal,
+and it is in the course of making these choices where aspects 
+of the craftsmen's character is conferred to the final product. 
 
 The rise of automation and mechanization means that the conferral
 of the craftsman's character to each individual product is 
@@ -347,18 +344,24 @@ The actual number of citations are much higher.
 \label{tab:theoreticalpapers}}
 \end{table}
 
-A criticism of Table~\ref{tab:foundation} is biased towards a "plane wave" conception of electronic structure. 
+A criticism of Table~\ref{tab:foundation} is biased towards a "plane wave" 
+conception of electronic structure. 
 These methods are suitable for crystalline systems with periodicity and can be pushed 
 to describe more disordered systems on the order, as discussed in Sec.\ref{sec:riseofcomp}, 
 of 1000 atoms. These sorts of techniques are also most favoured by workers studying metallurgical
 systems from first principles and materials with potential electronic applications.
 
 To broadly categorize the workers we can say a material scientist 
-is interested in crystals, alloys, ceramics, glasses, and, possibly, rubbers and elastomers. They
-worry about energy differences on the order of 100 meV. Chemists are interested in molecules, 
-tend to use localized basis sets and exploit Monte Carlo and related methods to obtain energy 
-bounds on the order of a few meV. Physicists are interested in lasers, Ising and Hubbard models, and the 
-general positions of resonances and asymptotes in very cold materials and won't be discussed further. 
+is interested in crystals, alloys, ceramics, glasses, and, possibly, rubbers and elastomers. 
+Chemists are interested in molecules, 
+tend to use localized basis sets and exploit Monte Carlo and 
+related methods to obtain energy 
+bounds on the order of a few meV. Physicists are interested in lasers, 
+Ising and Hubbard models, and the 
+general positions of resonances and asymptotes in very cold materials 
+and won't be discussed further. The connection between band
+theory and the chemist's molecular orbital picture is developed in
+Ref.~\cite{hoffman87}.
 %String theorists and cosmologists are charlatans.
 
 \section{Justification by Utility}
@@ -567,7 +570,7 @@ P(\mathcal{H}_{i}|D) \propto P(D|\mathcal{H}_{i})P(\mathcal{H}_{i})
 %
 \begin{equation}
 \label{eq:bayesH}
-P(D|\mathcal{H}_{i}) = P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H}_{i})d\mathbf{w}
+P(D|\mathcal{H}_{i}) = \int P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H}_{i})d\mathbf{w}
 \end{equation}
 %
 Models (hypotheses) of material systems can then be ranked according to Eq.~\ref{eq:bayesH},  
@@ -576,17 +579,21 @@ Models (hypotheses) of material systems can then be ranked according to Eq.~\ref
 The purpose of these notes is to collect established tools into 
 a framework for mapping first principles knowledge about material systems 
 onto concise mathematical models. 
+
 In the first chapter the ideas underlying invariance and the 
 theory of the local atomic environment are presented along with references
 to the original work. The recursion technique is introduced. 
 Recursion techniques are viewed as the {\emph central unifying technique} in these
-notes and all subsequent discussion is formulated with recursion techniques in mind.
+notes and all subsequent discussion is formulated with recursion in mind.
 
-After spending some (considerable) time on invariance and recursion theory 
-the standard presentation of Density Functional Theory is made along 
+After having spent some (considerable) time on invariance and recursion
+Chap.~\ref{chap:gw} makes the standard presentation of Density Functional Theory is made along 
 with a brief discussion of the Harris-Foulkes functional and tight-binding theory. 
 Density Functional Theory is the primary {\it ab initio} engine that will 
-provide the local interaction parameters required in recursion formulations.
+provide the interaction parameters required in recursion formulations.
+Chapter~\ref{chap:gw} will simultaneously introduce a more advanced 
+treatment for the correlation of electrons in materials.
+This is called, ominously and (to the uninitiated) confusingly, $GW$ theory.
 
 Chapter~\ref{chap:wannier} is a whistle stop tour 
 on modern techniques for preparing localized wave packets in the 
@@ -594,9 +601,6 @@ form of Wannier functions. The focus of this chapter is on
 ways of deducing the coefficients of a sparse Hamiltonian
 necessary for performing recursion calculations.
 
-Chapter~\ref{chap:gw} introduces a more advanced 
-treatment for the correlation of electrons in materials.
-This is called, ominously and (to the uninitiated) confusingly, $GW$ theory.
 After introducing the standard $GW$ theory, recursive perturbation theory
 will be suggested as a means of including many-body corrections 
 to the standard single particle formulation of recursion theory. 
