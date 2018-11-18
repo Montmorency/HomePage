@@ -17,8 +17,8 @@ the recursion formula:
   b_{n+1}\psi_{n+1} = [H - a_{n}]\psi_{n} - b_{n}\psi_{n-1}, n=0,1,.
   
 Where :math:`a_{n} = \langle\psi_{n}|H \psi_{n}\rangle` and :math:`b_{n+1}` is 
-chosen such that :math:`\langle\psi(n+1)|\psi(n+1)\rangle = 1`, :math:`\psi_{-1} =0`, and 
-:math:`\psi_{0}` are given. 
+chosen such that :math:`\langle\psi_{n+1}|\psi_{n+1}\rangle = 1`, 
+:math:`\psi_{-1} =0`, and :math:`\psi_{0}` are given. 
 
 (Within the Fortran the subscripts are increased by 1 to conform to
 Fortran IV convention, although all routines have also run in
