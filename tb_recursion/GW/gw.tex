@@ -1065,11 +1065,13 @@ forms.
 The first constraint we have is $\int\rho(\r)d^{3}\r = N$ incorporating this
 constraing using a Lagrange multiplier technique with the fact that we want
 to find a variational minimum for the energy we can write:
-
+%
 \begin{equation}
-\frac{\delta}{\delta \rho} \left[E[\rho] - \mu(\int \rho(\r)d\r - N)\right],
+\frac{\delta}{\delta \rho} \left[E[\rho] - \mu(\int \rho(\r)d\r - N)\right] = 0,
 \end{equation}
-which leads to 
+%
+which leads to:
+%
 \begin{equation}
 \frac{\delta E[\rho]}{\delta \rho}= \mu.
 \end{equation}
@@ -1077,12 +1079,30 @@ which leads to
 \section{Purely Functional Forms}
 Finnis' textbook gives a comprehensive discussion of functionals,
 the Hohenberg-Kohn Functional and the Harris-Foulkes functional.
-His development is far more thorought than that given here and makes
-a direct connection with response functions. 
+His development is far more thorough than what is discussed here. 
+The important connections to make in the present collection
+is that we can point out a direct connection between the
+
+\begin{itemize}
+\item A direct relation between the second nd order variation in $E_{\rm xc}$ and the dielectric function can be made.
+\item We can define the Generalized Harris-Foulkes Functional which will clarify our ideas about optimizing the computed
+      electron densities and changing the potentials we are asking the electrons to move in.
+\end{itemize}
+
+The first point means we can connect the exchange-correlation functional, 
+which is mysterious and foreign, to a dielectric function, which has a pleasing 
+classical picture and is familiar.
+
+The second point is essential because it will justify the use of certain 
+computational approaches and clarify why, in some cases, a single shot GW
+calculation might ``work", and where it might not. The Generalized Harris-Foulkes
+and quantify what is meant by an optimum model of our system and allow for the
+construction of densities and potentials that reach this optimum position in 
+the functional space. 
 
 The text of this section will be kept to a minimum. It should be viewed as a
-useful collection of functional definitions collected into one
-place. The Hohenberg-Kohn-Sham Energy written in its pure functional form,
+useful collection of functional definitions all contained in one place. 
+The Hohenberg-Kohn-Sham Energy written in its pure functional form,
 as a set of non-interacting electrons, expanded to first order, expanded to
 second order, and the Harris-Foulkes function are all discussed.
 
@@ -1185,13 +1205,13 @@ E^{(2)}[\rho] = \sum_{i}{\bra \psi_{i}|\hat{H}^{\rm in}|\psi_{i}\ket} + E_{\rm x
 -\rho^{\rm in}V_{xc}^{in} - E_{H}^{in} + E_{ZZ} + \frac{1}{2}\int C_{in}(\r,\r')\delta\rho\delta\rho'.
 \end{equation}
 
-Eq.\ref{eq:sohks} can be obtained by introducing a density $\rho = \rho^{\rm in} + \delta\rho$, inserting this into
-Eq.\ref{eq:hks} and expanding the terms. 
+Eq.~\ref{eq:sohks} can be obtained by introducing a density $\rho = \rho^{\rm in} + \delta\rho$, inserting this into
+Eq.~\ref{eq:hks} and expanding the terms. 
 
 The second order variation in the Hartree and exchange correlation terms are encoded in
 %
 \begin{equation}
-C_{in(\r,\r') = \frac{1}{|\r-\r'|} + \frac{\delta^{2}E_{xc}[\rho]}{\delta rho \delta rho'}
+C_{\rm in}(\r,\r') = \frac{1}{|\r-\r'|} + \frac{\delta^{2}E_{xc}[\rho]}{\delta rho \delta rho'}
 \end{equation}
 
 If one has some knowledge of $C(\r,\r')$ than one is in a position where the self-consistency 
@@ -1206,25 +1226,54 @@ Eq.~\ref{eq:sohks} is minimized by solving:
 %
 where $V_{\rm eff}^{(2)}=V^{\rm in}_{\rm eff}(\r) + C_{in}(\r,\r')\delta \rho(\r')d\r'$
 
-Finally note:
+%Finally note:
+%
+%\begin{equation}
+%E^{\rm HKS}[\rho = E^{(2)} + \Delta E_{\rm xc}^{\rm in}[\rho
+%\end{equation}
+
+\subsection{Generalization of the Harris-Foulke Functional}
+
+The Harris Foulkes functional:
 %
 \begin{equation}
-E^{\rm HKS}[\rho = E^{(2)} + \Delta E_{\rm xc}^{\rm in}[\rho
+E^{(1)}_{\rm HF}[\rho] = \sum_{i} \bra i |\hat{H}^{\rm in}|i\ket + E_{\rm xc}^{\rm in} - \int \rho^{\rm in}V^{\rm in}_{\rm xc} - E^{\rm in}_{H} + E_{ZZ}
 \end{equation}
 
-\subsection{Harris-Foulke Generalized and the Tightbing Hamiltonian}
-Write 3.48
-The generalized Harris Foulkes functional can be viewed in these terms:
+is variationally minimal with respect to the wave functions, which is equivalent, to it being variationally minimal
+with respect to the output density at fixed $rho^{in}$. So it has two co-ordinates that
+we can vary to minimize it. The $V^{in}_{eff}$ is a thisd co=ordinate that can be minimized
+
+The generalized Harris-Foulkes functional can be viewed in these terms:
 %
 \begin{equation}
 E^{HFG}[\rho^{out}, \rho^{in}, V_{eff}] = \sum_{i}f_{i}\epsilon_{i}-\rho^{in}V_{eff}+\rho^{in}V_{ext}+E_{xc}^{in}+E_{H}^{in}+E_{ZZ}
 \end{equation}
 %
-
 $\rho_{in}$ and $V_{eff}$ can strictly speaking be anything you want them to be. This is where the 
 craft comes into materials modelling and really choosing them is only dictated by what you
-want to calculate and how accurately you would like to calculate it. However the functional
-is only minimized when $\rho^{in} = \rho^{out}$ and $V_{eff}=V_{in}$.
+want to calculate and how accurately you would like to calculate it. 
+
+However the functional is only minimized when $\rho^{in} = \rho^{out}$ and $V_{eff}=V_{in}$.
+In Fig.~\ref{fig:hfg} a graphical representation of the co-ordinate of the functional.
+%
+\begin{figure}
+\begin{center}
+\includegraphics{./GW/HFG_space.pdf}
+\caption{Schematic representation of the coordinates for the generalized
+Harris-Foulkes functional. Left panel gives stationary points in the co-ordinate space
+for the LDA Kohn-Sham functional, the station point for exact density and exact
+Kohn-Sham energy functional, the blue dot, and for a hypothetical "optimal functional" the green dot.
+The sense in which it is optimal is discussed in the text and in Chap.~\ref{chap:manybodyrec}. The
+right panel divides the space of effective potentials into a co-ordinate composed of only local Hermitian potentials
+and an orthogonal co-ordinate of non-Hermitian non-local potentials.
+This is in the spirit of Ref.~\cite{sohrab10}. The figure demonstrates how one can approach an optimal
+potential which minimizes the distance to the true functional while remaining computational tractable.}
+\end{center}
+\end{figure}
+%
+The blue dot corresponds to $\rho^{\rm ex}$, and $V^{\rm ex}_{\rm eff}$. The red dot
+represents the stationary point for the HKS functional using the LDA.
 
 The important point is that the energy obtained will differ by quantities of second
 order smallness in the guessed density, and the effective potential: i.e., 
@@ -1278,4 +1327,3 @@ amenable to local interactions was begun in the section on the Harris-Foulkes fu
 These idea will be developed further in Chapter~\ref{chap:manybodyrec}, but first 
 we will look at a popular way of preparing localized wave packets in solids 
 from first principles.
-

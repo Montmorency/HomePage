@@ -31,8 +31,13 @@ https://github.com/textext/textext/wiki/Common-issues#preview-is-not-working-but
 https://github.com/textext/textext
 https://github.com/seebk/LaTeXText
 
-http://www.colby.edu/chemistry/PChem/Hartree.html
+However for now we are in a good position just using the render extension
+in the inkscape package. Had to append the path location for latex and dvips
+to the inkscape distribution but then everything worked fine.
 
 Hydrogen Vibrational Modes:
 http://www.nat.vu.nl/~wimu/Publications/Fund-Vibr-PhysRevLett.110.193601.pdf
+
+Added some Caltech bibmerge bibfilter tools to the system path: These might be useful.
+
 
