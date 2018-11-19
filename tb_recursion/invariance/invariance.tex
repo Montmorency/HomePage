@@ -1074,26 +1074,28 @@ Refs.~\cite{burke76, haydock79, haydock81} might be revisited with potentially p
 effect.
 
 \subsection{Off-Diagonal elements}
-The off diagonal elements of the Green's function contain a lot of useful information as well.
+The off diagonal elements of the Green's function contain a lot of 
+useful information as well.
 
-Of particular interest are response functions \cite{terakura78} and Bond Orders \cite{tersoff86, pettifor89} 
-are built out of the off diagonal elements.
-
+Of particular interest are response functions \cite{terakura78} and 
+Bond Orders \cite{tersoff86, pettifor89} are built out of the 
+off diagonal elements.
 %
 \begin{equation}
 \phi_{+} = \frac{1}{\sqrt{2}}(\phi_{A} + \phi_{B})
 \phi_{-} = \frac{1}{\sqrt{2}}(\phi_{A} - \phi_{B})
 \end{equation}
 %
-for a self-adjoint H, and real $\phi_{A}$ and $\phi_{B}$ the off-diagonal element of the resolvent
-gives:
+for a self-adjoint H, and real $\phi_{A}$ and $\phi_{B}$ 
+the off-diagonal element of the resolvent gives:
 %
 \begin{equation}
 R_{AB}(E) = \frac{1}{2}[R_{++}(E)-R_{--}(E)]
 \end{equation}
 
-Pettifor defined the bond order as the integrated energy difference between a symmetric
-and anti-symmetric combination of nearest neighbour orbitals \cite{pettifor89}.
+Pettifor defined the bond order as the integrated energy difference 
+between a symmetric and anti-symmetric combination of 
+nearest neighbour orbitals \cite{pettifor89}.
 %
 \begin{equation}
 \Theta_{ij} = - \frac{2}{\pi} {\rm Im} \int^{E_{F}}\left[G^{+}_{00}(E)-G_{00}^{-}(E)\right]dE
@@ -1116,15 +1118,39 @@ The susceptibility is defined:
 
 See also Finnis \cite{finnis84} for a discussion of susceptibilties.
 
+\subsection{Block Recursion}
+By picking a single orbital and turning the wheel on the recursion method a
+chain of coefficients can be generated. However rounding errors in the evaluation
+of the matrix vector products mean that numerical noise can disrupt underlying
+symmetries. This can be demonstrated where there are deviations in the density
+of states computed for a given orbital if the z-axis is changed arbitrarily 
+which should not be the case. To alleviate this the Block recursion method.
+In this method a set of initial orbitals are chosen and the the recursion
+coefficients become matrices. The technique and its implementations are described 
+in Refs.~\cite{jones84, inoue87, nex89, godin91, ozaki00}. To see
+the method in action Paxton's study of the
+phase stability in silicon Refs.~\cite{paxton87, paxton88},
+and calculations of quantum transmittance through disorder media 
+in Refs.~\cite{godin86, godin88}.
+
+The difference between the scalar recursion and the block
+recursion method is similar to the difference between
+playing a number of notes at the same time like a 
+musical chord rather than picking out single 
+notes at a time as in a melody.
+
 \subsection{Phonon Recursion}
-With a simple modification phonon spectra can be computed directly using the recursion technique.
-Instead of localized orbitals, localized displacements are introduced, and in the place of onsite and hopping
-matrix elements force constants connect nearest and next nearest neighbour displacements. 
-The papers and PHD thesis of Meek describes in detail the application of the recursion method to the
-computation of vibrational spectra \cite{meek76, meek78}. Electron-phonon coupling has also been
+With a simple modification phonon spectra can be computed directly 
+using the recursion technique. Instead of localized orbitals, localized 
+displacements are introduced, and in the place of onsite and hopping
+matrix elements force constants connect nearest and next 
+nearest neighbour displacements. 
+The papers and PHD thesis of Meek describes in detail the 
+application of the recursion method to the computation of 
+vibrational spectra \cite{meek76, meek78}. Electron-phonon coupling has also been
 considered in this context\cite{terakura78}. The method is particularly useful for
-computing vibrational spectra in disordered media where a statistical averaging procedure needs to be
-undertaken \cite{mookerjee04}.
+computing vibrational spectra in disordered media 
+where a statistical averaging procedure needs to be undertaken \cite{mookerjee04}.
 
 The force constant matrix of a crystal can be written as:
 %
@@ -1179,35 +1205,49 @@ G_{i\alpha,i\alpha}(\omega^{2})= \bra i\alpha| \left[D- \omega^{2}I\right]^{-1} 
 \end{equation}
 %
 
-For instance for 2 atoms in a unit cell of a perfect crystal Eq.~\ref{eq:phonon} would only
-need to be computed for 6x6 matrix at every $\k$ point in the Brillouin zone to determine
-the vibration spectrum. In this case there would be little need for employing a recursion method.
-Well developed techniques exist to obtain the force constant matrix at every $\k$ point 
-from first principles \cite{baroni01}, however this again requires an assumption about
-microscopic periodicity which may not be valid. For any amount of disorder at the atomic level,
-for instance in the CRN systems studied by Meeks secular determinants of $3N\times3N$ with
-$N=200-300$ may need to be solved. In these situations recursion type calculation become necessary.
+For instance for 2 atoms in a unit cell of a perfect 
+crystal Eq.~\ref{eq:phonon} would only
+need to be computed for 6x6 matrix at every $\k$ point 
+in the Brillouin zone to determine the vibration spectrum. 
+In this case there would be little need for employing a recursion method.
+Well developed techniques exist to obtain the force constant 
+matrix at every $\k$ point from first principles \cite{baroni01}, 
+however this again requires an assumption about
+microscopic periodicity which may not be valid. For any amount of 
+disorder at the atomic level, for instance in the CRN systems 
+studied by Meeks secular determinants of $3N\times3N$ with
+$N=200-300$ may need to be solved. In these situations recursion 
+type calculation become necessary.
 %
 \begin{figure}
 \begin{center}
 {\graphicspath{{./invariance/rec_examples/phonon/}}\input{./invariance/rec_examples/phonon/phonon_dos.tex}}
-\caption{The local phonon density of states for a small six atom molecule composed of two atom types.
-The model is specified by giving the masses of the two atoms. In the present simulation 
+\caption{The local phonon density of states for a small six atom molecule 
+composed of two atom types. The model is specified by giving the 
+masses of the two atoms. In the present simulation 
 the masses are chosen to be 0.25 and $0.189$ amu. Two force constants are also
-specified, a bond stretching force constant of 1.0, which is the same for both atomic types
-and two bond bending force constants of 0.5 and 0.25 \label{fig:phonondos}. The phonon DOS relies on the routine
-\texttt{RECSUM} to combine the continued fraction coefficients for the vibration modes computed for each
-site. The six atom system has $3N-6=12$ vibration modes and the DOVS integrates to 12 as expected.}
+specified, a bond stretching force constant of 1.0, 
+which is the same for both atomic types
+and two bond bending force constants of 0.5 and 0.25 \label{fig:phonondos}. 
+The phonon DOS relies on the routine
+\texttt{RECSUM} to combine the continued fraction coefficients 
+for the vibration modes computed for each site. 
+The six atom system has $3N-6=12$ vibration modes and the 
+DOVS integrates to 12 as expected.}
 \end{center}
 \end{figure}
 %
-The phonon density of states and the integrated phonon density of states is depicted in Fig.~\ref{fig:phonondos} 
-for a six atom molecule consisting of two atomic types. The number of sets of continued fraction coefficients
-that needs to be generated is equal to $3*N_{s}$ where $N_{s}$ is the number of atoms that the phonon LDOS
-or ensity of vibrational states (DOVS), is computed for and the factor of 3 is for the 
-displacement in each atomic direction. The expression for the average phonon density of states
-over the different matrix elements of the resolvent is first over the cartesian displacements
-$\alpha$:
+The phonon density of states and the integrated phonon density of 
+states is depicted in Fig.~\ref{fig:phonondos} 
+for a six atom molecule consisting of two atomic types. The number of 
+sets of continued fraction coefficients
+that needs to be generated is equal to $3*N_{s}$ where $N_{s}$ 
+is the number of atoms that the phonon LDOS
+or density of vibrational states (DOVS), is computed 
+for and the factor of 3 is for the displacement in each 
+atomic direction. The expression for the average phonon density of states
+over the different matrix elements of the resolvent 
+is first over the cartesian displacements $\alpha$:
 %
 \begin{equation}
 n_{i}(\omega^{2}) = \sum_{\alpha}n_{\alpha,i}(\omega^{2}),
@@ -1219,21 +1259,28 @@ N(\omega) = \frac{2\omega}{N_{s}}\sum_{i}^{N_{s}}n_{i}(\omega^{2}),
 %
 its integral gives the total number of vibrational modes.
 
-In Fig.~\ref{fig:phonondos} two sites are used to generate the DOVS, to a depth of $7$ 
-in the continued fraction coefficients. The postprocessing of the continued 
-fraction coefficients is the same as in the case of the surface and bulk DOS calculations. 
-In Meeks work sufficient feature resolution in the DOVS is achieved with a depth of 20 
-in the recursion steps for a cluster of 344 diamond atoms. The force constants entering 
-these models were not ab initio instead being derived from a model due to Born \cite{born14}. 
+In Fig.~\ref{fig:phonondos} two sites are used to generate the 
+DOVS, to a depth of $7$ in the continued fraction coefficients. 
+The postprocessing of the continued fraction coefficients 
+is the same as in the case of the surface and bulk DOS calculations. 
+In Meeks work sufficient feature resolution in the DOVS is 
+achieved with a depth of 20 in the recursion steps for a 
+cluster of 344 diamond atoms. The force constants entering 
+these models were not ab initio instead being 
+derived from a model due to Born \cite{born14}. 
 It is now possible to obtain highly accurate force 
-constants from first principles. The higher quality force constant matrices that
-can be generated as a result could well be reflected in the quality (with respect to experiment)
-of the features observed in the density of states.
+constants from first principles. The higher 
+quality force constant matrices that can be generated 
+as a result could well be reflected in the quality 
+(with respect to experiment) of the features 
+observed in the density of states.
 
-Direct examination of the routines involved in the computation of the Phonon DOS 
-itself give a good feeling for how the recursion method works. In Table~\ref{tab:phonon} 
-the various routines and the task they accomplish are listed. These routines specify the entire problem
-and with minor adaptations, (the crystal structure, force constants etc.), can 
+Direct examination of the routines involved in the 
+computation of the Phonon DOS itself give a good feeling 
+for how the recursion method works. In Table~\ref{tab:phonon} 
+the various routines and the task they accomplish are listed. 
+These routines specify the entire problem and with minor 
+adaptations, (the crystal structure, force constants etc.), can 
 be used to compute the DOVS for any system.
 
 \begin{table}
@@ -1328,10 +1375,6 @@ in Eq.~\ref{eq:circuit}.
 
 Detailed workings of the application of the recursion method to a surface atom in Cubium
 are presented in Ref.~\cite{haydock75}. 
-
-
-
-
 
 \section{Future Work}
 The references provided here and in Vol. 35 demonstrate the impact of 
