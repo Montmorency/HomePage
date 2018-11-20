@@ -855,7 +855,8 @@ The difference in the qualities, in terms of the structure revealed, in the DOS
 is determined by the different termination scheme employed. \footnote{See the routines 
 \texttt{DENCRS} and \texttt{DENSQ} for the analytic terminator (TermDOS) scheme and \texttt{DENQD} 
 for the QuadDOS termination scheme in the Cambridge Recursion Library. 
-The TermDOS scheme is described in NEX C.M.M. Comp. Phys. Comm.  (1985)}
+\cite{nex84,haydock84,haydock85} The TermDOS scheme is described 
+in \cite{nex84}.}
 
 \subsection{Surface Electronic Structure}
 Surface catalysis is a topic of immense interest in chemistry and chemical engineering.
@@ -971,22 +972,23 @@ as a matrix means the determinant van be split into a sum over
 five separate logarithms this is accomplished by "orbital peeling".
 
 \begin{equation}
-det|G2| = \bar{G}_{21}\bar{G}_{22}\bar{G}_{23}\bar{G}_{24}\bar{G}_{25}
+{\rm det}|G2| = \bar{G}_{21}\bar{G}_{22}\bar{G}_{23}\bar{G}_{24}\bar{G}_{25}
 \end{equation}
 
 \begin{equation}
-det|G1| = \bar{G}_{11}\bar{G}_{12}\bar{G}_{13}\bar{G}_{14}\bar{G}_{15}
+{\rm det}|G1| = \bar{G}_{11}\bar{G}_{12}\bar{G}_{13}\bar{G}_{14}\bar{G}_{15}
 \end{equation}
 
 The matrix elements for each $G_{i\alpha}$ should be very familiar at this point:
 %
 \begin{equation}
-G_{i\alpha}=<i,\alpha| [EI-\bar{H}_{i\alpha}] |i, \alpha>
+G_{i\alpha}=\bra i,\alpha| [E-\bar{H}_{i\alpha}]^{-1} |i, \alpha\ket
 \end{equation}
 %
 with $i=1,2$ $\alpha=1,5$. The matrix $\bar{H}_{i\alpha}$ is formed by taking 
-$[EI-H_{i}]$, deleting the first $(\alpha-1)$ rows and columns to form $[EI-\bar H_{i\alpha}]$.
-The desired matrix element is now the in the upperleft-most corner of the matrix. 
+$[E-\bar{H}_{i}]$, deleting the first $(\alpha-1)$ rows and columns 
+to form $[EI-\bar{H}_{i\alpha}]$. The desired matrix element is now the 
+in the upperleft-most corner of the matrix. 
 Using this representation the difference in the density of states is calculated:
 %
 \begin{equation}
@@ -1003,16 +1005,23 @@ The SK parameters used for fcc, bcc, and hcp crystals in Ref.~\cite{haydock72} a
 given in Table \ref{tab:pettiparams}.
 %
 \begin{table}
-\begin{tabular}{ccccc} 
+\begin{center}
+\begin{tabular}{|ccccc|} 
+\hline
 Structure & $dd\sigma$ & $dd\pi$  & $dd\delta$ &  Band-limits \\
+\hline
 fcc       & -0.027784  & 0.012535 & -0.001554  & -0.131 to 0.085 \\ 
+\hline
 hcp       & -0.027784  & 0.012535 & -0.001554  & -0.119 to 0.081 \\
+\hline
 bcc       & -0.03248   & 0.01538  & -0.00200   & -0.119 to 0.097 \\
           & -0.01341   & 0.00487  & -0.00049   &              \\
+\hline
 \end{tabular}
 \caption{Slater-Koster parameters from Pettifor \cite{pettifor69}, 
 along with band edges in Ry. First and second nearest neighbour 
 parameters are given for BCC crystals. \label{tab:pettiparams}.}
+\end{center}
 \end{table}
 %
 %\begin{table}
@@ -1030,22 +1039,29 @@ parameters are given for BCC crystals. \label{tab:pettiparams}.}
 %\end{table}
 %
 \begin{table}
+\begin{center}
 \begin{tabular}{|c|c|c|}
+\hline
 \multicolumn{3}{|c|} {FCC TB Parameters} \\
+\hline
 Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
 \hline
 $dd\sigma$ & -0.027784 & - \\
 $dd\pi$    &  0.012535 & - \\
 $dd\delta$ & -0.001554 & - \\
+\hline
 \multicolumn{3}{|c|} {BCC TB Parameters} \\
+\hline
 Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
 $dd\sigma$ & -0.06560  & -0.03195 \\
 $dd\pi$    &  0.04373  & 0.02130\\
 $dd\delta$ & -0.010934 & -0.00537\\
 \hline
 \end{tabular}
-\caption{The tight binding parameters used for the electronic DOS example calculations in this chapter,
-in the FCC lattice only nearest neighbours are included.}
+\caption{The tight binding parameters used for the example recursion 
+calculations in this chapter, in the FCC lattice only nearest neighbours 
+are included.}
+\end{center}
 \end{table}
 %
 The range of $E_{F}$ is restricted to $-0.068 \ge E_{F} \le 0.12$ Ryd by considerations
@@ -1080,16 +1096,19 @@ Refs.~\cite{burke76, haydock79, haydock81} might be revisited with potentially p
 effect.
 
 \subsection{Off-Diagonal elements}
-The off diagonal elements of the Green's function contain a lot of 
-useful information. 
-%The significance of the off-diagonal terms is that
-%they encode all the information about why materials form solids in the first place
-%Ref.\cite{yang62}.
+The off diagonal elements of the Green's function can be written:
+%
+\begin{equation}
+G_{AB}(E) = \bra \phi_{A}|[H-E]^{-1}|\phi_{B}\ket,
+\end{equation}
+%
+and they may contain a lot of useful information. 
 
-Of particular interest are response functions \cite{terakura78} and 
-Bond Orders \cite{tersoff86, pettifor89} are built out of the 
-off diagonal elements.
-%bond orders in superconductors mean non-zero elements of the local states.
+Of particular interest are response functions computed in this manner 
+\cite{terakura78} and bond orders \cite{tersoff86, pettifor89} 
+which describe the response of a system to an external 
+perturbation and the nature of the interatomic binding.
+%
 \begin{equation}
 \phi_{+} = \frac{1}{\sqrt{2}}(\phi_{A} + \phi_{B})
 \phi_{-} = \frac{1}{\sqrt{2}}(\phi_{A} - \phi_{B})
@@ -1099,7 +1118,8 @@ for a self-adjoint H, and real $\phi_{A}$ and $\phi_{B}$
 the off-diagonal element of the resolvent gives:
 %
 \begin{equation}
-R_{AB}(E) = \frac{1}{2}[R_{++}(E)-R_{--}(E)]
+\label{eq:offdiaggreen}
+G_{AB}(E) = \frac{1}{2}[G_{++}(E)-G_{--}(E)]
 \end{equation}
 
 Pettifor defined the bond order as the integrated energy difference 
@@ -1107,9 +1127,15 @@ between a symmetric and anti-symmetric combination of
 nearest neighbour orbitals \cite{pettifor89}.
 %
 \begin{equation}
+\label{eq:bondorder}
 \Theta_{ij} = - \frac{2}{\pi} {\rm Im} \int^{E_{F}}\left[G^{+}_{00}(E)-G_{00}^{-}(E)\right]dE
 \end{equation}
-
+%
+Eq.~\ref{eq:bondorder} takes an interesting form. As we integrate up in energy the difference
+in the symmetric and antisymmetric combinations of the two states are accumulated.
+The resulting integral is then a scalar which measures the sign and magnitude of the
+interference between the two local states.
+%
 \begin{equation}
 G^{\pm}_{00}(E) = \bra u_{0}^{\pm}|\left[E-H\right]^{-1}|u_{0}^{\pm}\ket
 \end{equation}
@@ -1125,7 +1151,13 @@ The susceptibility is defined:
 \end{equation}
 %
 
-See also Finnis \cite{finnis84} for a discussion of susceptibilties.
+See also Finnis \cite{finnis84} for a discussion of susceptibilties computed using the 
+off diagonal elements of the Green's function.
+
+Eq.~\ref{eq:offdiaggreen} gives an immediate scheme for computing the off diagonal
+elements but can result in the need for substracting two largish quantities to find
+a small one. Which is never ideal. This concern and others motivates the introduction
+of the block recursion method.
 
 \subsection{Block Recursion}
 By picking a single orbital and turning the wheel on the recursion method a
