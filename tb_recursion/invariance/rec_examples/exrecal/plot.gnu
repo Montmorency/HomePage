@@ -4,7 +4,7 @@ set output 'recal_dos.tex'
 set multiplot layout 2,1 rowsfirst 
 set ylabel 'N(E)'
 
-set key left top
+set key right top
 set format x '%.1f'
 
 pl 'dos.dat' u ($1*13.605):2 w lp pt 7 t 'TermDOS',\
