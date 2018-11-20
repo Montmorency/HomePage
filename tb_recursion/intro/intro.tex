@@ -145,20 +145,40 @@ using quantum mechanics? What are the time scales?
 What is a typical number of particles?
 
 Chemists arrived at the mol as a convenient unit for describing
-quantities of atoms. A mol is on the order of $10^{23}$ atoms. 
-That is a lot of atoms. Setting up a single system of 
+quantities of atoms. A mol is on the order of $10^{23}$ atoms with
+the precise number called the Avogadro Constant. While not strictly relevant
+it is worth mentioning that Avogadro possesses one of the most
+interesting scientific profile pictures. This picture is, quite rightly, reproduced
+in a number of introductory chemistry books. We carry on this tradition 
+in Fig.~\ref{fig:avogadro}.
+%
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{./intro/Amadeo_Avogadro.png}
+\end{center}
+\caption{Count Amadeo Avogadro.}
+\end{figure}
+%
+$10^{23}$ is by everyday standards an incredibly large number. 
+It goes without saying that setting up a single system of 
 equations to describe the motion of and mutual 
-interactions of this number of particles is not practical.
+interactions of each individual particle in such an ensemble is not practical 
+(nor has it been seriously suggested as far as I am aware). Nor is it even necessary.
+For such large aggregates of particles their behaviour for the most part seems 
+well described by collective laws like ideal gas laws or continuum mechanics. 
+So at what stage does it become necessary to describe the properties of the material
+using quantum mechanics? 
 
-More realisitically a suitably macroscopic specimen might be considered to be on the 
-order of 200 nm$^{3}$ of material. A sample of material of this size is of the 
+In order to be more concrete about things let us consider a  macroscopic specimen 
+to be on the order of 200 nm$^{3}$ of material. A sample of material of this size is of the 
 same order as the wavelength of visible light and could be
-resolved with an optical microscope. Assuming an atomic spacing of 2 tenths 
-of a nanometer a dynamical simulation of around a billion atoms 
+resolved with an optical microscope (using some focusing tricks). Assuming an atomic spacing of 2 tenths 
+of a nanometer a dynamical simulation of around a $10^{9}$ atoms 
 done using quantum mechanics could be considered a quantum mechanical 
-simulation of a macroscopic system. 
+simulation of a macroscopic system. $10^{9}$, one billion, is a number
+much more familiar than $10^{23}$.
 
-To give an idea of the time required to perform a well converged quantum simulation 
+To give an idea of the time required to perform a well converged quantum simulation. 
 250 Fe atoms required 4 hours on 96 nodes of the computer with the same 
 specifications noted earlier. There are 2000 electrons in the 
 simulation which must be allowed
@@ -620,9 +640,10 @@ coupling parameters required to compute transition temperatures.
 
 Chapter \ref{chap:metallurgy} then looks at some metallurgical concepts 
 and a few interesting calculations which can and have been performed 
-using recursive techniques. The final chapter introduces some Bayesian 
-techniques to select material models and rank them according 
-to a mathematical criterion. 
+using recursive techniques. 
+
+Finally, Chapter \ref{chap:bayes} points out some Bayesian techniques 
+to select material models and rank them according to a mathematical criterion.
 
 All of these techniques have been developed by other workers 
 over a number of years but collecting them into a single place 
@@ -635,7 +656,30 @@ be worked through using this library. This companion calculator's value lies not
 in the numbers it provides but the physical insight afforded by the calculations.
 This valuable resource can then be used for whatever calculations one desires.
 
-Ideally these notes will point to a framework where engineers, informed by the
+The recursion method placed in the broad context of twentieth century condensed matter physics
+is admittedly niche. It has its practitioners, its uses, 
+its successes and limitations like any other field.
+However to the author its importance lies in the close connection between the mathematical
+technique and the reality it seeks to describe. The way an electron may be associated with 
+one atom and then, through its excursions, hopping from atom to atom and returning home,
+may form new combinations. The process braids the chains which link atoms together into 
+new structures with new properties.
+
+This complementarity of mathematical technique and physical reality 
+is best articulated by Heisenberg in a tribute to his friend Rudolf Peierls:
+ 
+\begin{quote}
+In the case of theoretical physics, as we learned it primarily from
+Bohr, the essence neither consists of proofs
+nor in the mathematical description of experiments.
+Rather the convincing power of the mathematics employed comes from
+what one calls physical insight or physical interpretation. The supreme
+requirement of this type of physics is to understand every formula that
+one writes down physically both as to its intellectual content and to its context.
+\end{quote}
+ 
+It is hoped this close marriage of physical insight and mathematical technique
+will point to a framework where engineers, informed by the
 structure and composition of a material, can consult a simple table of
 coefficients and directly perform their computations, perhaps even with 
 pen and paper. The result of these computations should yield accurate 
@@ -643,4 +687,3 @@ properties of their system derived from quantum mechanics.
 Properties like band gaps, elasticity tensors, conductivities, 
 heat capacities, cohesive energies, adhesive energies, superconducting transition temperatures, 
 and so on. Such a framework would constitute a real calculus for quantum engineers.
-

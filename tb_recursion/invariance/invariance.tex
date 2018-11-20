@@ -1,6 +1,6 @@
-\chapter{Tight Binding Recursion}
+\chapter{The Local Atomic Environment}
 \label{chap:invariance}
-\section{The Local Atomic Environment}
+\section{Introduction}
 Vol.~35 of Solid State Physics is dedicated to electronic structure
 theory from the point of view of the local environment. This perspective
 has a long tradition in physical and chemical electronic structure theory.
@@ -17,7 +17,7 @@ in realistic physical situations and yields quantities which can be interpreted 
 %Topics that are often discussed at the beginning of introductory physics courses include:
 %the study of black body radiation, photoemission phenomenon, De Broghlie waves,
 %electron diffraction experiments and the structure of the hydrogen atom.
-%Examination of thesis topics constitute a suitable foundation 
+%Examination of these topics constitute a suitable foundation 
 %for understanding the formalism and experimental justification for the theory.
 
 %It is natural to hope that from the understanding of the electronic states of hydrogen the
@@ -46,13 +46,16 @@ in realistic physical situations and yields quantities which can be interpreted 
 An example of the economy of explanatory expression afforded by the recursion method
 and a physical formulation in terms of the local atomic environment
 is Ref.~\cite{johannes76}. In that work 76 crystal structures are correctly predicted 
-with a model containing 5 parameters.
+with a model containing 5 coefficients derived from first principles.
 
 The purpose of this chapter is two fold: firstly to attempt to summarize the incredible range and
-detail of theory and application covered in Vol. 35 of Solid State Physics; and secondly, to speculate on where 
-it should be possible to exploit modern computational advantages and the new understanding 
-which has emerged in materials to systematically improve descriptions of quantum systems based
+detail of theory and application covered in Vol. 35 of Solid State Physics. The secondly
+purpose is to speculate on where it should be possible to exploit modern 
+computational advantages and the new understanding which has emerged in materials 
+to systematically improve descriptions of quantum systems based
 on the local environment. 
+
+%
 
 \section{The Invariance Theorem}
 \label{sec:invariance}
@@ -673,6 +676,7 @@ For instance, to couple an impurity to a constant chain we allow the first two c
 and the rest of the chain remains constant. This leads to the expression:
 %
 \begin{equation}
+\label{eq:defectchain}
 G(E) = \frac{1/b_{1}}{\frac{E-a_{0}}{b_{1}} - G_{0}(E)}
 \end{equation}
 %
@@ -688,14 +692,15 @@ results for different couplings $b_{1}$ are plotted.
 \begin{figure}
 \begin{center}
 {\graphicspath{{./invariance/chain_figs/}}\input{./invariance/chain_figs/inband_plot.tex}}
-\caption{State with $a_{0}$ chosen to be within the band and a range of coupling strengths. 
-For well matched systems the density of states splits into two resonances corresponding 
-to bound and antibound states. \label{fig:impurity}}
+\caption{Defect chain model, Eq.~\ref{eq:defectchain}, with $a_{0}$ chosen to be 
+within the band of energies for the constant chain. The strength of the coupling between the chain 
+and the defect, $b_1$, is varied. For well matched systems the density of states splits 
+into two resonances corresponding to bound and antibound states. \label{fig:impurity}}
 \end{center}
 \end{figure}
 %
 
-For states outside the energy range of the band, the coupling to the band shifts the position
+For $a_{0}$ outside the energy range of the band, the coupling to the band shifts the position
 of the pole from $a_{0}$ and adjusts the areas under the two curves. Where there is 
 near matching of the chain and the defect the function changes rapidly for small
 variations in the coupling parameters.
@@ -703,8 +708,9 @@ variations in the coupling parameters.
 \begin{figure}
 \begin{center}
 {\graphicspath{{./invariance/chain_figs/}}\input{./invariance/chain_figs/adsorbate_plot.tex}}
-\caption{Coupling of an adsorbate to a constant chain model. Where there is strong coupling
-to the chain two distinct resonances appear. In this case $a_{0}$ is chosen to be outside the band.
+\caption{Coupling of an adsorbate to a constant chain model Eq.~\ref{eq:defectchain}. 
+In this case $a_{0}$ is chosen to be outside the band formed by the chain.
+Where there is strong coupling to the chain two distinct resonances appear.
 The blue and green curves correspond to couplings of $b_{1}=2b$ and $b_{1}=b/10$ respectively.
 \label{fig:gfconstchain}}
 \end{center}
