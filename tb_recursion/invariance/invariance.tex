@@ -342,8 +342,8 @@ can give rise to band structures.
 The determination of the integration constants is a problem unto itself.
 Tight binding parameters for the transition metals can be extracted from 
 a number of places: tight binding parameters that span the transition
-metal range can be found in Refs. \cite{nieminen76}, \cite{pettifor77} and \cite{jepsen75}.
-Each study is a good example of studying homologous trends. 
+metal range can be found in Refs. \cite{nieminen76}, \cite{pettifor77} and \cite{jepsen75, andersen77, harrison80}.
+Harrison has also published a set of universal parameters for s-p bonded structures.
 
 \section{Transition Metal Tight Binding}
 \label{sec:tmtb}
@@ -366,7 +366,8 @@ stems from the presence of an energy resonance
 complicating the process of choosing the coefficients of the tight binding matrix. 
 For the optimal, energy independent, set of coefficients that can be 
 chosen see the work of Pettifor. There is a close parallel with the resonant
-scattering of d-wave electrons in materials and Feshbach resonances Ref.~\cite{chin10}.}
+scattering of d-wave electrons in materials and Feshbach resonances Ref.~\cite{chin10}.
+[Figure Taken from D.W. Bullet Solid State Physics Vol. 35 pg. 197.]}
 \end{figure}
 %
 
@@ -416,8 +417,8 @@ This means an appropriate model Hamiltonian must account for the various states 
 %
 \begin{eqnarray}
 \label{eq:d-hamiltonian}
-H = d-d  & d-PW \\
-    PW-D & PW-PW \\
+H =  d-d  &  d-PW \\
+     PW-D & PW-PW 
 \end{eqnarray}
 %
 where d-d and PW-PW are of the tight-binding and plane-wave 
@@ -618,8 +619,6 @@ P. L. Chebyshev, Bull. Acad. Imp. Sci. St. Petersbourg 1, 193 (1859)}
 %\begin{equation}
 %b_{n+1}|u_{n+1}\ket = H |u_{n}\ket - a_{n}|u_{n}\ket - b_{n}|u_{n-1}\ket
 %\end{equation}
-
-
 
 \section{Analytic Recursion}
 \subsection{The Constant Chain}
@@ -1102,83 +1101,244 @@ The off diagonal elements of the Green's function can be written:
 G_{AB}(E) = \bra \phi_{A}|[H-E]^{-1}|\phi_{B}\ket,
 \end{equation}
 %
-and they may contain a lot of useful information. 
+and they contain a lot of useful information. 
 
-Of particular interest are response functions computed in this manner 
-\cite{terakura78} and bond orders \cite{tersoff86, pettifor89} 
-which describe the response of a system to an external 
-perturbation and the nature of the interatomic binding.
+These off diagonal elements are require to calculate 
+response functions, \cite{terakura78}, interatomic forces \cite{finnis84, finnis87, ohta87}, 
+and bond orders \cite{tersoff86, pettifor89}.
+
+One direct route to computing an off diagonal elements of the Green's function
+is by expressing it as a linear combination of two diagonal elements. 
+This can be seen by forming new starting vectors 
+from the potential linear combinations of $\phi_{A}$ and $\phi_{B}$:
 %
-\begin{equation}
-\phi_{+} = \frac{1}{\sqrt{2}}(\phi_{A} + \phi_{B})
-\phi_{-} = \frac{1}{\sqrt{2}}(\phi_{A} - \phi_{B})
-\end{equation}
+\begin{align}
+\phi_{+} = \frac{1}{\sqrt{2}}(\phi_{A} + \phi_{B})\\
+\phi_{-} = \frac{1}{\sqrt{2}}(\phi_{A} - \phi_{B})\\
+\phi_{i+} = \frac{1}{\sqrt{2}}(\phi_{A} + i\phi_{B})\\
+\phi_{i-} = \frac{1}{\sqrt{2}}(\phi_{A} - i\phi_{B}),
+\end{align}
 %
-for a self-adjoint H, and real $\phi_{A}$ and $\phi_{B}$ 
-the off-diagonal element of the resolvent gives:
+we can retrieve the off diagonal elements by computing 
+two `normal' diagonal elements from these linear combinations.
+For example, for an Hermition $\hat{H}$, and real $\phi_{A}$ and $\phi_{B}$ 
+the $AB$ off-diagonal element of the Green's function can be computed as:
 %
 \begin{equation}
 \label{eq:offdiaggreen}
-G_{AB}(E) = \frac{1}{2}[G_{++}(E)-G_{--}(E)]
+G_{AB}(E) = \frac{1}{2}[G_{++}(E)-G_{--}(E)].
 \end{equation}
 
-Pettifor defined the bond order as the integrated energy difference 
-between a symmetric and anti-symmetric combination of 
-nearest neighbour orbitals \cite{pettifor89}.
+To see how the off diagonal elements contribute to the force on an 
+atom we follow Sec. 2.4 of Sutton \cite{sutton88} and Ohta \cite{ohta87}:
+\begin{equation}
+\label{eq:tbenergy}
+u_{ij} = u^{\rm rep}_{ij} - \frac{4}{\pi}\sum_{\lambda\mu} 
+h_{ij}^{\lambda\mu}{\rm Im}\int_{-\infty}^{\epsilon_{F}}G_{ji}^{\mu\lambda}(\epsilon+i0)d\epsilon,
+\end{equation}
+%
+The total energy is then a sum over the bond energies:
+%
+\begin{equation}
+\label{eq:tbtoten}
+U^{\rm tot} = \frac{1}{2}\sum_{ij,(i\neq=j)}u^{\rm tot}_{ij}
+\end{equation}
+%
+\begin{equation}
+\label{eq:tbforce}
+f_{ij}^{\alpha} = f^{\rm rep}_{ij\alpha} - \frac{4}{\pi}\sum_{\lambda\mu} 
+\nabla_{i\alpha}h_{ij}^{\lambda\mu}{\rm Im}\int_{-\infty}^{\epsilon_{F}}G_{ji}^{\mu\lambda}(\epsilon+i0)d\epsilon,
+\end{equation}
+%
+$\alpha$ is a Cartesian direction, $i,j$ are site indices, and $\lambda, \mu$ are orbital indices 
+the z axis lies along the bond connecting atoms i and j. The first term in Eq~\ref{eq:tbforce} 
+we will come back to this term in Chapter~\ref{chap:gw} and Chapter~\ref{chap:wannier}. 
+It is very much a term determined by craft and describes the repulsive contribution of the ion cores. 
+But all this to come. 
+
+For now it is the second term that is of interest and
+it is easily recognized as something we can access via the Green's function 
+computed using recursion techniques. It is also important to note that 
+Eq.~\ref{eq:tbforce} is certainly not a two body interaction! The Green's function 
+as it is calculated accounts for information from every shell of neighbours 
+until there are no more or the recursion process is terminated. 
+The importance of this local formulation of forces should not be underestimated.
+Many of the practical applications discussed in Chapter~\ref{chap:metallurgy} 
+will rely on it.
+
+%
+These off diagonal elements are also required to determine the vibrational properties. 
+If we want the interatomic force constants in the harmonic approach we follow Finnis and
+go to second order in the variation of the total energy to derive the interatomic force
+constant matrix:
+%
+\begin{equation}
+\label{eq:tbdynmat}
+\psi_{\alpha\beta}^{ab} = \hat{\psi}_{\alpha\beta}^{ab} +  \sum_{dnq\sigma}(\delta 
+\rho_{bd,a\alpha}^{nq,\sigma}\nabla_{\beta}h_{db}^{qn} + \delta\rho_{ad,b\beta}^{nq,\sigma}\nabla_{\alpha}h_{da}^{qn}),
+\end{equation}
+%
+$h^{qn}_{db}$ is a two center hopping integral that links the orbital n on atom b to orbital 
+q on atom d. For the d electrons this integral is taken to decay as
+$\r^{5}$. The density changes are proportional to the variation in the Hamiltonian 
+time the response function. Displacing atom a in the $\alpha$ direction induces a change in the
+bond charges about atom b. The change in the bond charge between atoms b and d 
+in the spin-$\sigma$ channel stemming from orbitals n and q is given by:
+%
+\begin{equation}
+\label{eq:tbdeltarho}
+\delta \rho_{bd,a\alpha}^{nq,\sigma} = \sum_{cmp}(\chi_{bc,ad}^{np,mq,\sigma}+\chi_{ba,cd}^{nm,pq,\sigma})\nabla_{\alpha}h_{ac}^{pm}
+\end{equation}
+%
+where the response function is defined as:
+%
+\begin{equation}
+\label{eq:tbresponse}
+\chi_{bc,ad}^{np,mq,\sigma} = \frac{1}{\pi}{\rm Im}\int^{E_{F}}G_{bc}^{np,\sigma}(\epsilon)G_{ad}^{mq,\sigma}(\epsilon)d\epsilon,
+\end{equation}
+%
+
+An interesting relationship can be derived between off-diagonal elements
+and the response functions \cite{terakura82, sutton88}:
+%
+\begin{equation}
+\frac{dG}{dE}=-G^{2},
+\end{equation}
+%
+and upon integration:
+%
+\begin{equation}
+\frac{-2}{\pi}G_{jk}(E^{+}) = \frac{2{\rm Im}}{\pi}\int^{E}\sum_{l}G{jl}(E')G_{lk}(E')dE'.
+\end{equation}
+%
+
+Fig.~\ref{fig:tbresponse} gives a pictorial representation of some of these many indiced terms. In 
+Ref.\cite{finnis84} the Green's functions are computed out to sixth nearest neighbour. This allows
+for force contributions out to the thirteenth nearest neighbour. Symmetry relations are exploited 
+in that work to reduce the number of unique off-diagonal Green's function elements to 
+33 separate functions which are tabulated and used to compute the force constant matrix. 
+%
+\begin{figure}
+\begin{center}
+\includegraphics[scale=1.0]{./invariance/tbresponse.pdf}
+\caption{Pictorial representation of the terms and sites described by Eq.~\ref{eq:tbdynmat}.
+On the left atoms $b,d$ and corresponding orbitals, $d, q$. On the right are two unit cells
+of BCC crystal with the nearest neighbours to the 0th atom extended out to its sixth nearest
+neighbour.\label{fig:tbresponse}}
+\end{center}
+\end{figure}
+ 
+
+The type of analysis in Ref.~\cite{finnis84} is taken as an example
+of the desired model computational framework these notes pursue. 
+The approach satisfies many of Ehrenreich's points ~\ref{en:ehrenreich}: 
+direct experimental links \cite{powell68, colella70, shaw71}, 
+tractable calculations for a minimally idealized system, and, most importantly, 
+the calculations have {\emph explanatory and predictive power 
+across a homologous series}, in this case the BCC transition metals.
+\footnote{The mystery of obtaining a good experimental phonon spectra in published
+literature continues... A. M. B. G. De Vallera, Ph.D. thesis, Cambridge University, 1977 (unpublished).
+However it is apparently quite similar to NbMo\cite{powerll68}.}
+
+The only point not fully satisfied is that of theoretical justification.
+The force constants as determined in Eq.~\ref{eq:tbdynmat}
+rely on the repulsive force and some means of determining 
+the local Hamiltonian i.e. its bond integrals and their 
+radial dependence {\it ab initio}. Addressing this issue 
+will be the subject of subsequent chapters. For the present we can simply 
+admire how the formalism can yield results entirely in keeping with local 
+notions of forces and electron orbitals.
+ 
+Eqs.~\ref{eq:tbdynmat, eq:tbdeltarho, eq:tbresponse} encode
+a huge amount of information. Although well developed reciprocal space 
+techniques exist, see Ref.~\cite{baroni01}, to obtain the phonon dispersion
+curves, the local formulation still has a great deal of 
+interprative value, and crucially, will remain valid
+in situations where Bloch's theorem does not.
+
+The bond order between atoms has a long history
+beginning with Coulson's study of carbonyl 
+chains in Ref.~\cite{coulson39}. It is a good exercise to compare
+the derivative of Eq.~\ref{eq:tbtoten} with respect
+to the hopping integral and the Green's function,
+with Coulson's definition of the bond order.
+
+The order of a given bond is a measure
+of the force tending to change the length of a given bond
+for small variation of the bond length.
+
+The more frequently referred to bond order, defined
+in terms of Green's functions, is the integrated 
+energy difference between a symmetric 
+and anti-symmetric combination of nearest neighbour 
+orbitals \cite{pettifor89}:
 %
 \begin{equation}
 \label{eq:bondorder}
-\Theta_{ij} = - \frac{2}{\pi} {\rm Im} \int^{E_{F}}\left[G^{+}_{00}(E)-G_{00}^{-}(E)\right]dE
+\Theta_{ij} = - \frac{2}{\pi} {\rm Im} \int^{E_{F}}\left[G^{+}_{00}(E)-G_{00}^{-}(E)\right]dE.
 \end{equation}
 %
-Eq.~\ref{eq:bondorder} takes an interesting form. As we integrate up in energy the difference
-in the symmetric and antisymmetric combinations of the two states are accumulated.
-The resulting integral is then a scalar which measures the sign and magnitude of the
-interference between the two local states.
-%
-\begin{equation}
-G^{\pm}_{00}(E) = \bra u_{0}^{\pm}|\left[E-H\right]^{-1}|u_{0}^{\pm}\ket
-\end{equation}
-%
-$|u^{\pm}_{0}\ket = (\frac{1}{\sqrt{2}})|\phi_{i} \pm \phi_{j}\ket$.
+The bond order in this form then appears like a measure of the interference 
+between orbitals on the two sites.
 
-The Green functions can be evaluated using the recursion techniques.
-
-The susceptibility is defined:
-%
-\begin{equation}
-\chi_{0m,n0}(E_{F})=\frac{1}{\pi}{\rm Im}\int^{E_{F}}G^{0}_{0m}(E)G_{n0}^{0}(E)dE
-\end{equation}
-%
-
-See also Finnis \cite{finnis84} for a discussion of susceptibilties computed using the 
-off diagonal elements of the Green's function.
+As we integrate up in energy the difference in the symmetric and antisymmetric 
+combinations of the two states are accumulated. The resulting integral is 
+then a scalar which measures the sign and magnitude of the
+interference between the two localized orbitals up to the Fermi energy.
 
 Eq.~\ref{eq:offdiaggreen} gives an immediate scheme for computing the off diagonal
 elements but can result in the need for substracting two largish quantities to find
-a small one. Which is never ideal. This concern and others motivates the introduction
-of the block recursion method.
+a small one. Such a procedure is never ideal. This concern and others motivated the introduction
+of the block recursion method which will be discussed in the next section.
+
+First though a small digression.
+
+Harrison in his textbook argues that every conclusion drawn in his work follows immediately
+from the proposition that electrons are simultaneously a particle and a wave. This is
+somewhat abstract. In the present context we can propose a tentative meaning to this:
+the electron is a particle when we can point to it and say there it is in that orbital
+centered on that atom, it becomes a wave when the recursion is iterated and the localized 
+orbital spread outwards and interact with the space around it. 
+The form this interaction takes in the recursion method is the linear mixing of
+the other localised vectors in the system with varying coefficients from further and further away. 
+Adding these vectors together is equivalent to allowing them to interfere constructively or 
+deconstructively. 
+
+At the end the recursion method gives a record of the projection of 
+the starting orbital on to each of its, increasingly distance neighbours, as a function
+of energy. The electron, confined to a single energy and a single state 
+on the lone atom, in a solid can access a range of shapes 
+across a range of energies distributed throughout a crystal.
 
 \subsection{Block Recursion}
 By picking a single orbital and turning the wheel on the recursion method a
-chain of coefficients can be generated. However rounding errors in the evaluation
-of the matrix vector products mean that numerical noise can disrupt underlying
-symmetries. This can be demonstrated where there are deviations in the density
-of states computed for a given orbital if the z-axis is changed arbitrarily 
-which should not be the case. To alleviate this the Block recursion method.
-In this method a set of initial orbitals are chosen and the the recursion
-coefficients become matrices. The technique and its implementations are described 
-in Refs.~\cite{jones84, inoue87, nex89, godin91, ozaki00}. To see
-the method in action Paxton's study of the
-phase stability in silicon Refs.~\cite{paxton87, paxton88},
-and calculations of quantum transmittance through disorder media 
-in Refs.~\cite{godin86, godin88}.
+chain of coefficients and vectors can be generated. However rounding errors in the evaluation
+of the matrix vector products mean the accumulation of numerical noise
+and the necessity of truncation the recursion in extended solids somewhere 
+can disrupt underlying symmetries. This can be demonstrated where there are 
+deviations in the density of states computed for a given orbital if the z-axis 
+is changed arbitrarily which should not be the case. This provided one motivation for 
+the block recursion method. 
 
-The difference between the scalar recursion and the block
-recursion method is similar to the difference between
-playing a number of notes at the same time like a 
-musical chord rather than picking out single 
-notes at a time as in a melody.
+The block recursion method is a direct and intuitive extension of the scalar method.
+In this method a {\emph set of m} initial orbitals are chosen. The recursion
+coefficients become matrices. The technique and its implementations are described 
+in Refs.~\cite{jones84, legrand85, inoue87, nex89, godin91, ozaki00}. For discussions
+on the implementation and applications of the block recursion method see
+the computation of the local electron density in a system by 
+Lewis and Jones in Ref.~\cite{jones84}, Paxton's study of the
+stability of different phases of silicon in Refs.~\cite{paxton87, paxton88}. The work of 
+Godin and Haydock on the passage of electrons through disordered media 
+in Refs.~\cite{godin86, godin88}.
+The notation we supply here is a synthesis of the descriptions given in
+Refs.~\cite{paxton88, nex89, godin91} and is in accord with the accompanying CamRecLib
+routines.
+
+If we may be permitted a small discursion into metaphor the difference 
+between the scalar recursion and the block recursion method is 
+similar to the difference between playing a number of notes at the 
+same time like a musical chord rather than picking out single notes at 
+a time as in a melody.
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly 
@@ -1541,43 +1701,3 @@ What type of function represents the eigenstate of a free electron?
       at the Fermi energy for an atom on a $[001]$, $[110]$, and a $[111]$ surface?
 
 \end{itemize}
-%\begin{figure}
-%\begin{center}
-%\includegraphics[width=\columnwidth]{./invariance/schematicpolestructure.pdf}
-%\caption{Schematic of the poles of the Green's function in terms of the parameters of the 
-%coefficients of the recursion calculation.}
-%\end{center}
-%\end{figure}
-%\scriptsize
-%\bibliographystyle{unsrtnat}
-%\bibliography{refs}
-%\end{document}
-%\bibliography
-%Dilute Alloys
-%J Friedel Adv. Phys. 3, 446 (1954)
-%
-%
-%Non-Hermitian Matrices
-%R. Haydock and M.J. Kelly. J. PHys. C 8, L290
-%R. Haydock, J. Phys. A 7, 2120 (1974)
-%
-%
-%Lave Phases:
-%A. K. Sinha, Prog. Mater. Sci. 15, 81 (1972)
-%
-%Anderson Localization
-%R. Haydock Philos. Mag. [Part] B 37, 97 (1978)
-%R. Haydock and A. Mookerejee, J. Phys. C 7, 3001 (1974)
-%
-%
-%UV Photoemission
-%R. K. C. McLean and R. Haydock, J. Phys. C 10, 1929 (1977)
-%https://materialscience.uoregon.edu/wp-content/uploads/2016/02/tightbind.pdf
-%
-%Self-Consistent Tight Binding Orbitals
-%Philos. Mag [8] 35, 845 (1977) #
-%
-%
-%Binary Alloys 
-%R. L. Jacobs, J. Phys. F 3, 933 (1973)
-%and stacking in La \cite{duthie77}.

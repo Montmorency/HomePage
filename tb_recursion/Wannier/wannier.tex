@@ -125,7 +125,25 @@ The appendix of the Slater-Koster paper deals with the issue of whether L\"owdin
 orbitals, which are orthogonalized to their neighbours, transform according to the same
 symmetry operations as the spherical harmonics.
 
-\section{BCC Structure}
+\section{TB-NN}
+Wannier functions are, it has been pointed out, just a gauge\footnote{What is a gauge?}. But
+any gauge that can arrange Bloch orbitals which are spread across a crystal into a localized
+packet of orthogonal orbitals will be of some considerable use in the local recursion techniques.
+The essential point is that the local Hamiltonians, which the recursion techniques require,
+must correspond formally to results obtained {it ab initio}. 
+This correspondence must be quantitative and controllable and achieved in 
+a way based on rigorous physical reasoning. 
+This must be accomplished before we can move on to the real fun with the 
+applications in Chapter \ref{eq:}.
+Put simply it is essential that the houses are not built on sand! 
+It is for this reason Chapter~\ref{chap:gw} contained what it did. The discussion of 
+the previous work done on DFT, GW, and the Harris-Foulkes functionals is required to formulate
+the local approach.
+
+
+
+If they were it would be too easy for another to come along and tweak a few `parameters' to obtain 
+new results. 
 
 \section{Diamond Structure TB}
 The choice of appropriate basis for a diamond tight binding model requires a little thinking.
@@ -154,9 +172,10 @@ integrals will be negligible in this basis. Slater-Koster found that the two cen
 basis was not a particularly good one and unable to interpolate the results obtained
 from an orthogonalized plane wave calculation, however the atom centered spherical harmonic orbitals is likely 
 to suffer from this deficiency, the requirement that neighbouring orbitals are orthogonal would lead to 
-the formation of actual orbitals with non-zero components on neighbouring shells of atoms. Choosing
-the Wannier Basis results in orthogonal orbitals that remain well localized. This approach is similar to
+the formation of actual orbitals with non-zero components on neighbouring shells of atoms. 
+
+Choosing the Wannier Basis results in orthogonal orbitals that remain well localized. This approach is similar to
 that made by Hall \cite{hall52} who uses symmetric  combinations of directed orbitals
 on adjacent pairs of atoms and constructs the bloch sums from these orbitals.
-
 The second nearest neighbour s-interaction is found to have the opposite sign.
+
