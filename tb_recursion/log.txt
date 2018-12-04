@@ -41,3 +41,47 @@ http://www.nat.vu.nl/~wimu/Publications/Fund-Vibr-PhysRevLett.110.193601.pdf
 Added some Caltech bibmerge bibfilter tools to the system path: These might be useful.
 
 
+Tue 20 Nov 2018 17:59:12 GMT
+Important improvements to the figures. Looks much more consistent in the 
+presentation. Should probably pick a color scheme. Added a nice quote 
+from Heisenberg which really rounds off the discussion and motivates 
+the focus on the technique.
+
+There were improvements to the overall layout and, of course, 
+the text including the Avogadro picture. A few more 
+changes to the orbital peeling discussion, and complete the Block 
+recursion discussion and the Local Atomic Environment chapter 
+will be completed. The Block recursion is really important 
+for the superconductivity chapter.
+
+Nothing added to the Harris-Foulkes section will have 
+to complete that discussion tomorrow, for the different 
+stationary points along different co-ordinates.
+
+Superconductivity notes require Dan's integrations, 
+as well as the Metallurgy section for the strain fields of 
+dislocations. 
+
+Before starting on the final chapter though
+there is the Python/Julia-fication of the CamRecLib 
+so we can do the defects, orbital peeling of hydrogen and 
+elasticity calculations all as examples.
+
+So I can't see this being completed before the new year. Things
+will be going well if it is!
+
+Thu 22 Nov 2018 16:09:07 GMT
+Hope to do some work on the block recursion this evening. Lewis and Jones
+compute the charge density which is nice. So I'd like to put that discussion in.
+
+Also the perdew-zunger plot in the introduction it might be nice to change the scale
+because it only goes up to 0.36 for Fe in the examples of material densities that
+I give. Could also add a couple Crystal structures on to the plot if they look good.
+
+To make the Avogadro picture not completely insane we could have a triptych of 
+Atomists i.e. people who were in favour of atoms perhaps Dalton, Avogadro,
+and Thompson?
+
+For d superconductivity a 5x5 block recursion could be good!
+
+

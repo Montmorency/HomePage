@@ -1,76 +1,87 @@
 \chapter{Metallurgy}
 \label{chap:metallurgy}
 \section{Introduction}
-Cottrell noted that metallurgy would require a "theory... which explains
+In his textbook Cottrell noted that metallurgy would require a "theory... which explains
 the properties of metallic solids and the explanation of the origin of this
-structure from the structures of individual atoms." 
+structure from the structures of individual atoms." Similarly in Vol. 35
+Heine noted "What we lack is a fundamental quantum theory of the cohesion
+and structure of a wide diversity of solids." The previous chapters,
+though hopefully enjoyable in their own right, were really just meant to bring
+us to the stage where we can understand the properties of metallic solids
+with the framework of a single computational tool.
 
-This chapter will examine the ability to calculate the electronic and mechanical
-properties of transition metals and their alloys. The sorts of quantities
-of interest are elastic constants, dislocation cores, grain boundaries
-and ideas related to bond mobility in metals.
+This chapter will focus on the calculation of the electronic and mechanical
+properties of transition metals and their alloys. The quantities of interest
+are the elastic and chemical properties of dislocations, defects,
+grain boundaries, and alloying.
 
+In keeping with the unifying theme of the book the targeted quantities
+will first be described and formulated in general terms and then mapped
+on to a set of recursion calculations to understand the elastic and
+electronic properties of a material from the perspective of the local
+atomic environment.
 
+\section{Elasticity}
+Shearing, straining, Young's modulus, poisson ratio, elastic tensors these are the
+stuff of every undergraduate material's mechanics course.
+Ref.~\cite{terakura84} demonstrates how the recursion method
+may be used to compute the elastic constants of a material.
 
+The interaction of dislocations and defects reveals one of the most difficult problems
+in theoretical materials science: the coupling of long range elastic fields
+with local chemical changes. This coupling of length scales structure makes
+reliable quantitative calculations difficult with variations in the electronic structure
+inducing strains in the metal matrix which feed back into the electronic structure. 
+It appears that one might require a theory with quantum accuracy on the scale of an 
+interatomic bond that simultaneously takes into account the long range elastic 
+field in its environment.
 
-%Similarly Heine noted "What we lack is a fundamental quantum 
-%theory of the cohesion and structure of a wide diversity of solids." 
-%For a hubbard U model of cohesion energies in FCC and HCP metal using the Project density of transitions
-%\cite{haydock14}.
+To proceed we will assume we can obtain a relaxed structure where all the atomic forces are
+in equilibrium. We then follow the derivation of Ref.~\cite{freedman09} which uses the free energy
+of the system at equilibrium to derive a tensor that describes the interaction of point defects 
+with elastic fields. A few different ways of computing this tensor are then described \cite{nazarov16}.
 
-\section{Transition Metals: Fe}
-If we seek a quantum theory of metallurgy Fe is the place to start.
-Local descriptions of the electronic description of iron may take two forms. 
+The force method of computing the elastic dipole tensor lends itself 
+immediately to the expressions introduced all the way back in 
+Chapter~\ref{chap:invariance}, Eq.\ref{eq:tbforce}.
 
-The tight binding parameters determined by pettifor, and the Localized 
-Wannier functions studied by \cite{yates06}. 
+\section{Recursing through Dislocations}
+The ability of the recursion method to quantify the local changes in interatomic bonding and
+forces makes it a particularly useful tool for the study of dislocations. 
 
-The parameters they use are as follows 16x16x16 0.02 Ry fermi smearing, obtaining
-a spin magnetic moment of 2.22 $\mu_{b}$. Norm Conserving pseudopotential with KE cutoff
-of 60 Hartree (120 Ry.)
+Understanding the interaction of interstitials and impurities with the motion of
+dislocations through a crystal is a central goal of theoretical metallurgy with
+with work on this subject beginning in the 50s \cite{cochardt55}.
 
-The self consistent potential is then frozen and a uniform nxnxn grid of k points is
-used to compute the Wannier functions. 18 WFs are targeted (s,p and d gives a 9x9 matrix
-and then the two two spins doubles the size), with spin up and 
-down. 28 bands calculated at each k point and any bands above 58 eV are excluded.
-
-In the course of the Wannierization, the initial guess was using s, p, and (eg and t2g)
-type d-like Gaussians of pure spin character transformed the bands into the t2g like 
-Wannier functions and the $e_{g}$, s and p-like states formed six hybrid 
-$sp^{3}d^{2}$-type orbitals. Thus with the initial choice of 6 $sp^{3}d^{2}$ and 3 
-$t_{2g}$  type orbitals a 100 iterations reach a neatly converged spread functional.
-
-The $sp^{3}d^{2}$ orbitals are directed along $\pm x, \pm y, \pm z$ axis 
-slightly shifted off the center of the atoms, the $xy$, $xz$ $yz$ orbitals are
-$t_{2g}$ like and centered on the atoms. An ab initio grid of 8x8x8 was sufficient
-to obtain well localized Wannier functions.
-
-\section{Recursion for Dislocations}
-For the BCC Metals \cite{terakura84} used the recursion method to compute the elastic constants.
 The local density of states for atoms at a screw dislocation core have been computed by \cite{paidar81}. 
+The change in the local bonding picture induced by a vacancy in Fe was examined in Ref.~\cite{ohta87}.
 
 \section{Grain Boundaries}
-The analysis of Read and Shockley is comprehensive and serves in many ways as a wide
-ranging survey of the ideas pertinent to the energetics of Grain boundaries, their motion, 
-and the properties of dislocations in crystals \cite{read50}.
+The analysis of Read and Shockley in Ref.~\cite{read50} serves as a comprehensive
+introduction to the field of interfaces in condensed matter. The definitive textbook
+on the subject of interfaces in materials is Sutton and Baluffi Ref.~\cite{sutton95}.
+The possibility of examining grain boundaries atomistically has interested
+researchers since it became practical to perform full relaxations with pair
+potentials Refs.~\cite{bristowe75,wolf83, rittner96, tschopp07}.
+A hybrid TB-DFT model study is given by Paxton \cite{paxton96} on the structure of Nb, and Mo-Re.
+At present for certain boundaries calculation may be performed entirely within
+the framework of DFT \cite{momida13, du11, du12, mceniry18}.
 
-Dislocation core structure and stress Field of grain boundaries.
+\subsection{An Analytic Example}
+For isotropic elasticity we can gain some useful practice in contour integration and arrive
+at a closed set of expressions to obtain. These expressions are given in Ref.~\cite{sutton95}.
 
 \section{Alloys}
-%GrainBoundaries 
-%Masuda-Jindo ISIJ 28, 843 (1988)
 \section{Random Alloys}
 Lattice periodicity allows for the use of Bloch's theorem. The Fourier transform
 is well defined and the eigenstates can be grouped according the their Bloch vector.
-For normal alloys there may not be an identifiable periodicity in the structure.
-
-The 
+For alloys its quite likely there will not be an identifiable periodicity in 
+the structure.
 %
 \begin{equation}
 H_{nm} = e_{n}\delta_{nm} + V_{nm}
 \end{equation}
 %
-
 Mookerjee and Haydock extended the recursion method to the case of random alloys.
 The developement of the recursion method to handle random material systems is 
 itself quite ingenious \cite{mookerjee, haydock74}. The Hamiltonian is extended
@@ -90,8 +101,33 @@ need to be found due to the difficulty of enumerating all the possible paths.
 
 Early work on DOS of alloys \cite{cubiotti77}. 
 
-
 \section{Conclusion}
-In this chapter we have looked at metallurgical ideas dislocations, 
-grainboundaries, random alloys, and the embrittlement phenomenon.
+In this chapter we have looked at a number of the important concepts
+in metallurgy. The motion of dislocations, 
+the structure of grain boundaries, and alloying. 
 
+%Masuda-Jindo ISIJ 28, 843 (1988)
+%Dilute Alloys
+%J Friedel Adv. Phys. 3, 446 (1954)
+%Non-Hermitian Matrices
+%R. Haydock and M.J. Kelly. J. PHys. C 8, L290
+%R. Haydock, J. Phys. A 7, 2120 (1974)
+%Lave Phases:
+%A. K. Sinha, Prog. Mater. Sci. 15, 81 (1972)
+%Anderson Localization
+%R. Haydock Philos. Mag. [Part] B 37, 97 (1978)
+%R. Haydock and A. Mookerejee, J. Phys. C 7, 3001 (1974)
+%UV Photoemission
+%R. K. C. McLean and R. Haydock, J. Phys. C 10, 1929 (1977)
+%https://materialscience.uoregon.edu/wp-content/uploads/2016/02/tightbind.pdf
+%Self-Consistent Tight Binding Orbitals
+%Philos. Mag [8] 35, 845 (1977) #
+%Binary Alloys 
+%R. L. Jacobs, J. Phys. F 3, 933 (1973)
+%and stacking in La \cite{duthie77}.
+
+%Atomic stress tensors:
+%Sutton 88
+%Nielsen O H and Martin R M 1983 Phys. Rev. Lett. 50 697
+%Nielsen O H and Martin R M 1985a Phys. Rev. B 32 3780
+%-                          1985b Phys. Rev. B 32 3792

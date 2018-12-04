@@ -174,6 +174,14 @@ The dependency of the Hamiltonian on the density means obtaining the Kohn-Sham
 wavefunctions and eigenvalues requires a self-consistent
 procedure. In order to proceed some definite form for $V_{\rm{xc}}(\r)$ 
 is required. We discuss this in the next section.
+
+The Kohn-Sham functional is in the spirit of the time honoured trick of regrouping
+terms over and over again to try and squeeze total 
+ignorance into a smaller space. The non-interacting auxiliary system 
+reintroduces an orbital character into the contribution of the kinetic
+energy to the exchange-correlation functional and can be computed exactly.
+Along with the Hartree, and the electron-ion contributions all of which can
+be computed accurately. This tucks all the remaining ignorance into $E_{xc}$.
 %
 \subsection{The Local Density Approximation}
 \noindent
@@ -1288,16 +1296,31 @@ $(\rho^{\rm in}-\rho^{\rm ex})^{2}$ and $(V_{\rm eff}^{\rm in}-V_{\rm eff}^{\rm 
 This means with judicious choices we can obtain accurate results with a feasible
 amount of computational work.
 
+Finally, the reader may recall the mystery around the first term 
+of Eq.~\ref{tb:force} in Chapter~\ref{chap:invariance}. This term is required to complement
+the band energy contribution which we can calculate with the recursion technique. However it is
+less obvious what form this potential should take. It is often approximated as a pair potential.
+
+If we re-write the total energy following Finnis:
+%
+%\begin{equation}
+%\end{equation}
+%
+If $\rho_{in}$ in Eq.~\ref{eq:rewrittenHFG} is the charge density for the sum of spherical atomic 
+charges then the interacting ion terms will correspond to pair potentials that are rapidly screened. 
+These considerations will be developed further in Chapter~\ref{chap:wannier}.
+
 \section{Conclusion}
 \noindent
 This chapter introduced the Hohenberg-Kohn theorem. This theorem,
 which states the ground-state energy of an interacting electronic system 
 is a functional of the ground-state charge density is the basis of all the
-subsequent discussion. From that theorem the rest follows.
+subsequent discussion. From that theorem much of the rest follows.
 
-Following this the Kohn-Sham scheme was introduced as providing 
-a prescription for obtaining a set of wavefunctions, and eigenvalues, thus describing
-the ground-state density of a system. 
+The Kohn-Sham scheme was introduced as providing 
+a prescription for obtaining a set of wavefunctions, 
+and eigenvalues, to describe the ground-state density of a system. 
+
 The various approximations to the exchange correlation 
 functional commonly used in applications of Kohn-Sham DFT like the LDA, LDA+U,
 GGA, and hybrid functionals are the work horses of materials modelling. 
@@ -1330,7 +1353,6 @@ which experimentally accessible quantities we wish to compute
 it should be possible to streamline the calculations into a more manageable framework. 
 
 The formal transformation from DFT/GW methods to functionals
-amenable to local interactions was begun in the section on the Harris-Foulkes functional.
-These idea will be developed further in Chapter~\ref{chap:manybodyrec}, but first 
-we will look at a popular way of preparing localized wave packets in solids 
-from first principles.
+amenable to being described in terms of local short range interactions 
+was begun in the section on the Harris-Foulkes functional.
+These idea will be developed further in Chapters~\ref{chap:wannier} and \ref{chap:manybodyrec}.
