@@ -610,9 +610,10 @@ and when generalized to determinants for $|D_{n}|$, $|D_{n+1}|$, and $|D_{n+2}|$
 \frac{{\rm det}|D_{n}|}{{\rm det}|D_{n+1}|} = E-a_{n}-\frac{b^{2}_{n+1}}{\frac{{\rm det}|D_{n+1}|}{{\rm det}|D_{n+2}|}}
 \end{equation}
 
-\footnote{C. Lanczos J. Res. Natl. Bur. Stand. 45, 255 (1950) 
-used the chain model in numerical work as a way of diagonalizing matrices
-that could be implemented efficiently in a computer..
+\footnote{
+%C. Lanczos J. Res. Natl. Bur. Stand. 45, 255 (1950) 
+%used the chain model in numerical work as a way of diagonalizing matrices
+%that could be implemented efficiently in a computer.
 Chebyshev used chain models for approximating functions on an interval
 P. L. Chebyshev, Bull. Acad. Imp. Sci. St. Petersbourg 1, 193 (1859)}
 
@@ -720,7 +721,7 @@ there is only a small renormalization of the pole from $a_{0}$ and redistributio
 This will be discussed more in Chap.\ref{chap:manybodyrec} in the context of single particle states
 interacting with plasmon bands and the continuum.
 
-\section{The Cambridge Recursion Library}
+\section{The Cambridge Recursion Library: \texttt {CamRecLib}}
 Moving from analytic chain models to material systems with different atoms requires specification
 of the Hamiltonian. The choice of the tight binding parameters was discussed in the first half of this
 chapter. For present purposes the Slater-Koster tight binding parameters for the interaction of 
@@ -1220,10 +1221,11 @@ in that work to reduce the number of unique off-diagonal Green's function elemen
 %
 \begin{figure}
 \begin{center}
-\includegraphics[scale=1.0]{./invariance/tbresponse.pdf}
+\includegraphics[scale=0.8]{./invariance/tbresponse.pdf}
 \caption{Pictorial representation of the terms and sites described by Eq.~\ref{eq:tbdynmat}.
-On the left atoms $b,d$ and corresponding orbitals, $d, q$. On the right are two unit cells
-of BCC crystal with the nearest neighbours to the 0th atom extended out to its sixth nearest
+On the left atoms $b,d$ and two orbitals centered on those sites, $n, q$, and the energy
+integral $h_{bd}^{qn}$ which connects them. On the right are two unit cells
+of BCC crystal with the nearest neighbours to the zeroth atom labeled out to its sixth nearest
 neighbour.\label{fig:tbresponse}}
 \end{center}
 \end{figure}
@@ -1334,11 +1336,17 @@ The notation we supply here is a synthesis of the descriptions given in
 Refs.~\cite{paxton88, nex89, godin91} and is in accord with the accompanying CamRecLib
 routines.
 
-If we may be permitted a small discursion into metaphor the difference 
-between the scalar recursion and the block recursion method is 
+
+The asymptotic behaviour of the recursion co-efficients in the scalar recursion case
+is analyzed in \cite{turchi82, yoshina87, yoshino88, haydock10, alhaidari18}.
+
+If a small discursion into metaphor is allowed we might suggest 
+the difference between the scalar recursion and the block recursion method is 
 similar to the difference between playing a number of notes at the 
 same time like a musical chord rather than picking out single notes at 
 a time as in a melody.
+
+%T.J. Godin, Ph.D. Thesis, University of Oregon (1988).
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly 
