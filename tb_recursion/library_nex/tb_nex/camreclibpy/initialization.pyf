@@ -1,0 +1,67 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module nncal__user__routines 
+    interface nncal_user_interface 
+        function ngbr(iip,jjp,r2,dum) result (id) ! in :initialization:nncal.f:nncal:unknown_interface
+            integer :: iip
+            integer :: jjp
+            real :: r2
+            integer dimension(13) :: dum
+            integer :: id
+        end function ngbr
+    end interface nncal_user_interface
+end python module nncal__user__routines
+
+python module initialization ! in 
+    interface  ! in :initialization
+        subroutine fcclat(crd,ndim,izp,nat,nx,ny,nz,ntype) ! in :initialization:fcclat.f
+            integer, intent(inout) :: nat
+            integer dimension(ndim,nat),intent(inout),depend(nat) :: crd
+            integer, optional,check(shape(crd,0)==ndim),depend(crd) :: ndim=shape(crd,0)
+            integer dimension(nat),intent(inout),depend(nat) :: izp
+            integer :: nx
+            integer :: ny
+            integer :: nz
+            integer :: ntype
+        end subroutine fcclat
+        subroutine bcclat(crd,ndim,izp,nat,nx,ny,nz,ntype) ! in :initialization:bcclat.f
+            integer, intent(inout) :: nat
+            integer dimension(ndim,nat),intent(inout),depend(nat) :: crd
+            integer, optional,check(shape(crd,0)==ndim),depend(crd) :: ndim=shape(crd,0)
+            integer dimension(nat),intent(inout),depend(nat) :: izp
+            integer :: nx
+            integer :: ny
+            integer :: nz
+            integer :: ntype
+        end subroutine bcclat
+        subroutine nncal(crd,ndim,nat,izp,nn,nd,nm,ngbr) ! in :initialization:nncal.f
+            use nncal__user__routines
+            integer dimension(ndim,nat),intent(in),depend(nat) :: crd
+            integer, intent(in) :: nat
+            integer, optional,check(shape(crd,0)==ndim),depend(crd) :: ndim=shape(crd,0)
+            integer dimension(nat),depend(nat),intent(in) :: izp
+            integer dimension(nd,nm), intent(inout) :: nn
+            integer, optional,check(shape(nn,0)==nd),depend(nn) :: nd=shape(nn,0)
+            integer, optional,check(shape(nn,1)==nm),depend(nn) :: nm=shape(nn,1)
+            external ngbr
+        end subroutine nncal
+        function fccbnd(i,j,r2,dd) ! in :initialization:nncal.f
+            integer :: i
+            integer :: j
+            real :: r2
+            real dimension(13) :: dd
+            integer :: fccbnd
+        end function fccbnd
+        function bccbfe(i,j,r2,dd) ! in :initialization:nncal.f
+            integer :: i
+            integer :: j
+            real :: r2
+            real dimension(13) :: dd
+            integer :: bccbfe
+        end function bccbfe
+    end interface 
+end python module initialization
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/
