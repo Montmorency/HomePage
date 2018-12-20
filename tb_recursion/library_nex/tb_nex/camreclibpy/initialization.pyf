@@ -13,6 +13,17 @@ python module nncal__user__routines
     end interface nncal_user_interface
 end python module nncal__user__routines
 
+python module mmcal__user__routines 
+    interface mmcal_user_interface 
+        logical function ev(v,w) result (id) ! in :initialization:equiv.f
+            integer dimension(3),intent(in) :: v
+            integer dimension(3),intent(in) :: w
+            logical, intent(out) :: id
+            logical, intent(out) :: ev
+        end function ev
+    end interface mmcal_user_interface
+end python module mmcal__user__routines
+
 python module initialization ! in 
     interface  ! in :initialization
         subroutine fcclat(crd,ndim,izp,nat,nx,ny,nz,ntype) ! in :initialization:fcclat.f
@@ -39,13 +50,28 @@ python module initialization ! in
             use nncal__user__routines
             integer dimension(ndim,nat),intent(in),depend(nat) :: crd
             integer, intent(in) :: nat
+            integer, check(shape(nn,1)==nm),intent(inout) :: nm
             integer, optional,check(shape(crd,0)==ndim),depend(crd) :: ndim=shape(crd,0)
             integer dimension(nat),depend(nat),intent(in) :: izp
             integer dimension(nd,nm), intent(inout) :: nn
             integer, optional,check(shape(nn,0)==nd),depend(nn) :: nd=shape(nn,0)
-            integer, optional,check(shape(nn,1)==nm),depend(nn) :: nm=shape(nn,1)
             external ngbr
         end subroutine nncal
+        subroutine mmcal(crd,ndim,nat,nn,nd,nm,ev,izp,nmat,mm,vec,iw) ! in mmcal.f
+          use mmcal__user__routines
+          integer dimension(ndim,nat),intent(in) :: crd
+          integer, optional,check(shape(crd,0)==ndim),depend(crd) :: ndim=shape(crd,0)
+          integer, optional,check(shape(crd,1)==nat),depend(crd) :: nat=shape(crd,1)
+          integer dimension(nd,25), intent(in) :: nn
+          integer, optional,check(shape(nn,0)==nd),depend(nn) :: nd=shape(nn,0)
+          integer dimension(nat),depend(nat),intent(in) :: izp
+          integer, intent(in) :: nm
+          integer, intent(in) :: nmat
+          integer dimension(nd,25),depend(nd),intent(inout) :: mm
+          integer dimension(ndim,25),depend(ndim),intent(inout) :: vec
+          integer dimension(2,25),intent(inout) :: iw
+          external :: ev
+        end subroutine mmcal
         function fccbnd(i,j,r2,dd) ! in :initialization:nncal.f
             integer :: i
             integer :: j
@@ -60,6 +86,11 @@ python module initialization ! in
             real dimension(13) :: dd
             integer :: bccbfe
         end function bccbfe
+        logical function equiv(v,w) ! in :initialization:equiv.f
+            integer dimension(3),intent(in) :: v
+            integer dimension(3),intent(in) :: w
+            logical, intent(out) :: equiv
+        end function equiv
     end interface 
 end python module initialization
 
