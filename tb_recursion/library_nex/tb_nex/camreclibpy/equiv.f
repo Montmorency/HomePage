@@ -1,6 +1,6 @@
       LOGICAL FUNCTION EQUIV(V,W)
 
-      REAL DIMENSION V(3),W(3)
+      DIMENSION V(3),W(3)
 
       EQUIV=.FALSE.
 
