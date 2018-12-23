@@ -2,9 +2,10 @@
 
       DIMENSION PSI(M),PMN(M),A(N),B2(N)
 
+      EXTERNAL HOP
+
       DOUBLE PRECISION SUM,DSQRT
 
-      EXTERNAL HOP
 
       SUM=B2(1)
 
@@ -16,7 +17,7 @@
 
       S=1.0/DSQRT(SUM)
 
-      CALL HOP(PSI,PMN,A(J))
+      CALL HOP(PSI,PMN,A(J),M)
 
       A(J)=A(J)/B2(J)
 
