@@ -6,7 +6,7 @@ python module nncal__user__routines
         function ngbr(iip,jjp,r2,dum) result (id) ! in :initialization:nncal.f:nncal:unknown_interface
             integer :: iip
             integer :: jjp
-            real :: r2
+            real*8 :: r2
             integer dimension(13),intent(inout) :: dum
             integer :: id
         end function ngbr
@@ -75,20 +75,20 @@ python module initialization ! in
         function fccbnd(i,j,r2,dd) ! in :initialization:nncal.f
             integer :: i
             integer :: j
-            real :: r2
-            real dimension(13) :: dd
+            real*8 :: r2
+            real*8 dimension(13) :: dd
             integer :: fccbnd
         end function fccbnd
         function bccbfe(i,j,r2,dd) ! in :initialization:nncal.f
             integer :: i
             integer :: j
-            real :: r2
-            real dimension(13), intent(inout) :: dd
+            real*8 :: r2
+            real*8 dimension(13), intent(inout) :: dd
             integer :: bccbfe
         end function bccbfe
         function equiv(v,w) ! in :initialization:equiv.f
-            real dimension(3),intent(in) :: v
-            real dimension(3),intent(in) :: w
+            real*8 dimension(3),intent(in) :: v
+            real*8 dimension(3),intent(in) :: w
             logical, intent(out) :: equiv
         end function equiv
     end interface 

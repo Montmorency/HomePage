@@ -6,7 +6,6 @@
 
       DOUBLE PRECISION SUM,DSQRT
 
-
       SUM=B2(1)
 
       NM1=N-1
@@ -17,7 +16,7 @@
 
       S=1.0/DSQRT(SUM)
 
-      CALL HOP(PSI,PMN,A(J),M)
+      CALL HOP(PSI,PMN,A(J))
 
       A(J)=A(J)/B2(J)
 

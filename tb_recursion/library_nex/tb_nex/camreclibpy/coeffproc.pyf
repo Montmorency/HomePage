@@ -1,0 +1,240 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module coeffproc ! in 
+    interface  ! in :coeffproc
+        subroutine recsum(ac,bc,na,nn,nc,a,b,eps,wk,nw) ! in :coeffproc:recsum.f
+            real*8 dimension(na,nc), intent(inout) :: ac
+            real*8 dimension(na,nc),depend(na,nc),intent(inout) :: bc
+            integer, optional,check(shape(ac,0)==na),depend(ac) :: na=shape(ac,0)
+            integer :: nn
+            integer, optional,check(shape(ac,1)==nc),depend(ac) :: nc=shape(ac,1)
+            real*8 dimension(na),depend(na),intent(inout) :: a
+            real*8 dimension(na),depend(na),intent(inout) :: b
+            real*8,intent(in) :: eps
+            real*8 dimension(nw),intent(inout) :: wk
+            integer, optional,check(len(wk)>=nw),depend(wk) :: nw=len(wk)
+        end subroutine recsum
+        subroutine recqd(a,b2,lm1,x,wt,m,eps,wk,mu) ! in :coeffproc:recqd.f
+            real*8 :: a
+            real*8 :: b2
+            integer :: lm1
+            real*8 :: x
+            real*8 :: wt
+            integer :: m
+            real*8 :: eps
+            real*8 :: wk
+            integer :: mu
+        end subroutine recqd
+        subroutine recrts(a,b2,lm1,eps,xlim,n,x,mult,bi,ni) ! in :coeffproc:recrts.f
+            real*8 dimension(lm1) :: a
+            real*8 dimension(lm1),depend(lm1) :: b2
+            integer, optional,check(len(a)>=lm1),depend(a) :: lm1=len(a)
+            real*8 :: eps
+            real*8 :: xlim
+            integer :: n
+            real*8 dimension(lm1),depend(lm1) :: x
+            integer dimension(lm1),depend(lm1) :: mult
+            real*8 dimension(lm1),depend(lm1) :: bi
+            integer dimension(lm1),depend(lm1) :: ni
+        end subroutine recrts
+        function recwt(e,a,b2,ll,eps,n,p,ns) ! in :coeffproc:recwt.f
+            real*8 :: e
+            real*8 dimension(ll) :: a
+            real*8 dimension(ll),depend(ll) :: b2
+            integer, optional,check(len(a)>=ll),depend(a) :: ll=len(a)
+            real*8 :: eps
+            integer :: n
+            real*8 dimension(2,3) :: p
+            integer :: ns
+            real*8 :: recwt
+        end function recwt
+        subroutine cfgpgn(aa,rng,wb,nbp1,ic,eps,a,b2,lm1,wk,nw) ! in :coeffproc:cfgpgn.f
+            real*8 dimension(nbp1) :: aa
+            real*8 dimension(nbp1),depend(nbp1) :: rng
+            real*8 dimension(nbp1),depend(nbp1) :: wb
+            integer, optional,check(len(aa)>=nbp1),depend(aa) :: nbp1=len(aa)
+            integer :: ic
+            real*8 :: eps
+            real*8 dimension(lm1) :: a
+            real*8 dimension(lm1),depend(lm1) :: b2
+            integer, optional,check(len(a)>=lm1),depend(a) :: lm1=len(a)
+            real*8 dimension(nw,2,nbp1),depend(nbp1) :: wk
+            integer, optional,check(shape(wk,0)==nw),depend(wk) :: nw=shape(wk,0)
+        end subroutine cfgpgn
+        subroutine cfgen(x,w,n,eps,a,b2,lm1,wk) ! in :coeffproc:cfgen.f
+            real*8 dimension(n) :: x
+            real*8 dimension(n),depend(n) :: w
+            integer, optional,check(len(x)>=n),depend(x) :: n=len(x)
+            real*8 :: eps
+            real*8 dimension(lm1) :: a
+            real*8 dimension(lm1),depend(lm1) :: b2
+            integer, optional,check(len(a)>=lm1),depend(a) :: lm1=len(a)
+            real*8 dimension(n,2),depend(n) :: wk
+        end subroutine cfgen
+        function denqd(e,emx,a,b2,ll,alp,eps,tb,nt,nq,ne,iwk) ! in :coeffproc:denqd.f
+            real*8, intent(in) :: e
+            real*8 :: emx
+            integer, intent(inout) :: nq
+            integer, intent(inout) :: ne
+            real*8 dimension(ll) :: a
+            real*8 dimension(ll),depend(ll) :: b2
+            integer, optional,check(len(a)>=ll),depend(a) :: ll=len(a)
+            real*8 :: alp
+            real*8 :: eps
+            real*8 dimension(nt,4),intent(inout) :: tb
+            integer, optional,check(shape(tb,0)==nt),depend(tb) :: nt=shape(tb,0)
+            integer dimension(ll),depend(ll) :: iwk
+            real*8 :: denqd
+        end function denqd
+        function dencrs(e,a,b2,ll,aa,rng,wb,nb,am,bm2) ! in :coeffproc:dencrs.f
+            real*8 :: e
+            real*8 dimension(ll) :: a
+            real*8 dimension(ll),depend(ll) :: b2
+            integer, optional,check(len(a)>=ll),depend(a) :: ll=len(a)
+            real*8 dimension(nb) :: aa
+            real*8 dimension(nb),depend(nb) :: rng
+            real*8 dimension(nb),depend(nb) :: wb
+            integer, optional,check(len(aa)>=nb),depend(aa) :: nb=len(aa)
+            real*8 dimension(ll),depend(ll) :: am
+            real*8 dimension(ll),depend(ll) :: bm2
+            real*8 :: dencrs
+        end function dencrs
+        subroutine plyval(e,a,b2,lm1,p,q) ! in :coeffproc:plyval.f
+            real*8 :: e
+            real*8 dimension(lm1) :: a
+            real*8 dimension(lm1),depend(lm1) :: b2
+            integer, optional,check(len(a)>=lm1),depend(a) :: lm1=len(a)
+            real*8 dimension(2) :: p
+            real*8 dimension(2) :: q
+        end subroutine plyval
+        subroutine termgn(a,b2,ll,eps,err,itmx,aa,rng,wb,nbp1,am,bm2,ic,wk,nw,bwk,nbd,iwk) ! in :coeffproc:termgn.f
+            real*8 dimension(ll) :: a
+            real*8 dimension(ll),depend(ll) :: b2
+            integer, optional,check(len(a)>=ll),depend(a) :: ll=len(a)
+            real*8 :: eps
+            real*8 :: err
+            integer :: itmx
+            real*8 dimension(nbp1) :: aa
+            real*8 dimension(nbp1),depend(nbp1) :: rng
+            real*8 dimension(nbp1),depend(nbp1) :: wb
+            integer, optional,check(len(aa)>=nbp1),depend(aa) :: nbp1=len(aa)
+            real*8 dimension(ll),depend(ll) :: am
+            real*8 dimension(ll),depend(ll) :: bm2
+            integer dimension(nw) :: ic
+            real*8 dimension(nw,2,nbp1),depend(nw,nbp1) :: wk
+            integer, optional,check(len(ic)>=nw),depend(ic) :: nw=len(ic)
+            real*8 dimension(nbd,4) :: bwk
+            integer, optional,check(shape(bwk,0)==nbd),depend(bwk) :: nbd=shape(bwk,0)
+            integer dimension(ll),depend(ll) :: iwk
+        end subroutine termgn
+        function fenval(an,a,b2,nd,ll,nc,err,eps,eb,wk,nw,iw,ift) ! in :coeffproc:fenval.f
+            real*8 :: an
+            real*8 dimension(nd,nc) :: a
+            real*8 dimension(nd,nc),depend(nd,nc) :: b2
+            integer, optional,check(shape(a,0)==nd),depend(a) :: nd=shape(a,0)
+            integer :: ll
+            integer, optional,check(shape(a,1)==nc),depend(a) :: nc=shape(a,1)
+            real*8 :: err
+            real*8 :: eps
+            real*8 dimension(2) :: eb
+            real*8 dimension(nw,4) :: wk
+            integer, optional,check(shape(wk,0)==nw),depend(wk) :: nw=shape(wk,0)
+            integer dimension(nw),depend(nw) :: iw
+            integer :: ift
+            real*8 :: fenval
+        end function fenval
+        subroutine bndcrd(et,ic,wtt,net,nb,aa,rng) ! in :coeffproc:bndcrd.f
+            real*8 dimension(net) :: et
+            integer dimension(net),depend(net) :: ic
+            real*8 dimension(net),depend(net) :: wtt
+            integer, optional,check(len(et)>=net),depend(et) :: net=len(et)
+            integer, optional,check(len(aa)>=nb),depend(aa) :: nb=len(aa)
+            real*8 dimension(nb) :: aa
+            real*8 dimension(nb),depend(nb) :: rng
+        end subroutine bndcrd
+        subroutine bndref(del,am,bm2,ll,eps,aa,rng,nb,bwk,nbd,ic,net) ! in :coeffproc:bndref.f
+            real*8 :: del
+            real*8 dimension(ll) :: am
+            real*8 dimension(ll),depend(ll) :: bm2
+            integer, optional,check(len(am)>=ll),depend(am) :: ll=len(am)
+            real*8 :: eps
+            real*8 dimension(nb) :: aa
+            real*8 dimension(nb),depend(nb) :: rng
+            integer, optional,check(len(aa)>=nb),depend(aa) :: nb=len(aa)
+            real*8 dimension(nbd,3) :: bwk
+            integer, optional,check(shape(bwk,0)==nbd),depend(bwk) :: nbd=shape(bwk,0)
+            integer dimension(nbd),depend(nbd) :: ic
+            integer :: net
+        end subroutine bndref
+        subroutine bndest(a,b2,ll,eps,aa,rng,nb,ev,fev,ic,net,de,wk,nw) ! in :coeffproc:bndest.f
+            real*8 dimension(ll) :: a
+            real*8 dimension(ll),depend(ll) :: b2
+            integer, optional,check(len(a)>=ll),depend(a) :: ll=len(a)
+            real*8 :: eps
+            real*8 dimension(nb) :: aa
+            real*8 dimension(nb),depend(nb) :: rng
+            integer, optional,check(len(aa)>=nb),depend(aa) :: nb=len(aa)
+            real*8 dimension(net) :: ev
+            real*8 dimension(net),depend(net) :: fev
+            integer dimension(net),depend(net) :: ic
+            integer, optional,check(len(ev)>=net),depend(ev) :: net=len(ev)
+            real*8 :: de
+            real*8 dimension(nw,4) :: wk
+            integer, optional,check(shape(wk,0)==nw),depend(wk) :: nw=shape(wk,0)
+        end subroutine bndest
+        subroutine bndwt(aa,rng,wb,nb,a,b2,ll,eps,wk,nw,iwk) ! in :coeffproc:bndwt.f
+            real*8 dimension(nb) :: aa
+            real*8 dimension(nb),depend(nb) :: rng
+            real*8 dimension(nb),depend(nb) :: wb
+            integer, optional,check(len(aa)>=nb),depend(aa) :: nb=len(aa)
+            real*8 dimension(ll) :: a
+            real*8 dimension(ll),depend(ll) :: b2
+            integer, optional,check(len(a)>=ll),depend(a) :: ll=len(a)
+            real*8 :: eps
+            real*8 dimension(nw,4) :: wk
+            integer, optional,check(shape(wk,0)==nw),depend(wk) :: nw=shape(wk,0)
+            integer dimension(nw),depend(nw) :: iwk
+        end subroutine bndwt
+        subroutine wtmin(aa,bb,a,b2,ll,eps,acc,itmx,em,fem) ! in :coeffproc:wtmin.f
+            real*8 :: aa
+            real*8 :: bb
+            real*8 dimension(ll) :: a
+            real*8 dimension(ll),depend(ll) :: b2
+            integer, optional,check(len(a)>=ll),depend(a) :: ll=len(a)
+            real*8 :: eps
+            real*8 :: acc
+            integer :: itmx
+            real*8 :: em
+            real*8 :: fem
+        end subroutine wtmin
+        subroutine numd(a,b2,alam,lm1,de) ! in :coeffproc:numd.f
+            real*8 dimension(lm1) :: a
+            real*8 dimension(lm1),depend(lm1) :: b2
+            real*8 :: alam
+            integer, optional,check(len(a)>=lm1),depend(a) :: lm1=len(a)
+            real*8 :: de
+        end subroutine numd
+        function numc(a,b2,alam,lm1) ! in :coeffproc:numc.f
+            real*8 dimension(lm1) :: a
+            real*8 dimension(lm1),depend(lm1) :: b2
+            real*8 :: alam
+            integer, optional,check(len(a)>=lm1),depend(a) :: lm1=len(a)
+            integer :: numc
+        end function numc
+        subroutine taban(e,wt,npts,thu,thl,et,ic,wtt,net) ! in :coeffproc:taban.f
+            real*8 dimension(npts) :: e
+            real*8 dimension(npts),depend(npts) :: wt
+            integer, optional,check(len(e)>=npts),depend(e) :: npts=len(e)
+            real*8 :: thu
+            real*8 :: thl
+            real*8 dimension(net) :: et
+            integer dimension(net),depend(net) :: ic
+            real*8 dimension(net),depend(net) :: wtt
+            integer, optional,check(len(et)>=net),depend(et) :: net=len(et)
+        end subroutine taban
+    end interface 
+end python module coeffproc
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/

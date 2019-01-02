@@ -5,8 +5,8 @@ python module selfd__user__routines
         function iovpar(i,j,r2,parm) result (id) ! in :slaterkoster:selfd.f:selfd:unknown_interface
             integer :: i
             integer :: j
-            real :: r2
-            real dimension(13),intent(inout) :: parm
+            real*8 :: r2
+            real*8 dimension(13),intent(inout) :: parm
             integer :: id
         end function iovpar
     end interface selfd_user_interface
@@ -16,8 +16,8 @@ python module skdd__user__routines
         function iovpar(i,j,r2,parm) result (id) ! in :slaterkoster:skdd.f:skdd:unknown_interface
             integer :: i
             integer :: j
-            real :: r2
-            real dimension(13),intent(inout) :: parm
+            real*8 :: r2
+            real*8 dimension(13),intent(inout) :: parm
             integer :: id
         end function iovpar
     end interface skdd_user_interface
@@ -26,30 +26,30 @@ python module slaterkoster ! in
     interface  ! in :slaterkoster
         subroutine slkode(dum,i,j,em,iovpar) ! in :slaterkoster:slkode.f
             use selfd__user__routines
-            real dimension(3) :: dum
+            real*8 dimension(3) :: dum
             integer :: i
             integer :: j
-            real dimension(5,5), intent(inout) :: em
+            real*8 dimension(5,5), intent(inout) :: em
             external :: iovpar
         end subroutine slkode
         subroutine selfd(i,j,r2,iovpar,em,ne) ! in :slaterkoster:selfd.f
             use selfd__user__routines
             integer :: i
             integer :: j
-            real :: r2
+            real*8 :: r2
             external iovpar
-            real dimension(ne,5),intent(inout) :: em
+            real*8 dimension(ne,5),intent(inout) :: em
             integer, optional,check(shape(em,0)==ne),depend(em) :: ne=shape(em,0)
         end subroutine selfd
         subroutine skdd(x,x2,i,j,r2,iovpar,em,ne) ! in :slaterkoster:skdd.f
             use skdd__user__routines
-            real dimension(6) :: x
-            real dimension(6) :: x2
+            real*8 dimension(6) :: x
+            real*8 dimension(6) :: x2
             integer :: i
             integer :: j
-            real :: r2
+            real*8 :: r2
             external iovpar
-            real dimension(ne,5),intent(inout) :: em
+            real*8 dimension(ne,5),intent(inout) :: em
             integer, optional,check(shape(em,0)==ne),depend(em) :: ne=shape(em,0)
         end subroutine skdd
     end interface 
