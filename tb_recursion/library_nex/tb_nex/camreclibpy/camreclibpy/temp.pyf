@@ -1,0 +1,43 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module recal__user__routines 
+    interface recal_user_interface 
+        subroutine hop(psi,pmn,e_a_j_err) ! in :recal:recal.f:recal:unknown_interface
+            real dimension((m)) :: psi
+            real dimension((m)) :: pmn
+            real :: e_a_j_err
+        end subroutine hop
+    end interface recal_user_interface
+end python module recal__user__routines
+python module recal ! in 
+    interface  ! in :recal
+        subroutine recal(hop,psi,pmn,m,a,b2,n) ! in :recal:recal.f
+            use recal__user__routines
+            external hop
+            real dimension(m) :: psi
+            real dimension(m),depend(m) :: pmn
+            integer, optional,check(len(psi)>=m),depend(psi) :: m=len(psi)
+            real dimension(n) :: a
+            real dimension(n),depend(n) :: b2
+            integer, optional,check(len(a)>=n),depend(a) :: n=len(a)
+        end subroutine recal
+        subroutine hop(psi,pmn,an) ! in :recal:hop.f
+            real dimension(5,100) :: psi
+            real dimension(5,100) :: pmn
+            real :: an
+            integer dimension(100,25) :: nn
+            integer dimension(100,25) :: mm
+            integer :: nat
+            integer :: np
+            real dimension(5,5,25) :: ee
+            integer dimension(100) :: izero
+            integer dimension(100) :: idum
+            common /blkrec/ nn,mm,nat,np,ee,izero
+            common idum
+        end subroutine hop
+    end interface 
+end python module recal
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/
