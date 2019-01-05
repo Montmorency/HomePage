@@ -469,8 +469,9 @@ of d electron structure  culminated in the work of D. G. Pettifor's \cite{pettif
 Pettifor's work produced a justifiable scheme for computing the two center tight binding integrals of Slater
 and Koster, $dd\sigma$, $dd\pi$, $dd\delta$ in terms of the position and halfwidth of the resonance:
 $\epsilon_0$ and $\Gamma$. It is worthwhile considering the achievement of these collected papers.
-With relatively basic computing power the workers determined the positions of atomic eigenvalues,
-band widths, and the effect of atomic scattering potentials. In 
+With relatively limited computing power the workers determined 
+the positions of atomic eigenvalues, band widths, and the effect 
+of atomic scattering potentials. In 
 the course of the work a great deal of algebraic manipulation of spherical 
 harmonics and plane waves is required, along with the determination
 of numerical values via graphical methods. All in all a laborious but fruitful task resulting
@@ -559,7 +560,7 @@ usually inquire about the whole of life, but about one particular matrix element
 $u_{0}$ so that Eq.~\ref{eq:greenian} gives us what, to put it crudely, we want.
 \end{quote}
 
-Typically we wish to start with our matrices in a tridiagonal matrix of the form:
+If we are given a tridiagonal matrix of the form:
 %
 \begin{equation}
 H = \begin{bmatrix}
@@ -573,7 +574,7 @@ b_1 & a_1 & b_2 & 0 & 0 &  ...\\
 \end{equation}
 
 %
-The various determinants and subdeterminants of the matrix can be divided as such:
+The determinants and sub-determinants etc. of the matrix can be nested:
 %
 $$
 \newcommand*{\temp}{\multicolumn{1}{|c|}{b_1}}
@@ -860,10 +861,18 @@ atom in the middle of a small nickel cluster.}
 
 The difference in the qualities, in terms of the structure revealed, in the DOS 
 is determined by the different termination scheme employed. \footnote{See the routines 
-\texttt{DENCRS} and \texttt{DENSQ} for the analytic terminator (TermDOS) scheme and \texttt{DENQD} 
+\texttt{DENCRS} and \texttt{DENSQ} for the analytic 
+terminator (TermDOS) scheme and \texttt{DENQD} 
 for the QuadDOS termination scheme in the Cambridge Recursion Library. 
-\cite{nex84,haydock84,haydock85} The TermDOS scheme is described 
-in \cite{nex84}.}
+\cite{nex84,haydock84,haydock85} 
+The TermDOS scheme is described in \cite{nex84}. The asymptotic behaviour
+of the continued fraction is affected by the presence of singularities
+in the spectrum, delta function, band edges, and Van Hove singularities.
+There is considerable literature on the topic of termination schemes 
+and the analytic structure of the asymptotic coefficients:
+\cite{turchi82,haydock84,luchini87,glanville88,yoshino87,yoshino88,haydock89,haydock10}.
+In certain cases expressions for the behaviour of the coefficients
+is given in terms of sinusoidal or elliptic functions.}
 
 \subsection{Surface Electronic Structure}
 Surface catalysis is a topic of immense interest in chemistry and chemical engineering.
@@ -973,10 +982,10 @@ expression to:
 
 The physical meaning is that $\log \det G_{2}$ gives the energy required to pull
 one of two adatoms away from the substrate and its paired atom, the $\log \det G_1$
-term is the energy required to put it back on substarte at an isolated site. 
-The difference is then the interaction energy. Formulating the problem
-as a matrix means the determinant van be split into a sum over
-five separate logarithms this is accomplished by "orbital peeling".
+term is the energy required to put it back on substrate at an isolated site. 
+The difference between these two energies is then the interaction energy. 
+Formulating the problem as a matrix means the determinant can be split 
+into a sum over five separate logarithms. This is accomplished by "orbital peeling".
 
 \begin{equation}
 {\rm det}|G2| = \bar{G}_{21}\bar{G}_{22}\bar{G}_{23}\bar{G}_{24}\bar{G}_{25}
@@ -1008,20 +1017,20 @@ Using this representation the difference in the density of states is calculated:
 %coming from Pettifor\cite{pettifor69} and rescaled to produce the observed
 %bandwidth of tungsten. The parameters are given in Table~\ref{tab:dsurface}.
 
-The SK parameters used for fcc, bcc, and hcp crystals in Ref.~\cite{haydock72} are
-given in Table \ref{tab:pettiparams}.
+The Slater-Koster parameters used for FCC, BCC, and HCP crystals 
+in Ref.~\cite{haydock72} are given in Table \ref{tab:pettiparams}.
 %
 \begin{table}
 \begin{center}
-\begin{tabular}{|ccccc|} 
+\begin{tabular}{|c|c|c|c|c|} 
 \hline
 Structure & $dd\sigma$ & $dd\pi$  & $dd\delta$ &  Band-limits \\
 \hline
-fcc       & -0.027784  & 0.012535 & -0.001554  & -0.131 to 0.085 \\ 
+FCC       & -0.027784  & 0.012535 & -0.001554  & -0.131 to 0.085 \\ 
 \hline
-hcp       & -0.027784  & 0.012535 & -0.001554  & -0.119 to 0.081 \\
+HCP       & -0.027784  & 0.012535 & -0.001554  & -0.119 to 0.081 \\
 \hline
-bcc       & -0.03248   & 0.01538  & -0.00200   & -0.119 to 0.097 \\
+BCC       & -0.03248   & 0.01538  & -0.00200   & -0.119 to 0.097 \\
           & -0.01341   & 0.00487  & -0.00049   &              \\
 \hline
 \end{tabular}

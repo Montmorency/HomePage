@@ -84,4 +84,26 @@ and Thompson?
 
 For d superconductivity a 5x5 block recursion could be good!
 
+Thu  3 Jan 2019 17:54:31 GMT
+-----------------------------
+camreclibpy now a reality! Running the small fcc cluster example in a python notebook.
+I've broken off the CamRecLib into a new repository as well which is now self contained.
+Next steps are to create a notebook for each example and integrate an atom viewer as well
+along with possibly a visualization of the way the starting vector emanates. This should
+be possible with the c_api in debug mode returning the value of pmn/psi at each application
+of the Hamiltonian (HOP). Adam may be able to help with this.
+
+Also if python call backs can be written to pass in new nearest neighbour criterion, or
+a new slater koster parameter than we can couple to the tb_nn library in a fairly straight
+forward manner.
+
+
+Sat  5 Jan 2019 01:46:45 GMT
+
+Starting a Math appendix to contain the interesting math bits which would
+bog down the main flow of the text. Finding an interesting connection
+between orthogonal polynomials, euclidean division.
+https://jeremy9959.github.io/about/
+
+
 

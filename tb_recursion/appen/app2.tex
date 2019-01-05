@@ -1,0 +1,98 @@
+\chapter{Recurrence and Continued Fractions}
+\section{Introduction}
+This appendix takes the form of a brief and essential
+set of notes on the the various algorithms, recurrence relations,
+root finding methods, continued fractions, orthogonal polynomials that 
+underlie the methods discussed in the main text. 
+These are mainly mathematical results
+that may not be so familiar to a materials scientist.
+
+\section{Euclid's Algorithm}
+As pointed out by Haydock in Ref.~\cite{weaire85} the 
+use of three term recurrence formulas goes back to 
+ancient Greece. 
+
+Euclid's Algorithm is a generaliztion 
+by analogy of Euclidean division from natural numbers
+to polynomial equations.
+
+\footnote{The connection between Lanczos,
+Euclidean Algorithms has been explored in pure number 
+theoretical and cryptographic literature \cite{compmath97}.}
+
+\section{Newton's Method for Finding Roots}
+Newton's method is a useful way to find the roots of a polynomial
+equation. If $f(\gamma_i)$ is an approximate root of an equation,
+let $f(\gamma_i+h)$ be the exact root then:
+%
+\begin{equation}
+f(\gamma_i+h)=0
+\end{equation}
+%
+if h is small then we can expand to first order in a 
+Taylor series and write:
+\begin{equation}
+f(\gamma_i) + h f'(\gamma_{i})= 0
+\end{equation}
+%
+or, equivalently:
+%
+\begin{equation}
+h = -\frac{f(\gamma_{i}}{f'(\gamma_i)}.
+\end{equation}
+
+Finally, we can improve the guess at the approximate root:
+%
+\begin{equation}
+\gamma_{i+1} =  \gamma_{i} + h,
+\end{equation}
+%
+and iterate the whole procedure to whatever accuracy we desire.
+
+\section{Sturm's Theorem}
+The Sturm sequence provides a means of determining the number of 
+roots for a given polynomial equation contained in a real interval.
+
+\section{Rational Interpolation}
+\label{app:ratint}
+An algorithm to compute rational interpolants 
+using continued fractions algorithm is described in Ref.~\cite{vidbergserene77}.
+A generic function $C_N(z)$ is written as a continued fraction:
+%
+\begin{equation}
+C_{N}(z) = \frac{a_{1}}{1+}\frac{a_{2}(z-z_{1})}{1+}...\frac{a_{N}(z-z_{N-1})}{1},
+\end{equation}
+%
+where $z$ is the argument of the interpolating function
+at the desired point, $z_{i}$ are the points the original function is sampled at,
+and $a_{i}$ are the coefficients of the interpolating polynomial.
+%
+\begin{equation}
+C_{N}(z_{i}) = u_{i}, \quad i=1,...N.
+\end{equation}
+%
+the coefficients $a_{i}$ can be generated from the recursion relations:
+%
+\begin{equation}
+a_{i} = g_{i}(z_{i}),\quad g_{i}(z_{i})=u_{i},\quad i=1,...,N.
+\end{equation}
+%
+\begin{equation}
+g_{p}(z) = \frac{g_{p-1}(z_{p-1}) - g_{p-1}(z)}{(z - z_{p-1})g_{p-1}(z)}, \quad p \geq 2.
+\end{equation}
+%
+The value of the function can then be generated at the point $z$ using the relations:
+%
+\begin{equation}
+C_{N}(z) = \frac{A_{N}(z)}{B_{N}(z)},
+\end{equation}
+%
+where:
+%
+\begin{eqnarray}
+A_{0}=0, \quad A_{1} = a_{1}, \quad B_{0}=B_{1}=1, \nonumber \\
+A_{n+1}(z) = A_{n}(z) + (z-z_{n})a_{n+1}A_{n-1}(z), \nonumber \\
+B_{n+1}(z) = B_{n}(z) + (z-z_{n})a_{n+1}B_{n-1}(z).
+\end{eqnarray}
+
+
