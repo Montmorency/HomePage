@@ -484,10 +484,84 @@ effectively completed by 1969, was an important prerequisite for the subsequent
 development of the recursion method in the 1970s. Generalized tables for tightbinding parameters 
 across the transition metal series has been produced in Ref.~\cite{harrison80}.
 
+%The parameters used in Ref.~\cite{burke78} are appropriate to the BCC structure.
+%The tightbinding Hamiltonian only considers two center contributions, with the parameters 
+%coming from Pettifor\cite{pettifor69} and rescaled to produce the observed
+%bandwidth of tungsten. The parameters are given in Table~\ref{tab:dsurface}.
+
+For ease of reference we collect here d tight-binding coefficicents
+that have found there way into the literature. The choice of these parameters
+is very much an example of theoretical materials science constituting a 
+craft. In later chapters we will examine some of the developments that set
+tight-binding and the choice of coefficients on a more definite 
+theoretical framework. The Slater-Koster parameters used for FCC, BCC, 
+and HCP crystals in Ref.~\cite{haydock72} are given in Table \ref{tab:pettiparams}.
+%
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|} 
+\hline
+Structure & $dd\sigma$ & $dd\pi$  & $dd\delta$ &  Band-limits \\
+\hline
+FCC       & -0.027784  & 0.012535 & -0.001554  & -0.131 to 0.085 \\ 
+\hline
+HCP       & -0.027784  & 0.012535 & -0.001554  & -0.119 to 0.081 \\
+\hline
+BCC       & -0.03248   & 0.01538  & -0.00200   & -0.119 to 0.097 \\
+          & -0.01341   & 0.00487  & -0.00049   &              \\
+\hline
+\end{tabular}
+\caption{Slater-Koster parameters from Pettifor \cite{pettifor69}, 
+along with band edges in Ry. First and second nearest neighbour 
+parameters are given for BCC crystals. \label{tab:pettiparams}.}
+\end{center}
+\end{table}
+%
+%\begin{table}
+%\begin{tabular}{|c|c|c|}
+%\hline
+%SK Parameter & First Neighbour & Second Nearest Neighbour \\
+%\hline
+%$dd\sigma$ & -0.02992  & -0.05364 \\
+%$dd\pi$    &  0.06652  &  0.01943 \\
+%$dd\delta$ &  0.00800  &  0.00196 \\
+%\hline
+%\end{tabular}
+%\caption{These parameters are difficult to make out from the electronic version of Ref.
+%due to poor resolution of the scan. \label{tab:dsurface}.}
+%\end{table}
+%
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{3}{|c|} {FCC TB Parameters} \\
+\hline
+Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
+\hline
+$dd\sigma$ & -0.027784 & - \\
+$dd\pi$    &  0.012535 & - \\
+$dd\delta$ & -0.001554 & - \\
+\hline
+\multicolumn{3}{|c|} {BCC TB Parameters} \\
+\hline
+Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
+$dd\sigma$ & -0.06560  & -0.03195 \\
+$dd\pi$    &  0.04373  & 0.02130\\
+$dd\delta$ & -0.010934 & -0.00537\\
+\hline
+\end{tabular}
+\caption{The tight binding parameters used for the example recursion 
+calculations in this chapter, in the FCC lattice only nearest neighbours 
+are included.}
+\end{center}
+\end{table}
+
 Whether we are able to create a tight binding description of transition metals
-depends on whether a decent, energy independent, approximation to the electronic structure in fcc/bcc metals
-can be achieved with 9x9 matrices describing nearest neighbour interactions of the s, p and d states,
-in the Slater-Koster form or derived from electronic states localized according to some 
+depends on whether a decent, energy independent, approximation to the electronic 
+structure in fcc/bcc metals can be achieved with 9x9 matrices describing 
+nearest neighbour interactions of the s, p and d states, in the Slater-Koster 
+form or derived from electronic states localized according to some 
 
 \subsection{Kelly Tight Binding}
 
@@ -746,7 +820,10 @@ this is disappointing there is a silver lining. Integrals over the density of st
 are very stable. As such any time we require an integral over the density of states
 we can be quite confident in the result, similarly integrals over differences
 are quite stable. This property of the recursion chains will be exploited again and again
-to compute the relative stability of different structures.
+to compute the relative stability of different structures. The details of how
+integrals of continued fractions are performed is included in the appendix 
+but it is highly recommended that the reader refer to Ref.~\cite{nex78}
+for a formal description of the implemented techniques.
 
 To compute the difference in energy between inequivalent structures 
 one begins with the electron occupancy of a specific orbital:
@@ -860,42 +937,52 @@ atom in the middle of a small nickel cluster.}
 \end{table}
 
 The difference in the qualities, in terms of the structure revealed, in the DOS 
-is determined by the different termination scheme employed. \footnote{See the routines 
-\texttt{DENCRS} and \texttt{DENSQ} for the analytic 
-terminator (TermDOS) scheme and \texttt{DENQD} 
-for the QuadDOS termination scheme in the Cambridge Recursion Library. 
-\cite{nex84,haydock84,haydock85} 
-The TermDOS scheme is described in \cite{nex84}. The asymptotic behaviour
-of the continued fraction is affected by the presence of singularities
-in the spectrum, delta function, band edges, and Van Hove singularities.
+is determined by the different termination scheme employed. 
+\footnote{See the routines \texttt{DENCRS} and \texttt{DENSQ} 
+for the square root and analytic terminator (TermDOS) schemes and \texttt{DENQD} 
+for the QuadDOS termination scheme in the Cambridge Recursion Library 
+\cite{nex84,haydock84,haydock85}.
+The asymptotic behaviour of the continued fraction coefficients 
+are affected by the presence of singularities
+in the spectrum: e.g. delta functions near the band edges,the band edges
+themselves, and Van Hove singularities.
 There is considerable literature on the topic of termination schemes 
 and the analytic structure of the asymptotic coefficients:
 \cite{turchi82,haydock84,luchini87,glanville88,yoshino87,yoshino88,haydock89,haydock10}.
 In certain cases expressions for the behaviour of the coefficients
-is given in terms of sinusoidal or elliptic functions.}
+is given in terms of sinusoidal or elliptic functions linear prediction techniques
+have also been used to study the behaviour of the recursion coefficients in the
+asymptotic region \cite{allan84}. Given the rise of inference techniques in recent
+years the latter approach may be worth some investigation.}
 
 \subsection{Surface Electronic Structure}
 Surface catalysis is a topic of immense interest in chemistry and chemical engineering.
-The rate at which reactions proceed is important in industrial processes and biomedical 
-processes. The presence of a surface disrupts the periodicity required to use Bloch's theorem,
-at least in the direction normal to the surface, and the in plane periodicity is likely to 
-be compromised by steps, impurities, etc. along the material surface.
+The rate at which reactions proceed is important in industrial and biomedical 
+applications. The presence of a surface disrupts the periodicity required to use Bloch's theorem,
+at least in the direction normal to the surface, and the in-plane periodicity is likely to 
+be compromised by steps, vacancies and impurities, etc. along the material surface.
+All this is to say that where there is a surface there is likely to be 
+a need for recursion.
 
 Relevant work on surfaces using the recursion method can be found in 
 Refs.~\cite{haydock72, kelly73, kelly74, kelly74b, burke76, haydock79, haydock82}.
 In particular \cite{haydock79} presents a semi-quantitative treatment of chemisorption of simple
 molecules to transition metal surfaces across the transition metal series, 
 a study which provides a strong positive example of analysis of homologous 
-trends in materials according to Ehrenreich's $4^{\rm th}$ point.
+trends in materials according to Ehrenreich's fourth point (See Ehrenreich's
+Points~\ref{en:ehrenreich} from Chapter~\ref{chap:intro}).
 
 A detailed discussion of surface catalysis is also given in Ref.~\cite{haydock80}
-for the dissociation of hydrogen on a transition metal surface. \footnote{The, 
-somewhat surprising, connection to embrittlement phenomenon will be 
-discussed in detail in Chap.~\ref{chap:metallurgy}}.
+for the dissociation of hydrogen on a transition metal surface. \footnote{The 
+connection to embrittlement phenomenon will be discussed in detail in Chap.~\ref{chap:metallurgy}}.
 
-The Cambridge Recursion library provides an example of the indirect interaction of adatoms on a surface,
-i.e. adatoms interacting via the metallic substrate \cite{einstein73}. Most of this section is based 
-on the work presented in Ref.~\cite{burke76}. 
+The Cambridge Recursion Library provides an example 
+to demonstrate some of the typical techniques required to perform 
+surface type calculations.
+The example treats the problem of the interaction of adatoms on a 
+surface, i.e. adatoms interacting via the metallic substrate a problem
+treated in Ref.~\cite{einstein73}. Most of this section is 
+based on the work presented in Ref.~\cite{burke76}. 
 
 The problem reduces to finding the difference in the total energy of the system when
 adatoms are distant (infinitely separated) and when they are close together:
@@ -912,8 +999,7 @@ and corresponds to the energetic contribution coming from the adatoms sharing
 electrons via the d-band substrate.
 
 The calculation proceeds as follows. 
-
-1) First the two atoms are placed at a sufficient
+First the two atoms are placed at a sufficient
 distance that they do not interact and the energy:
 %
 \begin{equation}
@@ -922,14 +1008,14 @@ U_{1} = \int_{-\infty}^{E^{(1)}_{F}}EN_{1}(E)dE,
 %
 is computed. 
 
-2) Allow the two adatoms to come together on the surface, recalculate a new
-density of states and the new fermi level.
+Then the two adatoms are allowed to come together on the surface, 
+a new density of states is recalculated along with the new Fermi level.
+%
 \begin{equation}
 U_{2} = \int_{-\infty}^{E^{(2)}_{F}}EN_{2}(E)dE,
 \end{equation}
 
-The integrals of the two density of states up to the two fermi energies is equal.
-This can be understood because no new electrons have entered the system.
+The integrals of the two density of states up to the two Fermi energies are equal.
 
 The interaction is now given:
 %
@@ -959,21 +1045,22 @@ Finally the identity:
 \end{equation}
 %
 is employed to reach an expression for the difference in the density
-of states $\delta N= (N_{2}-N_{1})$.
-
+of states $\delta N=(N_{2}-N_{1})$.
+%
 \begin{equation}
 \delta N = \frac{\partial}{\partial E}\log\frac{\det[EI-H_{2}]}{\det [EI-H_{1}]}\frac{[EI-H_{0}]}{[EI-H_{1}]}
 \end{equation}
 %
 
-What then follows is some consideration of the block structure of the matrices $H_2$, $H_1$ and $H_0$.
-$H_2$ is a partitioned matrix of dimension $5N+10$ and $H_1$ has dimension $5N+5$.
-$H_{0}$ is the substrate Hamiltonian with dimensions $5\times N$ (orbitals times atoms).
+What then follows is some consideration of the block structure of the matrices 
+$H_2$, $H_1$ and $H_0$. $H_2$ is a partitioned matrix of dimension 
+$5N+6$ and $H_1$ has dimension $5N+3$. $H_{0}$ is the substrate Hamiltonian 
+with dimensions $5\times N$ (orbitals times atoms).
 The self energy elements are given in the block $E_A$, $V_{1}$ and $V_{2}$ describe
 the atoms interactions with the substrate and the $V_{12}$ describe the interaction
 between adatoms. Some identities from matrix algebra employed in Ref.~\cite{einstein73}
-and given in the append of Ref.~\cite{burke76} are then used to simplify the
-expression to:
+and given in the appendix of Ref.~\cite{burke76} are then used to simplify the
+expressions to:
 %
 \begin{equation}
 \delta N = \frac{\partial}{\partial E}\log \frac{\det G_{1}}{\det G_{2}}
@@ -1004,7 +1091,7 @@ G_{i\alpha}=\bra i,\alpha| [E-\bar{H}_{i\alpha}]^{-1} |i, \alpha\ket
 with $i=1,2$ $\alpha=1,5$. The matrix $\bar{H}_{i\alpha}$ is formed by taking 
 $[E-\bar{H}_{i}]$, deleting the first $(\alpha-1)$ rows and columns 
 to form $[EI-\bar{H}_{i\alpha}]$. The desired matrix element is now the 
-in the upperleft-most corner of the matrix. 
+in the upper left-most corner of the matrix. 
 Using this representation the difference in the density of states is calculated:
 %
 \begin{equation}
@@ -1012,78 +1099,11 @@ Using this representation the difference in the density of states is calculated:
 \end{equation}
 %
 
-%The parameters used in Ref.~\cite{burke78} are appropriate to the BCC structure.
-%The tightbinding Hamiltonian only considers two center contributions, with the parameters 
-%coming from Pettifor\cite{pettifor69} and rescaled to produce the observed
-%bandwidth of tungsten. The parameters are given in Table~\ref{tab:dsurface}.
-
-The Slater-Koster parameters used for FCC, BCC, and HCP crystals 
-in Ref.~\cite{haydock72} are given in Table \ref{tab:pettiparams}.
 %
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|} 
-\hline
-Structure & $dd\sigma$ & $dd\pi$  & $dd\delta$ &  Band-limits \\
-\hline
-FCC       & -0.027784  & 0.012535 & -0.001554  & -0.131 to 0.085 \\ 
-\hline
-HCP       & -0.027784  & 0.012535 & -0.001554  & -0.119 to 0.081 \\
-\hline
-BCC       & -0.03248   & 0.01538  & -0.00200   & -0.119 to 0.097 \\
-          & -0.01341   & 0.00487  & -0.00049   &              \\
-\hline
-\end{tabular}
-\caption{Slater-Koster parameters from Pettifor \cite{pettifor69}, 
-along with band edges in Ry. First and second nearest neighbour 
-parameters are given for BCC crystals. \label{tab:pettiparams}.}
-\end{center}
-\end{table}
-%
-%\begin{table}
-%\begin{tabular}{|c|c|c|}
-%\hline
-%SK Parameter & First Neighbour & Second Nearest Neighbour \\
-%\hline
-%$dd\sigma$ & -0.02992  & -0.05364 \\
-%$dd\pi$    &  0.06652  &  0.01943 \\
-%$dd\delta$ &  0.00800  &  0.00196 \\
-%\hline
-%\end{tabular}
-%\caption{These parameters are difficult to make out from the electronic version of Ref.
-%due to poor resolution of the scan. \label{tab:dsurface}.}
-%\end{table}
-%
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-\multicolumn{3}{|c|} {FCC TB Parameters} \\
-\hline
-Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
-\hline
-$dd\sigma$ & -0.027784 & - \\
-$dd\pi$    &  0.012535 & - \\
-$dd\delta$ & -0.001554 & - \\
-\hline
-\multicolumn{3}{|c|} {BCC TB Parameters} \\
-\hline
-Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
-$dd\sigma$ & -0.06560  & -0.03195 \\
-$dd\pi$    &  0.04373  & 0.02130\\
-$dd\delta$ & -0.010934 & -0.00537\\
-\hline
-\end{tabular}
-\caption{The tight binding parameters used for the example recursion 
-calculations in this chapter, in the FCC lattice only nearest neighbours 
-are included.}
-\end{center}
-\end{table}
-%
-The range of $E_{F}$ is restricted to $-0.068 \ge E_{F} \le 0.12$ Ryd by considerations
-based on the atomic configuration of tungsten as $5d^{4}6s^{2}$, meaning the band 
-should contain a minimum of 4 and a maximum of 6 electrons, with the band being half filled (5 e)
-considered the most plausible.
+%The range of $E_{F}$ is restricted to $-0.068 \ge E_{F} \le 0.12$ Ryd by considerations
+%based on the atomic configuration of tungsten as $5d^{4}6s^{2}$, meaning the band 
+%should contain a minimum of 4 and a maximum of 6 electrons, with the band being half filled (5 e)
+%considered the most plausible.
 
 Fig.~\ref{fig:burkesurface} shows the energy difference as a function of the 
 Fermi energy position. The energy is computed from the three p orbitals of a 
@@ -1107,9 +1127,9 @@ self consistent charge density, and precise atomic structure in the presence of 
 \cite{mostoller79} for a treatment of surface effects using the recursion method.}
 First principles work has greatly simplified access to these quantities and should remove 
 some of the ambiguities in mapping ab initio data onto a local picture
-of the electronic structure at surfaces. Meaning the recursion techniques described in 
-Refs.~\cite{burke76, haydock79, haydock81} might be revisited with potentially profitable 
-effect.
+of the electronic structure at surfaces. These advances mean that the 
+recursion techniques described in Refs.~\cite{burke76, haydock79, haydock81} 
+might be revisited with potentially profitable effect.
 
 \subsection{Off-Diagonal elements}
 The off diagonal elements of the Green's function can be written:
@@ -1359,7 +1379,7 @@ routines.
 
 
 The asymptotic behaviour of the recursion co-efficients in the scalar recursion case
-is analyzed in \cite{turchi82, yoshina87, yoshino88, haydock10, alhaidari18}.
+is analyzed in \cite{turchi82, yoshino87, yoshino88, haydock10, alhaidari18}.
 
 If a small discursion into metaphor is allowed we might suggest 
 the difference between the scalar recursion and the block recursion method is 
