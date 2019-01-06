@@ -9,16 +9,63 @@ that may not be so familiar to a materials scientist.
 
 \section{Euclid's Algorithm}
 As pointed out by Haydock in Ref.~\cite{weaire85} the 
-use of three term recurrence formulas goes back to 
+use of three term recurrence formulae goes back to 
 ancient Greece. 
 
-Euclid's Algorithm is a generaliztion 
-by analogy of Euclidean division from natural numbers
-to polynomial equations.
+To find the greatest common divisor of two numbers $a,b$ with
+$a>b$, a recurrence relation can be set up. The starting orbitals are now 
+selected from ${u_{n}}\in\mathbb{N}$ a subset of the 
+natural numbers (the positive integers) with ${u_1>u_2,...,1}$.
 
-\footnote{The connection between Lanczos,
-Euclidean Algorithms has been explored in pure number 
-theoretical and cryptographic literature \cite{compmath97}.}
+\begin{algorithm}
+\caption{Euclid$'$s Algorithm}\label{alg:euclid}
+\begin{algorithmic}[1]
+\Procedure{Euclid}{$a,b$}\Comment{Find greatest common divisor of a and b}
+\While{($u_{n-1}>u_{n}$)}
+\State $q = 0$
+\While{($(u_{n-1}-qu_n) > 0$)}\Comment{This is the $H\psi$ step.}
+\State $u_{n+1} = -(qu_{n} - u_{n-1})$
+\State $q \gets q+1$
+\EndWhile\label{quotientwhile}
+\State $u_{n-1} \gets u_{n}$
+\State $u_{n} \gets u_{n+1}$
+\EndWhile\label{euclidendwhile}
+\State \textbf{return} $b$\Comment{The gcd is $u_{n}$}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+The use of Euclid's algorithm in the determination of 
+the continued fraction representation of a real number
+provides the most direct connection with the Haydock recursion
+method. Instead of a continued fraction approximation to a real
+number the materials scientist seeks a continued fraction
+approximation to the Green's function G(E) evaluated 
+at some energy.
+
+If a number is written:
+\begin{equation}
+a=bq_{0} + r_{0}
+\end{equation}
+
+\begin{equation}
+\frac{a}{b} = q_{0} + \frac{r_{0}}{b}
+\frac{b}{r_{0}} = \frac{1}{\frac{a}{b} - q_{0}}
+\end{equation}
+
+Again the operation or `work' at each stage of the algorithm
+is finding the value of the quotient $q_i$, The process
+is again iterated until it terminates (in the case of a rational number)
+or up to some desired precision if it is an irrational number.
+
+%In fields of numbers euclids algorithm is used to determine
+%the multiplicative inverse
+%Euclid's Algorithm can be generalized 
+%by analogy of Euclidean division from natural numbers
+%to polynomial equations.
+%\footnote{The connection between Lanczos,
+%Euclidean Algorithms has been explored in pure number 
+%theoretical and cryptographic literature \cite{compmath97}.}
 
 \section{Newton's Method for Finding Roots}
 Newton's method is a useful way to find the roots of a polynomial
@@ -38,7 +85,7 @@ f(\gamma_i) + h f'(\gamma_{i})= 0
 or, equivalently:
 %
 \begin{equation}
-h = -\frac{f(\gamma_{i}}{f'(\gamma_i)}.
+h = -\frac{f(\gamma_{i})}{f'(\gamma_i)}.
 \end{equation}
 
 Finally, we can improve the guess at the approximate root:

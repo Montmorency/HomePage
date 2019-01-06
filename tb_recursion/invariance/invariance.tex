@@ -320,13 +320,13 @@ eigenvector of the Hamiltonian.
 If a basis set of atomic orbitals $\phi_{n}(\r-\R_{i})$
 is placed on each atom in the crystal an un-normalized Bloch sum can be 
 written as $\sum_{\R_{i}} e^{i\k\cdot\R_{i}}\phi_{n}(\r-\R_{i})$. For
-a given $\k$ there will be off diagonal elements between Bloch sums
+a given $\k$ there will be off-diagonal elements between Bloch sums
 for different atomic orbitals.
 
   Interestingly Slater and Koster state that there are no off-diagonal
 elements of the Hamiltonian, consisting of the kinetic energy and the periodic potential, 
 between Bloch sums with different $\k$'s. This is considered again in Chapter~\ref{chap:odlro}
-where off diagonal elements in the Hamiltonian between different $\k$ values are considered.
+where off-diagonal elements in the Hamiltonian between different $\k$ values are considered.
 
 The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ are used instead of LCAOs, \cite{lowdin62}) gives:
 %
@@ -430,7 +430,7 @@ H =  d-d  &  d-PW \\
 %
 where d-d and PW-PW are of the tight-binding and plane-wave 
 pseudopotential form and hybridization occurring in the 
-off diagonal elements. The dual characteristic of transition metals
+off-diagonal elements. The dual characteristic of transition metals
 tightly bound d-electrons and diffuse s-p orbitals hybridizing 
 accounts for the difficulties in describing their electronic properties.
 
@@ -444,11 +444,11 @@ dd\sigma \approx \frac{-5W\cos\kappa_{d}R}{\kappa_{d}R}
 %
 If we write our basis functions in terms of localized orbitals
 Eq.~\ref{eq:pettifor} suggests our Hamiltonian matrix will be 
-populated by a huge number of off diagonal matrix elements which can't be neglected. If 
+populated by a huge number of off-diagonal matrix elements which can't be neglected. If 
 the energy is equal to $k^{2}$ constructive interference occurs and the energy summation
-diverges with off diagonal matrix elements between all d states on remote atoms becoming
+diverges with off-diagonal matrix elements between all d states on remote atoms becoming
 significant. This isn't entirely surprising. We are considering a periodic crystalline solid
-and the eigenfunctions of this crystal are extended throughout. The off diagonal elements
+and the eigenfunctions of this crystal are extended throughout. The off-diagonal elements
 in a coordinate space representation reflect the long range order of the material and
 preservation of the phase of the electronic wave function as they move from atom to atom. See
 Chapter~\ref{chap:odlro} for further discussion of this and related points.
@@ -869,13 +869,12 @@ U_{B}-ZE_{FA}= \int_{-\infty}^{E_{FA}}(E-E_{FA})n_{B}(E)dE + \int_{E_{FB}}^{E_{F
 If $n_{B}(E)$ is taken to be constant across that small energy range, the second term, in
 Eq. results in a small squared term that can be dropped. Swapping $E_{FB}$ and $E_{FA}$ gives
 a similar result. This justifies dropping the A index on the Fermi energy to get the
-final expression:
+final expression \cite{johannes76}:
 %
 \begin{equation}
 U_{A}-U_{B} = \int_{-\infty}^{E_{F}}(E-E_{F})[n_{A}(E) -n_{B}(E)]dE.
 \end{equation}
 %
-It is this expression used to separate the Lave phases of transition metals in Ref.~\cite{johannes76}.
 
 \subsection{Local Density of States}
 \label{sec:fccldos}
@@ -948,14 +947,15 @@ in the spectrum: e.g. delta functions near the band edges,the band edges
 themselves, and Van Hove singularities.
 There is considerable literature on the topic of termination schemes 
 and the analytic structure of the asymptotic coefficients:
-\cite{turchi82,haydock84,luchini87,glanville88,yoshino87,yoshino88,haydock89,haydock10}.
+\cite{hodges77,bylander80,turchi82,haydock84,luchini87,glanville88,
+yoshino87,yoshino88,haydock89,haydock10}.
 In certain cases expressions for the behaviour of the coefficients
 is given in terms of sinusoidal or elliptic functions linear prediction techniques
 have also been used to study the behaviour of the recursion coefficients in the
 asymptotic region \cite{allan84}. Given the rise of inference techniques in recent
 years the latter approach may be worth some investigation.}
 
-\subsection{Surface Electronic Structure}
+\subsection{Surface Electronic Structure and Orbital Peeling}
 Surface catalysis is a topic of immense interest in chemistry and chemical engineering.
 The rate at which reactions proceed is important in industrial and biomedical 
 applications. The presence of a surface disrupts the periodicity required to use Bloch's theorem,
@@ -1072,14 +1072,14 @@ one of two adatoms away from the substrate and its paired atom, the $\log \det G
 term is the energy required to put it back on substrate at an isolated site. 
 The difference between these two energies is then the interaction energy. 
 Formulating the problem as a matrix means the determinant can be split 
-into a sum over five separate logarithms. This is accomplished by "orbital peeling".
+into a sum over five separate logarithms. This is accomplished by ``orbital peeling".
 
 \begin{equation}
-{\rm det}|G2| = \bar{G}_{21}\bar{G}_{22}\bar{G}_{23}\bar{G}_{24}\bar{G}_{25}
+{\rm det}|G_{2}| = \bar{G}_{21}\bar{G}_{22}\bar{G}_{23}\bar{G}_{24}\bar{G}_{25}
 \end{equation}
 
 \begin{equation}
-{\rm det}|G1| = \bar{G}_{11}\bar{G}_{12}\bar{G}_{13}\bar{G}_{14}\bar{G}_{15}
+{\rm det}|G_{1}| = \bar{G}_{11}\bar{G}_{12}\bar{G}_{13}\bar{G}_{14}\bar{G}_{15}
 \end{equation}
 
 The matrix elements for each $G_{i\alpha}$ should be very familiar at this point:
@@ -1131,20 +1131,20 @@ of the electronic structure at surfaces. These advances mean that the
 recursion techniques described in Refs.~\cite{burke76, haydock79, haydock81} 
 might be revisited with potentially profitable effect.
 
-\subsection{Off-Diagonal elements}
-The off diagonal elements of the Green's function can be written:
+\subsection{Off-Diagonal Elements of the Green's Function}
+The off-diagonal elements of the Green's function can be written:
 %
 \begin{equation}
 G_{AB}(E) = \bra \phi_{A}|[H-E]^{-1}|\phi_{B}\ket,
 \end{equation}
 %
 and they contain a lot of useful information. 
+These off-diagonal elements are required to calculate 
+response functions, \cite{terakura78}, interatomic 
+forces \cite{finnis84, finnis87, ohta87}, and bond orders 
+\cite{coulson39,tersoff86,pettifor89}.
 
-These off diagonal elements are require to calculate 
-response functions, \cite{terakura78}, interatomic forces \cite{finnis84, finnis87, ohta87}, 
-and bond orders \cite{tersoff86, pettifor89}.
-
-One direct route to computing an off diagonal elements of the Green's function
+One direct route to computing an off-diagonal elements of the Green's function
 is by expressing it as a linear combination of two diagonal elements. 
 This can be seen by forming new starting vectors 
 from the potential linear combinations of $\phi_{A}$ and $\phi_{B}$:
@@ -1156,7 +1156,7 @@ from the potential linear combinations of $\phi_{A}$ and $\phi_{B}$:
 \phi_{i-} = \frac{1}{\sqrt{2}}(\phi_{A} - i\phi_{B}),
 \end{align}
 %
-we can retrieve the off diagonal elements by computing 
+we can retrieve the off-diagonal elements by computing 
 two `normal' diagonal elements from these linear combinations.
 For example, for an Hermition $\hat{H}$, and real $\phi_{A}$ and $\phi_{B}$ 
 the $AB$ off-diagonal element of the Green's function can be computed as:
@@ -1166,7 +1166,7 @@ the $AB$ off-diagonal element of the Green's function can be computed as:
 G_{AB}(E) = \frac{1}{2}[G_{++}(E)-G_{--}(E)].
 \end{equation}
 
-To see how the off diagonal elements contribute to the force on an 
+To see how the off-diagonal elements contribute to the force on an 
 atom we follow Sec. 2.4 of Sutton \cite{sutton88} and Ohta \cite{ohta87}.
 First we reproduce their expression for the bond energy:
 %
@@ -1209,7 +1209,7 @@ Many of the practical applications discussed in Chapter~\ref{chap:metallurgy}
 will rely on it.
 
 %
-These off diagonal elements are also required to determine the vibrational properties. 
+These off-diagonal elements are also required to determine the vibrational properties. 
 If we want the interatomic force constants in the harmonic approach we follow Finnis and
 go to second order in the variation of the total energy to derive the interatomic force
 constant matrix:
@@ -1250,7 +1250,7 @@ and the response functions \cite{terakura82, sutton88}:
 and upon integration:
 %
 \begin{equation}
-\frac{-2}{\pi}G_{jk}(E^{+}) = \frac{2{\rm Im}}{\pi}\int^{E}\sum_{l}G{jl}(E')G_{lk}(E')dE'.
+\frac{-2}{\pi}G_{jk}(E^{+}) = \frac{2{\rm Im}}{\pi}\int^{E}\sum_{l}G_{jl}(E')G_{lk}(E')dE'.
 \end{equation}
 %
 
@@ -1329,7 +1329,7 @@ combinations of the two states are accumulated. The resulting integral is
 then a scalar which measures the sign and magnitude of the
 interference between the two localized orbitals up to the Fermi energy.
 
-Eq.~\ref{eq:offdiaggreen} gives an immediate scheme for computing the off diagonal
+Eq.~\ref{eq:offdiaggreen} gives an immediate scheme for computing the off-diagonal
 elements but can result in the need for substracting two largish quantities to find
 a small one. Such a procedure is never ideal. This concern and others motivated the introduction
 of the block recursion method which will be discussed in the next section.
@@ -1348,10 +1348,11 @@ Adding these vectors together is equivalent to allowing them to interfere constr
 deconstructively. 
 
 At the end the recursion method gives a record of the projection of 
-the starting orbital on to each of its, increasingly distance neighbours, as a function
-of energy. The electron, confined to a single energy and a single state 
-on the lone atom, in a solid can access a range of shapes 
-across a range of energies distributed throughout a crystal.
+the starting orbital on to each of its increasingly distance neighbours 
+as a function of energy. The electron, though confined to a 
+single energy and a single state on the lone atom, when in a solid, 
+can take on a range of shapes across a range of energies distributed 
+throughout a crystal.
 
 \subsection{Block Recursion}
 By picking a single orbital and turning the wheel on the recursion method a
