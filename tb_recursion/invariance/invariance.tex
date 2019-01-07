@@ -988,11 +988,11 @@ The problem reduces to finding the difference in the total energy of the system 
 adatoms are distant (infinitely separated) and when they are close together:
 %
 \begin{equation}
-U_{TOT} = \sum_{i}E_{i} - U_{es},
+U_{\rm TOT} = \sum_{i}\epsilon_{i} - U_{\rm ES},
 \end{equation}
 %
 the first term is the band structure contribution to the energy, integrated
-across all the occupied electronic states, and the second term is the electrostatic
+across all the occupied electronic states (on an adatom), and the second term is the electrostatic
 energy, including the interelectron repulsion (to avoid double counting), and the repulsion
 between the ion cores. It is the first term that is of primary interest in the example
 and corresponds to the energetic contribution coming from the adatoms sharing
@@ -1015,7 +1015,8 @@ a new density of states is recalculated along with the new Fermi level.
 U_{2} = \int_{-\infty}^{E^{(2)}_{F}}EN_{2}(E)dE,
 \end{equation}
 
-The integrals of the two density of states up to the two Fermi energies are equal.
+The integrals of the two density of states up to the two Fermi energies are equal
+(no electrons have been added to the system).
 
 The interaction is now given:
 %
@@ -1090,7 +1091,7 @@ G_{i\alpha}=\bra i,\alpha| [E-\bar{H}_{i\alpha}]^{-1} |i, \alpha\ket
 %
 with $i=1,2$ $\alpha=1,5$. The matrix $\bar{H}_{i\alpha}$ is formed by taking 
 $[E-\bar{H}_{i}]$, deleting the first $(\alpha-1)$ rows and columns 
-to form $[EI-\bar{H}_{i\alpha}]$. The desired matrix element is now the 
+to form $[EI-\bar{H}_{i\alpha}]$. The desired matrix element is now 
 in the upper left-most corner of the matrix. 
 Using this representation the difference in the density of states is calculated:
 %
@@ -1120,9 +1121,12 @@ d-band filling (position of the Fermi energy). See Ref.~\cite{burke76} for detai
 \end{center}
 \end{figure}
 %
-Surface chemistry using the recursion method was hindered 
-by the necessary arbitrariness in the choice of the tight binding Hamiltonian and accessing the 
-self consistent charge density, and precise atomic structure in the presence of a surface. 
+
+Surface calculations using the recursion method were
+overwhelmed by a number of uncertainties.
+The lack of a procedure for a choice of the tight binding 
+Hamiltonian and accessing the self consistent charge density
+in the presence of a surface being the most significant.
 \footnote{For early work on Wannier functions at surfaces Ref.~\cite{smith74}. Also see 
 \cite{mostoller79} for a treatment of surface effects using the recursion method.}
 First principles work has greatly simplified access to these quantities and should remove 
