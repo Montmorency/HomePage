@@ -964,6 +964,12 @@ be compromised by steps, vacancies and impurities, etc. along the material surfa
 All this is to say that where there is a surface there is likely to be 
 a need for recursion.
 
+The need for a direct calculation of binding energy between adatoms or
+the binding of an impurity in a lattice stems from the difficulties in computing 
+these quantities via the method of energy differences. Performing two total
+energy calculations on systems with $10^23$ atoms and subtracting the
+resulting numbers is not a well conditioned problem. 
+
 Relevant work on surfaces using the recursion method can be found in 
 Refs.~\cite{haydock72, kelly73, kelly74, kelly74b, burke76, haydock79, haydock82}.
 In particular \cite{haydock79} presents a semi-quantitative treatment of chemisorption of simple
@@ -971,21 +977,22 @@ molecules to transition metal surfaces across the transition metal series,
 a study which provides a strong positive example of analysis of homologous 
 trends in materials according to Ehrenreich's fourth point (See Ehrenreich's
 Points~\ref{en:ehrenreich} from Chapter~\ref{chap:intro}).
-
 A detailed discussion of surface catalysis is also given in Ref.~\cite{haydock80}
 for the dissociation of hydrogen on a transition metal surface. \footnote{The 
 connection to embrittlement phenomenon will be discussed in detail in Chap.~\ref{chap:metallurgy}}.
 
 The Cambridge Recursion Library provides an example 
-to demonstrate some of the typical techniques required to perform 
-surface type calculations.
-The example treats the problem of the interaction of adatoms on a 
-surface, i.e. adatoms interacting via the metallic substrate a problem
-treated in Ref.~\cite{einstein73}. Most of this section is 
-based on the work presented in Ref.~\cite{burke76}. 
+to demonstrate some of the technique required to perform 
+direct calculations of adatom interactions. The example treats the problem of the interaction of adatoms on a 
+surface, i.e. adatoms interacting via the metallic substrate.
+The formalism developed in Ref.~\cite{einstein73} allows for the study of adatom
+interaction energy as a function of band filling, adatom energy level, and the hopping
+potential chosen between the adatom and the substrate. The generalization
+to multiple orbital adatoms was given in Ref.~\cite{burke76}. 
 
 The problem reduces to finding the difference in the total energy of the system when
-adatoms are distant (infinitely separated) and when they are close together:
+adatoms are distant (infinitely separated) and when they are close together.
+The total energy of the system is written:
 %
 \begin{equation}
 U_{\rm TOT} = \sum_{i}\epsilon_{i} - U_{\rm ES},
@@ -994,12 +1001,11 @@ U_{\rm TOT} = \sum_{i}\epsilon_{i} - U_{\rm ES},
 the first term is the band structure contribution to the energy, integrated
 across all the occupied electronic states (on an adatom), and the second term is the electrostatic
 energy, including the interelectron repulsion (to avoid double counting), and the repulsion
-between the ion cores. It is the first term that is of primary interest in the example
-and corresponds to the energetic contribution coming from the adatoms sharing
-electrons via the d-band substrate.
+between the ion cores. It is the first term that is considered to be of primary 
+interest in the example and corresponds to the energetic contribution coming 
+from the adatoms sharing electrons via the d-band substrate.
 
-The calculation proceeds as follows. 
-First the two atoms are placed at a sufficient
+The calculation proceeds as follows. First the two atoms are placed at a sufficient
 distance that they do not interact and the energy:
 %
 \begin{equation}
