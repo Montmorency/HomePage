@@ -1,25 +1,64 @@
 \chapter{Metallurgy}
 \label{chap:metallurgy}
 \section{Introduction}
-In his textbook Cottrell noted that metallurgy would require a "theory... which explains
+Cottrell observed that metallurgy would require a ``theory... which explains
 the properties of metallic solids and the explanation of the origin of this
 structure from the structures of individual atoms." Similarly in Vol. 35
 Heine noted "What we lack is a fundamental quantum theory of the cohesion
 and structure of a wide diversity of solids." The previous chapters,
 though hopefully enjoyable in their own right, were really just meant to bring
-us to the stage where we can understand the properties of metallic solids
-with the framework of a single computational tool.
+us to the stage where we can understand start to compute 
+the mechanical properties of solids within the framework 
+of a single computational tool.
 
 This chapter will focus on the calculation of the electronic and mechanical
 properties of transition metals and their alloys. The quantities of interest
-are the elastic and chemical properties of dislocations, defects,
-grain boundaries, and alloying.
+being cohesive energies and elastic properties.
+
+Perhaps the most interesting aspect of physical metallurgy is how
+macroscopic parameters can be directly connected to the solution of 
+the wave equation governing the atomic scale motion of the electrons.
+The analysis of Wigner and Seitz in many ways initiated the field
+of theoretical materials science with there calculation of the cohesive
+energy and lattice constant of metallic sodium\cite{wigner33, wigner34}.
+Subsequent work in this field extended Wigner and Seitz analysis
+to the cohesive and elastic properties of monovalent
+metals like sodium, lithium, and copper \cite{fuchs36}. The quantum theory was
+also used to explain the appearance of different phases in alloys in terms 
+of Brillouin zones \cite{owen33, jones34}. Born's work provides the standard
+treatment of the stability of lattices to short and long wavelength
+vibrations considering general forms for the interatomic potentials\cite{born40,born42},
+with other workers again making extensions of the theory to particular
+lattice types \cite{power41, nabarro52}.
 
 In keeping with the unifying theme of the book the targeted quantities
 will first be described and formulated in general terms and then mapped
-on to a set of recursion calculations to understand the elastic and
-electronic properties of a material from the perspective of the local
-atomic environment.
+on to a set of recursion calculations to compute the cohesive and elastic
+properties of a material from the perspective of the local atomic environment.
+
+\section{Stress and Strain}
+Imagine you have some tensor $\epsilon$ and you apply a virtual pure strain to a collection atoms.
+The TBB Model \cite{sutton88} gives us a means of defining and calculation a local in the sense of a 
+per atom stress tensor. 
+If $I$ and $J$ are cartesian components $x,y,z$ to first order in the energy:
+%
+\begin{equation}
+\delta E^(1) = \sum_{I} \sum_{(ij)}\Omega^{i}\sigma^{i}_{IJ}\epsilon_{IJ}
+\end{equation}
+%
+The contribution to the IJ component of the stress tensor is:
+%
+\begin{equation}
+\label{eq:atomstress}
+\sigma^{i}_{IJ} = \frac{1}{\Omega^{i}}\sum_{j\neq i}\sum_{\alpha\beta}G(\epsilon)_{i\alpha j\beta}\frac{\partial H_{j\beta i\alpha}}{\partial R_{jI}}(R_{jJ}-R_{iJ})
+\end{equation}
+%
+The pair contributions can be added to obtain the full stress tensor. But if we are only interested in the electronic contributions
+Eq.~\ref{eq:atomstress} is already good enough. For an application of the see Ref.~\cite{ohta90}
+
+As usual we need to know the $R$ dependence of our
+integrals, both hopping and on-site, which we went to the trouble 
+of learning in Chapter~\ref{chap:wannier}.
 
 \section{Elasticity}
 Shearing, straining, Young's modulus, poisson ratio, elastic tensors these are the
@@ -35,6 +74,7 @@ inducing strains in the metal matrix which feed back into the electronic structu
 It appears that one might require a theory with quantum accuracy on the scale of an 
 interatomic bond that simultaneously takes into account the long range elastic 
 field in its environment.
+
 
 To proceed we will assume we can obtain a relaxed structure where all the atomic forces are
 in equilibrium. We then follow the derivation of Ref.~\cite{freedman09} which uses the free energy

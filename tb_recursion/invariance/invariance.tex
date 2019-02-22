@@ -305,17 +305,18 @@ function in a certain region of space being independent of the size and shape
 of the container and the boundary conditions.
 
 \section{Slater-Koster Tight Binding}
-  In a crystal if we denote the translation operator $\hat{T}$
-as the one which shifts a the coordinates of a vector by a crystal lattice vector 
-$\R_{i}$ we require firstly that $[\hat{T},\hat{H}]=0$, i.e. that the 
+  Let us denote the translation operator $\hat{T}$
+as the operator which displaces all the coordinates of a vector 
+by a crystal lattice vector $\R_{i}$ we require 
+firstly that $[\hat{T},\hat{H}]=0$, i.e. that the 
 translation operator commutes with the Hamiltonian. This also
 has the consequence that the eigenvectors of the Hamiltonian
 must be eigenvectors of the translation operator. 
 
 Bloch's theorem encapsulates this idea. When a translation operator acts 
-on an eigenvector of a crystal the vector is multiplied by a scalar
-value $e^{i\k\cdot\R}$: this is just the condition for a vector to be an
-eigenvector of the Hamiltonian.
+on a Bloch state of a crystal the wavefunction is multiplied by a scalar
+value $e^{i\k\cdot\R}$: i.e. the condition for a vector to be an
+eigenvector.
 
 If a basis set of atomic orbitals $\phi_{n}(\r-\R_{i})$
 is placed on each atom in the crystal an un-normalized Bloch sum can be 
@@ -323,12 +324,9 @@ written as $\sum_{\R_{i}} e^{i\k\cdot\R_{i}}\phi_{n}(\r-\R_{i})$. For
 a given $\k$ there will be off-diagonal elements between Bloch sums
 for different atomic orbitals.
 
-  Interestingly Slater and Koster state that there are no off-diagonal
-elements of the Hamiltonian, consisting of the kinetic energy and the periodic potential, 
-between Bloch sums with different $\k$'s. This is considered again in Chapter~\ref{chap:odlro}
-where off-diagonal elements in the Hamiltonian between different $\k$ values are considered.
 
-The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ are used instead of LCAOs, \cite{lowdin62}) gives:
+The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ 
+are used instead of LCAOs, \cite{lowdin62}) gives:
 %
 \begin{equation}
 \sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \psi^{*}_{n}(\r-\R_{i})H\psi_{m}(\r-\R_{j})dV
@@ -344,7 +342,11 @@ The work of Slater-Koster demonstrates, in an intuitive fashion, how localized a
 states, when modulated by a wave of the form $e^{i\k\cdot\R}$ can interfere 
 (constructively or deconstructively) to allow charge to accumulate in different 
 spatial patterns between atoms, and how the variation in the eigenvalues of $H_{\k}$
-can give rise to band structures.
+can give rise to band structures. Determining the coefficients involved in the 
+tight binding energy integrals is somewhat involved. The Coordinate system needs
+to be set up and the integrals performed for different combinations of spherical
+harmonics on neighbouring atoms. Ref.~\cite{sharma79,podolsky04} both give explicit
+expression for generating the coefficients programmatically.
 
 The determination of the integration constants is a problem unto itself.
 Tight binding parameters for the transition metals can be extracted from 
@@ -955,7 +957,7 @@ have also been used to study the behaviour of the recursion coefficients in the
 asymptotic region \cite{allan84}. Given the rise of inference techniques in recent
 years the latter approach may be worth some investigation.}
 
-\subsection{Surface Electronic Structure and Orbital Peeling}
+\subsection{Defects, Surface Electronic Structure and Orbital Peeling}
 Surface catalysis is a topic of immense interest in chemistry and chemical engineering.
 The rate at which reactions proceed is important in industrial and biomedical 
 applications. The presence of a surface disrupts the periodicity required to use Bloch's theorem,
@@ -965,10 +967,12 @@ All this is to say that where there is a surface there is likely to be
 a need for recursion.
 
 The need for a direct calculation of binding energy between adatoms or
-the binding of an impurity in a lattice stems from the difficulties in computing 
+the binding of a defect impurity in a lattice stems from the difficulties in computing 
 these quantities via the method of energy differences. Performing two total
 energy calculations on systems with $10^23$ atoms and subtracting the
 resulting numbers is not a well conditioned problem. 
+The very nature of the problem suggests that exploiting symmetries
+will not greatly simplify things.
 
 Relevant work on surfaces using the recursion method can be found in 
 Refs.~\cite{haydock72, kelly73, kelly74, kelly74b, burke76, haydock79, haydock82}.
@@ -1128,9 +1132,8 @@ d-band filling (position of the Fermi energy). See Ref.~\cite{burke76} for detai
 \end{figure}
 %
 
-Surface calculations using the recursion method were
-overwhelmed by a number of uncertainties.
-The lack of a procedure for a choice of the tight binding 
+These early surface calculations using the recursion method were overwhelmed 
+by a number of uncertainties. The lack of a procedure for a choice of the tight-binding 
 Hamiltonian and accessing the self consistent charge density
 in the presence of a surface being the most significant.
 \footnote{For early work on Wannier functions at surfaces Ref.~\cite{smith74}. Also see 
@@ -1141,6 +1144,12 @@ of the electronic structure at surfaces. These advances mean that the
 recursion techniques described in Refs.~\cite{burke76, haydock79, haydock81} 
 might be revisited with potentially profitable effect.
 
+For applications of orbital peeling to defects and the 
+computation of interaction energies and variations in the charge density
+see Refs.\cite{gibson93,gibson94}. However that work partially relies 
+on the computation of off diagonal of the Green's function. A topic
+to which we turn now.
+
 \subsection{Off-Diagonal Elements of the Green's Function}
 The off-diagonal elements of the Green's function can be written:
 %
@@ -1149,6 +1158,7 @@ G_{AB}(E) = \bra \phi_{A}|[H-E]^{-1}|\phi_{B}\ket,
 \end{equation}
 %
 and they contain a lot of useful information. 
+
 These off-diagonal elements are required to calculate 
 response functions, \cite{terakura78}, interatomic 
 forces \cite{finnis84, finnis87, ohta87}, and bond orders 
@@ -1388,7 +1398,6 @@ The notation we supply here is a synthesis of the descriptions given in
 Refs.~\cite{paxton88, nex89, godin91} and is in accord with the accompanying CamRecLib
 routines.
 
-
 The asymptotic behaviour of the recursion co-efficients in the scalar recursion case
 is analyzed in \cite{turchi82, yoshino87, yoshino88, haydock10, alhaidari18}.
 
@@ -1403,7 +1412,7 @@ a time as in a melody.
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly 
 using the recursion technique. Instead of localized orbitals, localized 
-displacements are introduced, and in the place of onsite and hopping
+displacements are introduced, and in the place of on-site and hopping
 matrix elements force constants connect nearest and next 
 nearest neighbour displacements. 
 The papers and PHD thesis of Meek describes in detail the 
