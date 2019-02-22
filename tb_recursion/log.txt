@@ -106,4 +106,7 @@ between orthogonal polynomials, euclidean division.
 https://jeremy9959.github.io/about/
 
 
+If we are going to look at molecules and polymers there are some 
+well developed tools here: 
+https://www.rdkit.org/docs/Overview.html#what-is-it
 

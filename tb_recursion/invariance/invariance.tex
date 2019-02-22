@@ -693,15 +693,27 @@ and when generalized to determinants for $|D_{n}|$, $|D_{n+1}|$, and $|D_{n+2}|$
 \end{equation}
 
 \footnote{
-%C. Lanczos J. Res. Natl. Bur. Stand. 45, 255 (1950) 
-%used the chain model in numerical work as a way of diagonalizing matrices
-%that could be implemented efficiently in a computer.
+C. Lanczos J. Res. Natl. Bur. Stand. 45, 255 (1950) 
+used the chain model in numerical work as a way of diagonalizing matrices
+that could be implemented efficiently in a computer.
 Chebyshev used chain models for approximating functions on an interval
 P. L. Chebyshev, Bull. Acad. Imp. Sci. St. Petersbourg 1, 193 (1859)}
 
-%\begin{equation}
-%b_{n+1}|u_{n+1}\ket = H |u_{n}\ket - a_{n}|u_{n}\ket - b_{n}|u_{n-1}\ket
-%\end{equation}
+The coefficients of the continued fraction can be obtained from
+a three term recurrence relation:
+%
+\begin{equation}
+b_{n+1}|u_{n+1}\ket = H |u_{n}\ket - a_{n}|u_{n}\ket - b_{n}|u_{n-1}\ket
+\end{equation}
+
+where:
+\begin{equation}
+a_{n} = \bra u_{n}|H|u_{n} \ket,
+\end{equation}
+and 
+\begin{equation}
+b_{n} = \bra u_{n}|H|u_{n-1} \ket.
+\end{equation}
 
 \section{Analytic Recursion}
 \subsection{The Constant Chain}
@@ -879,34 +891,42 @@ U_{A}-U_{B} = \int_{-\infty}^{E_{F}}(E-E_{F})[n_{A}(E) -n_{B}(E)]dE.
 \subsection{Local Density of States}
 \label{sec:fccldos}
 The simplest demonstration of the Cambridge Recursion Library 
-is a computation of the local density of states for an Ni atom located at the center of a small cluster. 
-Fig.~\ref{fig:cuboid} depicts a 75 atom cuboid cluster and the computed local density of states for an 
-Ni atom located in the middle of the cluster. 
+is a computation of the local density of states for an atom located at the center of a small 
+Face Centered Cubic (FCC) cluster. 
+Fig.~\ref{fig:cuboid} depicts a 75 atom cuboid cluster and the 
+local density of states for an atom located in the middle of the cluster. 
 The contribution of the electronic states to the total energy are also plotted. 
 %
 \begin{figure}
 \begin{center}
 \includegraphics[width=\columnwidth]{./invariance/rec_examples/exrecal/combined.png}
-\caption{(a) 75 atom cuboid cluster of face centered cubic (FCC) crystal. Green atoms are in an FCC environment, and have a complete
-set of FCC neighbours, grey atoms are surface atoms of the cluster and a have a lower coordination number.
-(b) Same cluster with an extra Ni atom and two additional atoms placed on the surface at two different sites. 
+\caption{(a) 75 atom cuboid cluster of face centered cubic (FCC) crystal. Green 
+atoms are in an FCC environment, and have a complete set of FCC neighbours, grey atoms 
+are surface atoms of the cluster and a have a lower coordination number.
+(b) Same cluster with an extra bulk atom and two additional atoms 
+placed on the surface at two different sites. 
 \label{fig:cuboid}}
 \end{center}
 \end{figure}
 %
-The density of states in Fig.~\ref{fig:fcc_dos} is computed using 11 levels of recursion: i.e, coefficients
-are computed from $a_{0}$ to $a_{11}$ and $b_{0}$ to $b_11$. The Hamiltonian consists of five d orbitals.
+The density of states in Fig.~\ref{fig:fcc_dos} is computed by 11 iterations of the 
+recurrence equation. This generates continued fraction coefficients
+from $a_{0}$ to $a_{10}$ and $b_{0}$ to $b_{11}$. 
+A basis of five d orbitals are chosen to reside on each atom 
+and their interaction via the Hamiltonian is determined by the Slater-Koster parameters.
 The Hamiltonian parameters and the coefficients of the continued fraction are given in Table~\ref{tab:reccoeffs}.
-The total DOS in this case is computed by summing up the continued fractions computed for each of the 
-five starting orbitals. Symmetry considerations would allow this to be constraine to the two inequivalent 
-orbitals $t_{2g}$ and $e_{g}$ however the finite cluster size will disrupt the symmetry of the recursion coefficients.
+The total DOS in this case is computed by combining the continued fractions computed for each of the 
+five starting orbitals into a single continued fraction 
+(multiple sets of continued fraction coefficients can be combined via the 
+routine \texttt{RECSUM} in \texttt{CamRecLib}). 
 %
 \begin{figure}
 \begin{center}
 {\graphicspath{{./invariance/rec_examples/exrecal/}}\input{./invariance/rec_examples/exrecal/recal_dos.tex}}
-\caption{Top panel: the local density of states on the central atom for the Ni cluster in Fig.~\ref{fig:cuboid}
-is computed. Bottom panel:  along with the contribution of the band structure to the cohesive energy and the integrated
-density of states.\label{fig:fcc_dos}}
+\caption{Top panel: the local density of states on the central atom for the FCC 
+cluster in Fig.~\ref{fig:cuboid} is computed. 
+Bottom panel:  The contribution of the band structure to the 
+cohesive energy and the integrated density of states.\label{fig:fcc_dos}}
 \end{center}
 \end{figure}
 %
@@ -931,62 +951,67 @@ $a_{n}$ & $b_{n}$ \\
 \hline
 \end{tabular}
 \caption{Coefficients for the continued fraction DOS for a $d_{xy}$ orbital of a Ni 
-atom in the middle of a small nickel cluster.}
+atom in the middle of a small nickel cluster.\label{tab:reccoeffs}}
 \end{center}
 \end{table}
 
 The difference in the qualities, in terms of the structure revealed, in the DOS 
-is determined by the different termination scheme employed. 
+is determined by the size of the cluster, the number of iterations of the
+recurrence relations, the hamiltonian, and the different termination scheme employed. 
 \footnote{See the routines \texttt{DENCRS} and \texttt{DENSQ} 
 for the square root and analytic terminator (TermDOS) schemes and \texttt{DENQD} 
 for the QuadDOS termination scheme in the Cambridge Recursion Library 
 \cite{nex84,haydock84,haydock85}.
 The asymptotic behaviour of the continued fraction coefficients 
 are affected by the presence of singularities
-in the spectrum: e.g. delta functions near the band edges,the band edges
-themselves, and Van Hove singularities.
+in the spectrum: e.g. band gaps, delta functions near the band edges,
+the band edges themselves, and Van Hove singularities.
 There is considerable literature on the topic of termination schemes 
 and the analytic structure of the asymptotic coefficients:
 \cite{hodges77,bylander80,turchi82,haydock84,luchini87,glanville88,
 yoshino87,yoshino88,haydock89,haydock10}.
 In certain cases expressions for the behaviour of the coefficients
-is given in terms of sinusoidal or elliptic functions linear prediction techniques
+is given in terms of sinusoidal or elliptic functions. Linear prediction techniques
 have also been used to study the behaviour of the recursion coefficients in the
-asymptotic region \cite{allan84}. Given the rise of inference techniques in recent
-years the latter approach may be worth some investigation.}
+asymptotic region \cite{allan84}. The problem of terminating the continued fraction
+is quite an involved one and the discussion is deffered to the appendix.}
 
 \subsection{Surface Electronic Structure and Orbital Peeling}
 Surface catalysis is a topic of immense interest in chemistry and chemical engineering.
 The rate at which reactions proceed is important in industrial and biomedical 
 applications. The presence of a surface disrupts the periodicity required to use Bloch's theorem,
-at least in the direction normal to the surface, and the in-plane periodicity is likely to 
-be compromised by steps, vacancies and impurities, etc. along the material surface.
-All this is to say that where there is a surface there is likely to be 
-a need for recursion.
+at least in the direction normal to the surface. In real systems
+The periodicity parallel to the surface is also quite likely to 
+be compromised by steps, terminating dislocation loops, 
+vacancies and impurities. All this is to say that where 
+there is a surface there is likely to be a need for recursion
+techniques.
 
 The need for a direct calculation of binding energy between adatoms or
 the binding of an impurity in a lattice stems from the difficulties in computing 
 these quantities via the method of energy differences. Performing two total
-energy calculations on systems with $10^23$ atoms and subtracting the
+energy calculations on systems with on the order of $10^23$ atoms and subtracting the
 resulting numbers is not a well conditioned problem. 
 
 Relevant work on surfaces using the recursion method can be found in 
 Refs.~\cite{haydock72, kelly73, kelly74, kelly74b, burke76, haydock79, haydock82}.
-In particular \cite{haydock79} presents a semi-quantitative treatment of chemisorption of simple
-molecules to transition metal surfaces across the transition metal series, 
-a study which provides a strong positive example of analysis of homologous 
-trends in materials according to Ehrenreich's fourth point (See Ehrenreich's
-Points~\ref{en:ehrenreich} from Chapter~\ref{chap:intro}).
+In particular \cite{haydock79} presents a quantitative treatment of chemisorption of simple
+molecules to transition metal surfaces across the transition metal series. 
+\footnote{This study provides a strong positive example of analysis of homologous 
+trends in materials according to Ehrenreich's fourth point Chapter~\ref{chap:intro}}.
 A detailed discussion of surface catalysis is also given in Ref.~\cite{haydock80}
-for the dissociation of hydrogen on a transition metal surface. \footnote{The 
-connection to embrittlement phenomenon will be discussed in detail in Chap.~\ref{chap:metallurgy}}.
+for the dissociation of hydrogen on a transition metal surface. The apparent
+connection to embrittlement phenomenon will be discussed in detail in Chap.~\ref{chap:metallurgy}.
 
 The Cambridge Recursion Library provides an example 
 to demonstrate some of the technique required to perform 
-direct calculations of adatom interactions. The example treats the problem of the interaction of adatoms on a 
+calculations of electronic properties on a surface. 
+
+The example treats the problem of the interaction of adatoms on a 
 surface, i.e. adatoms interacting via the metallic substrate.
-The formalism developed in Ref.~\cite{einstein73} allows for the study of adatom
-interaction energy as a function of band filling, adatom energy level, and the hopping
+The formalism was partially developed in Ref.~\cite{einstein73} and 
+allowed for the study of adatom interaction energy 
+as a function of the substrate band filling, adatom energy level, and the hopping
 potential chosen between the adatom and the substrate. The generalization
 to multiple orbital adatoms was given in Ref.~\cite{burke76}. 
 
@@ -1024,7 +1049,7 @@ U_{2} = \int_{-\infty}^{E^{(2)}_{F}}EN_{2}(E)dE,
 The integrals of the two density of states up to the two Fermi energies are equal
 (no electrons have been added to the system).
 
-The interaction is now given:
+The interaction energy can now be written:
 %
 \begin{equation}
 W = \int_{-\infty}^{E_{F}} (E-E_{F})(N_{2}-N_{1}) dE
@@ -1130,16 +1155,18 @@ d-band filling (position of the Fermi energy). See Ref.~\cite{burke76} for detai
 
 Surface calculations using the recursion method were
 overwhelmed by a number of uncertainties.
-The lack of a procedure for a choice of the tight binding 
+The lack of ab initio date for determining the tight binding 
 Hamiltonian and accessing the self consistent charge density
-in the presence of a surface being the most significant.
+and relaxed structure in the presence of a surface being the most significant.
 \footnote{For early work on Wannier functions at surfaces Ref.~\cite{smith74}. Also see 
 \cite{mostoller79} for a treatment of surface effects using the recursion method.}
-First principles work has greatly simplified access to these quantities and should remove 
+
+The development of first principles calculations 
+has greatly simplified access to these quantities and should remove 
 some of the ambiguities in mapping ab initio data onto a local picture
 of the electronic structure at surfaces. These advances mean that the 
 recursion techniques described in Refs.~\cite{burke76, haydock79, haydock81} 
-might be revisited with potentially profitable effect.
+might be revisited with potentially profitable effect. 
 
 \subsection{Off-Diagonal Elements of the Green's Function}
 The off-diagonal elements of the Green's function can be written:
@@ -1168,7 +1195,7 @@ from the potential linear combinations of $\phi_{A}$ and $\phi_{B}$:
 %
 we can retrieve the off-diagonal elements by computing 
 two `normal' diagonal elements from these linear combinations.
-For example, for an Hermition $\hat{H}$, and real $\phi_{A}$ and $\phi_{B}$ 
+For example, for an Hermitian $\hat{H}$, and real $\phi_{A}$ and $\phi_{B}$ 
 the $AB$ off-diagonal element of the Green's function can be computed as:
 %
 \begin{equation}
@@ -1220,9 +1247,9 @@ will rely on it.
 
 %
 These off-diagonal elements are also required to determine the vibrational properties. 
-If we want the interatomic force constants in the harmonic approach we follow Finnis and
-go to second order in the variation of the total energy to derive the interatomic force
-constant matrix:
+If we want the interatomic force constants determining the harmonic energy surface 
+we follow Finnis\cite{finnis84} and go to second order in the variation of the 
+total energy to derive the interatomic force constant matrix:
 %
 \begin{equation}
 \label{eq:tbdynmat}
@@ -1233,9 +1260,9 @@ constant matrix:
 $h^{qn}_{db}$ is a two center hopping integral that links the orbital n on atom b to orbital 
 q on atom d. For the d electrons this integral is taken to decay as
 $\r^{5}$. The density changes are proportional to the variation in the Hamiltonian 
-time the response function. Displacing atom a in the $\alpha$ direction induces a change in the
+multiplied by the response function. Displacing atom a in the $\alpha$ direction induces a change in the
 bond charges about atom b. The change in the bond charge between atoms b and d 
-in the spin-$\sigma$ channel stemming from orbitals n and q is given by:
+in the spin-$\sigma$ channel stemming from orbitals n and q is then given by:
 %
 \begin{equation}
 \label{eq:tbdeltarho}
@@ -1283,24 +1310,26 @@ neighbour.\label{fig:tbresponse}}
  
 
 The type of analysis in Ref.~\cite{finnis84} is taken as an example
-of the desired model computational framework these notes pursue. 
+of the desired computational framework these notes pursue. 
 The approach satisfies many of Ehrenreich's points ~\ref{en:ehrenreich}: 
-direct experimental links \cite{powell68, colella70, shaw71}, 
+direct experimental links 
 tractable calculations for a minimally idealized system, and, most importantly, 
 the calculations have {\emph explanatory and predictive power 
 across a homologous series}, in this case the BCC transition metals.
-\footnote{The mystery of obtaining a good experimental phonon spectra in published
-literature continues... A. M. B. G. De Vallera, Ph.D. thesis, Cambridge University, 1977 (unpublished).
+\footnote{For neutron spectroscopy data determining vibrational modes 
+see \cite{powell68, colella70, shaw71}, The mystery of obtaining a 
+good experimental phonon spectra in published literature continues... 
+A. M. B. G. De Vallera, Ph.D. thesis, Cambridge University, 1977 (unpublished).
 However it is apparently quite similar to NbMo\cite{powerll68}.}
 
-The only point not fully satisfied is that of theoretical justification.
-The force constants as determined in Eq.~\ref{eq:tbdynmat}
-rely on the repulsive force and some means of determining 
-the local Hamiltonian i.e. its bond integrals and their 
-radial dependence {\it ab initio}. Addressing this issue 
-will be the subject of subsequent chapters. For the present we can simply 
-admire how the formalism can yield results entirely in keeping with local 
-notions of forces and electron orbitals.
+%The only point not fully satisfied is that of theoretical justification.
+%The force constants as determined in Eq.~\ref{eq:tbdynmat}
+%rely on the repulsive force and some means of determining 
+%the local Hamiltonian i.e. its bond integrals and their 
+%radial dependence {\it ab initio}. Addressing this issue 
+%will be the subject of subsequent chapters. For the present we can simply 
+%admire how the formalism can yield results entirely in keeping with local 
+%notions of forces and electron orbitals.
  
 Eqs.~\ref{eq:tbdynmat, eq:tbdeltarho, eq:tbresponse} encode
 a huge amount of information. Although well developed reciprocal space 
@@ -1349,18 +1378,18 @@ First though a small digression.
 Harrison in his textbook argues that every conclusion drawn in his work follows immediately
 from the proposition that electrons are simultaneously a particle and a wave. This is
 somewhat abstract. In the present context we can propose a tentative meaning to this:
-the electron is a particle when we can point to it and say there it is in that orbital
-centered on that atom, it becomes a wave when the recursion is iterated and the localized 
-orbital spread outwards and interact with the space around it. 
-The form this interaction takes in the recursion method is the linear mixing of
-the other localised vectors in the system with varying coefficients from further and further away. 
-Adding these vectors together is equivalent to allowing them to interfere constructively or 
+the electron is a particle when we can point to it and say, `There it is. It is in that orbital
+centered on that atom.' It becomes a wave when the recursion is iterated and the localized 
+orbital spreads outwards interacting with its neighbouring electrons. 
+The form this interaction takes in the recursion method is the linear mixing of the starting vector
+with the other localised vectors in the system from further and further away. 
+Adding these vectors with changing coefficients allowing them to interfere constructively or 
 deconstructively. 
 
 At the end the recursion method gives a record of the projection of 
 the starting orbital on to each of its increasingly distance neighbours 
 as a function of energy. The electron, though confined to a 
-single energy and a single state on the lone atom, when in a solid, 
+single energy and a single state on the lone atom, when placed in a solid, 
 can take on a range of shapes across a range of energies distributed 
 throughout a crystal.
 
