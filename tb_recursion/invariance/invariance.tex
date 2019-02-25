@@ -305,17 +305,18 @@ function in a certain region of space being independent of the size and shape
 of the container and the boundary conditions.
 
 \section{Slater-Koster Tight Binding}
-  In a crystal if we denote the translation operator $\hat{T}$
-as the one which shifts a the coordinates of a vector by a crystal lattice vector 
-$\R_{i}$ we require firstly that $[\hat{T},\hat{H}]=0$, i.e. that the 
+  Let us denote the translation operator $\hat{T}$
+as the operator which displaces all the coordinates of a vector 
+by a crystal lattice vector $\R_{i}$ we require 
+firstly that $[\hat{T},\hat{H}]=0$, i.e. that the 
 translation operator commutes with the Hamiltonian. This also
 has the consequence that the eigenvectors of the Hamiltonian
 must be eigenvectors of the translation operator. 
 
 Bloch's theorem encapsulates this idea. When a translation operator acts 
-on an eigenvector of a crystal the vector is multiplied by a scalar
-value $e^{i\k\cdot\R}$: this is just the condition for a vector to be an
-eigenvector of the Hamiltonian.
+on a Bloch state of a crystal the wavefunction is multiplied by a scalar
+value $e^{i\k\cdot\R}$: i.e. the condition for a vector to be an
+eigenvector.
 
 If a basis set of atomic orbitals $\phi_{n}(\r-\R_{i})$
 is placed on each atom in the crystal an un-normalized Bloch sum can be 
@@ -323,12 +324,9 @@ written as $\sum_{\R_{i}} e^{i\k\cdot\R_{i}}\phi_{n}(\r-\R_{i})$. For
 a given $\k$ there will be off-diagonal elements between Bloch sums
 for different atomic orbitals.
 
-  Interestingly Slater and Koster state that there are no off-diagonal
-elements of the Hamiltonian, consisting of the kinetic energy and the periodic potential, 
-between Bloch sums with different $\k$'s. This is considered again in Chapter~\ref{chap:odlro}
-where off-diagonal elements in the Hamiltonian between different $\k$ values are considered.
 
-The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ are used instead of LCAOs, \cite{lowdin62}) gives:
+The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ 
+are used instead of LCAOs, \cite{lowdin62}) gives:
 %
 \begin{equation}
 \sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \psi^{*}_{n}(\r-\R_{i})H\psi_{m}(\r-\R_{j})dV
@@ -344,7 +342,11 @@ The work of Slater-Koster demonstrates, in an intuitive fashion, how localized a
 states, when modulated by a wave of the form $e^{i\k\cdot\R}$ can interfere 
 (constructively or deconstructively) to allow charge to accumulate in different 
 spatial patterns between atoms, and how the variation in the eigenvalues of $H_{\k}$
-can give rise to band structures.
+can give rise to band structures. Determining the coefficients involved in the 
+tight binding energy integrals is somewhat involved. The Coordinate system needs
+to be set up and the integrals performed for different combinations of spherical
+harmonics on neighbouring atoms. Ref.~\cite{sharma79,podolsky04} both give explicit
+expression for generating the coefficients programmatically.
 
 The determination of the integration constants is a problem unto itself.
 Tight binding parameters for the transition metals can be extracted from 
@@ -726,7 +728,7 @@ The constant chain corresponds to the general continued fraction written:
 G_{0}(E) = \cfrac{1}{E-a_{0}-\cfrac{b_{1}^2}{E-a_{1}-\cfrac{b_{2}^{2}}{E-a_{2}-\cfrac{b_{3}^{2}}{...}}}},
 \end{equation}
 %
-where $a_{0}=a_{1}=...=a_{n}$ and $b_{0}=b_{1}=...=b_{n}$. 
+where $a_{0}=a_{1}=...=a_{n}=a$ and $b_{0}=b_{1}=...=b_{n}=b$. 
 %
 In this chain an electron experiences the same pull to 
 every site on the chain, and can hop from one site to 
@@ -760,10 +762,12 @@ in Fig.~\ref{fig:gfconstchain}.
 \end{figure}
 %
 The constant chain yields an analytic solution. All the coefficients of the continued
-fraction are known and the recursion relation can be solved exactly. In practice
-the computation of the $a_{n}$ and $b_{n}$ terms is truncated after some number.
-The function chosen to approximate the remaining coefficients is discussed in
-Refs.~\cite{haydock84, haydock85}.
+fraction are known and the recursion relation can be solved exactly. 
+
+%In practice
+%the computation of the $a_{n}$ and $b_{n}$ terms is truncated after some number.
+%The function chosen to approximate the remaining coefficients is discussed in
+%Refs.~\cite{haydock84, haydock85}.
 
 A great deal of interesting physics can be obtained directly from the chain model. 
 For instance, to couple an impurity to a constant chain we allow the first two coefficients $a_{0}$ and $b_{1}$ to vary, 
@@ -957,7 +961,8 @@ atom in the middle of a small nickel cluster.\label{tab:reccoeffs}}
 
 The difference in the qualities, in terms of the structure revealed, in the DOS 
 is determined by the size of the cluster, the number of iterations of the
-recurrence relations, the hamiltonian, and the different termination scheme employed. 
+recurrence relations, the Hamiltonian, and the different termination 
+scheme employed. 
 \footnote{See the routines \texttt{DENCRS} and \texttt{DENSQ} 
 for the square root and analytic terminator (TermDOS) schemes and \texttt{DENQD} 
 for the QuadDOS termination scheme in the Cambridge Recursion Library 
@@ -976,7 +981,7 @@ have also been used to study the behaviour of the recursion coefficients in the
 asymptotic region \cite{allan84}. The problem of terminating the continued fraction
 is quite an involved one and the discussion is deffered to the appendix.}
 
-\subsection{Surface Electronic Structure and Orbital Peeling}
+\subsection{Defects, Surface Electronic Structure and Orbital Peeling}
 Surface catalysis is a topic of immense interest in chemistry and chemical engineering.
 The rate at which reactions proceed is important in industrial and biomedical 
 applications. The presence of a surface disrupts the periodicity required to use Bloch's theorem,
@@ -988,10 +993,12 @@ there is a surface there is likely to be a need for recursion
 techniques.
 
 The need for a direct calculation of binding energy between adatoms or
-the binding of an impurity in a lattice stems from the difficulties in computing 
+the binding of a defect impurity in a lattice stems from the difficulties in computing 
 these quantities via the method of energy differences. Performing two total
-energy calculations on systems with on the order of $10^23$ atoms and subtracting the
+energy calculations on systems with on the order of $10^{23}$ atoms and subtracting the
 resulting numbers is not a well conditioned problem. 
+The very nature of the problem suggests that exploiting symmetries
+will not greatly simplify things.
 
 Relevant work on surfaces using the recursion method can be found in 
 Refs.~\cite{haydock72, kelly73, kelly74, kelly74b, burke76, haydock79, haydock82}.
@@ -1153,11 +1160,10 @@ d-band filling (position of the Fermi energy). See Ref.~\cite{burke76} for detai
 \end{figure}
 %
 
-Surface calculations using the recursion method were
-overwhelmed by a number of uncertainties.
-The lack of ab initio date for determining the tight binding 
-Hamiltonian and accessing the self consistent charge density
-and relaxed structure in the presence of a surface being the most significant.
+These early surface calculations using the recursion method were overwhelmed 
+by a number of uncertainties. The lack of a procedure for a choice of the tight-binding 
+Hamiltonian and difficulties in accessing the self consistent charge density
+and relaxed configurations in the presence of a surface being the most significant.
 \footnote{For early work on Wannier functions at surfaces Ref.~\cite{smith74}. Also see 
 \cite{mostoller79} for a treatment of surface effects using the recursion method.}
 
@@ -1168,6 +1174,12 @@ of the electronic structure at surfaces. These advances mean that the
 recursion techniques described in Refs.~\cite{burke76, haydock79, haydock81} 
 might be revisited with potentially profitable effect. 
 
+For applications of orbital peeling to defects and the 
+computation of interaction energies and variations in the charge density
+see Refs.\cite{gibson93,gibson94}. However that work partially relies 
+on the computation of off diagonal of the Green's function. A topic
+to which we turn now.
+
 \subsection{Off-Diagonal Elements of the Green's Function}
 The off-diagonal elements of the Green's function can be written:
 %
@@ -1176,6 +1188,7 @@ G_{AB}(E) = \bra \phi_{A}|[H-E]^{-1}|\phi_{B}\ket,
 \end{equation}
 %
 and they contain a lot of useful information. 
+
 These off-diagonal elements are required to calculate 
 response functions, \cite{terakura78}, interatomic 
 forces \cite{finnis84, finnis87, ohta87}, and bond orders 
@@ -1203,6 +1216,7 @@ the $AB$ off-diagonal element of the Green's function can be computed as:
 G_{AB}(E) = \frac{1}{2}[G_{++}(E)-G_{--}(E)].
 \end{equation}
 
+\subsection{The Tight Binding Bond Model}
 To see how the off-diagonal elements contribute to the force on an 
 atom we follow Sec. 2.4 of Sutton \cite{sutton88} and Ohta \cite{ohta87}.
 First we reproduce their expression for the bond energy:
@@ -1300,20 +1314,20 @@ in that work to reduce the number of unique off-diagonal Green's function elemen
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.8]{./invariance/tbresponse.pdf}
-\caption{Pictorial representation of the terms and sites described by Eq.~\ref{eq:tbdynmat}.
-On the left atoms $b,d$ and two orbitals centered on those sites, $n, q$, and the energy
+\caption{Pictorial representation of the terms and sites 
+described by Eq.~\ref{eq:tbdynmat}. On the left atoms $b,d$ 
+and two orbitals centered on those sites, $n, q$, and the energy
 integral $h_{bd}^{qn}$ which connects them. On the right are two unit cells
-of BCC crystal with the nearest neighbours to the zeroth atom labeled out to its sixth nearest
-neighbour.\label{fig:tbresponse}}
+of BCC crystal with the nearest neighbours to the zeroth atom 
+labeled out to its sixth nearest neighbour.\label{fig:tbresponse}}
 \end{center}
 \end{figure}
- 
 
 The type of analysis in Ref.~\cite{finnis84} is taken as an example
 of the desired computational framework these notes pursue. 
 The approach satisfies many of Ehrenreich's points ~\ref{en:ehrenreich}: 
-direct experimental links 
-tractable calculations for a minimally idealized system, and, most importantly, 
+direct experimental links, tractable calculations 
+for a minimally idealized system, and, most importantly, 
 the calculations have {\emph explanatory and predictive power 
 across a homologous series}, in this case the BCC transition metals.
 \footnote{For neutron spectroscopy data determining vibrational modes 
@@ -1322,14 +1336,12 @@ good experimental phonon spectra in published literature continues...
 A. M. B. G. De Vallera, Ph.D. thesis, Cambridge University, 1977 (unpublished).
 However it is apparently quite similar to NbMo\cite{powerll68}.}
 
-%The only point not fully satisfied is that of theoretical justification.
-%The force constants as determined in Eq.~\ref{eq:tbdynmat}
-%rely on the repulsive force and some means of determining 
-%the local Hamiltonian i.e. its bond integrals and their 
-%radial dependence {\it ab initio}. Addressing this issue 
-%will be the subject of subsequent chapters. For the present we can simply 
-%admire how the formalism can yield results entirely in keeping with local 
-%notions of forces and electron orbitals.
+The only point not fully satisfied is that of theoretical justification.
+The force constants as determined in Eq.~\ref{eq:tbdynmat}
+rely on the repulsive force and some means of determining 
+the local Hamiltonian i.e. its bond integrals and their 
+radial dependence {\it ab initio}. Addressing these issues
+will be the subject of subsequent chapters. 
  
 Eqs.~\ref{eq:tbdynmat, eq:tbdeltarho, eq:tbresponse} encode
 a huge amount of information. Although well developed reciprocal space 
@@ -1349,11 +1361,10 @@ The order of a given bond is a measure
 of the force tending to change the length of a given bond
 for small variation of the bond length.
 
-The more frequently referred to bond order, defined
+The more bond order, defined
 in terms of Green's functions, is the integrated 
-energy difference between a symmetric 
-and anti-symmetric combination of nearest neighbour 
-orbitals \cite{pettifor89}:
+energy difference between a symmetric and anti-symmetric combination 
+of nearest neighbour orbitals \cite{pettifor89}:
 %
 \begin{equation}
 \label{eq:bondorder}
@@ -1368,36 +1379,322 @@ combinations of the two states are accumulated. The resulting integral is
 then a scalar which measures the sign and magnitude of the
 interference between the two localized orbitals up to the Fermi energy.
 
-Eq.~\ref{eq:offdiaggreen} gives an immediate scheme for computing the off-diagonal
-elements but can result in the need for substracting two largish quantities to find
-a small one. Such a procedure is never ideal. This concern and others motivated the introduction
-of the block recursion method which will be discussed in the next section.
+Eq.~\ref{eq:offdiaggreen} gives an immediate scheme for computing the 
+off-diagonal elements but can result in the need for substracting 
+two largish quantities to find a small one. Such a procedure 
+is never ideal. This concern and others motivated the introduction
+of the block recursion method which will be discussed shortly.
 
 First though a small digression.
 
-Harrison in his textbook argues that every conclusion drawn in his work follows immediately
-from the proposition that electrons are simultaneously a particle and a wave. This is
-somewhat abstract. In the present context we can propose a tentative meaning to this:
-the electron is a particle when we can point to it and say, `There it is. It is in that orbital
-centered on that atom.' It becomes a wave when the recursion is iterated and the localized 
-orbital spreads outwards interacting with its neighbouring electrons. 
-The form this interaction takes in the recursion method is the linear mixing of the starting vector
-with the other localised vectors in the system from further and further away. 
-Adding these vectors with changing coefficients allowing them to interfere constructively or 
-deconstructively. 
+Harrison in his textbook argues that every conclusion drawn in 
+his work follows immediately from the proposition that electrons 
+are simultaneously a particle and a wave. 
+In the context of the recursion method we can propose 
+a tentative meaning to his statement: the electron is a 
+particle when we can point to it and say, `There it is. 
+It is in that orbital centered on that atom.' It becomes a wave 
+when the recursion process is initiated and the spectral weight of the 
+localized orbital spreads outwards onto neighbouring atoms. 
+The form this interaction takes in the recursion method 
+is the linear mixing of the starting vector
+with the other localised vectors in the system from 
+further and further away, adding these vectors with changing coefficients,
+allowing them to interfere constructively or deconstructively. 
 
-At the end the recursion method gives a record of the projection of 
-the starting orbital on to each of its increasingly distance neighbours 
-as a function of energy. The electron, though confined to a 
-single energy and a single state on the lone atom, when placed in a solid, 
-can take on a range of shapes across a range of energies distributed 
+When the recurrence is terminated a record of the projection of 
+the starting orbital on to each of its increasingly distant neighbours 
+is recorded. The electron, though confined to a discrete energy 
+and state on the lone atom, when placed in a solid, can 
+take on a range of shapes across a range of energies distributed 
 throughout a crystal.
+
+\subsection{Non-Orthogonal Recursion}
+The underlying assumption about the basis vectors
+used to describe the system up to this point have 
+been that they are orthogonal. Unfortunately
+spherical harmonics centered on neighbouring atoms
+will not be orthogonal functions. 
+
+L\"owdin functions are a class of orthogonal function
+as are Wannier functions but the price to be paid for
+obtaining these functions is that of a first principles calculation.
+In the case of Wannier functions this procedure will be discussed
+in Chap.\ref{chap:wannier}.
+It is possible in another rotated basis the Hamiltonian will gain a more 
+complicated form with contributions from more distant atoms.
+
+Anderson's chemical pseudopotential theory is formulated 
+in terms of a generalized eigenvalue problem \cite{anderson68,anderson69}
+and in the same paper he notes other work that had been done 
+for forming localized wavefunctions which may act as molecular building 
+blocks \cite{edmiston63}. Though we begin to digress it
+is clear that for physical and numerical accuracy we
+may require a non-orthogonal basis set but for intuition
+or heuristic purposes we may wish to continue thinking
+in terms of nicely formed localized starting states that 
+are not orthogonal but easy to picture and initialize.
+
+In any case when the basis vectors set up to describe the system
+are not orthogonal some choices need to be made. There are two options.
+The most tempting option is just to ignore the non-orthogonality of the
+vectors and carry on. The other is to modify our approach somewhat. 
+The latter course is the morally upright one. 
+
+%The problem of non-orthogonality of basis vectors 
+%is closely connected to the Block Recursion method 
+%which we will come to in the next section. 
+%But the general ideas underlying non-orthogonal 
+%recursion calculations should be treated first. 
+
+If the basis set for the Hamiltonian is given as a set of
+${\phi_{m}}$ orbitals elements of the overlap matrix can 
+be written:
+%
+\begin{equation}
+[S]_{mn} = \int \phi^{*}_{m}(\r)\phi_{n}(\r)d\tau
+\end{equation}
+%
+
+Given two states $\mathbf{u}$ and $\mathbf{v}$ which
+are linear combinations of the $\phi$ the physical
+overlap of the states is given: $\mathbf{v}^{\dagger}S\mathbf{u}$.
+
+The Hamiltonian operator $\mathcal{H}$ acts on a basis orbital and
+its effect is approximated by a sum over the basis orbitals:
+
+\begin{equation}
+\mathcal{H}\phi_{n}(\mathbf{r}) = \sum_{n=0}^{\infty} H_{mn}\phi_{m}(\r)
+\end{equation}
+
+If the basis set is not orthogonal the Hamiltonian operator
+is related to its representation in the basis set as:
+
+\begin{equation}
+\mathcal{H}_{mn} = [SH]_{mn}
+\end{equation}
+
+In the cases where S and $[\mathcal{H}_{mn}]$ are known the Hamiltonian
+matrix is required which is obtained from:
+%
+\begin{equation}
+H = S^{-1}[\mathcal{H}_{mn}]
+\end{equation}
+%
+
+S should hopefully have some nice properties like its diagonal
+elements are unity and that it possesses small off-diagonal 
+elements that fall off quickly in real space.
+
+The previous notation follows Haydock's article in Vol. 35 and uses 
+a calligraphic $\mathcal{H}$ to denote the Hamiltonian operator and 
+a roman $H$ with subscripts to denote the matrix elements of this operator 
+projected onto the chosen basis set. 
+
+In Ref.~\cite{ballentine86} Ballentine and Kol\'a\'r introduced 
+a compact tensor notation to keep track of whether one was working 
+with matrix elements of the overlap matrix and Hamiltonian 
+in the non-orthogonal basis or in the Hamiltonian transformed by
+the overlap matrix. The call to follow this tensor notation 
+was echoed in Ref.~\cite{sutton88} and we describe it here to help
+clarify the implementation of the non-orthogonal recursion method.
+
+In what follows the lower case greek letters in the sub and superscripts
+denote a composite orbital index comprised of the site-index and the 
+angular momentum channel. 
+
+The matrix element of the overlap between non-orthogonal 
+basis functions can be written:
+%
+\begin{equation}
+S_{\alpha\beta} = \bra \psi_{\alpha}|\psi_{\beta}\ket
+\end{equation}
+%
+with $i,j$ referring to a site index and $\alpha$ and $\beta$ 
+referring to orbital indices.
+
+The matrix elements of the Hamiltonian with the non-orthogonal states takes
+the form:
+%
+\begin{equation}
+H_{\alpha \beta} = \bra \psi_{\alpha}|H|\psi_{\beta}\ket
+\end{equation}
+
+The inverse of the overlap matrix is defined:
+%
+\begin{equation}
+\sum_{\beta}(S^{-1})^{\alpha\beta}S_{\beta\gamma}=\delta^{\alpha}_{\gamma}
+\end{equation}
+%
+
+The elements of the inverse overlap matrix are chosen using
+the definition of a matrix inverse as that which produces
+the identity matrix upon multiplication with its own inverse.
+
+The dual set of basis vectors is then defined:
+%
+\begin{equation}
+|\psi^{\alpha}\ket = \sum_{\beta}|\psi_{\beta}(S^{-1})^{\beta\alpha}.
+\end{equation}
+%
+If the overlap matrix is just the identity matrix the original 
+basis set is already orthonormal and the dual vectors (covariant
+contravariant, or upper and lower indiced, depending
+on your naming preference) are equal.
+
+The two most important aspects of the basis are how we can reprsent
+an arbitrary vector $|u\ket$ which we will call {\it representation}
+(done using either set of vectors):
+%
+\begin{equation}
+|u\ket = \sum_{\alpha}u^{\alpha}|\psi_{\alpha}\ket = \sum_{\alpha}u_{\alpha}|\psi^{\alpha}\ket.
+\end{equation}
+%
+The expansion coefficients in either basis can be obtained via:
+%
+\begin{equation}
+u_{\alpha} = \sum_{\beta}S_{\alpha\beta}u^{\beta}
+\end{equation}
+%
+
+Along with {\it representation} we require a {\it norm} i.e. 
+the inner product of two vectors:
+%
+\begin{equation}
+\bra v|u \ket = \sum_{\alpha\beta}v^{\alpha *}S_{\alpha\beta}u^{\beta} = \sum_{\alpha}v^{\alpha *}u_{\alpha} = \sum_{\beta}v_{\beta *}u^{\beta}
+\end{equation}
+%
+
+The arbitrary vectors might be the eigenvectors which we wish 
+to obtain in which case we need to diagonalize
+the Hamiltonian and the {\it norm} should be one.
+
+The Hamiltonian in a mixed representation takes the form.
+%
+\begin{equation}
+H^{\alpha}_{\beta} = \sum_{\gamma}S^{-1\alpha\gamma}H_{\gamma\beta}
+\end{equation}
+%
+
+The reason for going to all this trouble of defining upper and lower
+indexed vectors is illustrated by considering how the Schr\"odinger
+equation looks in different representations. If one works with
+the easily instantiated, in the sense that one has the Hamiltonian and
+overlap matrix elements to hand, but non-orthogonal basis set the Schrodinger
+equation takes the form:
+%
+\begin{equation}
+H..\psi^{.}=\epsilon S..\psi^{.}
+\end{equation}
+%
+
+However if the Hamiltonian is converted to the mixed representation:
+%
+\begin{equation}
+H^{.}.\psi^{.}=\epsilon\psi^{.}
+\end{equation}
+%
+the overlap matrix disappears and the eigenvalue problem is in a 
+more familiar form. The Hamiltonian in the mixed representation 
+is that obtained from Eq.~\ref{eq:mixedH}. The price? The Hamiltonian
+is no longer necessarily Hermitian.
+
+The starting vector for the recursion will often be a lower indiced
+vector corresponding with the basis set chosen to represent the electron
+states and allowing us to describe the diffusion of an s state or
+a d-orbital localized on a particular atom.
+
+Ballentine and Koclar conclude by giving the trace of an operator:
+\begin{align}
+{\rm Tr}A = \sum_{\alpha\beta}S_{\alpha\beta}A^{\beta\alpha}\\
+          = \sum_{\alpha\beta}(S^{-1})^{\alpha\beta}A_{\beta\alpha} \\
+          = \sum_{\alpha}A^{\alpha}_{\alpha}
+\end{align}
+
+The trace of the Hamiltonian or density operator would be necessary 
+if one wished to compute, for example, the total band energy 
+or the density. Depending on which matrix elements one has to hand, 
+the lower indiced being the more accessible generally. 
+
+As mentioned the trouble with the mixed representation of the Hamiltonian is,
+although it escapes the need to deal directly with the overlap 
+matrix or its inverse, it is no longer Hermitian. 
+
+The following two subsections suggest a generalization of the recursion
+scheme to deal with non-Hermitian matrices, and a practical means
+of performing non-orthogonal calculations which exploit the Gauss-Siedel
+iterative scheme to obtain the inverse of the overlap matrix efficiently.
+In effect these two approaches amount to the choice of working
+in the mixed representation or working with the inverse of the overlap
+matrix and the lower indiced Hamiltonian respectively.
+
+\subsubsection{Two Sided Lanczos}
+For the case where $H\neq H^{*\dagger}$ i.e. for a non-Hermitian
+Hamiltonian a two-sided Lanczos algorithm exists as discussed in
+Ref.\cite{haydockkelly75} following Wilkinson's description.
+
+Two starting vectors are chosen $|u_{0}\ket=|0\ket$, $|v_{0}\ket=|0\ket$
+and two chains of recurrences are generated:
+%
+\begin{equation}
+b_{n+1}|u_{n+1}\ket = H|u_{n}\ket - a_{n}|u_{n}\ket - b_{n}|u_{n-1}\ket
+\end{equation}
+%
+\begin{equation}
+b_{n+1}|v_{n+1}\ket = H^{\dagger}|v_{n}\ket - a_{n}|v_{n}\ket - b_{n}|v_{n-1}\ket
+\end{equation}
+%
+where $a_{n} = \bra v_{n}|H|u_{n}\ket = \bra u_{n}|H^{\dagger}|v_{n}\ket$
+and the overlap is given by $b^{2}_{n+1} = \bra v_{n+1}|u_{n+1}\ket$.
+
+The danger of the two sided recursion algorithm is that the inner
+product of the vectors $\bra v_{n+1}|u_{n+1}\ket$ could become negative.
+The density of states would no-longer be non-negative which makes it
+more difficult to interpret as a local density of states. The fact 
+that the Hamiltonian is non-Hermitian does not guarantee this will 
+be the case so the application of this method may not produce 
+any complex eigenvalues.
+
+\subsubsection{Gauss-Siedel Overlap}
+The approach to the non-orthogonal basis vectors taken in the 
+\texttt{CamRecLib} routine \texttt{recno} is slightly different.
+It is similar to the approach taken in Refs.\cite{jones84, jones85} which
+uses the Gauss-Siedel method to efficiently compute the application
+of the inverse of the overlap matrix.
+
+Following the notation in \cite{nex89} the generalized 
+eigenvalue problem to be solved becomes:
+
+\begin{equation}
+MX = \epsilon S X
+\end{equation}
+
+The actual Greenian computed is:
+%
+\begin{equation}
+\bra U^{T}S|[S\epsilon-M]^{-1}|SU\ket
+\end{equation}
+%
+
+The Gauss-Siedel Algorithm is used to compute the application of the inverse 
+of the overlap matrix to the recursion vector. 
+
+$S^{-1}\psi_{n+1}$:
+
+\begin{equation}
+U_{n+1}^{i} = \psi_{n+1} - LU_{n+1}^{i} - RU^{i-1}_{n+1}
+\end{equation}
+
+with L and R are the strict left and right triangular parts of S. The
+efficiency of the algorithm is determined by how diagonally dominant
+matrix S is. 
+
 
 \subsection{Block Recursion}
 By picking a single orbital and turning the wheel on the recursion method a
 chain of coefficients and vectors can be generated. However rounding errors in the evaluation
 of the matrix vector products mean the accumulation of numerical noise
-and the necessity of truncation the recursion in extended solids somewhere 
+generated by the artifical truncation of the recurrence
 can disrupt underlying symmetries. This can be demonstrated where there are 
 deviations in the density of states computed for a given orbital if the z-axis 
 is changed arbitrarily which should not be the case. This provided one motivation for 
@@ -1417,7 +1714,6 @@ The notation we supply here is a synthesis of the descriptions given in
 Refs.~\cite{paxton88, nex89, godin91} and is in accord with the accompanying CamRecLib
 routines.
 
-
 The asymptotic behaviour of the recursion co-efficients in the scalar recursion case
 is analyzed in \cite{turchi82, yoshino87, yoshino88, haydock10, alhaidari18}.
 
@@ -1432,7 +1728,7 @@ a time as in a melody.
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly 
 using the recursion technique. Instead of localized orbitals, localized 
-displacements are introduced, and in the place of onsite and hopping
+displacements are introduced, and in the place of on-site and hopping
 matrix elements force constants connect nearest and next 
 nearest neighbour displacements. 
 The papers and PHD thesis of Meek describes in detail the 
