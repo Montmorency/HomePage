@@ -1352,17 +1352,39 @@ in situations where Bloch's theorem does not.
 
 The bond order between atoms has a long history
 beginning with Coulson's study of carbonyl 
-chains in Ref.~\cite{coulson39,coulson47}. It is a good exercise to compare
-the derivative of Eq.~\ref{eq:tbtoten} with respect
+chains in Ref.~\cite{coulson39,coulson47}. 
+It is a good exercise to compare the derivative of Eq.~\ref{eq:tbtoten} with respect
 to the hopping integral and the Green's function,
-with Coulson's definition of the bond order.
+with Coulson's definition of the bond order\cite{coulson39}. 
+The correlation of the experimental data in the form of bond lengths
+with the concept of a bond order in polyenes and aromatic molecules
+is an elegant demonstration of a theory and application closely
+linked to experimental data, and studying the trend in a property
+of homologous materials.
+
+\footnote{It is  highly recommended to read the obituary of Coulson published in 
+Proc. Roy. Soc \cite{altmann74}. This work gives a comprehensive
+overview how wave mechanics were imported to the study of 
+complex molecules at the earliest stage. Coulson's 
+immense contribution to the study of electronic structure
+begins near the inception of quantum theory. As mentioned in Ref.~\cite{altmann74}
+Coulson is supposed to have attended a seminar given by Dirac 
+where Dirac was discussing the uncertainty relation: $xp-px=ih$.
+When Coulson inquired when this work had been done Dirac replied, 
+``Last night." Coulson may have performed the first iterative self-consistent field calculations 
+on a molecule, $H_2$, by hand (with the possible help of a £25 Brunsviga calculator)
+in Ref.~\cite{coulson38}. Coulson passed away in 1974 as the recursion method was gaining
+in ascendancy. Coulson's life work spans diverse fields touching on numerical methods 
+\cite{coulson37,coulson42}, random walks as they apply to a certain type of slug traversing a surface 
+\cite{coulson47}, aromatic compounds, polymers, dielectric media, and theology. 
+The application of the methods reviewed in the present work to his 
+fields of endeavour would constitute a textbook onto itself.}
 
 The order of a given bond is a measure
 of the force tending to change the length of a given bond
 for small variation of the bond length.
 
-The more bond order, defined
-in terms of Green's functions, is the integrated 
+Defined in terms of Green's functions, the bond order is the integrated 
 energy difference between a symmetric and anti-symmetric combination 
 of nearest neighbour orbitals \cite{pettifor89}:
 %
@@ -1413,17 +1435,14 @@ throughout a crystal.
 \label{sec:tensornotation}
 The underlying assumption about the basis vectors
 used to describe the system up to this point have 
-been that they are orthogonal. Unfortunately
-spherical harmonics centered on neighbouring atoms
+been that they are orthogonal. The most intuitive basis set to choose
+Unfortunately spherical harmonics centered on neighbouring atoms
 will not be orthogonal functions. 
 
 L\"owdin functions are a class of orthogonal function
 as are Wannier functions but the price to be paid for
-obtaining these functions is that of a first principles calculation.
-In the case of Wannier functions this procedure will be discussed
-in Chap.\ref{chap:wannier}.
-It is possible in another rotated basis the Hamiltonian will gain a more 
-complicated form with contributions from more distant atoms.
+obtaining these functions is that of a first principles calculation
+these matters will be discussed further in Chap.\ref{chap:wannier}.
 
 Anderson's chemical pseudopotential theory is formulated 
 in terms of a generalized eigenvalue problem \cite{anderson68,anderson69}
@@ -1431,7 +1450,7 @@ and in the same paper he notes other work that had been done
 for forming localized wavefunctions which may act as molecular building 
 blocks \cite{edmiston63}. Though we begin to digress it
 is clear that for physical and numerical accuracy we
-may require a non-orthogonal basis set but for intuition
+require a non-orthogonal basis set but for intuition
 or heuristic purposes we may wish to continue thinking
 in terms of nicely formed localized starting states that 
 are not orthogonal but easy to picture and initialize.
@@ -1441,12 +1460,6 @@ are not orthogonal some choices need to be made. There are two options.
 The most tempting option is just to ignore the non-orthogonality of the
 vectors and carry on. The other is to modify our approach somewhat. 
 The latter course is the morally upright one. 
-
-%The problem of non-orthogonality of basis vectors 
-%is closely connected to the Block Recursion method 
-%which we will come to in the next section. 
-%But the general ideas underlying non-orthogonal 
-%recursion calculations should be treated first. 
 
 If the basis set for the Hamiltonian is given as a set of
 ${\phi_{m}}$ orbitals elements of the overlap matrix can 

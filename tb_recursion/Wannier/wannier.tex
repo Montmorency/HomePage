@@ -1,6 +1,41 @@
 \chapter{Whistlestop Tour of Wannier Functions}
 \label{chap:wannier}
+
 \section{Local Wave Packets}
+Chemical intuition is built on a concept of local bonding. 
+Yet the mathematics of Bloch waves requires a picture of an 
+electron state extended throughout a crystal.
+
+Pauling introduced the concept of linear combinations of atomic eigenfunctions
+as forming hybrid orbitals which are local and directional in nature and
+in many cases can be used to anticipate or explain the observed structure
+of molecular compounds \cite{pauling28}. Pauling's publication was a year before
+Felix Bloch published his work on electrons in crystals \cite{bloch28}. The
+way these two perspectives, local and extended, are applied and rationalized 
+are the distinguishing feature in entire fields and sub-fields of physics 
+and chemistry.
+
+Wannier succeeded in obtaining a set of functions
+from the set of Bloch waves which were localized in each unit cell
+of a crystal and orthogonal to the wavefunctions in each of its
+neighbouring cells \cite{wannier37, wannier62}. This work, Wannier
+notes, stems from Wigner's suggestion that, ``... there ought to be
+a way to reconcile the local and the band concept for electrons, and that
+such a reconciliation would probably be useful in understanding the
+spectra of insultators." The practical consequence of his formalism was
+it allowed for an effective computational treatment of impurities 
+and donor and acceptor states in semiconductors \cite{slater49,kittel54}.
+
+Lowdin introduced a set of symmetrically orthogonalized wavefunctions which 
+can be viewed as an intermediate formulation between hybrid orbitals 
+and Wannier functions \cite{lowdin56}.
+
+
+A unified treatment of each of these perspectives based on group theory 
+has been made in Ref.~\cite{altmann58}.
+
+
+\section{MLWF: Maximally Localized Wannier Functions}
 For an isolated set N of Bloch bands, in the Maximally Localised Wannier Functions 
 (MLWF) formalism, the Wannier function is defined as:
 %
