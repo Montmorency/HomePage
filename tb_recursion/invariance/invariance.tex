@@ -680,7 +680,7 @@ or, equivalently, be written as:
 \bra u_{0}|[E-H]^{-1}|u_{0}\ket = \frac{1}{\frac{{\rm det}|D_{0}|}{{\rm det}|D_{1}|}}.
 \end{equation}
 %
-Appeal is then made to Cauchy\footnote{Baron Augustin-Louis Cauchy FRS FRSE (21 August 1789 – 23 May 1857)} 
+Appeal is then made to \index{Cauchy}\footnote{Baron Augustin-Louis Cauchy FRS FRSE (21 August 1789 – 23 May 1857)} 
 for the following expansion:
 %
 \begin{equation}
@@ -695,7 +695,7 @@ and when generalized to determinants for $|D_{n}|$, $|D_{n+1}|$, and $|D_{n+2}|$
 \end{equation}
 
 \footnote{
-C. Lanczos J. Res. Natl. Bur. Stand. 45, 255 (1950) 
+\index{C. Lanczos} J. Res. Natl. Bur. Stand. 45, 255 (1950) 
 used the chain model in numerical work as a way of diagonalizing matrices
 that could be implemented efficiently in a computer.
 Chebyshev used chain models for approximating functions on an interval
@@ -974,7 +974,7 @@ the band edges themselves, and Van Hove singularities.
 There is considerable literature on the topic of termination schemes 
 and the analytic structure of the asymptotic coefficients:
 \cite{hodges77,bylander80,turchi82,haydock84,luchini87,glanville88,
-yoshino87,yoshino88,haydock89,haydock10}.
+yoshino87,yoshino88,haydock89,haydock10,alhaidari18}.
 In certain cases expressions for the behaviour of the coefficients
 is given in terms of sinusoidal or elliptic functions. Linear prediction techniques
 have also been used to study the behaviour of the recursion coefficients in the
@@ -1410,6 +1410,7 @@ take on a range of shapes across a range of energies distributed
 throughout a crystal.
 
 \subsection{Non-Orthogonal Recursion}
+\label{sec:tensornotation}
 The underlying assumption about the basis vectors
 used to describe the system up to this point have 
 been that they are orthogonal. Unfortunately
@@ -1498,6 +1499,9 @@ in the non-orthogonal basis or in the Hamiltonian transformed by
 the overlap matrix. The call to follow this tensor notation 
 was echoed in Ref.~\cite{sutton88} and we describe it here to help
 clarify the implementation of the non-orthogonal recursion method.
+In Ref.~\cite{foulkes86} this notation was exploited in order to 
+study some extensions of the recursion method to the evaluation of 
+operator matrix elements.
 
 In what follows the lower case greek letters in the sub and superscripts
 denote a composite orbital index comprised of the site-index and the 
@@ -1572,6 +1576,7 @@ the Hamiltonian and the {\it norm} should be one.
 The Hamiltonian in a mixed representation takes the form.
 %
 \begin{equation}
+\label{eq:mixedH}
 H^{\alpha}_{\beta} = \sum_{\gamma}S^{-1\alpha\gamma}H_{\gamma\beta}
 \end{equation}
 %
@@ -1584,14 +1589,14 @@ overlap matrix elements to hand, but non-orthogonal basis set the Schrodinger
 equation takes the form:
 %
 \begin{equation}
-H..\psi^{.}=\epsilon S..\psi^{.}
+H..\psi^{\mbox{\large .}}=\epsilon S..\psi^{\mbox{\large .}}
 \end{equation}
 %
 
 However if the Hamiltonian is converted to the mixed representation:
 %
 \begin{equation}
-H^{.}.\psi^{.}=\epsilon\psi^{.}
+H^{\mbox{\large .}}.\psi^{\mbox{\large .}}=\epsilon\psi^{\mbox{\large .}}
 \end{equation}
 %
 the overlap matrix disappears and the eigenvalue problem is in a 
@@ -1606,9 +1611,9 @@ a d-orbital localized on a particular atom.
 
 Ballentine and Koclar conclude by giving the trace of an operator:
 \begin{align}
-{\rm Tr}A = \sum_{\alpha\beta}S_{\alpha\beta}A^{\beta\alpha}\\
-          = \sum_{\alpha\beta}(S^{-1})^{\alpha\beta}A_{\beta\alpha} \\
-          = \sum_{\alpha}A^{\alpha}_{\alpha}
+{\rm Tr}A =& \sum_{\alpha\beta}S_{\alpha\beta}A^{\beta\alpha}\\
+          =& \sum_{\alpha\beta}(S^{-1})^{\alpha\beta}A_{\beta\alpha} \\
+          =& \sum_{\alpha}A^{\alpha}_{\alpha}
 \end{align}
 
 The trace of the Hamiltonian or density operator would be necessary 
@@ -1627,6 +1632,7 @@ iterative scheme to obtain the inverse of the overlap matrix efficiently.
 In effect these two approaches amount to the choice of working
 in the mixed representation or working with the inverse of the overlap
 matrix and the lower indiced Hamiltonian respectively.
+
 
 \subsubsection{Two Sided Lanczos}
 For the case where $H\neq H^{*\dagger}$ i.e. for a non-Hermitian
@@ -1655,12 +1661,14 @@ that the Hamiltonian is non-Hermitian does not guarantee this will
 be the case so the application of this method may not produce 
 any complex eigenvalues.
 
-\subsubsection{Gauss-Siedel Overlap}
-The approach to the non-orthogonal basis vectors taken in the 
+\subsubsection{\texttt{RECNO}: Recursion Non-Orthogonal Algorithm}
+The approach to the \index{non-orthogonal basis vectors} taken in the 
 \texttt{CamRecLib} routine \texttt{recno} is slightly different.
 It is similar to the approach taken in Refs.\cite{jones84, jones85} which
-uses the Gauss-Siedel method to efficiently compute the application
-of the inverse of the overlap matrix.
+uses the Gauss-Siedel method or the Cholesky decomposition
+to efficiently compute the application of the inverse of the overlap matrix
+and obtain the $H^{\alpha}_{\beta}$ of the Hamiltonian discussed in 
+Section~\ref{sec:tensornotation}.
 
 Following the notation in \cite{nex89} the generalized 
 eigenvalue problem to be solved becomes:
@@ -1676,19 +1684,72 @@ The actual Greenian computed is:
 \end{equation}
 %
 
+The \texttt{RECNO} algorithm then proceeds according to the following steps:
+%
+\begin{flalign}
+\psi_{0} = & SU_{0} \\
+b^{2}_{1} = & \bra U_{0}|\psi_{0} \ket \\
+\end{flalign}
+Then up to the $LL^{th}$ iteration of the recurrence:
+\begin{flalign}
+ a_{n} = \frac{\bra u_{n}|M U_{n}\ket}{\bra U_{n}|\psi_{n} \ket}&\\
+ \psi_{n+1} = M U_{n} - a_{n}\psi_{n} - b^{2}_{n}\psi_{n-1}&\\
+ U_{n+1} = S^{-1}\psi_{n+1}&
+\end{flalign}
+%
 The Gauss-Siedel Algorithm is used to compute the application of the inverse 
-of the overlap matrix to the recursion vector. 
-
-$S^{-1}\psi_{n+1}$:
-
+of the overlap matrix to the recursion vector so $S^{-1}\psi_{n+1}$:
+%
 \begin{equation}
-U_{n+1}^{i} = \psi_{n+1} - LU_{n+1}^{i} - RU^{i-1}_{n+1}
+U_{n+1}^{i} = \psi_{n+1} - LU_{n+1}^{i} - RU^{i-1}_{n+1}.
 \end{equation}
+%
+L and R are the strict left and right triangular parts of S.
 
-with L and R are the strict left and right triangular parts of S. The
-efficiency of the algorithm is determined by how diagonally dominant
-matrix S is. 
+In Ref.~\cite{weaire85} R. Jones proposes an alternative strategy
+for obtaining and applying the inverse matrix $S^{-1}$ based on the Cholesky
+decomposition \index{Cholesky Decomposition}.
 
+A lower triangular matrix $L_{ij}$ is calculated by solving:
+%
+\begin{align}
+\label{alg:cholesky}
+L_{ll} = & \sqrt{S_{ll}}   &\\
+S_{il} = & L_{il}L_{ll}    & i>l\\
+S_{ij} = & \sum_{k \leq j}L_{ik}L_{jk} & j\leq i
+\end{align}
+
+$U_{i}$ in Eq.~\ref{eq:} is then found by solving for $q$:
+%
+\begin{equation}
+\sum_{k\leq i} L_{ik}q_{k} = \psi_{i}
+\end{equation}
+%
+
+followed by:
+%
+\begin{equation}
+\sum_{k\leq i} L_{ik}U_{k} = q_{i}
+\end{equation}
+%
+using back substitution. 
+
+For ease of reference we also write out the explicit expressions 
+for the elements of $L$ determined in the Cholesky decomposition:
+%
+\begin{align}
+L_{jj} =& \sqrt{S_{jj} - \sum_{k=1}^{j-1}L_{jk}L^{*}_{jk}}\\
+L_{ij} =& \frac{1}{L_{jj}}(S_{ij}-\sum_{k=1}^{j-1}L_{ik}L^{*}_{jk})
+\end{align}
+%
+The forward substitution can proceed column wise or row wise. See Ref.~\cite{wilkinson88} 
+for a discussion of the stability of this procedure.
+
+Both the Gauss-Siedel and Cholesky processes emphasise the physical consequence
+of applying $S^{-1}$ to the recursion vector at each step.
+It is like a small orthogonalizing hair-cut applied at each stage of the recurrence
+to remove the double counting of components that would arise 
+as a consequence of the overlap of the basis set.
 
 \subsection{Block Recursion}
 By picking a single orbital and turning the wheel on the recursion method a
@@ -1711,19 +1772,13 @@ stability of different phases of silicon in Refs.~\cite{paxton87, paxton88}. The
 Godin and Haydock on the passage of electrons through disordered media 
 in Refs.~\cite{godin86, godin88}.
 The notation we supply here is a synthesis of the descriptions given in
-Refs.~\cite{paxton88, nex89, godin91} and is in accord with the accompanying CamRecLib
-routines.
-
-The asymptotic behaviour of the recursion co-efficients in the scalar recursion case
-is analyzed in \cite{turchi82, yoshino87, yoshino88, haydock10, alhaidari18}.
+Refs.~\cite{paxton88, nex89, godin91} and is in accord with the accompanying 
+\texttt{CamRecLib} routines.
 
 If a small discursion into metaphor is allowed we might suggest 
 the difference between the scalar recursion and the block recursion method is 
 similar to the difference between playing a number of notes at the 
-same time like a musical chord rather than picking out single notes at 
-a time as in a melody.
-
-%T.J. Godin, Ph.D. Thesis, University of Oregon (1988).
+same time like a musical chord rather than picking out single notes at a time.
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly 
