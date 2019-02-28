@@ -10,7 +10,8 @@ performing $GW$ calculations. The guiding principle for treating electron
 correlation followed here is to start from the ``best possible" ground state description
 that can be calculated precisely. This may be a Hartree-Fock ground state,
 a DFT ground state, a ground state computed using some mixture of exact exchange
-and DFT etc. While the Green's function formalism allows for systematic
+and DFT, or interesting, a non-selfconsistent ground state made up of a superposition
+of atomic orbitals. While the Green's function formalism allows for systematic
 inclusion of higher and higher order interactions in keeping with the ``materials
 science as a craft" approach it is much more efficient to start from the most 
 favourable position possible: i.e., the best single particle description we can obtain.
@@ -18,7 +19,7 @@ favourable position possible: i.e., the best single particle description we can 
 To make the connection with the tight-binding recursion method 
 we need to transform our ground state (however it might be obtained), into a
 Hamiltonian capable of being written in terms of local interactions. The
-framework for accomplishing this connection is given by the Harris-Foulkes
+framework for accomplishing and justifying this connection is given by the Harris-Foulkes
 functional and its generalizations. The final section of this chapter
 introduces the work done using these functionals to justify
 the analytic forms for purely local representations of Hamiltonians.
@@ -28,7 +29,6 @@ for self-consistent and non-self-consistent schemes.
 
 \section{Density Functional Theory}
 \subsection{Hohenberg-Kohn theorem}
-
 Modern Density Functional Theory (DFT) has its foundations in the 
 papers of Hohenberg and Kohn~\cite{hohenbergkohn64}, and Kohn and Sham~\cite{kohnsham65}.
 DFT provides a means for obtaining the ground-state energy of an
@@ -459,7 +459,7 @@ transform converges at infinite time arguments.
 The presence of the field operators implies that the only 
 non-zero contributions to Eq.~\ref{eq:greenfreq} are between 
 the ground and excited states of the $N'=N+1$ and the $N'=N-1$ systems. 
-Therefore it is convenient to make the follow substitution~\cite{inkson}:
+Therefore it is convenient to make the follow substitution~\cite{inkson86}:
 %
 \begin{equation}
 (E^{s}_{N+1} - E^{0}_{N}) = \epsilon^{s}_{N+1},
@@ -589,7 +589,7 @@ function via a functional derivative.
 
 To derive Hedin's equation we make some formal modifications. The following derivation follows closely
 that presented in Appendix A of Ref.~\cite{hedin65}, the review article of \cite{strinati88} 
-and the textbook of Inkson \cite{inkson}. A few important functional identities 
+and the textbook of Inkson \cite{inkson86}. A few important functional identities 
 are reproduced in Appendix~\ref{app:funcdiv}. These are required to manipulate the equations 
 and obtain their final closed form.
 
@@ -918,7 +918,7 @@ G_{mn}(\omega)       = \int \int \phi_{m}^{\star}(\r) G(\r,\r';\omega) \phi_{n}(
 We can employ the same notation for matrix elements with $V^{\rm{xc}}(\r)$,
 and the Kohn-Sham Hamiltonian $\hat{H}^{\rm{KS}}$.
 %
-In matrix notation the Dyson equation \cite{inkson} can be written:
+In matrix notation the Dyson equation \cite{inkson86} can be written:
 %
 \begin{equation}
 \label{eq:matdys}
@@ -944,7 +944,7 @@ G_{mn}(\omega) = [\omega \delta_{mn} - \epsilon^{\rm{KS}}_{mn}\delta_{mn} + {\rm
 We can employ the same notation for matrix elements with $V^{\rm{xc}}(\r)$,
 and the Kohn-Sham Hamiltonian $\hat{H}^{\rm{KS}}$.
 %
-In matrix notation the Dyson equation \cite{inkson} can be written:
+In matrix notation the Dyson equation \cite{inkson86} can be written:
 %
 \begin{equation}
 \label{eq:matdys}
