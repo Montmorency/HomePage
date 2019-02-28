@@ -1448,7 +1448,8 @@ Anderson's chemical pseudopotential theory is formulated
 in terms of a generalized eigenvalue problem \cite{anderson68,anderson69}
 and in the same paper he notes other work that had been done 
 for forming localized wavefunctions which may act as molecular building 
-blocks \cite{edmiston63}. Though we begin to digress it
+blocks \cite{edmiston63} and the work of Boys and Boys and 
+Foster~\cite{boys60a,boys60b}. Though we begin to digress it
 is clear that for physical and numerical accuracy we
 require a non-orthogonal basis set but for intuition
 or heuristic purposes we may wish to continue thinking
@@ -1492,13 +1493,15 @@ In the cases where S and $[\mathcal{H}_{mn}]$ are known the Hamiltonian
 matrix is required which is obtained from:
 %
 \begin{equation}
-H = S^{-1}[\mathcal{H}_{mn}]
+H = S^{-1}[\mathcal{H}_{mn}],
 \end{equation}
 %
-
-S should hopefully have some nice properties like its diagonal
-elements are unity and that it possesses small off-diagonal 
-elements that fall off quickly in real space.
+this transformed matrix is sometimes denoted $D$ in the literature
+see Ref.~\cite{weeks73} for a discussion of the properties of
+this transformed Hamiltonian. S should hopefully have some 
+nice properties like its diagonal elements are unity and that it 
+possesses small off-diagonal elements that fall off relatively 
+quickly in real space.
 
 The previous notation follows Haydock's article in Vol. 35 and uses 
 a calligraphic $\mathcal{H}$ to denote the Hamiltonian operator and 
@@ -1647,7 +1650,7 @@ in the mixed representation or working with the inverse of the overlap
 matrix and the lower indiced Hamiltonian respectively.
 
 
-\subsubsection{Two Sided Lanczos}
+\subsubsection{Two-Sided Lanczos}
 For the case where $H\neq H^{*\dagger}$ i.e. for a non-Hermitian
 Hamiltonian a two-sided Lanczos algorithm exists as discussed in
 Ref.\cite{haydockkelly75} following Wilkinson's description.
@@ -1672,7 +1675,8 @@ The density of states would no-longer be non-negative which makes it
 more difficult to interpret as a local density of states. The fact 
 that the Hamiltonian is non-Hermitian does not guarantee this will 
 be the case so the application of this method may not produce 
-any complex eigenvalues.
+any complex eigenvalues. S. F. Boys has given a thorough treatment
+of the convergence properties of non-Hermitian operators in Ref.~\cite{boys69}.
 
 \subsubsection{\texttt{RECNO}: Recursion Non-Orthogonal Algorithm}
 The approach to the \index{non-orthogonal basis vectors} taken in the 
