@@ -1543,15 +1543,14 @@ H_{\alpha \beta} = \bra \psi_{\alpha}|H|\psi_{\beta}\ket
 The inverse of the overlap matrix is defined:
 %
 \begin{equation}
-\sum_{\beta}(S^{-1})^{\alpha\beta}S_{\beta\gamma}=\delta^{\alpha}_{\gamma}
+\sum_{\beta}(S^{-1})^{\alpha\beta}S_{\beta\gamma}=\delta^{\alpha}_{\gamma}.
 \end{equation}
 %
 
-The elements of the inverse overlap matrix are chosen using
-the definition of a matrix inverse as that which produces
-the identity matrix upon multiplication with its own inverse.
+Naturally, the elements of the inverse overlap matrix $S^{-1}$ are chosen 
+such that they produce the identity matrix upon multiplication $S$.
 
-The dual set of basis vectors is then defined:
+The dual set of basis vectors is:
 %
 \begin{equation}
 |\psi^{\alpha}\ket = \sum_{\beta}|\psi_{\beta}(S^{-1})^{\beta\alpha}.
@@ -1562,9 +1561,9 @@ basis set is already orthonormal and the dual vectors (covariant
 contravariant, or upper and lower indiced, depending
 on your naming preference) are equal.
 
-The two most important aspects of the basis are how we can reprsent
-an arbitrary vector $|u\ket$ which we will call {\it representation}
-(done using either set of vectors):
+The two most important aspects of any basis set
+are {\it representation} and {\it normalization}. 
+We can reprsent an arbitrary vector $|u\ket$:
 %
 \begin{equation}
 |u\ket = \sum_{\alpha}u^{\alpha}|\psi_{\alpha}\ket = \sum_{\alpha}u_{\alpha}|\psi^{\alpha}\ket.
@@ -1573,7 +1572,7 @@ an arbitrary vector $|u\ket$ which we will call {\it representation}
 The expansion coefficients in either basis can be obtained via:
 %
 \begin{equation}
-u_{\alpha} = \sum_{\beta}S_{\alpha\beta}u^{\beta}
+u_{\alpha} = \sum_{\beta}S_{\alpha\beta}u^{\beta}.
 \end{equation}
 %
 
@@ -1585,20 +1584,17 @@ the inner product of two vectors:
 \end{equation}
 %
 
-The arbitrary vectors might be the eigenvectors which we wish 
-to obtain in which case we need to diagonalize
-the Hamiltonian and the {\it norm} should be one.
-
-The Hamiltonian in a mixed representation takes the form.
+The Hamiltonian in a mixed representation takes the form:
 %
 \begin{equation}
 \label{eq:mixedH}
-H^{\alpha}_{\beta} = \sum_{\gamma}S^{-1\alpha\gamma}H_{\gamma\beta}
+H^{\alpha}_{\beta} = \sum_{\gamma}S^{-1\alpha\gamma}H_{\gamma\beta}.
 \end{equation}
 %
+This form of the Hamiltonian matrix is sometimes referred to as $D$ \cite{weeks73}.
 
 The reason for going to all this trouble of defining upper and lower
-indexed vectors is illustrated by considering how the Schr\"odinger
+indexed vectors and a tensor notation is illustrated by considering how the Schr\"odinger
 equation looks in different representations. If one works with
 the easily instantiated, in the sense that one has the Hamiltonian and
 overlap matrix elements to hand, but non-orthogonal basis set the Schrodinger
@@ -1622,8 +1618,7 @@ is no longer necessarily Hermitian.
 
 The starting vector for the recursion will often be a lower indiced
 vector corresponding with the basis set chosen to represent the electron
-states and allowing us to describe the diffusion of an s state or
-a d-orbital localized on a particular atom.
+states.
 
 Ballentine and Koclar conclude by giving the trace of an operator:
 \begin{align}
@@ -1648,7 +1643,6 @@ iterative scheme to obtain the inverse of the overlap matrix efficiently.
 In effect these two approaches amount to the choice of working
 in the mixed representation or working with the inverse of the overlap
 matrix and the lower indiced Hamiltonian respectively.
-
 
 \subsubsection{Two-Sided Lanczos}
 For the case where $H\neq H^{*\dagger}$ i.e. for a non-Hermitian
@@ -1759,40 +1753,49 @@ L_{jj} =& \sqrt{S_{jj} - \sum_{k=1}^{j-1}L_{jk}L^{*}_{jk}}\\
 L_{ij} =& \frac{1}{L_{jj}}(S_{ij}-\sum_{k=1}^{j-1}L_{ik}L^{*}_{jk})
 \end{align}
 %
-The forward substitution can proceed column wise or row wise. See Ref.~\cite{wilkinson88} 
+The forward substitution can proceed column wise or row wise. See Ref.~\cite{wilkinson68} 
 for a discussion of the stability of this procedure.
 
 Both the Gauss-Siedel and Cholesky processes emphasise the physical consequence
 of applying $S^{-1}$ to the recursion vector at each step.
 It is like a small orthogonalizing hair-cut applied at each stage of the recurrence
 to remove the double counting of components that would arise 
-as a consequence of the overlap of the basis set.
+as a consequence of the overlap of the basis set. The more 
+diagonally dominant the overlap matrix is the faster the Gauss-Siedel 
+algorithm will converge.
 
 \subsection{Block Recursion}
+
+The block recursion method is a direct and intuitive extension of the scalar method.
+In this method a {\emph set of m} initial orbitals are chosen. The recursion
+coefficients then become matrices, and the continued fractions become
+matrix continued fractions. The technique and its implementations are described 
+in Refs.~\cite{jones84, legrand85, inoue87, nex89, godin91}. 
+The applications of the block recursion method are varied.
+Lewis and Jones in Ref.~\cite{jones84} derived the block recursion method
+in order to compute the real space electron density from a basis of atomic orbitals.
+Paxton's study of the stability of different phases of silicon in 
+Refs.~\cite{paxton87, paxton88} required the block recursion method so that
+the computed Greenians respected the underlying rotational symmetries of the 
+Hamiltonian. This point will be discussed more shortly. The work of 
+Godin and Haydock focused on the ability of the block recursion technique
+to directly provide off diagonal Greenians required for quantum transmittance problems
+on the passage of electrons through disordered media 
+in Refs.~\cite{godin86, godin88}. 
+
+The notation we supply here is a synthesis of the descriptions 
+given in Refs.~\cite{paxton88, nex89, godin91} and is in 
+accord with the accompanying \texttt{CamRecLib} routines.
+
+\subsubsection{Transforming Like a Tensor}
 By picking a single orbital and turning the wheel on the recursion method a
 chain of coefficients and vectors can be generated. However rounding errors in the evaluation
 of the matrix vector products mean the accumulation of numerical noise
 generated by the artifical truncation of the recurrence
 can disrupt underlying symmetries. This can be demonstrated where there are 
 deviations in the density of states computed for a given orbital if the z-axis 
-is changed arbitrarily which should not be the case. This provided one motivation for 
-the block recursion method. 
-
-The block recursion method is a direct and intuitive extension of the scalar method.
-In this method a {\emph set of m} initial orbitals are chosen. The recursion
-coefficients become matrices. The technique and its implementations are described 
-in Refs.~\cite{jones84, legrand85, inoue87, nex89, godin91, ozaki00}. For discussions
-on the implementation and applications of the block recursion method see
-the computation of the local electron density in a system by 
-Lewis and Jones in Ref.~\cite{jones84}, Paxton's study of the
-stability of different phases of silicon in Refs.~\cite{paxton87, paxton88}. The work of 
-Godin and Haydock on the passage of electrons through disordered media 
-in Refs.~\cite{godin86, godin88}.
-The notation we supply here is a synthesis of the descriptions given in
-Refs.~\cite{paxton88, nex89, godin91} and is in accord with the accompanying 
-\texttt{CamRecLib} routines.
-
-For some historical insight into the need for Block recursion we quote Finnis \cite{andersen89}
+is changed For some historical insight into the need for block recursion formulation
+we quote from Finnis' article in Ref.~\cite{andersen89}:
 
 \begin{quote}
 The first problem came to our attention in the course of 
@@ -1808,10 +1811,55 @@ methods do not transform exactly into their symmetry related combinations under 
 rotations.
 \end{quote}
 
-If a small discursion into metaphor is allowed we might suggest 
-the difference between the scalar recursion and the block recursion method is 
-similar to the difference between playing a number of notes at the 
-same time like a musical chord rather than picking out single notes at a time.
+Inoue and Ohta addressed the former problem, i.e. the proper transformation of the forces,
+in their formulation of the block recursion method. It is useful to incorporate 
+their discussion of the underlying symmetries of the Green's function and Greenians.
+
+
+
+\subsubsection{The General Procedure}
+
+\begin{equation}
+G(E) = \bra U_{0}S|[SE-H]^{-1}|SU_{0}\ket
+\end{equation}
+
+Nex formulates the block recursion in terms of the 
+$D$ matrix, or in the tensor notation, the mixed Hamiltonian"
+%
+\begin{equation}
+D = S^{-1}H = H^{\alpha}_{\beta}.
+\end{equation}
+%
+
+The steps of the block Lanczos iteration then follow a familiar pattern.
+the projection of the current step is computed:
+%
+\begin{equation}
+A_{n} = U_{n}SDU_{n},
+\end{equation}
+
+and the next block in the chain is formed 
+\begin{equation}
+U_{n+1}B^{\dagger}_{n+1} = V_{n+1} = \mathbf{D}U_{n} - U_{n}A_{n} - U_{n-1}B_{n}
+\end{equation}
+
+$B_{n}$ and $A_{n}$ are $p\times p$ matrices with $p$
+the number of columns in the initial block matrix, or
+physically, the number of starting orbitals chosen to
+initiate the recursion.
+
+There are a few different ways to factor $V_{n+1}$. Nex
+uses a modified Gram-Schmidt algorithm to orthogonalise 
+with respect to S directly. Denoting the columns of V and U
+as $v_{i}$ and $u_{i}$, the Gram-Schmidt process takes the
+form:
+%
+\begin{equation}
+u_{i} = \frac{1}{k_{i}}[v_{i} - \sum_{j\lt i (v^{\dagger}_{i}Su_{j})u_{j}]
+\end{equation}
+
+This can be rearranged with $B_{n}$:
+
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly 
