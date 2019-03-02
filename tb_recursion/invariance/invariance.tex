@@ -1817,17 +1817,32 @@ their discussion of the underlying symmetries of the Green's function and Greeni
 
 
 
-\subsubsection{The General Procedure}
-
+\subsubsection{The General Block Recursion Procedure}
+The matrix Greenian to be computed is:
+%
 \begin{equation}
 G(E) = \bra U_{0}S|[SE-H]^{-1}|SU_{0}\ket
 \end{equation}
 
-Nex formulates the block recursion in terms of the 
-$D$ matrix, or in the tensor notation, the mixed Hamiltonian"
+The starting vector $u_{0}$ which in the scalar recursion
+would have been a starting orbital or, to obtain an off diagonal
+element a linear combination of starting orbitals, is now a matrix
+of starting orbitals. In Inoue and Ohta's notation the initial block
+matrix can be written:
 %
 \begin{equation}
-D = S^{-1}H = H^{\alpha}_{\beta}.
+(U^{s}_{0})_{\lambda\mu} = \delta_{is}\delta_{\lambda\mu} \pm \delta_{js}\delta_{\lambda\mu}
+\end{equation}
+%
+with $s,i,j$ running over the site indices and  U is an $N\times p$ block or orbitals
+with N the number of sites and p the number of orbitals.
+
+Nex formulates the block recursion in terms of the 
+$\mathbf{D}$ matrix, or in the tensor notation discussed in 
+Sec.~\cite{sec:tensornotation}, the mixed Hamiltonian:
+%
+\begin{equation}
+\mathbf{D} = S^{-1}H = H^{\alpha}_{\beta}.
 \end{equation}
 %
 
@@ -1838,10 +1853,12 @@ the projection of the current step is computed:
 A_{n} = U_{n}SDU_{n},
 \end{equation}
 
-and the next block in the chain is formed 
+and the next block in the chain is formed:
+%
 \begin{equation}
-U_{n+1}B^{\dagger}_{n+1} = V_{n+1} = \mathbf{D}U_{n} - U_{n}A_{n} - U_{n-1}B_{n}
+U_{n+1}B^{\dagger}_{n+1} = V_{n+1} = DU_{n} - U_{n}A_{n} - U_{n-1}B_{n}
 \end{equation}
+%
 
 $B_{n}$ and $A_{n}$ are $p\times p$ matrices with $p$
 the number of columns in the initial block matrix, or
@@ -1855,11 +1872,16 @@ as $v_{i}$ and $u_{i}$, the Gram-Schmidt process takes the
 form:
 %
 \begin{equation}
-u_{i} = \frac{1}{k_{i}}[v_{i} - \sum_{j\lt i (v^{\dagger}_{i}Su_{j})u_{j}]
+u_{i} = \frac{1}{k_{i}}[v_{i} - \sum_{j<i}(\bra v_{i}|Su_{j}\ket)u_{j}]
 \end{equation}
 
-This can be rearranged with $B_{n}$:
-
+This can be rearranged to obtain the elements of the $B_{n}$ matrix as
+an upper triangular matrix:
+%
+\begin{equation}
+b_{ij} = k_{ij}\delta_{ij} + \bra v_{i}|Su_{j}\ket (1-\delta_{ij}) \quad j>i
+\end{equation}
+%
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly 
