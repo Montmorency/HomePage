@@ -1362,23 +1362,27 @@ is an elegant demonstration of a theory and application closely
 linked to experimental data, and studying the trend in a property
 of homologous materials.
 
-\footnote{It is  highly recommended to read the obituary of Coulson published in 
-Proc. Roy. Soc \cite{altmann74}. This work gives a comprehensive
-overview how wave mechanics were imported to the study of 
-complex molecules at the earliest stage. Coulson's 
+\footnote{The obituary of C.A.Coulson\cite{altmann74} 
+is highly recommended reading. His obituary gives an insight into 
+of how wave mechanics was imported to the study of 
+complex molecules and crystals at the earliest stage. Coulson's 
 immense contribution to the study of electronic structure
 begins near the inception of quantum theory. As mentioned in Ref.~\cite{altmann74}
 Coulson is supposed to have attended a seminar given by Dirac 
 where Dirac was discussing the uncertainty relation: $xp-px=ih$.
 When Coulson inquired when this work had been done Dirac replied, 
-``Last night." Coulson may have performed the first iterative self-consistent field calculations 
+``Last night." In 1938 Coulson may have performed the first 
+iterative self-consistent field calculations 
 on a molecule, $H_2$, by hand (with the possible help of a £25 Brunsviga calculator)
-in Ref.~\cite{coulson38}. Coulson passed away in 1974 as the recursion method was gaining
-in ascendancy. Coulson's life work spans diverse fields touching on numerical methods 
-\cite{coulson37,coulson42}, random walks as they apply to a certain type of slug traversing a surface 
-\cite{coulson47}, aromatic compounds, polymers, dielectric media, and theology. 
-The application of the methods reviewed in the present work to his 
-fields of endeavour would constitute a textbook onto itself.}
+~\cite{coulson38}. Coulson's life work spans diverse fields.
+A small selection from his bibliography will find work 
+touching on numerical methods \cite{coulson37,coulson42}, 
+random walks with an application to a certain type of slug 
+traversing a surface in the presence of a bright light \cite{coulson47}, 
+the electronic structure of aromatic compounds and polymers, 
+dielectric media, and theology. The application of the methods 
+reviewed in the present work to his fields of endeavour would 
+constitute a textbook onto itself.}
 
 The order of a given bond is a measure
 of the force tending to change the length of a given bond
@@ -1435,24 +1439,24 @@ throughout a crystal.
 \label{sec:tensornotation}
 The underlying assumption about the basis vectors
 used to describe the system up to this point have 
-been that they are orthogonal. The most intuitive basis set to choose
-Unfortunately spherical harmonics centered on neighbouring atoms
-will not be orthogonal functions. 
+been that they are orthogonal. However the most intuitive basis set to 
+choose, a basis of atomic orbitals centered on an atom, 
+the original choice made by Bl\"och, will not be orthogonal. 
 
-L\"owdin functions are a class of orthogonal function
+L\"owdin functions are a class of localized orthogonal functions,
 as are Wannier functions but the price to be paid for
-obtaining these functions is that of a first principles calculation
-these matters will be discussed further in Chap.\ref{chap:wannier}.
+obtaining these functions is often that of an entire 
+first principles calculation. These matters will 
+be discussed further in Chap.~\ref{chap:wannier}.
 
 Anderson's chemical pseudopotential theory is formulated 
 in terms of a generalized eigenvalue problem \cite{anderson68,anderson69}
-and in the same paper he notes other work that had been done 
-for forming localized wavefunctions which may act as molecular building 
-blocks \cite{edmiston63} and the work of Boys and Boys and 
-Foster~\cite{boys60a,boys60b}. Though we begin to digress it
-is clear that for physical and numerical accuracy we
-require a non-orthogonal basis set but for intuition
-or heuristic purposes we may wish to continue thinking
+as are the molecular building block type orbitals of \cite{edmiston63} 
+and the work of Boys and Boys and Foster~\cite{boys60a,boys60b}. 
+
+Though we begin to digress it is clear that for physical 
+and numerical accuracy we require an orthogonal basis 
+set but for intuition or heuristic purposes we may wish to continue thinking
 in terms of nicely formed localized starting states that 
 are not orthogonal but easy to picture and initialize.
 
@@ -1517,11 +1521,17 @@ was echoed in Ref.~\cite{sutton88} and we describe it here to help
 clarify the implementation of the non-orthogonal recursion method.
 In Ref.~\cite{foulkes86} this notation was exploited in order to 
 study some extensions of the recursion method to the evaluation of 
-operator matrix elements.
+operator matrix elements. A transparent notation can greatly clarify
+the concepts.
 
 In what follows the lower case greek letters in the sub and superscripts
 denote a composite orbital index comprised of the site-index and the 
-angular momentum channel. 
+angular momentum channel. In later sections of this chapter this notation
+might be expanded with site indices denoted using lower case
+roman letters and orbital indices denoted by lower case greek letters.
+An effort is made to use $\alpha$ and $\beta$ where the index is a composite
+one and $\lambda$, $\mu$, where they refer only to orbital indices with the 
+site index made explicit. The usage should be clear from the context.
 
 The matrix element of the overlap between non-orthogonal 
 basis functions can be written:
@@ -1588,7 +1598,7 @@ The Hamiltonian in a mixed representation takes the form:
 %
 \begin{equation}
 \label{eq:mixedH}
-H^{\alpha}_{\beta} = \sum_{\gamma}S^{-1\alpha\gamma}H_{\gamma\beta}.
+H^{\alpha}\ _{\beta} = \sum_{\gamma}(S^{-1})^{\alpha\gamma}H_{\gamma\beta}.
 \end{equation}
 %
 This form of the Hamiltonian matrix is sometimes referred to as $D$ \cite{weeks73}.
@@ -1691,28 +1701,28 @@ MX = \epsilon S X
 The actual Greenian computed is:
 %
 \begin{equation}
-\bra U^{T}S|[S\epsilon-M]^{-1}|SU\ket
+\bra u_{0}S|[S\epsilon-M]^{-1}|Su_{0}\ket
 \end{equation}
 %
 
 The \texttt{RECNO} algorithm then proceeds according to the following steps:
 %
 \begin{flalign}
-\psi_{0} = & SU_{0} \\
-b^{2}_{1} = & \bra U_{0}|\psi_{0} \ket \\
+\psi_{0} = & Su_{0} \\
+b^{2}_{1} = & \bra u_{0}|\psi_{0} \ket \\
 \end{flalign}
 Then up to the $LL^{th}$ iteration of the recurrence:
 \begin{flalign}
- a_{n} = \frac{\bra u_{n}|M U_{n}\ket}{\bra U_{n}|\psi_{n} \ket}&\\
- \psi_{n+1} = M U_{n} - a_{n}\psi_{n} - b^{2}_{n}\psi_{n-1}&\\
- U_{n+1} = S^{-1}\psi_{n+1}&
+ a_{n} = \frac{\bra u_{n}|M u_{n}\ket}{\bra u_{n}|\psi_{n} \ket}&\\
+ \psi_{n+1} = M u_{n} - a_{n}\psi_{n} - b^{2}_{n}\psi_{n-1}&\\
+ u_{n+1} = S^{-1}\psi_{n+1}&
 \end{flalign}
 %
 The Gauss-Siedel Algorithm is used to compute the application of the inverse 
 of the overlap matrix to the recursion vector so $S^{-1}\psi_{n+1}$:
 %
 \begin{equation}
-U_{n+1}^{i} = \psi_{n+1} - LU_{n+1}^{i} - RU^{i-1}_{n+1}.
+u_{n+1}^{i} = \psi_{n+1} - Lu_{n+1}^{i} - Ru^{i-1}_{n+1}
 \end{equation}
 %
 L and R are the strict left and right triangular parts of S.
@@ -1753,8 +1763,9 @@ L_{jj} =& \sqrt{S_{jj} - \sum_{k=1}^{j-1}L_{jk}L^{*}_{jk}}\\
 L_{ij} =& \frac{1}{L_{jj}}(S_{ij}-\sum_{k=1}^{j-1}L_{ik}L^{*}_{jk})
 \end{align}
 %
-The forward substitution can proceed column wise or row wise. See Ref.~\cite{wilkinson68} 
-for a discussion of the stability of this procedure.
+The forward substitution can proceed column wise or row wise. 
+See Ref.~\cite{wilkinson68} for a discussion of the 
+stability of this procedure.
 
 Both the Gauss-Siedel and Cholesky processes emphasise the physical consequence
 of applying $S^{-1}$ to the recursion vector at each step.
@@ -1765,7 +1776,6 @@ diagonally dominant the overlap matrix is the faster the Gauss-Siedel
 algorithm will converge.
 
 \subsection{Block Recursion}
-
 The block recursion method is a direct and intuitive extension of the scalar method.
 In this method a {\emph set of m} initial orbitals are chosen. The recursion
 coefficients then become matrices, and the continued fractions become
@@ -1780,12 +1790,19 @@ the computed Greenians respected the underlying rotational symmetries of the
 Hamiltonian. This point will be discussed more shortly. The work of 
 Godin and Haydock focused on the ability of the block recursion technique
 to directly provide off diagonal Greenians required for quantum transmittance problems
-on the passage of electrons through disordered media 
-in Refs.~\cite{godin86, godin88}. 
+on the passage of electrons through disordered media in Refs.~\cite{godin86, godin88}. 
 
 The notation we supply here is a synthesis of the descriptions 
-given in Refs.~\cite{paxton88, nex89, godin91} and is in 
+given in Refs.~\cite{paxton88, nex89} and is in 
 accord with the accompanying \texttt{CamRecLib} routines.
+
+We make a simple adjustment to the notation when discussing
+block recursion as opposed to scalar recursion.
+The starting vector $u_{0}$ and the recursion coefficients
+$a_{n}$ and $b_{n}$ from the scalar case are transformed to
+matrices denoted by capital letters $U_{0}$, $A_{n}$, and $B_{n}$
+in the case of block recursion. Where recursion coefficents could be
+inverted by simple division the block matrices require matrix inversion.
 
 \subsubsection{Transforming Like a Tensor}
 By picking a single orbital and turning the wheel on the recursion method a
@@ -1812,19 +1829,41 @@ rotations.
 \end{quote}
 
 Inoue and Ohta addressed the former problem, i.e. the proper transformation of the forces,
-in their formulation of the block recursion method. It is useful to incorporate 
-their discussion of the underlying symmetries of the Green's function and Greenians.
+in their formulation of the block recursion method\cite{inoue87}. 
+It is useful to incorporate their discussion of the underlying 
+symmetries of the Green's function and Greenians.
 
+\begin{equation}
+R(\alpha\beta\gamma)
+\end{equation}
 
+If the crystal under considerations has a potential V which transforms as some symmetry group
+the Slater-Koster matrix elements will also transform according to that symmetry group:
+%
+\begin{equation}
+H_{i\lambda j\mu} = \bra \phi_{i\lambda} | -\frac{\hbar^{2}}{2m}\nabla^{2} + V|\psi_{j\mu} \ket
+\end{equation}
+%
 
-\subsubsection{The General Procedure}
+We may denote an element of the symmetry group of the crystal $G_{h}$:
+%
+\begin{equation}
+G_{h} H_{ij} =  K^{\dagger}(h)H_{ij}K(h)
+\end{equation}
+%
+where K is a representation matrix of the symmetry element 
+with respect to the atomic orbitals. 
+
+\subsubsection{The Block Recursion Algorithm}
+\label{sec:blockrecursion}
+\index{blockrecursion}
 
 \begin{equation}
 G(E) = \bra U_{0}S|[SE-H]^{-1}|SU_{0}\ket
 \end{equation}
 
 Nex formulates the block recursion in terms of the 
-$D$ matrix, or in the tensor notation, the mixed Hamiltonian"
+$D$ matrix, or in the tensor notation, the mixed Hamiltonian:
 %
 \begin{equation}
 D = S^{-1}H = H^{\alpha}_{\beta}.
@@ -1838,15 +1877,25 @@ the projection of the current step is computed:
 A_{n} = U_{n}SDU_{n},
 \end{equation}
 
-and the next block in the chain is formed 
+and the next block of vectors in the chain is formed by: 
+%
 \begin{equation}
-U_{n+1}B^{\dagger}_{n+1} = V_{n+1} = \mathbf{D}U_{n} - U_{n}A_{n} - U_{n-1}B_{n}
+\label{eq:blockrec}
+U_{n+1}B^{\dagger}_{n+1} = V_{n+1} = \mathbf{D}U_{n} - U_{n}A_{n} - U_{n-1}B_{n}.
 \end{equation}
-
-$B_{n}$ and $A_{n}$ are $p\times p$ matrices with $p$
-the number of columns in the initial block matrix, or
+%
+The vector $V_{n+1}$, which is produced operationally by the right hand
+side of Eq.~\ref{eq:blockrec}, needs to be factored into the block
+$U_{n+1}$ and $B_{n+1}$. $B_{n}$ and $A_{n}$ are $p\times p$ 
+matrices with $p$ the number of columns in the initial block matrix, or
 physically, the number of starting orbitals chosen to
-initiate the recursion.
+initiate the recursion. 
+
+A common choice for the starting block
+might be the full set of atomic orbitals centered on a particular 
+site: e.g. 5 d-orbitals centered on an atom in an FCC crystal. 
+Each step of the block recursion then propagates an entire subspace of
+the matrix rather than just a single element.
 
 There are a few different ways to factor $V_{n+1}$. Nex
 uses a modified Gram-Schmidt algorithm to orthogonalise 
@@ -1855,11 +1904,69 @@ as $v_{i}$ and $u_{i}$, the Gram-Schmidt process takes the
 form:
 %
 \begin{equation}
-u_{i} = \frac{1}{k_{i}}[v_{i} - \sum_{j\lt i (v^{\dagger}_{i}Su_{j})u_{j}]
+u_{i} = \frac{1}{k_{i}}[v_{i} - \sum_{j < i} (v^{\dagger}_{i}Su_{j})u_{j}]
+\end{equation}
+%
+This can be rearranged with $B_{n}$ a lower triangular matrix (note it is $B^{\dagger}$
+that is applied in Eq.~\ref{eq:blockrec}.
+
+The effect of the three term block recurrence procedure
+is demonstrated by the action of the D matrix on the 
+generated chain:
+%
+\begin{align}
+D[U_{0}U_{1}U_{2}...] = &[U_{0}U_{1}U_{2}...]& A_{0} B_{1} 0  ...             \\
+                        &                    & B_{1}^{\dagger} A_{1} B_{2} ... \\
+                        &                    & 0     B_{2} A_{2} B_{3}
+\end{align}
+%
+
+\subsubsection{Matrix Continued Fractions}
+The matrix recursion coefficients $A_{n}$ and $B_{n}$ are handled by
+analogy with their scalar counterparts $a_{n}$ and $b_{n}$. 
+The recursion library provides two different approaches to generating 
+the desired resolvent spectra from the recurrence coefficient blocks.
+
+As in the scalar case there are two approaches a quadrature approach
+and a termination approach. Most of the discussion 
+of handling of the continued fractions in the scalar case
+is deferred to the mathematical appendix and it is recommended 
+the reader familiarizes themselves with that. The relations for
+the block recursion are included here for ease of reference.
+
+The identities for the convergents of a continued fraction (see Appendix)
+are generalized. There are two types.
+
+Type 1:
+\begin{equation}
+B_{n+1}P_{n+1}(E) = (E-A_{n})P_{n}(E) -B^{\dagger}_{n}P_{n-1}(E),
+\end{equation}
+with $P_{-1}(E)=0$ and $P_{0}(E)=B_{0}^{-1}$,
+and type 2:
+%
+\begin{equation}
+B_{n+1}Q_{n}(E) = (E-A_{n})Q_{n-1} -B_{n}Q_{n-2}(E),
+\end{equation}
+%
+with $Q_{-1}(E)=0$ and $Q_{0}(E)=B_{1}^{-1}B^{\dagger}_{0}$.
+
+Defining the terminal matrix polynomials as:
+\begin{equation}
+\mathbf{P}_{L}(E) = \frac{P_{L}(E) -t(E)B_{L}^{\dagger}P_{L-1}(E)}
+\end{equation}
+and
+\begin{equation}
+\mathbf{Q}_{L}(E)=[Q_{L-1}(E) -t(E)B_{L}^{\dagger}Q_{L-2}(E)]
 \end{equation}
 
-This can be rearranged with $B_{n}$:
-
+The Greens function matrix can be written:
+%
+\begin{equation}
+\mathbf{G}(E) = \mathbf{P}_{L}^{-1}(E)\mathbf{Q}_{L}(E)
+\end{equation}
+%
+The terminator can be a diagonal matrix with the corresponding
+terminators for the scalar case.
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly 
