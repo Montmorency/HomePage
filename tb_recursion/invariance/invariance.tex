@@ -1834,8 +1834,11 @@ in their formulation of the block recursion method\cite{inoue87}.
 It is useful to incorporate their discussion of the underlying 
 symmetries of the Green's function and Greenians.
 
+Their notation follows Edminson, where a rotation of the co-ordinate axis
+of the system by the Euler angles $\alpha$,$\beta$, and $\gamma$ is denoted:
+
 \begin{equation}
-R(\alpha\beta\gamma)
+R(\alpha\beta\gamma)H
 \end{equation}
 
 If the crystal under considerations has a potential V which transforms as some symmetry group
@@ -1846,13 +1849,14 @@ H_{i\lambda j\mu} = \bra \phi_{i\lambda} | -\frac{\hbar^{2}}{2m}\nabla^{2} + V|\
 \end{equation}
 %
 
-We may denote an element of the symmetry group of the crystal $G_{h}$:
+%
+We may denote the action of an element of the symmetry group of the crystal $G_{h}$ by:
 %
 \begin{equation}
 G_{h} H_{ij} =  K^{\dagger}(h)H_{ij}K(h)
 \end{equation}
 %
-where K is a representation matrix of the symmetry element 
+where $K(h)$ is a matrix representation of the symmetry element 
 with respect to the atomic orbitals. 
 
 The symmetry of the underlying Hamiltonian is preserved in the coefficient
@@ -1860,10 +1864,23 @@ blocks $A_{n}$ and $B_{n}$\cite{inoue87} in the block recursion method.
 \subsubsection{The Block Recursion Algorithm}
 \label{sec:blockrecursion}
 \index{blockrecursion}
-
+The matrix Greenian to be computed is:
 \begin{equation}
 G(E) = \bra U_{0}S|[SE-H]^{-1}|SU_{0}\ket
 \end{equation}
+
+The starting vector $u_{0}$ which in the scalar recursion
+would have been a starting orbital or, to obtain an off diagonal
+element a linear combination of starting orbitals, is now a matrix
+of starting orbitals. In Inoue and Ohta's notation the initial block
+matrix can be written:
+%
+\begin{equation}
+(U^{s}_{0})_{\lambda\mu} = \delta_{is}\delta_{\lambda\mu} \pm \delta_{js}\delta_{\lambda\mu}
+\end{equation}
+%
+with $s,i,j$ running over the site indices and  U is an $N\times p$ block or orbitals
+with N the number of sites and p the number of orbitals.
 
 Nex formulates the block recursion in terms of the 
 $D$ matrix, or in the tensor notation, the mixed Hamiltonian:
@@ -1907,12 +1924,15 @@ as $v_{i}$ and $u_{i}$, the Gram-Schmidt process takes the
 form:
 %
 \begin{equation}
-u_{i} = \frac{1}{k_{i}}[v_{i} - \sum_{j < i} (v^{\dagger}_{i}Su_{j})u_{j}]
+u_{i} = \frac{1}{k_{i}}[v_{i} - \sum_{j < i}(v^{\dagger}_{i}Su_{j})u_{j}]
 \end{equation}
 %
 This can be rearranged with $B_{n}$ a lower triangular matrix (note it is $B^{\dagger}$
-that is applied in Eq.~\ref{eq:blockrec} which is the conjugate transpose an upper triangle
-matrix).
+that is applied in Eq.~\ref{eq:blockrec}):
+%
+\begin{equation}
+b_{ij} = k_{ij}\delta_{ij} + \bra v_{i}|Su_{j}\ket (1-\delta_{ij}) \quad j>i
+\end{equation}
 
 The effect of the three term block recurrence procedure
 is demonstrated by the action of the D matrix on the 
@@ -1953,7 +1973,7 @@ B_{n+1}Q_{n}(E) = (E-A_{n})Q_{n-1} -B_{n}Q_{n-2}(E),
 \end{equation}
 %
 with $Q_{-1}(E)=0$ and $Q_{0}(E)=B_{1}^{-1}B^{\dagger}_{0}$.
-
+%
 Defining the terminal matrix polynomials as:
 \begin{equation}
 \mathbf{P}_{L}(E) = P_{L}(E) -t(E)B_{L}^{\dagger}P_{L-1}(E)
@@ -1969,8 +1989,9 @@ The Greens function matrix can be written:
 \mathbf{G}(E) = \mathbf{P}_{L}^{-1}(E)\mathbf{Q}_{L}(E)
 \end{equation}
 %
-The terminator can be a diagonal matrix with the corresponding
-terminators for the scalar case.
+The simplest choice of matrix terminator is a diagonal 
+matrix with the corresponding terminators for the scalar 
+case along the diagonals.
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly 
@@ -1978,6 +1999,7 @@ using the recursion technique. Instead of localized orbitals, localized
 displacements are introduced, and in the place of on-site and hopping
 matrix elements force constants connect nearest and next 
 nearest neighbour displacements. 
+
 The papers and PHD thesis of Meek describes in detail the 
 application of the recursion method to the computation of 
 vibrational spectra \cite{meek76, meek78}. Electron-phonon coupling has also been
