@@ -1563,7 +1563,7 @@ such that they produce the identity matrix upon multiplication $S$.
 The dual set of basis vectors is:
 %
 \begin{equation}
-|\psi^{\alpha}\ket = \sum_{\beta}|\psi_{\beta}(S^{-1})^{\beta\alpha}.
+|\psi^{\alpha}\ket = \sum_{\beta}|\psi_{\beta}\ket(S^{-1})^{\beta\alpha}.
 \end{equation}
 %
 If the overlap matrix is just the identity matrix the original 
@@ -1655,8 +1655,8 @@ in the mixed representation or working with the inverse of the overlap
 matrix and the lower indiced Hamiltonian respectively.
 
 \subsubsection{Two-Sided Lanczos}
-For the case where $H\neq H^{*\dagger}$ i.e. for a non-Hermitian
-Hamiltonian a two-sided Lanczos algorithm exists as discussed in
+For the case where $H\neq H^{\dagger}$, i.e. for a non-Hermitian
+Hamiltonian, a two-sided Lanczos algorithm exists as discussed in
 Ref.\cite{haydockkelly75} following Wilkinson's description.
 
 Two starting vectors are chosen $|u_{0}\ket=|0\ket$, $|v_{0}\ket=|0\ket$
@@ -1680,7 +1680,8 @@ more difficult to interpret as a local density of states. The fact
 that the Hamiltonian is non-Hermitian does not guarantee this will 
 be the case so the application of this method may not produce 
 any complex eigenvalues. S. F. Boys has given a thorough treatment
-of the convergence properties of non-Hermitian operators in Ref.~\cite{boys69}.
+of the some of the properties of non-Hermitian operators in electronic
+structure calculations in Ref.~\cite{boys69}.
 
 \subsubsection{\texttt{RECNO}: Recursion Non-Orthogonal Algorithm}
 The approach to the \index{non-orthogonal basis vectors} taken in the 
@@ -1854,6 +1855,8 @@ G_{h} H_{ij} =  K^{\dagger}(h)H_{ij}K(h)
 where K is a representation matrix of the symmetry element 
 with respect to the atomic orbitals. 
 
+The symmetry of the underlying Hamiltonian is preserved in the coefficient
+blocks $A_{n}$ and $B_{n}$\cite{inoue87} in the block recursion method.
 \subsubsection{The Block Recursion Algorithm}
 \label{sec:blockrecursion}
 \index{blockrecursion}
@@ -1866,7 +1869,7 @@ Nex formulates the block recursion in terms of the
 $D$ matrix, or in the tensor notation, the mixed Hamiltonian:
 %
 \begin{equation}
-D = S^{-1}H = H^{\alpha}_{\beta}.
+D = S^{-1}H = H^{\alpha} _{\beta}.
 \end{equation}
 %
 
@@ -1908,17 +1911,18 @@ u_{i} = \frac{1}{k_{i}}[v_{i} - \sum_{j < i} (v^{\dagger}_{i}Su_{j})u_{j}]
 \end{equation}
 %
 This can be rearranged with $B_{n}$ a lower triangular matrix (note it is $B^{\dagger}$
-that is applied in Eq.~\ref{eq:blockrec}.
+that is applied in Eq.~\ref{eq:blockrec} which is the conjugate transpose an upper triangle
+matrix).
 
 The effect of the three term block recurrence procedure
 is demonstrated by the action of the D matrix on the 
 generated chain:
 %
-\begin{align}
-D[U_{0}U_{1}U_{2}...] = &[U_{0}U_{1}U_{2}...]& A_{0} B_{1} 0  ...             \\
-                        &                    & B_{1}^{\dagger} A_{1} B_{2} ... \\
-                        &                    & 0     B_{2} A_{2} B_{3}
-\end{align}
+\begin{align*}
+D[U_{0}U_{1}U_{2}...] &= &[U_{0}U_{1}U_{2}...]& A_{0}           & B_{1} & 0     & ...   \\
+                      &  &                    & B_{1}^{\dagger} & A_{1} & B_{2} & ...   \\
+                      &  &                    & 0               & B_{2} & A_{2} & B_{3}
+\end{align*}
 %
 
 \subsubsection{Matrix Continued Fractions}
@@ -1952,7 +1956,7 @@ with $Q_{-1}(E)=0$ and $Q_{0}(E)=B_{1}^{-1}B^{\dagger}_{0}$.
 
 Defining the terminal matrix polynomials as:
 \begin{equation}
-\mathbf{P}_{L}(E) = \frac{P_{L}(E) -t(E)B_{L}^{\dagger}P_{L-1}(E)}
+\mathbf{P}_{L}(E) = P_{L}(E) -t(E)B_{L}^{\dagger}P_{L-1}(E)
 \end{equation}
 and
 \begin{equation}
