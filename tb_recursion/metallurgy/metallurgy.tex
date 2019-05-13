@@ -36,14 +36,40 @@ will first be described and formulated in general terms and then mapped
 on to a set of recursion calculations to compute the cohesive and elastic
 properties of a material from the perspective of the local atomic environment.
 
-\section{Crystal Structure and Normal Modes}
+\section{Crystal Structure}
 Step number uno in the field of theoretical metallurgy is a theory that correctly
 describes the crystal structures formed by different pure metals. 
+
+Often the first three lattices encountered by students of metallurgy will be
+FCC, HCP, and BCC.
+
+\begin{quote}
+‘Close-packing’ lacks a unique meaning without a specification of 
+what is being packed, and what is meant by close and, in particular, 
+what is close to what. The thinking underlying the citation of f.c.c. 
+and h.p.c. as examples of closest-packed structures is the packing of 
+equal hard spheres. A metal is not an assembly of hard spheres,but rather of 
+nuclei and electrons.These are both corpundular, with nowhere vanishing 
+wavefunctions, but because of their very large mass ratio it is an excellent 
+approximation to consider the nuclei as located at points
+but the electrons as forming a continuum, with density throughout the metal 
+everywhere positive and, except close to the nuclei, quasi-uniform.
+\end{quote}
+
+The closeness of close packed structures stems from trying to squeeze
+the largest number of atoms into a particular volume
+with a hard lower bound on the approach of the Nucleii.
+The BCC structure solves a different problem in that it finds a
+distribution of nuclei likely to be closest to the electrons.
+
 Early considerations based on orbital hybridisation and geometry
 were performed by Altmann, Coulson, and Hume-Rothery who treated 
-the problem in Ref.~\cite{altmann57}. One of the earliest triumphs 
-of the recursion method the sorting of the Lave 
-Phases \cite{haydocklaves75,johannes76}.
+the problem in Ref.~\cite{altmann57}. 
+
+One of the earliest applications of the recursion method 
+the sorting of the Lave Phases \cite{haydocklaves75,johannes76}.
+
+\section{Vibrations}
 
 Probing the local forces in a material is possible with neutron spectroscopy.
 Interplanar force constants can be accessed directly which gives experimental
@@ -109,10 +135,18 @@ with work on this subject beginning in the 1950s \cite{cochardt55}.
 The local density of states for atoms at a screw dislocation core have been computed by \cite{paidar81,masuda81}. 
 The change in the local bonding picture induced by a vacancy in Fe was examined in Ref.~\cite{masuda82,ohta87}.
 
+\subsection{Charles Frank}
+By way of introduction to the variety of dislocation structures that occur
+we turn to F.C. Frank. Of Frank-Read dislocations fame.
+%Frank wrote a number of interesting article BCC as a 
+%close packed structure \cite{frank92}.
+
+
 \section{Grain Boundaries}
 The analysis of Read and Shockley in Ref.~\cite{read50} serves as a comprehensive
-introduction to the field of interfaces in condensed matter. The definitive textbook
-on the subject of interfaces in materials is Sutton and Baluffi Ref.~\cite{sutton95}.
+introduction to the field of interfaces in condensed matter. Currently the 
+standard reference on the subject of interfaces in materials is Sutton and 
+Baluffi Ref.~\cite{sutton95}.
 
 A number of experimental probes are capable of detecting the presence of 
 grain boundaries but efficient and accurate means of determining 
@@ -123,14 +157,23 @@ algebra see Ref.~\cite{sutton96}.
 The possibility of examining grain boundaries atomistically has interested
 researchers since it became practical to perform atomistic simulations
 with realistic potentials see Refs.~\cite{bristowe75,wolf83,paxton87,paxton88,paxtonsutton88,
-kohyama88,kohyama94,paxton96,rittner96,tschopp07,momida13,du11,du12,mceniry18} for a representative
+kohyama88,kohyama94,paxton96,rittner96,tschopp07,momida13,du11,du12,mceniry18} for a
 snapshot of the way these studies have evolved over time.
 
 %Hydrogen on metal \cite{garciavidal91}.
 
 \subsection{Discrete Boundary Dislocation Networks}
-For isotropic elasticity we can gain some useful practice in contour integration and arrive
-at a closed set of expressions to obtain. These expressions are given in Ref.~\cite{sutton95}.
+Combining isotropic elasticity with discrete dislocation networks
+we can gain some useful practice in contour integration and arrive
+at a closed set of expressions for the strains in a material. 
+
+These expressions are given in Ref.~\cite{sutton95} and derived here.
+
+
+\subsection{Pile Ups}
+Another interesting case is discussed in Ref.~\cite{eshelby} 
+where free dislocations pile up next to a pinned dislocation.
+
 
 \section{Alloys}
 \cite{glaser81}
@@ -164,8 +207,8 @@ need to be found due to the difficulty of enumerating all the possible paths.
 Early work on DOS of alloys \cite{cubiotti77}. 
 
 \section{Metallic Surfaces}
-
-Elegant experimentation can access some surprisingly delicate quantities \cite{whipp34}.
+Elegant experimentation can access some surprisingly delicate quantities \cite{whipp34}
+relating to thermal desorption.
 
 \section{Conclusion}
 In this chapter we have looked at a number of the important concepts
@@ -191,7 +234,6 @@ the structure of grain boundaries, and alloying.
 %Binary Alloys 
 %R. L. Jacobs, J. Phys. F 3, 933 (1973)
 %and stacking in La \cite{duthie77}.
-
 %Atomic stress tensors:
 %Sutton 88
 %Nielsen O H and Martin R M 1983 Phys. Rev. Lett. 50 697
