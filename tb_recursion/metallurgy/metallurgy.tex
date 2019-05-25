@@ -7,9 +7,9 @@ structure from the structures of individual atoms." Similarly in Vol. 35
 Heine noted "What we lack is a fundamental quantum theory of the cohesion
 and structure of a wide diversity of solids." The previous chapters,
 though hopefully enjoyable in their own right, were really just meant to bring
-us to the stage where we can understand start to compute 
-the mechanical properties of solids within the framework 
-of a single computational tool.
+us to the stage where we can start using the principles of locality
+and recursion methods to compute the structural 
+and mechanical properties of extended solids.
 
 This chapter will focus on the calculation of the electronic and mechanical
 properties of transition metals and their alloys. The quantities of interest
@@ -21,12 +21,16 @@ the wave equation governing the atomic scale motion of the electrons.
 The analysis of Wigner and Seitz in many ways initiated the field
 of theoretical materials science with there calculation of the cohesive
 energy and lattice constant of metallic sodium\cite{wigner33, wigner34}.
+
+
 Subsequent work in this field extended Wigner and Seitz analysis
 to the cohesive and elastic properties of monovalent
 metals like sodium, lithium, and copper \cite{fuchs36}. The quantum theory was
 also used to explain the appearance of different phases in alloys in terms 
-of Brillouin zones \cite{bethe29, bouckhaert36, owen33, jones34}. Born's work provides the standard
-treatment of the stability of lattices to short and long wavelength
+of Brillouin zones \cite{bethe29, bouckhaert36, owen33, jones34}. 
+
+Born's work provides the standard treatment of the stability of lattices 
+to short and long wavelength
 vibrations considering general forms for the interatomic potentials\cite{born40,born42},
 with other workers again making extensions of the theory to particular
 lattice types \cite{power41, nabarro52}.
@@ -36,18 +40,36 @@ will first be described and formulated in general terms and then mapped
 on to a set of recursion calculations to compute the cohesive and elastic
 properties of a material from the perspective of the local atomic environment.
 
-\section{Crystal Structure and Normal Modes}
+\section{Crystal Structure}
 Step number uno in the field of theoretical metallurgy is a theory that correctly
 describes the crystal structures formed by different pure metals. 
 Early considerations based on orbital hybridisation and geometry
 were performed by Altmann, Coulson, and Hume-Rothery who treated 
 the problem in Ref.~\cite{altmann57}. One of the earliest triumphs 
 of the recursion method the sorting of the Lave 
-Phases \cite{haydocklaves75,johannes76}.
+Phases \cite{haydocklaves75,johannes76}. Density functional
+studies of the crystal phases \cite{chan86,paxton97}
 
+The ability of the tight binding framework
+to provide an explanatory model for trends in homologous materials is
+well demonstrated by the work on the crystal structure along the transition
+metal series \cite{pettifor70}, the Chevrel Compounds of Molybdenum Chalcogenides Ref.~\cite{bullet77}.
+and the structures of the compounds in the Lave phases in Ref.~\cite{johannes76},
+
+\section{Vibrations}
 Probing the local forces in a material is possible with neutron spectroscopy.
 Interplanar force constants can be accessed directly which gives experimental
-insight into \cite{varma79a, varma79b}
+insight into \cite{varma79a, varma79b}.
+
+\section{Harmonic Approximations to the Free Energy and Entropy}
+As discussed in Chapter~\ref{chap:invariance} Sec.~\ref{sec:}. 
+The work of Ref.~\cite{wheeler68} combined quadrature approaches
+with the calculated moments of vibrational spectra to compute
+thermodynamic euantites. Brent Fultz is a comprehensive review
+of entropic effects in metals and alloys Ref.~\cite{fultz10} equip us
+with the expressions required. These expressions provide a starting
+point for the inclusion of higher order terms in the vibrational spectra
+the so called anharmonic effects which can become important at high temperatures.
 
 \section{Stress, Strain, and Elasticity}
 Shearing, straining, Young's modulus, poisson ratio, elastic tensors these are the
@@ -126,15 +148,15 @@ with realistic potentials see Refs.~\cite{bristowe75,wolf83,paxton87,paxton88,pa
 kohyama88,kohyama94,paxton96,rittner96,tschopp07,momida13,du11,du12,mceniry18} for a representative
 snapshot of the way these studies have evolved over time.
 
-%Hydrogen on metal \cite{garciavidal91}.
 
 \subsection{Discrete Boundary Dislocation Networks}
 For isotropic elasticity we can gain some useful practice in contour integration and arrive
 at a closed set of expressions to obtain. These expressions are given in Ref.~\cite{sutton95}.
 
+
+
 \section{Alloys}
 \cite{glaser81}
-\section{Random Alloys}
 Lattice periodicity allows for the use of Bloch's theorem. The Fourier transform
 is well defined and the eigenstates can be grouped according the their Bloch vector.
 For alloys its quite likely there will not be an identifiable periodicity in 
@@ -164,8 +186,9 @@ need to be found due to the difficulty of enumerating all the possible paths.
 Early work on DOS of alloys \cite{cubiotti77}. 
 
 \section{Metallic Surfaces}
-
 Elegant experimentation can access some surprisingly delicate quantities \cite{whipp34}.
+See \cite{bullet77} for calculations of the adsorption energy of H on W and Pt.
+Hydrogen on metal \cite{garciavidal91}.
 
 \section{Conclusion}
 In this chapter we have looked at a number of the important concepts

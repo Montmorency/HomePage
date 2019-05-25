@@ -1,11 +1,44 @@
-\chapter{Recurrence and Continued Fractions}
+\chapter{Maths and Algorithms}
 \section{Introduction}
 This appendix takes the form of a brief and essential
-set of notes on the the various algorithms, recurrence relations,
-root finding methods, continued fractions, orthogonal polynomials that 
-underlie the methods discussed in the main text. 
+set of notes on the the various algorithms, recurrence relations, and
+root finding methods, along with a discussion of important
+theorems relating to continued fractions and orthogonal polynomials. 
+
+These concepts underlie the methods discussed in the main text. 
 These are mainly mathematical results
 that may not be so familiar to a materials scientist.
+
+Two monographs are the principle sources for this appendix. 
+The first is Gabor's Szeg\~o's textbook 
+Orthogonal Polynomials which has been a standard reference
+for some time. Definitions and theorems of immediate relevance 
+from that work are included here. For the extended proofs and discussions 
+that work should be consulted. Szeg\~o's discussion relies primarily
+on the principle of orthogonality of functions on an interval, the distribution
+of zeros of the functions, quadrature, and the connection with different
+classes of differential equations. He does not go to deeply into the connection 
+with continued fractions.
+
+To complement Szeg\~o with an historical overview as well as
+a rigorous analysis of the deep
+connections that exist between continued fractions, 
+special functions and orthogonal polynomials Sergey 
+Krushchev's work Orthogonal Polynomials and Continued Fractions: From Euler's Point
+of View should be consulted \cite{khrushchev10}. 
+
+Two tables of particular significance are included in this
+appendix. The first tabulates 
+the defining properties of certain classes of orthogonal polynomials:
+the intervals, the weight functions, and the recurrences that can generate
+them.
+
+The second tables contains the asymptotic properties 
+of the recursion coefficients due to different spectral
+features: e.g. Van Hove singularities, band edges, and  band gaps. 
+This table follows that described by Alphonse Magnus and we 
+have extended it here with other references
+from the literature.
 
 \section{Euclid's Algorithm}
 As pointed out by Haydock in Ref.~\cite{weaire85} the 
@@ -97,11 +130,40 @@ Finally, we can improve the guess at the approximate root:
 %
 and iterate the whole procedure to whatever accuracy we desire.
 
+\section{Euler-Wallis Formula}
+
+\begin{align}
+P_{-1} = 1, & P_{0}= b_{0} \\
+Q_{-1} = 1, & Q_{0}= 1 
+\end{align}
+
 \section{Sturm's Theorem}
 The Sturm sequence provides a means of determining the number of 
 roots for a given polynomial equation contained in a real interval.
 
-\section{Rational Interpolation}
+\section{Orthogonal Polynomials}
+
+\section{Chebyshev Polynomials}
+
+For computational libraries implementing the procedures
+for interpolating functions and the solutions of differential-integral
+equations with the use of Chebyshev polynomials see Refs.\cite{nex80,daguano83}.
+
+\section{Continued Fractions}
+
+\section{Singularities within the Band}
+The affect of singularities within a band has 
+been considered by Wheeler for the case of modified moments in
+Ref.~\cite{wheeler74} and in the context of the Recursion method by Ref.~\cite{hodges77}.
+A formal mathematical treatment of the problem has been given in Ref.~\cite{vanlessen03} which
+agrees with many of the empirical observations made by and yields explicit formula
+for the recursion coefficients for weights with isolated singularities.
+
+
+\section{Continued Fractions and Orthogonal Polynomials for Multiple Bands}
+
+
+\section{Algorithm for Fitting a Rational Interpolation}
 \label{app:ratint}
 An algorithm to compute rational interpolants 
 using continued fractions algorithm is described in Ref.~\cite{vidbergserene77}.

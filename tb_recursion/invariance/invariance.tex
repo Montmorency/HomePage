@@ -1244,10 +1244,11 @@ f_{ij}^{\alpha} = f^{\rm rep}_{ij\alpha} - \frac{4}{\pi}\sum_{\lambda\mu}
 \end{equation}
 %
 $\alpha$ is a Cartesian direction, $i,j$ are site indices, and $\lambda, \mu$ are orbital indices 
-the z axis lies along the bond connecting atoms i and j. The first term in Eq~\ref{eq:tbforce} 
-we will come back to this term in Chapter~\ref{chap:gw} and Chapter~\ref{chap:wannier}. 
-It is very much a term determined by craft and describes the repulsive contribution of the ion cores. 
-But all this to come. 
+the z axis lies along the bond connecting atoms i and j. 
+We will return to the first term in Eq.~\ref{eq:tbforce} in Sec.~\ref{sec:harrisfoulkes} 
+and Chapter~\ref{chap:wannier}. The computation of the derivative
+of the Slater-Koster matrix elements, $\nabla h_{ij}^{\lambda\mu}$,
+is discussed in Appendix~\ref{appen:grouptheory}.
 
 For now it is the second term that is of interest and
 it is easily recognized as something we can access via the Green's function 
@@ -1841,6 +1842,15 @@ of the system by the Euler angles $\alpha$,$\beta$, and $\gamma$ is denoted:
 R(\alpha\beta\gamma)H
 \end{equation}
 
+The action of an element of the symmetry group of the crystal can be computed:
+%
+\begin{equation}
+\Rs(\alpha\beta\gamma)H =  D^{\dagger}(h)HD(h)
+\end{equation}
+%
+where $D(h)$ is a matrix representation of the symmetry element 
+with respect to the atomic orbitals. 
+
 If the crystal under considerations has a potential V which transforms as some symmetry group
 the Slater-Koster matrix elements will also transform according to that symmetry group:
 %
@@ -1849,31 +1859,24 @@ H_{i\lambda j\mu} = \bra \phi_{i\lambda} | -\frac{\hbar^{2}}{2m}\nabla^{2} + V|\
 \end{equation}
 %
 
-%
-We may denote the action of an element of the symmetry group of the crystal $G_{h}$ by:
-%
-\begin{equation}
-G_{h} H_{ij} =  K^{\dagger}(h)H_{ij}K(h)
-\end{equation}
-%
-where $K(h)$ is a matrix representation of the symmetry element 
-with respect to the atomic orbitals. 
+One of the motivations for the block recursion algorithm 
+is the symmetry of the underlying Hamiltonian is preserved by construction
+in the coefficient blocks $A_{n}$ and $B_{n}$\cite{inoue87}. A discussion of the
+transformation of spherical harmonics for different crystal symmetries
+is included in the appendix \ref{appen:grouptheory}.
 
-The symmetry of the underlying Hamiltonian is preserved in the coefficient
-blocks $A_{n}$ and $B_{n}$\cite{inoue87} in the block recursion method.
-\subsubsection{The Block Recursion Algorithm}
+\subsection{The Block Recursion Algorithm}
 \label{sec:blockrecursion}
 \index{blockrecursion}
 The matrix Greenian to be computed is:
 \begin{equation}
-G(E) = \bra U_{0}S|[SE-H]^{-1}|SU_{0}\ket
+\mathbf{G}(E) = \bra U_{0}S|[SE-H]^{-1}|SU_{0}\ket
 \end{equation}
 
 The starting vector $u_{0}$ which in the scalar recursion
-would have been a starting orbital or, to obtain an off diagonal
-element a linear combination of starting orbitals, is now a matrix
-of starting orbitals. In Inoue and Ohta's notation the initial block
-matrix can be written:
+would have been a starting orbital or a linear combination of 
+starting orbitals, is now a matrix of starting orbitals. 
+The initial block matrix can be written:
 %
 \begin{equation}
 (U^{s}_{0})_{\lambda\mu} = \delta_{is}\delta_{\lambda\mu} \pm \delta_{js}\delta_{\lambda\mu}
@@ -1883,7 +1886,7 @@ with $s,i,j$ running over the site indices and  U is an $N\times p$ block or orb
 with N the number of sites and p the number of orbitals.
 
 Nex formulates the block recursion in terms of the 
-$D$ matrix, or in the tensor notation, the mixed Hamiltonian:
+$D$ matrix, or in the tensor notation, the mixed Hamiltonian (see sec.~\ref{sec:tensornotation}:
 %
 \begin{equation}
 D = S^{-1}H = H^{\alpha} _{\beta}.
@@ -1897,7 +1900,8 @@ the projection of the current step is computed:
 A_{n} = U_{n}SDU_{n},
 \end{equation}
 
-and the next block of vectors in the chain is formed by: 
+and the next block of vectors in the chain is formed by application of the Hamiltonian
+and removed the previous components of the chain:
 %
 \begin{equation}
 \label{eq:blockrec}
@@ -1906,12 +1910,12 @@ U_{n+1}B^{\dagger}_{n+1} = V_{n+1} = \mathbf{D}U_{n} - U_{n}A_{n} - U_{n-1}B_{n}
 %
 The vector $V_{n+1}$, which is produced operationally by the right hand
 side of Eq.~\ref{eq:blockrec}, needs to be factored into the block
-$U_{n+1}$ and $B_{n+1}$. $B_{n}$ and $A_{n}$ are $p\times p$ 
+$U_{n+1}$ and $B_{n+1}$. 
+
+$B_{n}$ and $A_{n}$ are $p\times p$ 
 matrices with $p$ the number of columns in the initial block matrix, or
 physically, the number of starting orbitals chosen to
-initiate the recursion. 
-
-A common choice for the starting block
+initiate the recursion. A common choice for the starting block
 might be the full set of atomic orbitals centered on a particular 
 site: e.g. 5 d-orbitals centered on an atom in an FCC crystal. 
 Each step of the block recursion then propagates an entire subspace of
@@ -1997,17 +2001,18 @@ case along the diagonals.
 With a simple modification phonon spectra can be computed directly 
 using the recursion technique. Instead of localized orbitals, localized 
 displacements are introduced, and in the place of on-site and hopping
-matrix elements force constants connect nearest and next 
-nearest neighbour displacements. 
+matrix elements force constants connecting a finite set of nearest neighbours.
+The rest proceeds along identical lines to the electronic case.
 
-The papers and PHD thesis of Meek describes in detail the 
-application of the recursion method to the computation of 
-vibrational spectra \cite{meek76, meek78}. Electron-phonon coupling has also been
-considered in this context\cite{terakura78}. The method is particularly useful for
+The papers and PHD thesis of Meek describe in detail the 
+early application of the recursion method to the computation of 
+vibrational spectra \cite{meek76, meek78}. 
+The method is particularly useful for
 computing vibrational spectra in disordered media 
-where a statistical averaging procedure needs to be undertaken \cite{mookerjee04}.
+where a statistical averaging procedure needs to be 
+undertaken \cite{mookerjee04}.
 
-The force constant matrix of a crystal can be written as:
+In the Harmonic approximation the force constant matrix of a crystal can be written as:
 %
 \begin{equation}
 \label{eq:forceconstant}
@@ -2060,19 +2065,24 @@ G_{i\alpha,i\alpha}(\omega^{2})= \bra i\alpha| \left[D- \omega^{2}I\right]^{-1} 
 \end{equation}
 %
 
-For instance for 2 atoms in a unit cell of a perfect 
+The use of translational symmetry of a crystal
+can be readily appreciated. By applying translational
+symmetry to a 2 atom unit cell of a perfect 
 crystal Eq.~\ref{eq:phonon} would only
-need to be computed for 6x6 matrix at every $\k$ point 
-in the Brillouin zone to determine the vibration spectrum. 
+need to be computed for a 6x6 matrix at every $\k$ point 
+in the Brillouin zone to determine the vibrational frequencies. 
+
 In this case there would be little need for employing a recursion method.
 Well developed techniques exist to obtain the force constant 
-matrix at every $\k$ point from first principles \cite{baroni01}, 
-however this again requires an assumption about
-microscopic periodicity which may not be valid. For any amount of 
-disorder at the atomic level, for instance in the CRN systems 
+matrix at every $\k$ point from first principles \cite{baroni01}.
+However these techniques require assumptions about
+microscopic periodicity which are frequently  
+not valid. 
+
+For any amount of disorder at the atomic level, for instance in the systems 
 studied by Meeks secular determinants of $3N\times3N$ with
 $N=200-300$ may need to be solved. In these situations recursion 
-type calculation become necessary.
+type calculation become preferable. \cite{dean92}
 %
 \begin{figure}
 \begin{center}
@@ -2169,14 +2179,6 @@ States (DOVS) calculation. \label{tab:phonon}}
 For other examples of the computation of vibration spectra the stretching modes 
 in ice have also been studied using the recursion method\cite{mcgra78,bergren82}.
 
-The actual computation of forces using the recursion method is possible. 
-A discussion of the computation of forces in tight binding bond models can be found in
-Ref.~\cite{sutton88} and explicity expression using the recursion method can be found in 
-\cite{boswarva82, boswarva87}. However it should be noted that obtaining ab initio forces
-is now a highly developed technique and populating a force constant matrix for a recursion
-type calculation in novel alloys and chemical environments would be an interesting application
-of the method.
-
 \footnote{For an instructive derivation of the solution to an infinite 
 chain, using classical mechanics, of spring coupled massed using a continued fraction expansion see 
 The Classical Harmonic Chain: Solution via Laplace Transforms and Continued Fractions 
@@ -2188,25 +2190,37 @@ pictorial and heuristics comments on the recursion method
 and related methods.
 
 The recursion method produces the eigenvalue spectrum
-for a given Hamiltonian. The idea of a particle exploring
-the space around it according to the rules of the Hamiltonian
-can be formulated as excursions from a starting orbital localized
-on some atom. As the electron (or phonon) hops from atom to atom
-new eigenstates of the system are uncovered.
+for a given Hamiltonian and gives access to accurate
+integrals over this spectrum. 
 
-The second trend in the literature for producing the density of states
-from a locally defined Hamiltonian was to expand the density of
-states in terms of its moments. This can be seen by expanding the
-Green's function as a geometric series in the energy and the Hamiltonian.
-The comparison is valuable because it leads to the interpretation of 
-the recursion method as producing a density of states by closed walks
-from a starting point.\cite{ducastelle70} 
-Expanding the Green's function gives:
+The mathematics of the technique are uniquely consistent
+with the physical idea of an electron exploring
+the space around it as it diffuses according to Schr\"odinger's
+equation and the interactions present in the Hamiltonian.
+These excursions begin from some prepared localized starting state
+and as the electron (or phonon) hops from atom to atom
+the eigenstates of the system come into sharper and sharper relief.
+
+The closest antecendent of the recursion method was the method of moments.
+This method is directly obtained by expanding the 
+Green's function as a geometric series in the energy and the Hamiltonian:
 %
 \begin{equation}
 [E-H]^{-1} = \sum_{n=0}^{\infty} \frac{H^{n}}{E^{n+1}}.
 \end{equation}
 %
+
+The comparison is valuable because it leads to the interpretation of 
+the recursion method as producing a density of states by closed walks
+from a starting point\cite{ducastelle70}. Formulating problems
+which arise in condensed matter physics in terms of the moments of
+an operator also build a bridge to analytical tools mathematicians
+have developed in the field of moments. The mathematical techniques
+and the surprisingly deep connections between moments, orthogonal
+polynomials, and continued fractions are explored in Appendix~\ref{appen:app2}.
+
+Before concluding this chapter we present a small intuitive discussion of
+the connection between moments, the recursion method and path integrals.
 
 The $r^{\rm th}$ moment of the local density of states can be written:
 %
@@ -2232,23 +2246,18 @@ Detailed workings of the application of the recursion method to a surface atom i
 are presented in Ref.~\cite{haydock75}. 
 
 \section{Future Work}
-The references provided here and in Vol. 35 demonstrate the impact of 
-the recursion method already achieved by 1980. Only a small subset of that 
-work have been referenced here. The ability of the tight binding framework 
-to provide an explanatory model for trends in homologous materials is 
-well demonstrated by the work on the crystal structure along the transition
-metal series \cite{pettifor70}, the Chevrel Compounds of Molybdenum Chalcogenides Ref.~\cite{bullet77}.
-The recursion formulation of the tight binding method was used to order
-the structures of the compounds in the Lave phases in Ref.~\cite{johannes76},
-and explaining trends in surface chemistry by determining 
-the heat of adsorption for simple molecules transition metals across 
-the row of the transition series in \cite{haydock78}. 
+The references provided here and in Vol. 35 demonstrate the impact of
+the recursion method already achieved by 1980. Only a small subset of that
+work has been referenced here. 
+%Trends in surface chemistry were also analyzed by computing
+%the heat of adsorption for simple molecules across
+%the row of the transition metal series in \cite{haydock78}.
 
 A perturbation theory built on the recursion method has also been formulated
-making it possible to study photoemission phenomena \cite{mclean77}. 
-The use of the recursion method to compute susceptibilities has also been addressed, 
-see for instance Ref.~\cite{terakura78}, both these applications will be further 
-elaborated on in Chap.~\ref{chap:manybodyrec}.
+making it possible to study photoemission phenomena \cite{mclean77}
+and to compute susceptibilities, see for instance Ref.~\cite{terakura78},
+both these applications will be further elaborated
+on in Chap.~\ref{chap:manybodyrec}.
 
 The conclusion to Haydock's chapter in that volume is interesting in he gives 
 prognosis for further work along two lines. 
@@ -2264,18 +2273,18 @@ one could discuss the distributions of various physical quantities.
 \end{quote}
 %
 
-The second line of inquiry consists of the extension of the recursion from a single 
-particle description of electronic structure to a many-body Hamiltonian.
+The second line of inquiry consists of the extension of the recursion method
+from a single particle description of electronic structure to a many-body Hamiltonian:
 %
 \begin{quote}
 Finally, the reader may have noticed that the approach of this chapter has been entirely directed
 toward independent particle models. However, many-body Hamiltonians must be similarly 
 transformable to chain models. Aside from a small amount of thought and continuing interest, 
 nothing has been done about this and it remains a most interesting problem concerning recursive 
-solutions of the Schrodinger equation.
+solutions of the Schr\"odinger equation.
 \end{quote}
 
-	Since Vol. 35 was published there has been a rise in the accessibility of density functional methods 
+Since Vol. 35 was published there has been a rise in the accessibility of density functional methods 
 and access to good single particle approximations to the electronic eigenstates of a crystal
 is routine. Additionally, progress on the problem of determining the localized Wannier functions, 
 means tight binding Hamiltonians can be determined unambiguously.
