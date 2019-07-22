@@ -1071,13 +1071,15 @@ formalism of the $GW$ approximation.
 Armed with the local density approximation, a computer, 
 and the comfort of a well defined variational principle
 means computational material scientists are in a position 
-to go out and do a significant amound of damage. In 
+to go out and do a significant amount of damage. In 
 this section it is useful to look at a few different functional
 forms.
 
-The first constraint we have is $\int\rho(\r)d^{3}\r = N$ incorporating this
-constraing using a Lagrange multiplier technique with the fact that we want
-to find a variational minimum for the energy we can write:
+The first constraint we have is on the charge density: 
+$\int\rho(\r)d^{3}\r = N$. That is the integral of the charge
+density over all of space must equal the number of electrons 
+in the system. Incorporating this
+constraint using a Lagrange multiplier we can write:
 %
 \begin{equation}
 \frac{\delta}{\delta \rho} \left[E[\rho] - \mu(\int \rho(\r)d\r - N)\right] = 0,
@@ -1093,12 +1095,15 @@ which leads to:
 Finnis' textbook gives a comprehensive discussion of functionals,
 the Hohenberg-Kohn Functional and the Harris-Foulkes functional.
 His development is far more thorough than what is discussed here. 
-We itemize the important connections:
+We itemize the important connections for the present text that
+are developed in his work:
 
 \begin{itemize}
-\item A direct relation between the second order variation in $E_{\rm xc}$ and the dielectric function can be made.
-\item We can define the Generalized Harris-Foulkes Functional which will clarify our ideas about optimizing the computed
-      electron densities and changing the potentials we are asking the electrons to move in.
+\item A direct relation between the second order variation in the exchange correlation energy
+      $E_{\rm xc}$ and the dielectric function can be made.
+\item The Generalized Harris-Foulkes Functional and the property that the
+      the variational error in the total energy is only of the second order 
+      with respect to the input density.
 \end{itemize}
 
 The first point means we can connect the exchange-correlation functional, 
@@ -1107,8 +1112,10 @@ classical picture and is familiar.
 
 The second point is essential because it will justify the use of certain 
 computational approaches and clarify why, in some cases, a single shot GW
-calculation might ``work", and where it might not. The Generalized Harris-Foulkes
-and quantify what is meant by an optimum model of our system and allow for the
+calculation might ``work", and where it might not and where a tight binding 
+description of a material system may be more appropriate than an DFT-LDA
+calculation. The Generalized Harris-Foulkes allows us to quantify 
+what we mean by an optimal model of our system and allow for the
 construction of densities and potentials that reach this optimum position in 
 the functional space. 
 
@@ -1116,7 +1123,8 @@ The text of this section will be kept to a minimum. It should be viewed as a
 useful collection of functional definitions all contained in one place. 
 The Hohenberg-Kohn-Sham Energy written in its pure functional form,
 as a set of non-interacting electrons, expanded to first order, expanded to
-second order, and the Harris-Foulkes function are all discussed.
+second order, and the Harris-Foulkes functional. These relationships will
+be referred to in later chapters.
 
 \subsection{HKS}
 \begin{equation}
@@ -1203,7 +1211,7 @@ of a self-consistent loop. The idea has been tried in a few different contexts
 \cite{harris85, foulkes87, foulkes89, haydock11}.
 
 \subsection{HFG}
-The extremal properties of the Harris Foulkes functional are discussed 
+The extremal properties of the Harris-Foulkes functional are discussed 
 in Refs.~\cite{finnis,farid93,methfessel95, haydock11}.
 Finnis places particular emphasis on the expansion of the HKS function to second order in the
 variation of the density:
@@ -1221,13 +1229,13 @@ E^{(2)}[\rho] = \sum_{i}{\bra \psi_{i}|\hat{H}^{\rm in}|\psi_{i}\ket} + E_{\rm x
 -\rho^{\rm in}V_{xc}^{in} - E_{H}^{in} + E_{ZZ} + \frac{1}{2}\int C_{in}(\r,\r')\delta\rho\delta\rho'.
 \end{equation}
 
-Eq.~\ref{eq:sohks} can be obtained by introducing a density $\rho = \rho^{\rm in} + \delta\rho$, inserting this into
-Eq.~\ref{eq:hks} and expanding the terms. 
+Eq.~\ref{eq:sohks} can be obtained by introducing a density $\rho = \rho^{\rm in} + \delta\rho$, 
+inserting this into Eq.~\ref{eq:hks} and expanding the terms. 
 
 The second order variation in the Hartree and exchange correlation terms are encoded in
 %
 \begin{equation}
-C_{\rm in}(\r,\r') = \frac{1}{|\r-\r'|} + \frac{\delta^{2}E_{xc}[\rho]}{\delta rho \delta rho'}
+C_{\rm in}(\r,\r') = \frac{1}{|\r-\r'|} + \frac{\delta^{2}E_{xc}[\rho]}{\delta \rho \delta \rho'}
 \end{equation}
 
 If one has some knowledge of $C(\r,\r')$ than one is in a position where the self-consistency 
@@ -1320,31 +1328,21 @@ These considerations will be developed further in Chapter~\ref{chap:wannier}.
 
 \section{Conclusion}
 \noindent
-This chapter introduced the Hohenberg-Kohn theorem. This theorem,
+This chapter begain by introducing the Hohenberg-Kohn theorem. This theorem,
 which states the ground-state energy of an interacting electronic system 
 is a functional of the ground-state charge density is the basis of all the
-subsequent discussion. From that theorem much of the rest follows.
+subsequent discussion. From that theorem much of the rest followed.
 
-The Kohn-Sham scheme was introduced as providing 
-a prescription for obtaining a set of wavefunctions, 
-and eigenvalues, to describe the ground-state density of a system. 
+For a given configuration of ions it is now commonplace to send a calculation 
+off to a computing machine and within a few
+minutes, hours, or days (depending on the size of the system) come back to directories 
+full of eigenvalues, charge densities, wavefunctions, and total energies.
+We discussed various schemes for extending DFT, a theory for the ground state,
+to describe excited state properties and give us a better treatment of the exchange
+and correlation in real systems. 
 
-The various approximations to the exchange correlation 
-functional commonly used in applications of Kohn-Sham DFT like the LDA, LDA+U,
-GGA, and hybrid functionals are the work horses of materials modelling. 
-
-%For a given configuration of ionsit is commonplace to send a calculation 
-%off to a computing machine and within a few
-%minutes, hours, or days (depending on the size of the system) come back to directories 
-%full of eigenvalues, charge densities, wavefunctions, and total energies.
-%We discussed various schemes for extending DFT, a theory for the ground state,
-%to describe excited state properties and give us a better treatment of the exchange
-%and correlation in real systems. 
 We then discussed an approach based on Green's function methods 
-to accurately treat processes involving electron addition and removal
-to remedy some of the defects present in the use of the local density approximation
-to the exchange correlation functional. 
-
+to accurately treat processes involving electron addition and removal.
 Along these lines we presented a detailed discussion
 of the analytic properties of the Green's function and a full derivation of Hedin's
 equations which define the $GW$ approximation. Hopefully now the reason it is called

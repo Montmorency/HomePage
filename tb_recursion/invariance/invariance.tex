@@ -1365,7 +1365,7 @@ of homologous materials.
 
 \footnote{The obituary of C.A.Coulson\cite{altmann74} 
 is highly recommended reading. His obituary gives an insight into 
-of how wave mechanics was imported to the study of 
+how wave mechanics was imported to the study of 
 complex molecules and crystals at the earliest stage. Coulson's 
 immense contribution to the study of electronic structure
 begins near the inception of quantum theory. As mentioned in Ref.~\cite{altmann74}
@@ -1845,14 +1845,16 @@ R(\alpha\beta\gamma)H
 The action of an element of the symmetry group of the crystal can be computed:
 %
 \begin{equation}
-\Rs(\alpha\beta\gamma)H =  D^{\dagger}(h)HD(h)
+\Rs(\alpha\beta\gamma)H =  D_{mm'}^{\dagger}(\Rs)HD_{mm'}(\Rs)
 \end{equation}
 %
-where $D(h)$ is a matrix representation of the symmetry element 
-with respect to the atomic orbitals. 
+where $D(\Rs)$ is a matrix representation of the symmetry operation
+$\Rs$ written in the basis of the spherical harmonics. 
 
-If the crystal under considerations has a potential V which transforms as some symmetry group
-the Slater-Koster matrix elements will also transform according to that symmetry group:
+If the crystal under considerations has a potential 
+$V$ which transforms as some symmetry group
+the Slater-Koster matrix elements will also transform 
+according to that symmetry group:
 %
 \begin{equation}
 H_{i\lambda j\mu} = \bra \phi_{i\lambda} | -\frac{\hbar^{2}}{2m}\nabla^{2} + V|\psi_{j\mu} \ket
@@ -1860,8 +1862,9 @@ H_{i\lambda j\mu} = \bra \phi_{i\lambda} | -\frac{\hbar^{2}}{2m}\nabla^{2} + V|\
 %
 
 One of the motivations for the block recursion algorithm 
-is the symmetry of the underlying Hamiltonian is preserved by construction
-in the coefficient blocks $A_{n}$ and $B_{n}$\cite{inoue87}. A discussion of the
+is the symmetry of the underlying Hamiltonian is preserved 
+by construction in the coefficient blocks $A_{n}$ 
+and $B_{n}$\cite{inoue87}. A discussion of the
 transformation of spherical harmonics for different crystal symmetries
 is included in the appendix \ref{appen:grouptheory}.
 
