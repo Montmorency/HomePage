@@ -170,8 +170,25 @@ D.J. Chadi, Phys. Rev. B 16 3572 (1977)
 Matrix Elements for interatomic distances from Bullett.
   -Philos. Mag. [8] 32, 1063 (1975)
 
-
-
-
-
 https://doi.org/10.1080/14786437508221674
+
+
+From Van der Lage's and Bethe paper:
+In this connection the authors are indebted to Pro- fessor S. H. Caldwell of M.I.T. in making available the use of the mechanical Bush Differential Analyzer; to Mr. P. O. Crawford who as a graduate assistant (1940) made the work possible by operating the machine; to Dr. Martin Schwarzschild who ran an independent check on two of the functions at the Thomas Watson Computing Bureau at Columbia University.
+
+From Altmann and Bradley A note on the calculation of the matrix elements of the
+rotation group.
+A program has been written for the Mercury computer to calculate the coefficients
+T
+
+Ferranti Mercury Computer see Altmann and Cracknells Rev. Mod. Phys artice 1965
+for obtaining normalized symmetry-adapted harmonics for the cubic groups.
+
+We are grateful to Professor L. Fox for the grant of 
+computing time on the Oxford University Computer.
+
+Coulson again:
+Band Structure in Graphite
+"We should like to acknowledge the provision of a calculating machine by the British Iron and Steel Research Association,"
+
+@article{Coulson_1952,
