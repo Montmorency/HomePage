@@ -1648,7 +1648,7 @@ matrix or its inverse, it is no longer Hermitian.
 
 The following two subsections suggest a generalization of the recursion
 scheme to deal with non-Hermitian matrices, and a practical means
-of performing non-orthogonal calculations which exploit the Gauss-Siedel
+of performing non-orthogonal calculations which exploit the Gauss-Seidel
 iterative scheme to obtain the inverse of the overlap matrix efficiently.
 In effect these two approaches amount to the choice of working
 in the mixed representation or working with the inverse of the overlap
@@ -1686,7 +1686,7 @@ of the convergence properties of non-Hermitian operators in Ref.~\cite{boys69}.
 The approach to the \index{non-orthogonal basis vectors} taken in the 
 \texttt{CamRecLib} routine \texttt{recno} is slightly different.
 It is similar to the approach taken in Refs.\cite{jones84, jones85} which
-uses the Gauss-Siedel method or the Cholesky decomposition
+uses the Gauss-Seidel method or the Cholesky decomposition
 to efficiently compute the application of the inverse of the overlap matrix
 and obtain the $H^{\alpha}_{\beta}$ of the Hamiltonian discussed in 
 Section~\ref{sec:tensornotation}.
@@ -1718,7 +1718,8 @@ Then up to the $LL^{th}$ iteration of the recurrence:
  u_{n+1} = S^{-1}\psi_{n+1}&
 \end{flalign}
 %
-The Gauss-Siedel Algorithm is used to compute the application of the inverse 
+The Gauss-Seidel Algorithm \index{Gauss-Seidel} is used 
+to compute the application of the inverse 
 of the overlap matrix to the recursion vector so $S^{-1}\psi_{n+1}$:
 %
 \begin{equation}
@@ -1767,12 +1768,12 @@ The forward substitution can proceed column wise or row wise.
 See Ref.~\cite{wilkinson68} for a discussion of the 
 stability of this procedure.
 
-Both the Gauss-Siedel and Cholesky processes emphasise the physical consequence
+Both the Gauss-Seidel and Cholesky processes emphasise the physical consequence
 of applying $S^{-1}$ to the recursion vector at each step.
 It is like a small orthogonalizing hair-cut applied at each stage of the recurrence
 to remove the double counting of components that would arise 
 as a consequence of the overlap of the basis set. The more 
-diagonally dominant the overlap matrix is the faster the Gauss-Siedel 
+diagonally dominant the overlap matrix is the faster the Gauss-Seidel 
 algorithm will converge.
 
 \subsection{Block Recursion}
