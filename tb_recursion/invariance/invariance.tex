@@ -582,32 +582,41 @@ The actual operation of $H|u_{n}\ket$,which has been discussed in a general way 
 can be written as:
 %
 \begin{equation}
-H|u_{n}\ket = \sum_{\alpha l \beta j}a_{n \alpha l}(\bra \beta j |H| \alpha l\ket)|\beta j\ket,
+\label{eq:fullhamhop}
+H|u_{n}\ket = \sum_{i\alpha, j\beta}a_{n i\alpha }(\bra j\beta |H| i\alpha \ket)|j \beta \ket.
 \end{equation}
 %
-to exploit the sparsity of H we introduce an index $z$ which runs over the neighbors of 
-site l with which the orbitals interact:
+The summation in Eq.~\ref{eq:fullhamhop} does not run over every matrix element of the Hamiltonian.
+Instead we appeal to the local formulation of the interactions so that
+H can be stored and manipulated as a sparse matrix. To make this explicit let us 
+introduce an index $z$ which runs over the nearest-neighbours of 
+site $i$ with which the orbitals, $\alpha$, interact:
+%
 \begin{equation}
-H|u_{n}\ket = \sum_{\alpha l z}a_{n \alpha l}(\bra \beta_{z} j_{z} |H^{z}|\alpha l\ket)|\beta_{z} j_{z}\ket.
+\label{eq:hop}
+H|u_{n}\ket = \sum_{i\alpha, j_{z}\beta_{z}}a_{n i\alpha}(\bra j_{z}\beta_{z}|H_{z}|i\alpha\ket)|j_{z}\beta_{z}\ket.
 \end{equation}
+%
 There are no restrictions on the number of orbitals per site, or on the range of interactions that can be
 incorporated, these only impact on the efficiency of the method and the validity of the original assumptions
-about the dominance of the local atomic environment.
-
+about the pre-dominance of the local atomic environment. Computationally Eq.~\ref{eq:hop} is at the
+heart of all recursion calculations and the interested reader could at this point inspect the subroutine
+\texttt{HOP} in \texttt{CamRecLib} to understand how the neighbour lists, matrix elements, and interaction
+vectors are handled.
 
 \section{Recursion Method}
 The principle of the recursion method is to obtain a convergent expression 
 for an element of the Green's function:
 %
 \begin{equation}
-G_{\chi\chi}(E) = \bra\chi|[E + i\delta -H]^{-1}|\chi\ket.
+G(E) = \bra\phi_{i\alpha}|[E + i\delta -H]^{-1}|\phi_{i\alpha}\ket.
 \end{equation}
 %
 
 The Green's function can be immediately related to the local density of states as:
 %
 \begin{equation}
-n_{\alpha l}(E) = -\frac{1}{\pi} {\rm Im}\bra\alpha l|[E + i\delta -H]^{-1}|\alpha l\ket
+n_{i\alpha}(E) = -\frac{1}{\pi} {\rm Im}\bra \phi_{i\alpha} |[E + i\delta -H]^{-1}|\phi_{i\alpha}\ket
 \end{equation}
 %
 
@@ -981,7 +990,7 @@ have also been used to study the behaviour of the recursion coefficients in the
 asymptotic region \cite{allan84}. The problem of terminating the continued fraction
 is quite an involved one and the discussion is deffered to the appendix.}
 
-\subsection{Defects, Surface Electronic Structure and Orbital Peeling}
+\subsection{\texttt{ORPEEL}: Orbital Peeling}
 Surface catalysis is a topic of immense interest in chemistry and chemical engineering.
 The rate at which reactions proceed is important in industrial and biomedical 
 applications. The presence of a surface disrupts the periodicity required to use Bloch's theorem,
@@ -1302,7 +1311,7 @@ and the response functions \cite{terakura82, sutton88}:
 and upon integration:
 %
 \begin{equation}
-\frac{-2}{\pi}G_{jk}(E^{+}) = \frac{2{\rm Im}}{\pi}\int^{E}\sum_{l}G_{jl}(E')G_{lk}(E')dE'.
+G_{jk}(E^{+}) = -{\rm Im}\int^{E}\sum_{l}G_{jl}(E')G_{lk}(E')dE'.
 \end{equation}
 %
 
@@ -1372,9 +1381,10 @@ begins near the inception of quantum theory. As mentioned in Ref.~\cite{altmann7
 Coulson is supposed to have attended a seminar given by Dirac 
 where Dirac was discussing the uncertainty relation: $xp-px=ih$.
 When Coulson inquired when this work had been done Dirac replied, 
-``Last night." In 1938 Coulson may have performed the first 
-iterative self-consistent field calculations 
-on a molecule, $H_2$, by hand (with the possible help of a £25 Brunsviga calculator)
+``Last night." In 1938 Coulson may have performed what was
+the first iterative self-consistent field calculation
+on a molecule, H$_2$, by hand (with the possible help of a 
+Brunsviga calculator purchased for \pounds 25.)
 ~\cite{coulson38}. Coulson's life work spans diverse fields.
 A small selection from his bibliography will find work 
 touching on numerical methods \cite{coulson37,coulson42}, 
@@ -1538,7 +1548,7 @@ The matrix element of the overlap between non-orthogonal
 basis functions can be written:
 %
 \begin{equation}
-S_{\alpha\beta} = \bra \psi_{\alpha}|\psi_{\beta}\ket
+S_{i\alpha j\beta} = \bra \psi_{i\alpha}|\psi_{j\beta}\ket
 \end{equation}
 %
 with $i,j$ referring to a site index and $\alpha$ and $\beta$ 
@@ -1554,7 +1564,7 @@ H_{\alpha \beta} = \bra \psi_{\alpha}|H|\psi_{\beta}\ket
 The inverse of the overlap matrix is defined:
 %
 \begin{equation}
-\sum_{\beta}(S^{-1})^{\alpha\beta}S_{\beta\gamma}=\delta^{\alpha}_{\gamma}.
+\sum_{j\beta}(S^{-1})^{i\alpha j\beta}S_{j\beta l\gamma}=\delta^{i\alpha}\ _{l\gamma}.
 \end{equation}
 %
 
@@ -1564,7 +1574,7 @@ such that they produce the identity matrix upon multiplication $S$.
 The dual set of basis vectors is:
 %
 \begin{equation}
-|\psi^{\alpha}\ket = \sum_{\beta}|\psi_{\beta}\ket(S^{-1})^{\beta\alpha}.
+|\psi^{i\alpha}\ket = \sum_{j\beta}|\psi_{j\beta}\ket(S^{-1})^{j\beta i\alpha}.
 \end{equation}
 %
 If the overlap matrix is just the identity matrix the original 
@@ -1574,16 +1584,16 @@ on your naming preference) are equal.
 
 The two most important aspects of any basis set
 are {\it representation} and {\it normalization}. 
-We can reprsent an arbitrary vector $|u\ket$:
+We can {\it represent} an arbitrary vector $|u\ket$ as:
 %
 \begin{equation}
-|u\ket = \sum_{\alpha}u^{\alpha}|\psi_{\alpha}\ket = \sum_{\alpha}u_{\alpha}|\psi^{\alpha}\ket.
+|u\ket = \sum_{i\alpha}u^{i\alpha}|\psi_{i\alpha}\ket = \sum_{i\alpha}u_{i\alpha}|\psi^{i\alpha}\ket.
 \end{equation}
 %
 The expansion coefficients in either basis can be obtained via:
 %
 \begin{equation}
-u_{\alpha} = \sum_{\beta}S_{\alpha\beta}u^{\beta}.
+u_{i\alpha} = \sum_{j\beta}S_{i\alpha j\beta}u^{j\beta}.
 \end{equation}
 %
 
@@ -1591,7 +1601,8 @@ Along with {\it representation} we require a {\it norm} i.e.
 the inner product of two vectors:
 %
 \begin{equation}
-\bra v|u \ket = \sum_{\alpha\beta}v^{\alpha *}S_{\alpha\beta}u^{\beta} = \sum_{\alpha}v^{\alpha *}u_{\alpha} = \sum_{\beta}v_{\beta *}u^{\beta}
+\bra v|u \ket = \sum_{i\alpha i\beta}v^{i\alpha *}S_{i\alpha j\beta}u^{j\beta} = \sum_{i\alpha}v^{i\alpha *}u_{i\alpha} 
+= \sum_{j\beta}v_{j\beta *}u^{j\beta}
 \end{equation}
 %
 
@@ -1650,7 +1661,7 @@ matrix or its inverse, it is no longer Hermitian.
 The following two subsections suggest a generalization of the recursion
 scheme to deal with non-Hermitian matrices, and a practical means
 of performing non-orthogonal calculations which exploit the Gauss-Seidel
-iterative scheme to obtain the inverse of the overlap matrix efficiently.
+iterative scheme to obtain the inverse of the overlap matrix.
 In effect these two approaches amount to the choice of working
 in the mixed representation or working with the inverse of the overlap
 matrix and the lower indiced Hamiltonian respectively.
@@ -1676,34 +1687,37 @@ and the overlap is given by $b^{2}_{n+1} = \bra v_{n+1}|u_{n+1}\ket$.
 
 The danger of the two sided recursion algorithm is that the inner
 product of the vectors $\bra v_{n+1}|u_{n+1}\ket$ could become negative.
-The density of states would no-longer be non-negative which makes it
-more difficult to interpret as a local density of states. The fact 
-that the Hamiltonian is non-Hermitian does not guarantee this will 
+The density of states would no longer be non-negative which makes it
+difficult to interpret. The fact that the Hamiltonian is non-Hermitian 
+does not guarantee this will 
 be the case so the application of this method may not produce 
-any complex eigenvalues. S. F. Boys has given a thorough treatment
-of the some of the properties of non-Hermitian operators in electronic
-structure calculations in Ref.~\cite{boys69}.
+any complex eigenvalues. 
+
+S. F. Boys has given a thorough treatment
+of the some of the properties of non-Hermitian operators in 
+electronic structure calculations in Ref.~\cite{boys69}.
 
 \subsubsection{\texttt{RECNO}: Recursion Non-Orthogonal Algorithm}
-The approach to the \index{non-orthogonal basis vectors} taken in the 
-\texttt{CamRecLib} routine \texttt{recno} is slightly different.
-It is similar to the approach taken in Refs.\cite{jones84, jones85} which
-uses the Gauss-Seidel method or the Cholesky decomposition
-to efficiently compute the application of the inverse of the overlap matrix
+We now describe one approach to non-orthogonal basis 
+vectors \index{non-orthogonal basis vectors} taken by
+\texttt{CamRecLib} and the routine \texttt{recno}.
+It is essentially the approach taken by Jones in Refs.\cite{jones84, jones85} which
+uses the Gauss-Seidel method to compute the application 
+of the inverse of the overlap matrix
 and obtain the $H^{\alpha}_{\beta}$ of the Hamiltonian discussed in 
 Section~\ref{sec:tensornotation}.
 
-Following the notation in \cite{nex89} the generalized 
+Following Nex in Ref.~\cite{nex89} the generalized 
 eigenvalue problem to be solved becomes:
 
 \begin{equation}
-MX = \epsilon S X
+MX = ESX
 \end{equation}
 
-The actual Greenian computed is:
+The Greenian computed is:
 %
 \begin{equation}
-\bra u_{0}S|[S\epsilon-M]^{-1}|Su_{0}\ket
+\bra u_{0}S|[SE-M]^{-1}|Su_{0}\ket
 \end{equation}
 %
 
@@ -1713,24 +1727,31 @@ The \texttt{RECNO} algorithm then proceeds according to the following steps:
 \psi_{0} = & Su_{0} \\
 b^{2}_{1} = & \bra u_{0}|\psi_{0} \ket \\
 \end{flalign}
-Then up to the $LL^{th}$ iteration of the recurrence:
+
+Then we recur:
+%
 \begin{flalign}
- a_{n} = \frac{\bra u_{n}|M u_{n}\ket}{\bra u_{n}|\psi_{n} \ket}&\\
+ a_{n} = \frac{\bra u_{n}|M|u_{n}\ket}{\bra u_{n}|\psi_{n} \ket}&\\
  \psi_{n+1} = M u_{n} - a_{n}\psi_{n} - b^{2}_{n}\psi_{n-1}&\\
  u_{n+1} = S^{-1}\psi_{n+1}&
 \end{flalign}
 %
 The Gauss-Seidel Algorithm \index{Gauss-Seidel} is used 
-to compute the application of the inverse 
-of the overlap matrix to the recursion vector so $S^{-1}\psi_{n+1}$:
+in the final step to compute the application of the inverse 
+of the overlap matrix to the recursion vector. 
+The matrix vector product is computed by repeated application
+(indexed by $i$) of the strict left and right triangular parts of $S$:
 %
 \begin{equation}
-u_{n+1}^{i} = \psi_{n+1} - Lu_{n+1}^{i} - Ru^{i-1}_{n+1}
+\label{eq:gaussseidelS}
+u_{n+1}^{i} = \psi_{n+1} - Lu_{n+1}^{i} - Ru^{i-1}_{n+1}.
 \end{equation}
 %
-L and R are the strict left and right triangular parts of S.
+Eq.~\ref{eq:gaussseidelS} involves tracking the convergence with respect
+to the number of iterations of Gauss-Seidel steps. The more strongly
+diagonally dominant the matrix is the quicker it will converge.
 
-In Ref.~\cite{weaire85} R. Jones proposes an alternative strategy
+In Ref.~\cite{weaire85} Jones proposes an alternative strategy
 for obtaining and applying the inverse matrix $S^{-1}$ based on the Cholesky
 decomposition \index{Cholesky Decomposition}.
 
@@ -1770,15 +1791,15 @@ The forward substitution can proceed column wise or row wise.
 See Ref.~\cite{wilkinson68} for a discussion of the 
 stability of this procedure.
 
+\subsubsection{}
+
 Both the Gauss-Seidel and Cholesky processes emphasise the physical consequence
 of applying $S^{-1}$ to the recursion vector at each step.
 It is like a small orthogonalizing hair-cut applied at each stage of the recurrence
 to remove the double counting of components that would arise 
-as a consequence of the overlap of the basis set. The more 
-diagonally dominant the overlap matrix is the faster the Gauss-Seidel 
-algorithm will converge.
+as a consequence of the overlap of the basis set. 
 
-\subsection{Block Recursion}
+\subsection{\texttt{BLKRECLIB}: Block Recursion}
 The block recursion method is a direct and intuitive extension of the scalar method.
 In this method a {\emph set of m} initial orbitals are chosen. The recursion
 coefficients then become matrices, and the continued fractions become
@@ -1874,56 +1895,69 @@ is included in the appendix \ref{appen:grouptheory}.
 \index{blockrecursion}
 The matrix Greenian to be computed is:
 \begin{equation}
-\mathbf{G}(E) = \bra U_{0}S|[SE-H]^{-1}|SU_{0}\ket
+G(E) = \bra U_{0}S|[SE-H]^{-1}|SU_{0}\ket
 \end{equation}
 
-The starting vector $u_{0}$ which in the scalar recursion
-would have been a starting orbital or a linear combination of 
-starting orbitals, is now a matrix of starting orbitals. 
+The starting vector $u_{0}$, which in the scalar recursion
+was a starting orbital or a linear combination of 
+starting orbitals represented as a vector, 
+is now a matrix (or block) of starting orbitals. 
 The initial block matrix can be written:
 %
 \begin{equation}
 (U^{s}_{0})_{\lambda\mu} = \delta_{is}\delta_{\lambda\mu} \pm \delta_{js}\delta_{\lambda\mu}
 \end{equation}
 %
-with $s,i,j$ running over the site indices and  U is an $N\times p$ block or orbitals
-with N the number of sites and p the number of orbitals.
+with $s,i,j$ running over the site indices and 
+U is an $N\times p$ block of orbitals
+with N the number of sites and p the 
+number of orbitals.
 
 Nex formulates the block recursion in terms of the 
-$D$ matrix, or in the tensor notation, the mixed Hamiltonian (see sec.~\ref{sec:tensornotation}:
+$D$ matrix, or in the tensor notation, the 
+Hamiltonian in the mixed representation 
+(Sec.~\ref{sec:tensornotation}):
 %
 \begin{equation}
-D = S^{-1}H = H^{\alpha} _{\beta}.
+D = S^{-1}H = H^{i\alpha}\ _{j\beta}.
 \end{equation}
 %
 
 The steps of the block Lanczos iteration then follow a familiar pattern.
-the projection of the current step is computed:
+The projection of the current step is computed:
 %
 \begin{equation}
-A_{n} = U_{n}SDU_{n},
+A_{n} = \bra U_{n}|SD|U_{n}\ket,
 \end{equation}
-
-and the next block of vectors in the chain is formed by application of the Hamiltonian
-and removed the previous components of the chain:
+%
+and the next block of vectors in the chain is formed 
+by application of the Hamiltonian and orthogonalization
+to the previous block:
 %
 \begin{equation}
 \label{eq:blockrec}
-U_{n+1}B^{\dagger}_{n+1} = V_{n+1} = \mathbf{D}U_{n} - U_{n}A_{n} - U_{n-1}B_{n}.
+U_{n+1}B^{\dagger}_{n+1} = V_{n+1} = DU_{n} - U_{n}A_{n} - U_{n-1}B_{n}.
 \end{equation}
 %
 The vector $V_{n+1}$, which is produced operationally by the right hand
-side of Eq.~\ref{eq:blockrec}, needs to be factored into the block
+side of Eq.~\ref{eq:blockrec}, needs to be factored into the blocks
 $U_{n+1}$ and $B_{n+1}$. 
 
-$B_{n}$ and $A_{n}$ are $p\times p$ 
-matrices with $p$ the number of columns in the initial block matrix, or
-physically, the number of starting orbitals chosen to
+The factorization is carried out be performing a modified Gram-Schmidt
+orthogonalization on  $U_{n+1}B_{n+1}^{\dagger}$. The $B$ matrices are
+lower triangular and are the Choleski factors of $B^{\dagger}B$
+see Refs.~\cite{nex89,godin91}.
+
+$B_{n}$ and $A_{n}$ are $NP\times NP$ 
+matrices with $NP$ the number of columns in the initial block matrix, 
+or, physically, the number of starting orbitals chosen to
 initiate the recursion. A common choice for the starting block
 might be the full set of atomic orbitals centered on a particular 
-site: e.g. 5 d-orbitals centered on an atom in an FCC crystal. 
-Each step of the block recursion then propagates an entire subspace of
-the matrix rather than just a single element.
+site: e.g. all 5 d-orbitals centered on an atom in an FCC crystal. Another
+choice would be two blocks of orbitals on separate atoms to compute
+off-diagonal blocks analogous to the off-diagonal scalar elements.
+Each step of the block recursion then propagates an entire 
+subspace of the matrix rather than just a single element.
 
 There are a few different ways to factor $V_{n+1}$. Nex
 uses a modified Gram-Schmidt algorithm to orthogonalise 
@@ -1935,8 +1969,9 @@ form:
 u_{i} = \frac{1}{k_{i}}[v_{i} - \sum_{j < i}(v^{\dagger}_{i}Su_{j})u_{j}]
 \end{equation}
 %
-This can be rearranged with $B_{n}$ a lower triangular matrix (note it is $B^{\dagger}$
-that is applied in Eq.~\ref{eq:blockrec}):
+This can be rearranged with $B_{n}$ a lower triangular 
+matrix (note it is $B^{\dagger}$ that is applied 
+in Eq.~\ref{eq:blockrec}):
 %
 \begin{equation}
 b_{ij} = k_{ij}\delta_{ij} + \bra v_{i}|Su_{j}\ket (1-\delta_{ij}) \quad j>i
@@ -1944,35 +1979,48 @@ b_{ij} = k_{ij}\delta_{ij} + \bra v_{i}|Su_{j}\ket (1-\delta_{ij}) \quad j>i
 
 The effect of the three term block recurrence procedure
 is demonstrated by the action of the D matrix on the 
-generated chain:
+chain:
 %
 \begin{align*}
-D[U_{0}U_{1}U_{2}...] &= &[U_{0}U_{1}U_{2}...]& A_{0}           & B_{1} & 0     & ...   \\
-                      &  &                    & B_{1}^{\dagger} & A_{1} & B_{2} & ...   \\
-                      &  &                    & 0               & B_{2} & A_{2} & B_{3}
+D\left[U_{0}U_{1}U_{2}...\right] = [U_{0}U_{1}U_{2}...] 
+                  \begin{bmatrix}       A_{0}           & B_{1}  & 0                &   0    & ...  \\
+                                        B_{1}^{\dagger} & A_{1}  & B_{2}            &   0    & ...  \\
+                                        0               & B_{2}  & A_{2}            & B_{3}  & ...  \\
+                                        \vdots          & \vdots & B^{\dagger}_{3}  & \ddots & ...  \\
+                  \end{bmatrix}
 \end{align*}
 %
 
 \subsubsection{Matrix Continued Fractions}
 The matrix recursion coefficients $A_{n}$ and $B_{n}$ are handled by
 analogy with their scalar counterparts $a_{n}$ and $b_{n}$. 
-The recursion library provides two different approaches to generating 
-the desired resolvent spectra from the recurrence coefficient blocks.
+In general the recursion library provides two 
+different approaches to generating 
+the desired resolvent spectra from the 
+recurrence coefficients or blocks of coefficients:
+%
+\begin{enumerate}
+\item A quadrature approach
+\item A termination approach
+\end{enumerate}
+%
 
-As in the scalar case there are two approaches a quadrature approach
-and a termination approach. Most of the discussion 
-of handling of the continued fractions in the scalar case
+Most of the discussion 
+of the handling of the continued fractions in the scalar case
 is deferred to the mathematical appendix and it is recommended 
-the reader familiarizes themselves with that. The relations for
-the block recursion are included here for ease of reference.
+the reader familiarizes themselves with that. The equations for
+generating the resolvents from the block 
+recursion coefficient matrices are 
+included here for ease of reference.
 
-The identities for the convergents of a continued fraction (see Appendix)
-are generalized. There are two types.
+The identities for the convergents of a scalar continued fraction (see Appendix)
+are generalized to matrices. There are two types.
 
 Type 1:
 \begin{equation}
 B_{n+1}P_{n+1}(E) = (E-A_{n})P_{n}(E) -B^{\dagger}_{n}P_{n-1}(E),
 \end{equation}
+%
 with $P_{-1}(E)=0$ and $P_{0}(E)=B_{0}^{-1}$,
 and type 2:
 %
@@ -1984,22 +2032,22 @@ with $Q_{-1}(E)=0$ and $Q_{0}(E)=B_{1}^{-1}B^{\dagger}_{0}$.
 %
 Defining the terminal matrix polynomials as:
 \begin{equation}
-\mathbf{P}_{L}(E) = P_{L}(E) -t(E)B_{L}^{\dagger}P_{L-1}(E)
+P_{L}(E) = P_{L}(E) -T(E)B_{L}^{\dagger}P_{L-1}(E)
 \end{equation}
 and
 \begin{equation}
-\mathbf{Q}_{L}(E)=[Q_{L-1}(E) -t(E)B_{L}^{\dagger}Q_{L-2}(E)]
+Q_{L}(E)=[Q_{L-1}(E) -T(E)B_{L}^{\dagger}Q_{L-2}(E)]
 \end{equation}
 
 The Greens function matrix can be written:
 %
 \begin{equation}
-\mathbf{G}(E) = \mathbf{P}_{L}^{-1}(E)\mathbf{Q}_{L}(E)
+G(E) = P_{L}^{-1}(E)Q_{L}(E)
 \end{equation}
 %
-The simplest choice of matrix terminator is a diagonal 
-matrix with the corresponding terminators for the scalar 
-case along the diagonals.
+The simplest choice of matrix terminator,$T(E)$, 
+is a diagonal matrix with the corresponding 
+terminators for the scalar case along the diagonals.
 
 \subsection{Phonon Recursion}
 With a simple modification phonon spectra can be computed directly 
@@ -2187,6 +2235,15 @@ in ice have also been studied using the recursion method\cite{mcgra78,bergren82}
 chain, using classical mechanics, of spring coupled massed using a continued fraction expansion see 
 The Classical Harmonic Chain: Solution via Laplace Transforms and Continued Fractions 
 (https://arxiv.org/pdf/1608.00616).}
+
+\section{Recursive Perturbation Theory:\texttt{RECPER}}
+An experiment on a material takes the form of some kind of probe. In many cases the probe is
+a photon or an electron that is launched in the direction of a sample. The scattering 
+of the probe is observed and the properties of the material are inferred.
+In other experiments a material is stretched or twisted and the 
+reaction of the material to the introduction of this external
+force is recorded. The necessary implications of the observed reaction
+for the microscopic properties are then deduced.
 
 \section{Chains and Moments}
 Before concluding this chapter there are a few 

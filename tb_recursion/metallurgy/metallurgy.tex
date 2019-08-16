@@ -113,6 +113,185 @@ Shearing, straining, Young's modulus, poisson ratio, elastic tensors these are t
 stuff of every undergraduate materials mechanics course.
 Imagine you have some tensor $\epsilon$ and you apply a virtual pure strain to a collection atoms.
 
+The present section will demonstrate how to compute some of the elastic properties
+of a BCC crystal using recursion techniques. There are a couple approaches.
+One of them involves looking at the changes in the total energy with
+respect to a deformation of the lattice and picking out the 
+second derivative of this change which, depending on the deformation chosen,
+will correspond to an element of the elastic tensor. The second approach
+proceeds directly from the Hamiltonian that has been chosen. Second order
+perturbation theory allows us to explicitly calculate the contributions of
+the Hamiltonian to the elastic constants. The second approach has distinct
+numerical and conceptual advantages.
+
+\subsection{The Expressions We Need}
+In the author's opinion elasticity is made difficult by the appearance of a variety
+of numerical prefactors. An abundance of factors of 2,
+1/3, 1/6, etc. seem to arise in the course of a calculation hindering progress. 
+We will not attempt to give an introduction to the principles of elasticity rather
+we would just provide a collection of equations and some visuals 
+that relate deformations of the crystal to changes in total energy.
+
+In this section we shall specialize the analysis to a cubic crystal, specifically a body centered cubic
+crystal and simply state the lattice deformations which are required to probe the 
+different material elastic constants. We will follow the notation given by Finnis where
+a much more detailed exposition can be found along with pointers to comprehensive references.
+
+The first constant we might calculate is the Bulk Modulus which is defined:
+%
+\begin{equation}
+\label{eq:bulkmodulus}
+B\equiv V_{c} \frac{\partial^{2} E}{\partial V_{c}^{2}}
+\end{equation}
+%
+that is the second order variation in the energy with respect to changes in the 
+sample volume multiplied by the volume. After some rearrangement (which is a useful
+exercise) Eq.~\ref{eq:bulkmodulus} can be written:
+%
+\begin{equation}
+V_{c}\frac{\partial^{2} E}{\partial V_{c}^{2}} = \left[-\frac{2}{3}\frac{\partial E}{\partial V_{c}}+\frac{1}{9V_{c}}\frac{\partial^{2}E}{\partial \gamma^{2}} \right],
+\end{equation}
+
+where gamma is a scalar that can be varied and controls the change in volume:
+%
+\begin{equation}
+V_{c}(\gamma) = (1+\gamma)^{3}V_{c}(0)
+\end{equation}
+%
+
+The elastic energy contribution to a sample is written:
+%
+\begin{equation}
+\label{eq:eq:elasticenergy}
+E^{elastic} = \frac{1}{2}C_{11}(\epsilon^{2}_{1} + \epsilon^{2}_{2} + \epsilon^{2}_{3}) + C_{12}(\epsilon_{1}\epsilon_{2}
++\epsilon_{2}\epsilon_{3} + \epsilon_{3}\epsilon{1}) + C_{44}(\epsilon^{2}_{4} + \epsilon^{2}_{5} + \epsilon^{2}_{6})
+\end{equation}
+%
+where Voight's notation ($\epsilon_{1}=\epsilon_{xx}$...) has been used. Staring at Eq.~\ref{eq:elasticenergy} you
+should be able to see that deformations which pick out only $C_{44}$ or $C_{11}$ should be fairly easy to write down
+however $C_{12}$ requires a little more work to pick out on its own.
+
+Let $\epsilon_{ij} = \gamma T_{ij}$, (we like introducing $\gamma$ because it is useful to have a simple scalar
+to parametrize the lattice distortions which are written as a matrix $T$).
+We can now write the modified lattice constants as:
+%
+\begin{equation}
+R'_{i\alpha} =  R_{i\alpha} + \gamma \sum_{\beta} T_{i\beta}R_{i\beta}
+\end{equation}
+%
+
+Following Finnis we rewrite Eq.~\ref{q:elastic energy} in terms of the T matrices:
+
+To obtain the shear elastic constant: $C' = \frac{1}{2}(C_{11}-C_{12})$ the following deformation
+matrices are particularly helpful a tetragonal distortion:
+%
+\begin{equation}
+T^{t} =  
+    \begin{bmatrix}
+         1 &   0   & 0  \\
+         0 &  -0.5 & 0  \\    
+         0 &   0   &-0.5 
+    \end{bmatrix}
+\end{equation}
+
+or a distortion of the (110) plane:
+%
+\begin{equation}
+T^{(110)} = 
+    \begin{bmatrix}
+            1 &  0 & 0  \\
+            0 & -1 & 0  \\    
+            0 &  0 & 0 
+    \end{bmatrix}
+\end{equation}
+
+To obtain the $C_{44}$ contributions we may introduce
+a rhombohedral distortion:
+%
+\begin{equation}
+T^{(111)} =  
+    \begin{bmatrix}
+             0   & 0.5 & 0.5 \\
+             0.5 & 0   & 0.5 \\    
+             0.5 & 0.5 & 0 
+    \end{bmatrix}
+\end{equation}
+%
+or a (100) distortion:
+%
+\begin{equation}
+T^{(100)} =  
+\begin{bmatrix}
+             0 & 1 & 0 \\
+             1 & 0 & 0 \\    
+             0 & 0 & 0 
+\end{bmatrix}
+\end{equation}
+%
+
+For any new potential the computation of the predicted elastic properties should
+be the first port of call. For the crystal to be stable $B,C',C_{44}$ must all be
+greater than 0 so that gives a definite sanity check on the model. 
+
+Let us apply these deformations to a BCC crystal and see what comes out.
+
+First we'll make a few observations. The deformation matrices for
+$C'$ will not change the relative positions of the first nearest neighbours.
+This deformation will, however, alter the second nearest neighbour positions so we may expect
+that the $C'$ shear will be largely determined by the second nearest neighbour interactions. 
+As for the $C_{44}$ distortions all neighbours participate in a rhombohedral distortion
+and all neighbours save the two second nearest neighbours orthogonal to the $(100)$
+plane participate in a $T^{(100)}$ distortion. 
+
+If we wish to approximate the second derivative of the total energies with 
+respect to $\gamma$ we are going to have to be careful. We won't be able
+to obtain it by doing a single total energy difference calculation. That
+will not contain enough information. We could accomplished it by assuming
+an expression of the form: 
+\begin{equation}
+\Delta E(\epsilon) = 2\epsilon^{2} E^{(2)} + \epsilon^{4} E^{(4)},
+\end{equation}
+and solving for $E^{(2)}$. Or we could do multiple energy calculations for a sequence 
+of distortions and fit a polynomial to the results extracting
+the second difference from the polynomial fit.
+
+If you have worked your way through Sec.~\ref{sec:vibrations} you might already have
+a set of force constant pairs to hand. In that case Eq.~\ref{eq:brockhouselimit} will give you
+another means of obtaining the required elastic constants.
+%
+\begin{equation}
+\label{eq:brockhouselimit}
+C_{i} = \frac{1}{B_{i}a}\sum_{n} n^{2}\Phi_{n}
+\end{equation}
+%
+The correspondence between the elastic constant $C_{i}$ and the phonon modes is given
+in Table~\ref{tab:brockhouse}:
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+Phonon Branch  & Elastic Constant \\
+\hline
+(00q)L  & $C_{11}$ \\
+(00q)T  & $C_{44}$ \\
+(qqq)L  & $(C_{11}+2C_{12}+4C_{44})/3$ \\
+(qqq)T  & $(C_{11}-C_{12}+C_{44})/3$ \\
+(qq0)L  & $C_{11}+2C_{12}+4C_{44}$ \\
+(qq0)T1 & ($C_{11}$ - $C_{12}$)/2\\
+(qq0)T2 & $C_{44}$\\
+\hline
+\end{tabular}
+
+\caption{Correspondence of phonon branch with combinations of elastic constants.}
+\end{center}
+\end{table}
+
+Notice that the factor of $n^{2}$ means you have to be quite confident in the accuracy of
+the force constants connecting distant pairs of atoms. Otherwise any error
+in your calculation will be rapidly amplified. You should also hope your force
+constants are decaying will some alacrity perhaps at least as quickly as $n^{-4}$.
+
 \subsection{Local Stress Fields}
 The TBB Model \cite{nielsen83, sutton88} gives us a means of defining and calculating 
 a local in the sense of a per atom stress tensor. If $I$ and $J$ 
@@ -138,8 +317,8 @@ see Ref.~\cite{ohta90}
 %integrals, both hopping and on-site, which we went to the trouble 
 %of learning in Chapter~\ref{chap:wannier}.
 
-Ref.~\cite{terakura84} demonstrates how the recursion method
-may be used to compute the elastic constants of a material.
+%Ref.~\cite{terakura84} demonstrates how the recursion method
+%may be used to compute the elastic constants of a material.
 
 The interaction of dislocations and defects reveals one of the most difficult problems
 in theoretical materials science: the coupling of long range elastic fields

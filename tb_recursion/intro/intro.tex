@@ -137,9 +137,6 @@ that a satisfactory theory of materials must possess:
 %
 These four observations provide a useful framework to analyze the current state of the field.
 
-
-
-
 \subsection{Scales of Materials Modelling}
 What are the scales involved in materials modelling?
 On what length scale is it important to treat the interactions
@@ -288,7 +285,7 @@ actual scale of the increase in computing power and then we will
 attempt to identify the major theoretical pillars of 
 materials modelling.
 
-\section{Digital Computing}
+\section{Computational Resources}
 \label{sec:riseofcomp}
 \begin{itemize}
 \item Ab initio calculations without approximations are virtually impossible 
@@ -303,12 +300,13 @@ Before discussing the development of machines in the three decades since the 198
 is to worthwhile to reflect on the development of the machines in two
 sets of three decades before the 1980s. 
 
-For a comprehensive introduction to the history of computing see 
+For an entertaing introduction to the history of computing see 
 George Dyson's Turing's Cathedral~\cite{dyson12} 
-and the references therein. For a review of the state of computing in
-1980 see Ref.~\cite{metropolis80}.
+and the references therein. For a technical review of 
+the state of computing in 1980 see Ref.~\cite{metropolis80}.
 
-In 1936 Alan Turing published, ``On Computable Numbers, 
+A suitable place to begin a potted history is in 
+1936 with Alan Turing's, ``On Computable Numbers, 
 With An Application to the Entsheidungsproblem"
 \cite{turing36a}. Turing's concerns were in the domain of pure mathematics and
 formal logical but his method of proof invoked a black box machine capable of performing
@@ -324,51 +322,53 @@ The journey from this magic theory box to a machine capable of manipulating
 numbers is the history of modern computing. From this basic set of processes
 all the mechanisms to add, subtract, multiply, divide, take square roots, cubed roots, to take logs,
 to store, copy, and erase numbers, had to be invented. As Turing noted the important point about
-these machines is they are discrete, the fact that they are electronic
+these machines is that they are discrete, the fact that they are electronic
 is an engineering choice; a choice made for speed.
 
 A figure to set the scale for the rise in digitial computing is given in a report
-by the U.S. Office of Naval Research: seventeen years after Turing's paper 
+by the U.S. Office of Naval Research. Seventeen years after Turing's paper 
 was published in March of 1953 there were 53 kilobytes of 
-random access memory on planet Earth.\cite{usonr53}
+random access memory on Earth.\cite{usonr53}
 These kilobytes were scattered across a few private and government machines. 
 
+One of the first major computing machines was built in Princeton and named
+MANIAC (Mathematical and Numerical Integrator and Computer)
 The types of computations that were performed in the early days of the MANIAC 
-(Mathematical and Numerical Integrator and Computer) in Princeton
 were mainly for thermonuclear applications with Nils Baricelli 
 squeezing in the first computational biology simulations 
-performed on a digital computer in between calculations \cite{dyson12, barricelli54, barricelli62}.
+performed on a digital computer in the small hours of the morning
+between thermonuclear runs \cite{dyson12, barricelli54, barricelli62}.
 
 The computational scientist of the early 1950s working
-on the MANIAC in the basement of Princeton had a number of additional 
-technical difficulties to overcome. The machine would have to be rewired when one wanted
-to change its instructions. Programming errors had to be surmounted along with exploding
+on the MANIAC had a number of additional 
+technical difficulties to overcome beyond those of present day programmers. 
+For instance programming errors, where reprogramming often meant physically rewiring
+the machine, had to be surmounted along side exploding
 vacuum tubes and mice meeting their untimely demise in the circuitry.
 
-As these machines were being developed Cornelius Lanczos published
-an article: An Iteration Method for the Solution of the Eigenvalue Problem of Linear
-Differential and Integral Operators\cite{lanczos50}. In timely fashion, Lanczos desribed 
+Contemporaneous with the development of these machines Cornelius Lanczos published
+an article: ``An Iteration Method for the Solution of the Eigenvalue Problem of Linear
+Differential and Integral Operators"\cite{lanczos50}. In timely fashion, Lanczos desribed 
 an iterative algorithm for determining the eigenvalues and eigenvectors for a given
-matrix. The iterative computation approach should become fairly
-familiar by the end of this book. We shall return to the algorithm 
-and related ideas in Chapter~\ref{eq:invariance}. 
+matrix with an algorithm particularly well suited to a computer. 
+The iterative approach to determining the spectral properties of operators 
+should become fairly familiar by the end of this book. 
+We shall return to the algorithm and related ideas in Chapter~\ref{eq:invariance}. 
 
-Interesting, for the purposes of our story, 
-Cornelius also made as one of the early workers
-to recognize the equivalence between Schr\"odinger and Heisenberg's early
+Interestingly, for the purposes of our story, 
+Cornelius Lanczos had also made an important contribution in the early
+days of Quantum Mechanics. He was one of the early workers
+to recognize the equivalence between the Schr\"odinger and Heisenberg
 formulations of quantum mechanics, see Zeitschrift fur Physik 35, 812 (1926). 
 
 The equivalence he recognized was effected by relating Heisenberg's matrix mechanics to
-Schr\"odinger's wave equation by exploiting a Green's function formalism. 
-So at two important points in the story to come Lanczos has made 
-decisive contributions.
+Schr\"odinger's wave equation by exploiting a Green's function formalism. In addition
+to the iterative approach to the solution of linear equations the use of Green's functions
+will form a central topic of study in these notes.
 
-%In 1973 the IBM 370 would have been a serviceable machine for a well equipped
-%laboratory.
-
-This situation had changed significantly by 1987. The MANIAC now sits collecting dust in
-the basement of the Institute for Advanced Study and attention 
-is focused on the Connection Machine.
+This situation had changed significantly by 1987. Gone were the vacuum tubes
+now replaced by solid state transistors. A representative state of the art
+machine of this era would be the Connection Machine.
 \footnote{One of the employees at Thinking Machines Corporation,
 the company building the connection machine, was Richard Feynman
 who would have been closely associated with those building and running
@@ -377,23 +377,19 @@ did at Thinking Machines and Feynman's time there see W. Daniel
 Hillis' article in Physics Today 42, 2, 78 (1989).}
 %There was a strong focus on design at the company. Some of that
 %work can be found at Tamiko Thiel's page}%; \url{http://www.tamikothiel.com/theory/cm_txts/di-frames.html}}
-The CM-2 was launched in 1987. From the planet's supply of 53 kilobytes of RAM
-the connection machine was configured with up to 512 MB of RAM and 25 GB of RAID
+The CM-2 was launched in 1987 and was configured with 512 MB of RAM and 25 GB of RAID
 hard disk space. It had 65K microprocessors (each with 600 bytes of memory). 
-%Support for 32 bit floating point operations meant just over 
-%2048 processors in practice per machine.
 
 By contrast the HPC machine presently accessible to the author 
 is more easily measured in nodes. Each node in a machine has 2x12 core Intel Broadwell processors.
 Each {\emph node} has 128 GB RAM and 120 GB static storage. The machine has in total 720 nodes. 
-The processors themselves have up to 10 cores with clock speeds 
-on the order of 3 GHz. A clock speed of 12.5 MHz would be representative in 1987. 
-Each processor, on the modern machine, has abundant cache 
+The processors themselves have up to 10 cores with clock speeds, the rate at which instructions can
+be executed, on the order of 3 GHz. A clock speed of 12.5 MHz would be representative in 1987. 
+Each processor, on the `modern' machine, has a cache 
 space of 10x 256 KiB L2 Cache, and 25 MiB of L3 cache,
 this is to be compared with 600 bytes in the connection machine. 
-Nowadays there could be on the order of 3 billion 
-transistors in a single microprocessor;
-in 1987 that number would be closer to 100,000. 
+Nowadays there could be on the order of 3 billion transistors in a 
+single microprocessor; in 1987 that number would be closer to 100,000. 
 
 Listing specifications like RAM and clock speeds doesn't necessarily clarify 
 how much more powerful machines have become, 
@@ -402,13 +398,14 @@ there are 3-5 orders of magnitude improvements in each category.
 The stability and optimization of compilers and the ease of programmability
 of the machines has also improved.
 
-It is this constant development of computing capacity that 
+It is this constant and dramatic development of computing capacity that 
 has played an important component in enabling {\it ab initio} calculations. 
 
 \section{Computational Craft}
 What sort of computations might a theoretical material scientist
-wish to compute? One wish list has been provided by O.K. Andersen. A materials scientist
-may wish to ``compute groundstate properties such as cohesive energies, interatomic forces, 
+wish to compute? One wish list has been provided by O.K. Andersen:
+a material's scientist may wish to:
+``compute groundstate properties such as cohesive energies, interatomic forces, 
 charge transfer, and magnetic moments, and also excitation spectra described 
 by the one-electron Green's function."\cite{anderson75} 
 
@@ -423,7 +420,7 @@ As a guide to which developments are considered important we may
 use the citation metrics as a first approximation. The high level of activity in the field of materials science 
 means that foundational papers number their citations in the tens of thousands. 
 Table~\ref{tab:foundation} lists some of the papers in the field which, as
-their citation count suggests, have enabled subsequent research. These techniques are divided into
+their citation count should imply, have enabled subsequent research. These techniques are divided into
 three categories, they are either theoretical justification for a calculation scheme, the description of
 a technique that allows for more expedient and/or accurate calculations to be performed, 
 or parameterizations of the exchange-correlation functional.
@@ -455,23 +452,22 @@ The actual number of citations are much higher.
 \end{table}
 
 There are no doubt many valid criticisms of Table~\ref{tab:foundation}.
-It may be biased towards a "plane wave" conception of electronic structure. 
+One obvious criticisms is it may be biased towards a "plane wave" conception of electronic structure. 
 These methods are suitable for crystalline systems with periodicity and can be pushed 
 to describe more disordered systems on the order, as discussed in Sec.\ref{sec:riseofcomp}, 
 of 1000 atoms. These sorts of techniques are also most favoured by workers studying metallurgical
 systems from first principles and materials with potential electronic applications.
 
-To broadly categorize the workers we can say a material scientist 
-is interested in crystals, alloys, ceramics, glasses, and, possibly, rubbers and elastomers. 
-Chemists are interested in molecules, 
-tend to use localized basis sets and exploit Monte Carlo and 
-related methods to obtain energy bounds on the order of a few meV. 
-For a pedagogical presentation of the connection between band 
-theory and the chemist's molecular orbital picture 
-see Ref.~\cite{hoffman87}. Physicists are interested in lasers, 
-Ising and Hubbard models, and the general positions of resonances 
-and asymptotes in very cold materials and won't be discussed further. 
-%String theorists and cosmologists are charlatans.
+%To broadly categorize the workers we can say a material scientist 
+%is interested in crystals, alloys, ceramics, glasses, and, possibly, rubbers and elastomers. 
+%Chemists are interested in molecules, 
+%tend to use localized basis sets and exploit Monte Carlo and 
+%related methods to obtain energy bounds on the order of a few meV. 
+%For a pedagogical presentation of the connection between band 
+%theory and the chemist's molecular orbital picture 
+%see Ref.~\cite{hoffman87}. Physicists are interested in lasers, 
+%Ising and Hubbard models, and the general positions of resonances 
+%and asymptotes in very cold materials and won't be discussed further. 
 
 \section{Justification by Utility}
 The observation that materials processing has evolved in the manner 
@@ -537,11 +533,14 @@ cancellation the number is probably representative.
 
 This parameterization is based on what may be considered an abstract question,
 ``What might happen if we start squeezing electrons into an imaginary box?".
-This imaginary box has been pondered for close to a century now. 
-The practical utility of these considerations is unreasonable. 
-The outcome of these considerations have resulted in a family of 
-unremarkable curves that describe some energy relationship between
-the density of electrons at a point in space and an energy. 
+We have moved from Turing's computing box to an imaginary box of electrons
+which has been pondered for close to a century now. 
+The practical utility of these speculative boxes is unreasonable. 
+
+One outcome of the box of electrons is a family of 
+unremarkable curves that describe the relationship between
+the density of electrons in the box and a total energy. 
+
 The practical consequence is this curve enables the
 structural, electronic, and vibrational properties of an 
 enormous class of materials to be calculated with creditable accuracy.
@@ -582,19 +581,22 @@ or describe techniques which differ in an incremental way to the works cited her
 %
 Just how creditable this approach is returns again to point three. 
 The theoretical justifications for the success of the approach are
-secondary to the fact that prior experience suggests these techniques work, 
-and the rate of their acceptance and adoption seems to have 
-tracked their usage in a positive feedback loop. 
+secondary to the fact that prior and ongoing experience suggests 
+these techniques capture the quantitative and qualitative features
+of experimental observation. The rate of their acceptance 
+and adoption seems to have tracked their usage in a positive 
+feedback loop. 
 
 If you look through a typical density functional based electronic structure code 
-it is interesting to look at the routine
-responsible for calculating the local exchange correlation potential. 
+it is interesting to look at the routine responsible for calculating 
+the local exchange correlation potential. 
 The input required is the electronic density at a point in space \footnote{Beyond the local density
 approximation there a range of increasingly complex parameterizations and
 approximations to the exchange-correlation functional. For instance some functionals
-require the gradient of the density at a point in space.} This 
-density is inserted as the sole argument in a subroutine and a single number is returned. The curve
-returned has little more structure than that given in Fig.~\ref{fig:ldapz}. 
+require the gradient of the density at a point in space.} 
+This  density is inserted as the argument of a subroutine and a single number is returned
+representing an energy. The curve as a function of density 
+has little more structure than that given in Fig.~\ref{fig:ldapz}. 
 %
 \begin{figure}
 \begin{center}
@@ -610,28 +612,27 @@ carbon in the diamond conformation would be around 0.1 e/a.u.$^{-3}$.
 %
 Curves of this type have been used to perform calculations and simulations for 
 materials composed of elements from across the periodic table. They have been
-used to compute all the properties of interest, cohesive energies, magnetic moments,
-etc. with varying degrees of success.
+used to compute all the properties of interest, cohesive energies, magnetic moments, 
+band gaps, etc. with varying degrees of success.
 
-Despite its apparent simplicity, in all manner of crystalline systems, 
-this functional enables the theoretical
-prediction of accurate ground state properties and structures entirely from first principles. 
-There are trends at the moment to reparameterize the exchange-correlation functional
+%Despite its apparent simplicity, in all manner of crystalline systems, 
+%this functional enables the theoretical
+%prediction of accurate ground state properties and structures entirely from first principles. 
+There are trends at the moment to reparameterize the simplest exchange-correlation functional
 in order that simulations return a better description of experimental data. The extent
 to which this reparameterization is helpful is debateable. 
-
 Part of the appeal of the simplest local density approximations is that it is universal. 
 Where a calculation fails to reproduce an experimental data point, and this failure is attributed to the
-exchange correlation functional, it will be argued that applying a more sophisticated treatment
-is preferred to introducing a complicated reparameterization of the exchange correlation
-function, based on a mixture of theoretical and post hoc experimental justification.
+exchange correlation functional, it will be argued that applying a more sophisticated treatment of exchange
+and correlation is preferred to introducing a complicated reparameterization of the exchange correlation
+function itself.
 
-\section{The Cross-Over}
-A component of the thesis which inspired these notes is 
-that there was at some point a crossover where local semi-empirical
-models of condensed matter systems was over taken by {\it ab initio} 
-calculations based on density functional theory. 
-Heralded in Finnis \cite{andersen89}  with reference to \cite{payne87}.
+%\section{The Cross-Over}
+%A component of the thesis which inspired these notes is 
+%that there was at some point a crossover where local semi-empirical
+%models of condensed matter systems was over taken by {\it ab initio} 
+%calculations based on density functional theory. 
+%Heralded in Finnis \cite{andersen89}  with reference to \cite{payne87}.
 
 \section{Bayesian Materials Science}
 The ubiquity of access to {\it ab initio} data has had a significant impact on 
@@ -704,12 +705,12 @@ Recursion techniques are viewed as the {\emph central unifying technique} in the
 notes and all subsequent discussion is formulated with recursion in mind.
 
 After having spent some (considerable) time on invariance and recursion
-Chap.~\ref{chap:gw} makes the standard presentation of Density Functional Theory is made along 
+Chap.~\ref{chap:gw} makes the standard presentation of Density Functional Theory along 
 with a brief discussion of the Harris-Foulkes functional and tight-binding theory. 
 Density Functional Theory is the primary {\it ab initio} engine that will 
 provide the interaction parameters required in recursion formulations.
-Chapter~\ref{chap:gw} will simultaneously introduce a more advanced 
-treatment for the correlation of electrons in materials.
+Alongside the standard DFT presentation in Chapter~\ref{chap:gw} we will
+introduce a more advanced treatment for the correlation of electrons in materials.
 This is called, ominously and (to the uninitiated) confusingly, $GW$ theory.
 
 Chapter~\ref{chap:wannier} is a whistle stop tour 
@@ -718,39 +719,44 @@ form of Wannier functions. The focus of this chapter is on
 ways of deducing the coefficients of a sparse Hamiltonian
 necessary for performing recursion calculations.
 
-After introducing the standard $GW$ theory, recursive perturbation theory
-will be suggested as a means of including many-body corrections 
-to the standard single particle formulation of recursion theory. 
-
+We will then discuss the outlines of an idea for 
+including many-body corrections to the standard 
+single particle formulation of recursion theory. 
 This perturbation theory is especially important for electronic 
 applications where bands gaps and excitation energies 
 are the most important quantities. It is also essential for
 energy level alignment at all sorts of interfaces. In fact the range
-of applications is so great they will be left to a separate set of notes.
+of applications is so great they will be left to a separate set of notes
+only the broad ideas will be discussed here.
 
-Chapter \ref{chap:superconductivity} is devoted to
+Chapter~\ref{chap:superconductivity} is devoted to
 certain aspect of the theory of superconductivity. 
 This is related to recursion theory by sketching some ideas for 
 local computations of the screened Coulomb and electron-phonon
 coupling parameters required to compute transition temperatures.
 
-Chapter \ref{chap:metallurgy} then looks at some metallurgical concepts 
-and a few interesting calculations which can and have been performed 
+Chapter \ref{chap:metallurgy} looks at metallurgical concepts 
+and a few interesting calculations which can be performed 
 using recursive techniques. 
 
 Finally, Chapter \ref{chap:bayes} points out some Bayesian techniques 
-to select material models and rank them according to a mathematical criterion.
+for selecting material models and ranking them according 
+to a mathematical criterion. Married with recursive techniques
+it is possible to identify novel atomistic configurations
+and extend our knowledge of materials system by "learning on the fly" 
+in the sense it was intended by Alessandro De Vita.
 
 All of these techniques have been developed by other workers 
-over a number of years but collecting them into a single place 
+over a number of years. Collecting them into a single place 
 and working through some applications still seems a worthwhile 
 endeavour. 
 
-As a companion to these notes a version of Chris Nex's Cambridge Recursion Library
-is exposed via a web framework, a number of practical examples of calculations can
-be worked through using this library. This companion calculator's value lies not only
+As a companion to these notes a version of Chris Nex's and Roger Haydock's Cambridge Recursion Library
+has been exposed via a web framework. A number of practical examples of calculations can
+be worked through using this library and these exercises are indicated throughout the notes. 
+This companion calculator's value lies not only
 in the numbers it provides but the physical insight afforded by the calculations.
-This valuable resource can then be used for whatever calculations one desires.
+This valuable computational package can then be used for whatever calculations one desires.
 
 The recursion method placed in the broad context of twentieth century condensed matter physics
 is admittedly niche. It has its practitioners, its uses, 
@@ -758,16 +764,16 @@ its successes and limitations like any other field.
 However to the author its importance lies in the close connection between the mathematical
 technique and the reality it seeks to describe. The way an electron may be associated with 
 one atom and then, through its excursions, hopping from atom to atom and returning home,
-may form new combinations. The process braids the chains which link atoms together into 
-new structures with new properties.
+form new combinations. The process explicitly generates the braids and chains which link atoms 
+together into new structures with new properties.
 
-Gibb's has suggested that:
+%Gibb's has suggested that:
 %
-\begin{quote}
-One of the principal objects of theoretical research is to
-find the point of view from which the subject appears in its
-greatest simplicity.
-\end{quote}
+%\begin{quote}
+%One of the principal objects of theoretical research is to
+%find the point of view from which the subject appears in its
+%greatest simplicity.
+%\end{quote}
 
 This complementarity of mathematical technique and physical reality 
 is best articulated by Heisenberg in a tribute to his friend Rudolf Peierls:
@@ -790,4 +796,4 @@ pen and paper. The result of these computations should yield accurate
 properties of their system derived from quantum mechanics.
 Properties like band gaps, elasticity tensors, conductivities, 
 heat capacities, cohesive energies, adhesive energies, superconducting transition temperatures, 
-and so on. Such a framework would constitute a real calculus for quantum engineers.
+and so on. Such a framework would constitute a useful calculus for quantum engineers.
