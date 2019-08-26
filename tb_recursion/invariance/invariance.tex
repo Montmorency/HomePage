@@ -1558,7 +1558,7 @@ The matrix elements of the Hamiltonian with the non-orthogonal states takes
 the form:
 %
 \begin{equation}
-H_{\alpha \beta} = \bra \psi_{\alpha}|H|\psi_{\beta}\ket
+H_{i\alpha j\beta} = \bra \psi_{i\alpha}|H|\psi_{j\beta}\ket
 \end{equation}
 
 The inverse of the overlap matrix is defined:
@@ -1571,7 +1571,7 @@ The inverse of the overlap matrix is defined:
 Naturally, the elements of the inverse overlap matrix $S^{-1}$ are chosen 
 such that they produce the identity matrix upon multiplication $S$.
 
-The dual set of basis vectors is:
+The dual set of basis vectors are then:
 %
 \begin{equation}
 |\psi^{i\alpha}\ket = \sum_{j\beta}|\psi_{j\beta}\ket(S^{-1})^{j\beta i\alpha}.
@@ -1584,7 +1584,8 @@ on your naming preference) are equal.
 
 The two most important aspects of any basis set
 are {\it representation} and {\it normalization}. 
-We can {\it represent} an arbitrary vector $|u\ket$ as:
+We can {\it represent} an arbitrary physical 
+vector $|u\ket$ as:
 %
 \begin{equation}
 |u\ket = \sum_{i\alpha}u^{i\alpha}|\psi_{i\alpha}\ket = \sum_{i\alpha}u_{i\alpha}|\psi^{i\alpha}\ket.
@@ -1610,16 +1611,18 @@ The Hamiltonian in a mixed representation takes the form:
 %
 \begin{equation}
 \label{eq:mixedH}
-H^{\alpha}\ _{\beta} = \sum_{\gamma}(S^{-1})^{\alpha\gamma}H_{\gamma\beta}.
+H^{i\alpha}\ _{j\beta} = \sum_{\gamma}(S^{-1})^{i\alpha k\gamma}H_{k\gamma j\beta}.
 \end{equation}
 %
-This form of the Hamiltonian matrix is sometimes referred to as $D$ \cite{weeks73}.
+In the literature this form of the Hamiltonian matrix is sometimes referred to as $D$ 
+not to be confused with $D$ as it applies to the force constant matrix in Ref.~\cite{weeks73}
+and Sec.~\ref{sec:recphonon}.
 
 The reason for going to all this trouble of defining upper and lower
 indexed vectors and a tensor notation is illustrated by considering how the Schr\"odinger
 equation looks in different representations. If one works with
 the easily instantiated, in the sense that one has the Hamiltonian and
-overlap matrix elements to hand, but non-orthogonal basis set the Schrodinger
+overlap matrix elements to hand, but non-orthogonal basis set, then the Schr\"odinger
 equation takes the form:
 %
 \begin{equation}
@@ -1635,23 +1638,25 @@ H^{\mbox{\large .}}.\psi^{\mbox{\large .}}=\epsilon\psi^{\mbox{\large .}}
 %
 the overlap matrix disappears and the eigenvalue problem is in a 
 more familiar form. The Hamiltonian in the mixed representation 
-is that obtained from Eq.~\ref{eq:mixedH}. The price? The Hamiltonian
-is no longer necessarily Hermitian.
+is that obtained from Eq.~\ref{eq:mixedH}. The price is the Hamiltonian
+is no longer necessarily Hermitian and the overlap matrix has to be inverted.
 
 The starting vector for the recursion will often be a lower indiced
 vector corresponding with the basis set chosen to represent the electron
 states.
 
-Ballentine and Koclar conclude by giving the trace of an operator:
+Ballentine and Koclar conclude by giving the trace of an operator
+(roman site indices are suppressed):
 \begin{align}
 {\rm Tr}A =& \sum_{\alpha\beta}S_{\alpha\beta}A^{\beta\alpha}\\
           =& \sum_{\alpha\beta}(S^{-1})^{\alpha\beta}A_{\beta\alpha} \\
-          =& \sum_{\alpha}A^{\alpha}_{\alpha}
+          =& \sum_{\alpha}A^{\alpha}\ _{\alpha}
 \end{align}
 
 The trace of the Hamiltonian or density operator would be necessary 
 if one wished to compute, for example, the total band energy 
-or the density. Depending on which matrix elements one has to hand, 
+or the charge density. Computationally the way of proceeding will
+depending on which matrix elements one has to hand, 
 the lower indiced being the more accessible generally. 
 
 As mentioned the trouble with the mixed representation of the Hamiltonian is,
@@ -2050,6 +2055,7 @@ is a diagonal matrix with the corresponding
 terminators for the scalar case along the diagonals.
 
 \subsection{Phonon Recursion}
+\label{sec:recphonon}
 With a simple modification phonon spectra can be computed directly 
 using the recursion technique. Instead of localized orbitals, localized 
 displacements are introduced, and in the place of on-site and hopping
