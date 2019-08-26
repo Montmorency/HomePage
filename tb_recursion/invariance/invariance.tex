@@ -2253,8 +2253,8 @@ for the microscopic properties are then deduced.
 
 \section{Chains and Moments}
 Before concluding this chapter there are a few 
-pictorial and heuristics comments on the recursion method
-and related methods.
+pictorial and heuristics comments on the relation of 
+the recursion method to other related methods.
 
 The recursion method produces the eigenvalue spectrum
 for a given Hamiltonian and gives access to accurate
@@ -2263,17 +2263,24 @@ integrals over this spectrum.
 The mathematics of the technique are uniquely consistent
 with the physical idea of an electron exploring
 the space around it as it diffuses according to Schr\"odinger's
-equation and the interactions present in the Hamiltonian.
+equation guided by the interactions present in the Hamiltonian.
 These excursions begin from some prepared localized starting state
-and as the electron (or phonon) hops from atom to atom
-the eigenstates of the system come into sharper and sharper relief.
+and as the electron (or phonon, or magnon, etc...) hops from atom to atom
+the spectral properties of the system come into sharper and sharper relief.
 
-The closest antecendent of the recursion method was the method of moments.
+The closest relation to the recursion method is the method of moments.
 This method is directly obtained by expanding the 
 Green's function as a geometric series in the energy and the Hamiltonian:
 %
 \begin{equation}
 [E-H]^{-1} = \sum_{n=0}^{\infty} \frac{H^{n}}{E^{n+1}}.
+\end{equation}
+%
+
+The $r^{\rm th}$ moment of the local density of states can be written:
+%
+\begin{equation}
+\mu^{r} = \int E^{r}N(E)dE = -\frac{1}{\pi}{\rm Im}\sum_{n=0}^{\infty}\int E^{r}\bra 0|\frac{H^{n}}{E^{n+1}}|0\ket dE.
 \end{equation}
 %
 
@@ -2286,16 +2293,6 @@ have developed in the field of moments. The mathematical techniques
 and the surprisingly deep connections between moments, orthogonal
 polynomials, and continued fractions are explored in Appendix~\ref{appen:app2}.
 
-Before concluding this chapter we present a small intuitive discussion of
-the connection between moments, the recursion method and path integrals.
-
-The $r^{\rm th}$ moment of the local density of states can be written:
-%
-\begin{equation}
-\mu^{r} = \int E^{r}N(E)dE = -\frac{1}{\pi}{\rm Im}\sum_{n=0}^{\infty}\int E^{r}\bra 0|\frac{H^{n}}{E^{n+1}}|0\ket dE.
-\end{equation}
-%
-
 When $H$ is a strictly local Hamiltonian the only non-zero matrix elements 
 will be immediate neighbours of the starting orbital $0$. The means
 the matrix element can be written as a over closed paths of length $r$:
@@ -2307,10 +2304,15 @@ the matrix element can be written as a over closed paths of length $r$:
 %
 0ijk...10 is a closed circuit through the lattice. Any circuit that takes hops between sites 
 that aren't connected by the Hamiltonian won't make any contribution to the matrix element
-in Eq.~\ref{eq:circuit}.
+in Eq.~\ref{eq:circuit}. A detailed discussion of the application of the recursion method 
+to a surface atom in Cubium is presented in Ref.~\cite{haydock75} where a number of the various
+paths emanating from the starting atom are presented. 
 
-Detailed workings of the application of the recursion method to a surface atom in Cubium
-are presented in Ref.~\cite{haydock75}. 
+The relation between the Green's function and path integral formulations is developed
+in Feynman and Hibbs \cite{feynmanhibbs64}. This connection suggests it may be fruitful to apply the recursion
+techniques to working out thermodynamic properties in analogy with the imaginary time
+path propagation techniques. Not much has been done in this direction to the author's 
+knowledge.
 
 \section{Future Work}
 The references provided here and in Vol. 35 demonstrate the impact of
@@ -2320,11 +2322,10 @@ work has been referenced here.
 %the heat of adsorption for simple molecules across
 %the row of the transition metal series in \cite{haydock78}.
 
-A perturbation theory built on the recursion method has also been formulated
-making it possible to study photoemission phenomena \cite{mclean77}
+The application of the perturbation theory built on the recursion method 
+has been used to study photoemission phenomena \cite{mclean77}
 and to compute susceptibilities, see for instance Ref.~\cite{terakura78},
-both these applications will be further elaborated
-on in Chap.~\ref{chap:manybodyrec}.
+both these applications will be further elaborated on in Chap.~\ref{chap:manybodyrec}.
 
 The conclusion to Haydock's chapter in that volume is interesting in he gives 
 prognosis for further work along two lines. 
@@ -2424,10 +2425,15 @@ of a free electron:
 %
 What type of function represents the eigenstate of a free electron?
 
-\item (R. Haydock and M.J. Kelly, Surf. Sci. 38, 139 (1973)) Given a body centered cubic crystal with an 
-      on site energy $a$ and a nearest neighbour hopping integral
-      $b$, what, using a single hop in the recursion method, will be the relative 
-      magnitudes of the local density of states 
-      at the Fermi energy for an atom on a $[001]$, $[110]$, and a $[111]$ surface?
+\item (R. Haydock and M.J. Kelly, Surf. Sci. 38, 139 (1973)) 
+       Given a body centered cubic crystal with an 
+       on site energy $a$ and a nearest neighbour hopping integral
+       $b$, what, using a single hop in the recursion method, will be the relative 
+       magnitudes of the local density of states 
+       at the Fermi energy for a canonical transition metal 
+       atom on a $[001]$, $[110]$, and a $[111]$ surface?
+       Show that the LDOS is proportional to the square root of the number of neighbours.
+       Following the template for the Bulk LDOS use the \texttt{CamRecLib} to compute
+       the LDOS spectra for the three different surfaces.
 
 \end{itemize}
