@@ -375,9 +375,204 @@ snapshot of the way these studies have evolved over time.
 \subsection{Discrete Boundary Dislocation Networks}
 Combining isotropic elasticity with discrete dislocation networks
 we can gain some useful practice in contour integration and arrive
-at a closed set of expressions for the strains in a material. 
+at a closed set of expressions for strains in linear elasticity
+theory next to a large angle grain boundary. 
 
 These expressions are given in Ref.~\cite{sutton95} and derived here.
+
+\subsubsection{Grain Boundary Algebra}
+\label{gbalgebra}
+%Just for reference, the algebra is similar for all other components of the stress, and
+%can be extended to cases where we have a traveling edge dislocation i.e. instead of
+%a sum over n $n$ we have a factor like (y-vt)....
+First we introduce the function:
+%
+\begin{equation}
+f(z) =  \pi\cot(\pi z)\frac{(Y-z)(3x^{2} + (Y-z)^{2})}{(X^{2} + (Y-z)^{2})^{2}}
+\end{equation}
+%
+This has simple poles at $z = 0, \pm 1, \pm 2,...$. It also has two 2nd 
+order poles at  $z_{1}=iX+Y$, $z_{2}=-iX+Y$. The residue at $z_{2}$ can
+be found from the following expression: 
+%
+\begin{equation}
+{\rm Res}(z_{2}) = \lim_{z\rightarrow z_{2}}\frac{d}{dz}(z-z_{2})^{2}
+\frac{\cot(\pi z)(Y-z)(3X^{2}+(Y-z)^2)}{(z-z_{1})^{2}(z-z_{2})^{2}}
+\end{equation}
+
+
+\begin{align}
+\label{eq:2ndstep}
+{\rm Res}(z_{2})&=\frac{\pi^{2}}{\sin^{2}(\pi z_{2})}\left[\frac{(Y-z_{2})(3x^{2}+(Y-z_{2})^{2})}{(z_{2}-z_{1})^{2}}\right]\\
+  &+\frac{\pi\cot(\pi z_{2})}{(z_{2}-z_{1})^{2}}\left[-(3x^{2} + (Y-z_{2})^{2})-2(Y-z_{2})^{2}\right] \\
+  &+\frac{2\pi\cot(\pi z)(Y-z_{2})(3X^{2}+(Y-z_{2})^{2})}{(z_{2} - z_{1})^{3}}
+\end{align}
+%
+The second term in Eq.~\ref{eq:2ndstep} evaluates to zero and the remaining terms can be simplified to:
+%
+\begin{equation}
+{\rm Res}(z_{2}) = \frac{\pi}{4\sin^{2}(\pi(Y-iX))}(i\pi X - \sin(2\pi(Y-iX)))
+\end{equation}
+%
+The residue at $z_{1}$ can be found in a similar manner.
+
+If we construct a set of contours as depicted in Fig.~\ref{fig:polediagram}.
+\begin{figure}[!tbp]
+\begin{center}
+\includegraphics[scale=1.0]{stresspolediagram.pdf}
+\caption{Contours to determine sum. The lines of poles from the $\cot(\pi z)$ 
+factor can be equated to the difference of the two 
+second order residues.\label{fig:polediagram}}
+\end{center}
+\end{figure}
+
+
+We can write down the sum as the difference of the two second order residues.
+
+\subsubsection{Jordan's lemma}
+We must consider the behaviour of the function $f(z)$ on the countours carefully in order to determine their contribution to the $\oint f(z) dz$ as we expand the semi-circular contours out to $\infty$.  Jordan's lemma says if we are able to write $f(z) = \exp(iaz)g(z)$ for positive $a$ then an upper-bound for the integral over the semi-circular contour in the upper-half plane is given by
+\begin{equation}
+\left|\int_{C_{1}}f(z)dz\right| \leq \frac{\pi}{|a|}\text{max}_{\theta\in [0,\pi]}\left|g(Re^{i\theta})\right|
+\end{equation}
+A similar results holds for the lower-half plane, provided we now make $a<0$.  We now consider expansions for $\cot(\pi z)$:
+\begin{eqnarray}
+\cot(\pi z)&=&-i(e^{i2\pi z}+1)(1-e^{i2\pi z})^{-1}=-i(1+e^{i2\pi z})(1+e^{i2\pi z}+e^{i4\pi z}+\ldots)\label{eq:upper}\\
+&=&i(1+e^{-i2\pi z})(1-e^{-i2\pi z})^{-1}=i(1+e^{-i2\pi z})(1+e^{-i2\pi z}+e^{-i4\pi z}+\ldots)\label{eq:lower}
+\end{eqnarray}
+Focusing first on the upper-half plane we replace $\cot(\pi z)$ with equation~\ref{eq:upper}.  Since $g(z)=f(z)/\cot(\pi z)$ goes to zero as $z\rightarrow\infty$ we can apply Jordan's lemma and ignore the contributions on $C_{1}$ from all positive powers of $e^{i2\pi z}$.  However we still need to consider the $-i$ term, where Jordan's lemma doesn't apply.  Substituting $z=Re^{i\theta}$ and taking the limit as $R\rightarrow\infty$ we obtain:
+\begin{equation}
+\int_{C_{1}}f(z)dz = \int_{\theta=0}^{\pi}d\theta iRe^{i\theta}*\frac{(i\pi R^{3}e^{3i\theta}}{R^{4}e^{4i\theta}} = -\pi^{2}
+\end{equation}
+We now instead focus on $C_{2}$ and replace $\cot(\pi z)$ with equation~\ref{eq:lower}.  Once again Jordan's lemma allows us to ignore the powers of $e^{-i2\pi z}$.  However we still need to focus on the $i$ term.  Substituting $z=Re^{i\theta}$ and taking the limit as $R\rightarrow\infty$ we obtain:
+\begin{equation}
+\int_{C_{2}}f(z)dz = \int_{\theta=2\pi}^{\pi}d\theta iRe^{i\theta}\times\frac{(-i\pi R^{3}e^{3i\theta})}{R^{4}e^{4i\theta}} = -\pi^{2}
+\end{equation}
+
+Let $I=\int_{\Gamma_{1}}f(z)dz$, then closing on the upper-half plane we have:
+\begin{equation}
+I-\pi^{2} = 2\pi i\left[Res(z_{1})+\sum_{n=-\infty}^{\infty}Res(z=n)\right]
+\end{equation}
+While closing on the lower-half plane gives:
+\begin{equation}
+I-\pi^{2} = -2\pi i Res(z_{2})
+\end{equation}
+(note, negative sign is since the contour goes clockwise on the lower-half plane).
+
+\subsection{Dislocation-Interstitial Interactions}
+Coupling of the hydrogen defects to the screw and edge dislocations can be
+handled via the approach taken in \cite{cochardt55}.
+The interaction energy between a dislocation and an interstial atom can
+be calculated from the work done by moving each face of a cell a distance
+$d_{i}$ against a force $F_{i}$ exerted by the stress field:
+%
+\begin{equation}
+U_{DC} =+\sum_{i}F_{i}d_{i}
+\end{equation}
+%
+If the components of the stress tensor are assumed constant along the distance $a$
+this energy can be written:
+%
+\begin{equation}
+U_{\rm{DC}} = -(T_{D},S_{H})a^{3}= -\sum_{ik} \sigma_{ik}^{D}\epsilon^{H}_{ik} a^{3}
+\end{equation}
+%
+
+The observed slip system in $\alpha$-Fe for a screw dislotion is along the [111]
+direction. Away from the dislocation core a bulk cell can be found and defined
+with three unit vectors [100], [010], [001]. This unit cell is drawn in
+Fig.~\ref{fig:interstitialcoords} (a). For an edge dislocation the slip plane is
+assumed to be in the $(0\bar{1}1)$-plane, the dislocation line is in the direction
+$\langle 211 \rangle$, and a Burgers vector in the direction $\langle \bar{1}11 \rangle$.
+
+\begin{figure}[!tbp]
+\begin{center}
+\includegraphics[scale=0.8]{screwcoordinate.png}
+\caption{\label{fig:interstitialcoords} Reproduced from \cite{cochardt55}.}
+\end{center}
+\end{figure}
+%
+In the analysis of Cochardt they calculate the interstitial-dislocation
+energy for the defect atom, Carbon, at a distance $b$. In each case we
+wish to translate the defect strain tensor into the
+
+This can be accomplished by determining the transformation matrix $\mathbf{R}$:
+which is the inverse of the matrix constructed by stacking up
+the basis vectors in the new coordinate system,
+%
+\begin{equation}
+\epsilon'_{ij} = \mathbf{R} \epsilon_{ij} \mathbf{R}^{\rm T}
+\end{equation}
+%
+In \cite{cochardt55} the strain tensor for a carbon atom in
+a conventional rectangular unit cell for BCC iron is:
+%
+\begin{equation}
+\left(
+\begin{array}{ccc}
+ a & 0 & 0 \\
+ 0 & b & 0 \\
+ 0 & 0 & c  \\
+\end{array}
+\right),
+\end{equation}
+%
+
+The stress tensor in the vicinity of a screw dislocation:
+%
+\begin{equation}
+T^{x',y',z'}_{D}=
+\frac{Gb}{2\pi r}
+\left(
+\begin{array}{ccc}
+0 & 0 & 1 \\
+0 & 0 & 0 \\
+1 & 0 & 0 \\
+\end{array}
+\right)
+\end{equation}
+%
+and the stress tensor in the vicinity of an edge dislocation:
+\begin{equation}
+T^{x',y',z'}_{D}=
+\frac{Gb}{2\pi(1-\nu)r}
+\left(
+\begin{array}{ccc}
+-\sin\psi(1+2 \cos^{2}\psi) & \cos\psi\cos 2\psi & 0 \\
+\cos\psi\cos 2\psi & \sin\psi\cos 2\psi & 0 \\
+0 & 0 & -2\nu\sin\psi \\
+\end{array}
+\right)
+\end{equation}
+%
+where the components of the tensor are estimated from X-ray measurements
+of the tetragonal distortion of martensite to be $\epsilon_{a}=0.38$,
+$\epsilon_{b}$=$\epsilon_{c}$=-0.026. For the screw dislocation
+geometry given in Fig.~\ref{fig:interstitialcoords} (a) the transformed strain
+tensor is:
+%
+%
+\begin{equation}
+\mathbf{\epsilon}'=\left(
+\begin{array}{ccc}
+ \frac{1}{3}[a+2 b+(a-b) \cos (2 \theta)] & -\frac{1}{3} (a-b) \sin (2 \theta ) & \frac{\sqrt{2}}{3} (a-b)\cos(\theta )\\
+ -\frac{1}{3} (a-b) \sin (2 \theta ) & \frac{1}{3} (a+2 b+(b-a) \cos (2 \theta )) & -\frac{\sqrt{2}}{3}(a-b) \sin (\theta )\\
+ \frac{\sqrt{2}}{3} (a-b) \cos (\theta ) & -\frac{\sqrt{2}}{3}(a-b)\sin(\theta ) & \frac{1}{3}(a+2 b)\\
+\end{array}
+\right).
+\end{equation}
+%
+For the edge dislocation the inner product of the basis vectors does not vary with $\theta$
+and the transformed strain tensor is given as:
+%
+\begin{equation}
+\mathbf{\epsilon}'=\left(
+\begin{array}{ccc}
+ \frac{1}{3} (a+b+c) & \frac{c-b}{\sqrt{6}} & \frac{-2 a+b+c}{3 \sqrt{2}} \\
+ \frac{c-b}{\sqrt{6}} & \frac{b+c}{2} & \frac{c-b}{2 \sqrt{3}} \\
+ \frac{-2 a+b+c}{3 \sqrt{2}} & \frac{c-b}{2 \sqrt{3}} & \frac{2}{3}a + \frac{1}{6}(b+c) \\
+\end{array}
+\right).
+\end{equation}
 
 \subsection{Pile Ups}
 Another interesting case is discussed in Ref.~\cite{eshelby} 

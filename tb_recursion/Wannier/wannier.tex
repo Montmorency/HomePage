@@ -13,7 +13,7 @@ of molecular compounds \cite{pauling28}. Pauling's publication was contemporaneo
 with Felix Bl\"och's work on electrons in crystals \cite{bloch28}. The
 way these two perspectives, the local and extended picture of electronic wave functions, 
 are applied and rationalized is the distinguishing feature 
-in entire fields and sub-fields of physics and chemistry.
+of entire fields and sub-fields of physics and chemistry.
 
 The mathematical transformation between the local formulation
 and Bl\"och's formulation was obtained by Wannier. 
@@ -27,20 +27,24 @@ for electrons, and that such a reconciliation would probably be useful in
 understanding the spectra of insultators." Koster proposed a variational
 procedure for the determination of Wannier functions \cite{koster53},
 alongside a number of other early treatments of the problem \cite{winston54}.
+This approach is similar to that made by Hall \cite{hall52} who uses symmetric  
+combinations of directed orbitals on adjacent pairs of atoms and constructs 
+the Bl\"och sums from these orbitals.
 
-The immediate practical consequence of his formalism was
+The immediate practical consequence of Wannier's formalism was
 it allowed for an effective computational treatment of impurities 
 and donor and acceptor states in semiconductors \cite{slater49,kittel54}.
-Appeal to the existence of Wannier like orbitals is frequently made in
+
+Appeal to the existence of a set of Wannier like orbitals is frequently made in
 tight-binding formulations where they are not explicitly calculated but
 matrix elements between them are estimated.
 
 Lennard-Jones evolved a concept of equivalent 
-orbitals \cite{lennardjones49a,lennardjones49b, hall50}
-to determine the relation between electron-pairing theory of valency, 
-the Pauling picture, and the molecular orbital theory treating each 
-electron as moving throughout the whole molecular 
-framework. Like much of the early work on localized wave functions in molecules 
+orbitals \cite{lennardjones49a,lennardjones49b,hall50}
+to determine the relation between electron-pairing theory of valency,
+the Pauling picture, and the molecular orbital theory treating each
+electron as moving throughout the whole molecular
+framework. Like much of the early work on localized wave functions in molecules
 a group theory formulation of the problem was employed.
 In Lennard-Jones' formulation a set of equivalent orbitals, 
 if such a set exists, has the property that the effect of a symmetry 
@@ -48,7 +52,6 @@ operation only involves the interchange of equivalent orbitals.
 See also Kimball for a full statement of the `chemical perspective' 
 on orbitals where combinations of spherical harmonics are taken to form
 directed bonds \cite{kimball41} with a number of molecular examples.
-
 
 Lowdin introduced a set of symmetrically orthogonalized wavefunctions which 
 can be viewed as an intermediate formulation between hybrid orbitals 
@@ -143,7 +146,7 @@ For a tight binding scheme to be valid these elements must decay relatively quic
 as a function of $\R$ and transform according to the same symmetry operations as spherical harmonics
 centered on the atomic sites. 
 
-\subsection{Wanner Practical Procedure}
+\subsection{Wannier Practical Procedure}
 To carry out the procedure in practice an initial set of orbitals 
 ${g_{i}(\r)}$ is chosen and the matrix elements:
 %
@@ -186,24 +189,25 @@ orbitals, which are orthogonalized to their neighbours, transform according to t
 symmetry operations as the spherical harmonics.
 
 \section{TB-NN}
-Wannier functions are, it has been pointed out, just a gauge\footnote{What is a gauge?}. But
-any gauge that can arrange Bloch orbitals which are spread across a crystal into a localized
+Wannier functions are just a gauge. Starting from an orthonormal set
+of Bl\"och wave vectors a unitary matrix is formed such that it rotates the
+extended waves into an optimally localized state.
+Any gauge that can arrange Bl\"och orbitals which are spread 
+across a crystal into a localized
 packet of orthogonal orbitals will be of some considerable use in the local recursion techniques.
 The essential point is that the local Hamiltonians, which the recursion techniques require,
-must correspond formally to results obtained {it ab initio}. 
+must correspond formally to results obtained {\it ab initio}. 
 This correspondence must be quantitative and controllable and achieved in 
 a way based on rigorous physical reasoning. 
-This must be accomplished before we can move on to the real fun with the 
-applications in Chapter \ref{eq:}.
 Put simply it is essential that the houses are not built on sand! 
 It is for this reason Chapter~\ref{chap:gw} contained what it did. The discussion of 
-the previous work done on DFT, GW, and the Harris-Foulkes functionals is required to formulate
+the previous work done on DFT, and the Harris-Foulkes functionals is required to formulate
 the local approach.
 
-If they were it would be too easy for another to come along and tweak a few `parameters' to obtain 
-new results. 
+If they were it would be too easy for another to come along and 
+tweak a few `parameters' to obtain new results. 
 
-\section{Diamond Structure TB}
+\section{Example 1: Diamond Structure}
 The choice of appropriate basis for a diamond tight binding model requires a little thinking.
 The structure itself can be considered a Face Centered Cubic structure with two atoms per unit cell.
 The lattice then has atoms at $a(p\bf{i} + q\bf{j} + r\bf{k})$ wherever $p+q+r$ is an even number
@@ -232,8 +236,6 @@ from an orthogonalized plane wave calculation, however the atom centered spheric
 to suffer from this deficiency, the requirement that neighbouring orbitals are orthogonal would lead to 
 the formation of actual orbitals with non-zero components on neighbouring shells of atoms. 
 
-Choosing the Wannier Basis results in orthogonal orbitals that remain well localized. This approach is similar to
-that made by Hall \cite{hall52} who uses symmetric  combinations of directed orbitals
-on adjacent pairs of atoms and constructs the bloch sums from these orbitals.
+
 The second nearest neighbour s-interaction is found to have the opposite sign.
 
