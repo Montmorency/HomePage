@@ -1,7 +1,7 @@
 \chapter{Maths and Algorithms}
 \section{Introduction}
 This appendix takes the form of a brief and essential
-set of notes on the the various algorithms, recurrence relations, and
+set of notes on various algorithms, recurrence relations, and
 root finding methods, along with a discussion of important
 theorems relating to continued fractions and orthogonal polynomials. 
 
@@ -9,21 +9,22 @@ These concepts underlie the methods discussed in the main text.
 These are mainly mathematical results
 that may not be so familiar to a materials scientist.
 
-Two monographs are the principle sources for this appendix. 
-The first is Gabor's Szeg\~o's textbook 
-Orthogonal Polynomials which has been a standard reference
+Two monographs are the principle sources for the discussion
+of orthogonal polynomials and continued fractions in this appendix. 
+The first is Gabor's Szeg\"o's textbook,
+Orthogonal Polynomials, which has been a standard reference
 for some time. Definitions and theorems of immediate relevance 
 from that work are included here. For the extended proofs and discussions 
-that work should be consulted. Szeg\~o's discussion relies primarily
+that work should be consulted. Szeg\"o's discussion relies primarily
 on the principle of orthogonality of functions on an interval, the distribution
 of zeros of the functions, quadrature, and the connection with different
-classes of differential equations. He does not go to deeply into the connection 
-with continued fractions.
+classes of differential equations. He does not go too 
+deeply into the connection with continued fractions.
 
-To complement Szeg\~o with an historical overview as well as
-a rigorous analysis of the deep
+To complement Szeg\"o with an historical overview, as well as
+a rigorous analysis, of the deep
 connections that exist between continued fractions, 
-special functions and orthogonal polynomials Sergey 
+special functions and orthogonal polynomials, Sergey 
 Krushchev's work Orthogonal Polynomials and Continued Fractions: From Euler's Point
 of View should be consulted \cite{khrushchev10}. 
 
@@ -39,6 +40,14 @@ features: e.g. Van Hove singularities, band edges, and  band gaps.
 This table follows that described by Alphonse Magnus and we 
 have extended it here with other references
 from the literature.
+
+As Haydock observed in Vol.~35,``To understand a 
+particular physical system, we need only find the chain model appropriate to it."
+The notion of understanding in this context means the mapping of any physical
+situation to a chain model, the subsequent study of the recursion coefficents 
+that are generated, determining the underlying groups that generate their behaviour, 
+and establish the fixed points of the system,i.e., the singularities, band edges, 
+and asymptotics all in an optimally condensed form.
 
 \section{Euclid's Algorithm}
 As pointed out by Haydock in Ref.~\cite{weaire85} the 
@@ -204,5 +213,4 @@ A_{0}=0, \quad A_{1} = a_{1}, \quad B_{0}=B_{1}=1, \nonumber \\
 A_{n+1}(z) = A_{n}(z) + (z-z_{n})a_{n+1}A_{n-1}(z), \nonumber \\
 B_{n+1}(z) = B_{n}(z) + (z-z_{n})a_{n+1}B_{n-1}(z).
 \end{eqnarray}
-
 

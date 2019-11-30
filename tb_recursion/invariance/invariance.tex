@@ -628,7 +628,7 @@ is determined by the choice of $\chi$.
 
 \subsection{Mathematical Origin}
 The trick of the recursion method, if you like to think of things in terms of tricks, 
-or its generating feature, if you prefer, is that from the outset the `Greenian', the element
+or its generating feature, if you prefer, is that from the outset the `Greenian', the matrix element
 of the Green's function we are interested in, is restricted to a particular matrix element: 
 %
 \begin{equation}
@@ -659,7 +659,7 @@ b_1 & a_1 & b_2 & 0 & 0 &  ...\\
 \end{equation}
 
 %
-The determinants and sub-determinants etc. of the matrix can be nested:
+The determinants and sub-determinants of the matrix can be nested:
 %
 $$
 \newcommand*{\temp}{\multicolumn{1}{|c|}{b_1}}
@@ -671,7 +671,7 @@ $$
 a_0 & b_1 & 0 & 0 & 0 & 0  & D_0 \\ \cline{2-6} 
 \temp & a_1 & b_2 & 0 & 0 & 0 & D_1 \\ \cline{3-6} 
 0 & \tempa & a_2 & b_3 & 0 & 0 & D_2 \\ \cline{4-6}
-0 & \tempc &  \tempb &  a_3 & b_4 & ... & D_3
+0 & \tempc &  \tempb &  a_3 & b_4 & ... & D_3.
 \end{array}
 $$
 
@@ -682,14 +682,14 @@ Eq.~\ref{eq:greenian} can be rewritten in terms of its determinants:
 \bra u_{0}|[E-H]^{-1}|u_{0}\ket = \frac{{\rm det}|D_{1}|}{{\rm det}|D_{0}|},
 \end{equation}
 %
-or, equivalently, be written as:
+or, by flipping the fraction on its head:
 %
 \begin{equation}
 \label{eq:greendet}
 \bra u_{0}|[E-H]^{-1}|u_{0}\ket = \frac{1}{\frac{{\rm det}|D_{0}|}{{\rm det}|D_{1}|}}.
 \end{equation}
 %
-Appeal is then made to \index{Cauchy}\footnote{Baron Augustin-Louis Cauchy FRS FRSE (21 August 1789 – 23 May 1857)} 
+Appeal is then made to Cauchy \index{Cauchy}\footnote{Baron Augustin-Louis Cauchy FRS FRSE (21 August 1789 – 23 May 1857)} 
 for the following expansion:
 %
 \begin{equation}
@@ -725,6 +725,12 @@ and
 \begin{equation}
 b_{n} = \bra u_{n}|H|u_{n-1} \ket.
 \end{equation}
+
+This at least is the rationale given in Vol.~35. In the appendix we pursue an
+alternative derivation of the recursion method that makes the connection
+with some different mathematical techniques a little more explicit. For the connection
+to tridiagonal matrices and expansions in terms of determinants
+is good enough to satisfy our mathematical curiousity.
 
 \section{Analytic Recursion}
 \subsection{The Constant Chain}

@@ -1069,11 +1069,15 @@ formalism of the $GW$ approximation.
 
 \section{Alternative Functionals and Tight Binding}
 Armed with the local density approximation, a computer, 
-and the comfort of a well defined variational principle
-means computational material scientists are in a position 
-to go out and do a significant amount of damage. In 
-this section it is useful to look at a few different functional
-forms.
+and the comforts of a well defined variational principle,
+computational material scientists are in a position 
+to go out and do a significant amount of damage. 
+
+In this section we look athe a few different definitions of
+total energy functions and the way forces are computed
+{\it ab initio}.
+
+%In this section it is useful to look at a few different functional forms.
 
 The first constraint we have is on the charge density: 
 $\int\rho(\r)d^{3}\r = N$. That is the integral of the charge
@@ -1091,33 +1095,38 @@ which leads to:
 \frac{\delta E[\rho]}{\delta \rho}= \mu.
 \end{equation}
 
-\section{Purely Functional Forms}
-Finnis' textbook gives a comprehensive discussion of functionals,
-the Hohenberg-Kohn Functional and the Harris-Foulkes functional.
-His development is far more thorough than what is discussed here. 
-We itemize the important connections for the present text that
-are developed in his work:
+\section{Total Energy Functionals and Forces}
+A lot of the work in condensed matter physics throughout the 1980's and 1990's
+involved sorting out the best way of computing all the terms that arise
+when we need to solve the Schr\"odinger equation for a given arrangement
+of atoms. This work proceeded according to a division of labour collaborative
+effort, wrong turns, inventions, and synthesis that characterizes much of the history
+of science. 
 
-\begin{itemize}
-\item A direct relation between the second order variation in the exchange correlation energy
-      $E_{\rm xc}$ and the dielectric function can be made.
-\item The Generalized Harris-Foulkes Functional and the property that the
-      the variational error in the total energy is only of the second order 
-      with respect to the input density.
-\end{itemize}
+To get a feel for the scale of the enterprise it is recommended that interested 
+parties consult Ref.~\ref{laasonen93} as a representative account.
+That is an account of all the terms that appear in the total energy expressions, 
+how the interaction of valence electrons and ions are calculated,
+the derivatives of the many terms with respect to the atomic coordinates, 
+how each term is computed in practice, how forces are derived in
+a Lagrangian formulation or in the context of direct minimization schemes, and
+all this along with the scaling of the computation with system size.
 
-The first point means we can connect the exchange-correlation functional, 
-which is mysterious and foreign, to a dielectric function, which has a pleasing 
-classical picture and is familiar.
+We might expect that their is some universal conservation of human effort law that governs
+the universe. If so it may spell some trouble for fitted potentials. Such a potential
+can only match in accuracy the results of an {\it ab initio} calculation it must be
+able to generalize to novel situations, and if the goal is numerical accuracy (with respect
+to the theory being employed) of energies and forces, we are going to have expect
+to do some work.
 
-The second point is essential because it will justify the use of certain 
-computational approaches and clarify why, in some cases, a single shot GW
-calculation might ``work", and where it might not and where a tight binding 
-description of a material system may be more appropriate than an DFT-LDA
-calculation. The Generalized Harris-Foulkes allows us to quantify 
-what we mean by an optimal model of our system and allow for the
-construction of densities and potentials that reach this optimum position in 
-the functional space. 
+%The second point is essential because it will justify the use of certain 
+%computational approaches and clarify why, in some cases, a single shot GW
+%calculation might ``work", and where it might not and where a tight binding 
+%description of a material system may be more appropriate than an DFT-LDA
+%calculation. The Generalized Harris-Foulkes allows us to quantify 
+%what we mean by an optimal model of our system and allow for the
+%construction of densities and potentials that reach this optimum position in 
+%the functional space. 
 
 The text of this section will be kept to a minimum. It should be viewed as a
 useful collection of functional definitions all contained in one place. 
@@ -1129,7 +1138,7 @@ be referred to in later chapters.
 \subsection{HKS}
 \begin{equation}
 \label{eq:hks}
-E^{\rm HKS} = T[\rho] + E_{\rm H}[\rho] + E_{\rm xc}[\rho] + E_{\rm eZ}[\rho] + E_{\rm ZZ}
+E^{\rm HKS} = T[\rho] + E_{\rm H}[\rho] + E_{\rm xc}[\rho] + E_{\rm e-ion}[\rho] + E_{\rm ZZ}
 \end{equation}
 
 Taking the variation of Eq.~\ref{eq:hks} with respect to the density gives:
@@ -1208,13 +1217,26 @@ and there is no need to solve the self-consistent problem iteratively.
 
 The Harris-Foulkes functional eliminates the need to perform multiple iterations
 of a self-consistent loop. The idea has been tried in a few different contexts
-\cite{harris85, foulkes87, foulkes89, haydock11}.
+\cite{harris85, foulkes87, foulkes89, haydock97}.
 
 \subsection{HFG}
+From Finnis' textbook we can learn two particularly important lessons:
+%
+\begin{itemize}
+\item A direct relation between the second order variation in the exchange correlation energy
+      $E_{\rm xc}$ and the dielectric function can be made.
+\item The Generalized Harris-Foulkes Functional and the property that the
+      the variational error in the total energy is only of the second order 
+      with respect to the input density.
+\end{itemize}
+%
+The first point means we can connect the exchange-correlation functional, 
+which is mysterious and foreign, to a dielectric function, which has a pleasing 
+classical picture and is familiar.
 The extremal properties of the Harris-Foulkes functional are discussed 
-in Refs.~\cite{finnis,farid93,methfessel95, haydock11}.
-Finnis places particular emphasis on the expansion of the HKS function to second order in the
-variation of the density:
+in Refs.~\cite{finnis,farid93,methfessel95, haydock97}.
+Finnis places particular emphasis on the expansion of 
+the HKS function to second order in the variation of the density:
 
 One finds that if $H^{in} = \hat{T}+V_{ext}+V_{H}^{\rm in}+V_{xc}^{\rm in}$,
 the kinetic energy functional can be calculated as:
@@ -1317,31 +1339,21 @@ of Eq.~\ref{tb:force} in Chapter~\ref{chap:invariance}. This term is required to
 the band energy contribution which we can calculate with the recursion technique. However it is
 less obvious what form this potential should take. It is often approximated as a pair potential.
 
-If we re-write the total energy following Finnis:
-%
-%\begin{equation}
-%\end{equation}
-%
-If $\rho_{in}$ in Eq.~\ref{eq:rewrittenHFG} is the charge density for the sum of spherical atomic 
-charges then the interacting ion terms will correspond to pair potentials that are rapidly screened. 
-These considerations will be developed further in Chapter~\ref{chap:wannier}.
+%If we re-write the total energy following Finnis:
+%If $\rho_{in}$ in Eq.~\ref{eq:rewrittenHFG} is the charge density for the sum of spherical atomic 
+%charges then the interacting ion terms will correspond to pair potentials that are rapidly screened. 
+%These considerations will be developed further in Chapter~\ref{chap:wannier}.
 
 \section{Conclusion}
 \noindent
 This chapter begain by introducing the Hohenberg-Kohn theorem. This theorem,
 which states the ground-state energy of an interacting electronic system 
-is a functional of the ground-state charge density is the basis of all the
-subsequent discussion. From that theorem much of the rest followed.
+is a functional of the charge density is the basis of all the
+subsequent discussion. 
 
-For a given configuration of ions it is now commonplace to send a calculation 
-off to a computing machine and within a few
-minutes, hours, or days (depending on the size of the system) come back to directories 
-full of eigenvalues, charge densities, wavefunctions, and total energies.
-We discussed various schemes for extending DFT, a theory for the ground state,
+We have discussed various schemes for extending DFT, a theory for the ground state,
 to describe excited state properties and give us a better treatment of the exchange
-and correlation in real systems. 
-
-We then discussed an approach based on Green's function methods 
+and correlation in real systems. We then discussed an approach based on Green's function methods 
 to accurately treat processes involving electron addition and removal.
 Along these lines we presented a detailed discussion
 of the analytic properties of the Green's function and a full derivation of Hedin's
@@ -1349,16 +1361,14 @@ equations which define the $GW$ approximation. Hopefully now the reason it is ca
 $GW$ is less mysterious \footnote{If the naming remains mysterious you 
 should go back and read that section again.}.
 
-The connection to the tight binding formulation of materials science was motivated
-in the final section of the $GW$ discussion by sketching out the type of integrals that would 
-have to be computed to form the matrix elements of the Green's function and self-energy
-operator. The possibility of exploiting a perturbative approach to including
-the exchange and correlation energies systematically was discussed in Section~\ref{sec:gwpert}. 
-By mapping these operators on to matrix elements and being selective about 
-which experimentally accessible quantities we wish to compute 
-it should be possible to streamline the calculations into a more manageable framework. 
+For a given configuration of ions it is now commonplace to send a calculation 
+off to a computing machine and within a few minutes, hours, or 
+days (depending on the size of the system) come back to directories 
+full of eigenvalues, charge densities, wavefunctions, forces, and total energies.
+Helping to make sense of this data and exploit the data to aid materials design is the 
+objective of this book.
 
-The formal transformation from DFT/GW methods to functionals
-amenable to being described in terms of local short range interactions 
-was begun in the section on the Harris-Foulkes functional.
-These idea will be developed further in Chapters~\ref{chap:wannier} and \ref{chap:manybodyrec}.
+The formal transformation from the total energy methods based on the LDA and GW 
+to functionals amenable to being described in terms of local short range interactions 
+amenable to recursion type calculations was begun in Sec.~\ref{sec:usefulfunctionals}. 
+These ideas will be developed further throughout the rest of the book.
