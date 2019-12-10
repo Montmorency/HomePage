@@ -1,56 +1,80 @@
 \chapter{Metallurgy}
 \label{chap:metallurgy}
 \section{Introduction}
-Cottrell observed that metallurgy would require a ``theory... which explains
+We shall begin this section with some quotes from the masters.
+Cottrell, for his part, observed that 
+metallurgy would require a ``theory... which explains
 the properties of metallic solids and the explanation of the origin of this
 structure from the structures of individual atoms." Similarly in Vol. 35
 Heine noted "What we lack is a fundamental quantum theory of the cohesion
-and structure of a wide diversity of solids." The previous chapters,
-though hopefully enjoyable in their own right, were really just meant to bring
+and structure of a wide diversity of solids." Perhaps the most telling comes
+from Wigner and Seitz: "If one had a great calculating machine, one might 
+apply it to the problem of solving the Schr\"odinger equation for each metal
+and obtain thereby the interesting physical quantities... It is not clear, however,
+that a great deal would be gained by this. Presumably the results would agree
+with the experimentally determined quantities... It would be preferable instead
+to have... a simple description of the essence of the factors which determine cohesion
+and an understanding of the origins of variation in properties from metal to metal."\cite{wigner55}.
+
+The previous chapters, though hopefully enjoyable in their own right, 
+were really just meant to bring
 us to the stage where we can start using the principles of locality
 and recursion methods to compute the structural and 
 mechanical properties of extended solids.
 
-This chapter will focus on the calculation of the electronic and mechanical
-properties of transition metals and their alloys. 
+This chapter will focus on determining which properties and trends we would like
+to calculate and how to go about calculating them.
 
 %Perhaps the most interesting aspect of physical metallurgy is how
 %macroscopic parameters can be directly connected to the solution of 
 %the wave equation governing the atomic scale motion of the electrons.
-
 %Feynman's definition of a chemical bond.
 %It now becomes quite clear why the strongest and most important attractive 
 %forces arise when there is a concentration of charge between two nuclei. 
 %The nuclei on each side of the concentrated charge are each strongly attracted to it.
 %Thus they are in effect attracted towards each other. 
 %
+The calculation of the cohesive
+energy and lattice constant of metallic sodium\cite{wigner33,wigner34,frolich37}.
+by Wigner and Seitz can be viewed as the initiation of the field
+of theoretical materials science.
 
-It is worthwhile reviewing some of the highlights from the history
-of first principles calculations of material properties.
-
-The analysis of Wigner and Seitz in many ways initiated the field
-of theoretical materials science with their calculation of the cohesive
-energy and lattice constant of metallic sodium\cite{wigner33, wigner34}.
-
-Subsequent work in this field extended Wigner and Seitz analysis
+Subsequent work in this field by Fuchs extended Wigner and Seitz's analysis
 to the cohesive and elastic properties of monovalent
-metals like sodium, lithium, and copper \cite{fuchs36}. Around
+metals like sodium, lithium, \cite{fuchs36} and by dealing
+with copper by only treating the outer s-shell \cite{fuchs35}. Around
 the same time the young quantum theory was being
 used to explain the appearance of different phases in alloys in terms 
 of Brillouin zones \cite{bethe29, bouckhaert36, owen33, jones34}. 
 
 Born's work provides the standard treatment of 
 the stability of lattices to short and long wavelength
-vibrations considering general forms for the interatomic potentials\cite{born40,born42},
+vibrations by considering general analytic forms for the interatomic potentials\cite{born40,born42},
 with other workers again making extensions of the theory to particular
-lattice types \cite{power41, nabarro52}. The work of Brockhouse and
-others on neutron spectroscopy provided striking experimental confirmation
-of many of the predicted properties of lattice vibrations.
+lattice types \cite{power41, nabarro52}. The work of Brockhouse, which led to the 1994
+Nobel Prize in Physics, and others on neutron spectroscopy provided striking 
+experimental confirmation
+of the predicted properties of lattice vibrations\cite{brockhouse62}.
+
+Cohesive energies in the transition metal series were an important early
+test of the validity of local density functional based methods\cite{moruzzi77}.
+
+\cite{gelatt77}. The results of these studies
+were particular satisfying in that cohesive energies, bulk moduli,
+and equilibrium nuclear separation could all be predicted accurately 
+by the density functional theory. 
 
 In keeping with the unifying theme of the book the targeted quantities
 will first be described and formulated in general terms and then mapped
-on to a set of recursion calculations to compute the cohesive and elastic
-properties of a material from the perspective of the local atomic environment.
+on to a set of recursion calculations. From these calculations it will be
+shown that we can compute the preferred crystal structures and the vibrational and 
+elastic properties of many transition metals from the perspective of the 
+local atomic environment.
+
+As a final demonstration of the recursion method in the context of metallurgy 
+we apply the calculations to a particular model for embrittlement. This
+will set us up nicely for the next (and final) chapter when we apply
+recursive techniques to determine more macroscopic parameters. 
 
 \section{Crystal Structure}
 Step number uno in the field of theoretical metallurgy is a theory that correctly
@@ -73,7 +97,7 @@ everywhere positive and, except close to the nuclei, quasi-uniform.
 
 The closeness of close packed structures stems from trying to squeeze
 the largest number of atoms into a particular volume
-with a hard lower bound on the approach of the Nucleii.
+with a hard lower bound on the approach of the nuclei.
 The BCC structure solves a different problem in that it finds a
 distribution of nuclei likely to be closest to the electrons.
 
@@ -87,10 +111,10 @@ Phases \cite{haydocklaves75,johannes76} into distinct structures.
 The ability of the tight binding framework
 to provide an explanatory model for trends in homologous materials is
 well demonstrated by the Pettifor's work on the transition
-metal series \cite{pettifor70}, the Chevrel compounds of Molybdenum 
-chalcogenides Ref.~\cite{bullet77}.
+metal series \cite{pettifor70}, the Chevrel 
+compounds of Molybdenum chalcogenides Ref.~\cite{bullet77}.
 and the structures of the compounds in the Lave phases 
-in Ref.~\cite{johannes76},
+in Ref.~\cite{johannes76}.
 
 \section{Lattice Vibrations}
 %insight into \cite{varma79a, varma79b}.
@@ -355,12 +379,6 @@ with work on this subject beginning in the 1950s \cite{cochardt55}.
 The local density of states for atoms at a screw dislocation core have been computed by \cite{paidar81,masuda81}. 
 The change in the local bonding picture induced by a vacancy in Fe was examined in Ref.~\cite{masuda82,ohta87}.
 
-\subsection{Charles Frank}
-By way of introduction to the variety of dislocation structures that occur
-we turn to F.C. Frank. Of Frank-Read dislocations fame.
-%Frank wrote a number of interesting article BCC as a 
-%close packed structure \cite{frank92}.
-
 \section{Grain Boundaries}
 The analysis of Read and Shockley in Ref.~\cite{read50} serves as a comprehensive
 introduction to the field of interfaces in condensed matter. The 
@@ -389,9 +407,9 @@ at a closed set of expressions for the strains in a material.
 
 These expressions are given in Ref.~\cite{sutton95} and derived here.
 
-\subsection{Pile Ups}
-Another interesting case is discussed in Ref.~\cite{eshelby} 
-where free dislocations pile up next to a pinned dislocation.
+%\subsection{Pile Ups}
+%Another interesting case is discussed in Ref.~\cite{eshelby} 
+%where free dislocations pile up next to a pinned dislocation.
 
 \section{Alloys}
 The application of the recursion method to random lattices is described.

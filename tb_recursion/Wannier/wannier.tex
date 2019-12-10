@@ -2,20 +2,19 @@
 \label{chap:wannier}
 \section{A Brief History of Local and Extended Waves}
 Chemical intuition is built on a concept of local bonding. 
-Yet the mathematics of Bloch waves requires a picture of an 
+Yet the mathematics of Bl\"och waves requires a picture of an 
 electron state extended throughout a crystal.
-%a figure here of the Pauling dot diagrams of shared bonds
-%and a representation of a Bloch orbital would be nice.
+
 Pauling introduced the concept of linear combinations of atomic eigenfunctions
 as forming hybrid orbitals which are local and directional in nature and
 in many cases can be used to anticipate or explain the observed structure
 of molecular compounds \cite{pauling28}. Pauling's publication was contemporaneous
-with Felix Bl\"och's work on electrons in crystals \cite{bloch29}. The
-way these two perspectives, the local and extended picture of electronic wave functions, 
-are applied and rationalized is the distinguishing feature 
-in entire fields and sub-fields of physics and chemistry.
+with Felix Bl\"och's work on electronic wave functions in crystals \cite{bloch29}. The
+way these two perspectives, that is, the local and the extended picturea
+of electronic wave functions, are applied is the distinguishing feature 
+of entire fields and sub-fields of physics and chemistry.
 
-The mathematical transformation between the local formulation
+A definite mathematical transformation between the local formulation
 and Bl\"och's formulation was obtained by Wannier. 
 Wannier succeeded in obtaining a set of functions
 from the set of Bl\"och waves which were localized in each unit cell
@@ -24,28 +23,34 @@ neighbouring cells \cite{wannier37, wannier62}.\index{Wannier,Bl\"och}
 This work, Wannier noted, was initiated by Eugene Wigner's suggestion that, 
 ``... there ought to be a way to reconcile the local and the band concept 
 for electrons, and that such a reconciliation would probably be useful in 
-understanding the spectra of insultators." Koster proposed a variational
-procedure for the determination of Wannier functions \cite{koster53},
+understanding the spectra of insulators." 
+
+
+However Wannier's transformation amounted to a gauge transformation
+and did not result in a unique local description of the electronic states.
+Koster proposed a variational procedure for the determination 
+of Wannier functions \cite{koster53},
 alongside a number of other early treatments of the problem \cite{winston54}.
 
-The immediate practical consequence of his formalism was
+The immediate practical consequence of Wannier's formalism was
 it allowed for an effective computational treatment of impurities 
-and donor and acceptor states in semiconductors \cite{slater49,kittel54}.
-Appeal to the existence of Wannier like orbitals is frequently made in
+and donor and acceptor states in semiconductors \cite{slater49,kittel54} simply
+by appealing to the existence of localized wave packets rather than calculating
+them explicitly. This appeal to the existence of Wannier like orbitals is frequently made in
 tight-binding formulations where they are not explicitly calculated but
-matrix elements between them are estimated.
+matrix elements between them are inferred.
 
 Lennard-Jones evolved a concept of equivalent 
 orbitals \cite{lennardjones49a,lennardjones49b, hall50}
 to determine the relation between electron-pairing theory of valency, 
-the Pauling picture, and the molecular orbital theory treating each 
+the Pauling picture, and the molecular orbital theory by treating each 
 electron as moving throughout the whole molecular 
 framework. Like much of the early work on localized wave functions in molecules 
 a group theory formulation of the problem was employed.
 In Lennard-Jones' formulation a set of equivalent orbitals, 
-if such a set exists, has the property that the effect of a symmetry 
+when such a set exists, has the property that the effect of a symmetry 
 operation only involves the interchange of equivalent orbitals.
-See also Kimball for a full statement of the `chemical perspective' 
+Kimball has written from a similar `chemical perspective' 
 on orbitals where combinations of spherical harmonics are taken to form
 directed bonds \cite{kimball41} with a number of molecular examples.
 
@@ -56,7 +61,8 @@ and Wannier functions \cite{lowdin56}.
 
 A unified treatment of each of these perspectives, molecular orbital,
 Bloch states, Wannier functions and L\"owdin orbitals based on group theory 
-has been made in Ref.~\cite{altmann58}.
+has been made in Ref.~\cite{altmann58}. As well as a later review by Phillips\cite{phillips70}.
+
 
 \section{MLWF: Maximally Localized Wannier Functions}
 For an isolated set N of Bloch bands, in the Maximally Localised Wannier Functions 
@@ -236,4 +242,10 @@ Choosing the Wannier Basis results in orthogonal orbitals that remain well local
 that made by Hall \cite{hall52} who uses symmetric  combinations of directed orbitals
 on adjacent pairs of atoms and constructs the bloch sums from these orbitals.
 The second nearest neighbour s-interaction is found to have the opposite sign.
+
+\section{Oh, What Larks}
+There is little need to motivate the theoretical investigations of semiconductors
+their technological relevance is undisputed. Nor is there a shortage of interesting
+problems to consider surface reconstructions, donor acceptor levels, 
+disorder \cite{hass40}, inversion layers.
 
