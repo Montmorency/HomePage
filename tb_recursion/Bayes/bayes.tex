@@ -1,3 +1,47 @@
-\chapter{Bayesian Materials Science}
-Mention GAP models, empirical pseudopotentials, the lave phase stuff as well.
-Parameters of excitation and structure TB recursions can be updated as well.
+\chapter{Macroscopic Materials Properties and Bayesian Modelling}
+\label{chap:bayes}
+%This paragraph needs research:
+%Mention GAP models, empirical pseudopotentials, the lave phase stuff as well.
+%Parameters of excitation and structure TB recursions can be updated as well.
+%In addition many important theoretical developments came 
+%from the context of attempting to explain a new set of experimental data.
+%Bethe's calculation of the hyperfine? shift, the recursion work on the magnetic 
+%moment of $FeAl_{3}$, I think Bardeen mentioned his work on superconductivity was
+%initiated when they were trying, Shockley's work on the transistor. (A good source 
+%for these sorts of anecdotal history can be found in Nobel prize banquet speeches.)
+
+\section{}
+
+\section{Bayesian Model Ranking}
+A metric for determining what is meant by a minimal model
+can be found in Bayesian probability theory. The Bayesian framework 
+lets us define a metric that increases as the number of free 
+parameters in the model is reduced, and the reproduction of 
+target experimental data is increased, with a bound on optimal predictions.
+
+The posterior on the parameters of the model can be assessed:
+%
+\begin{equation}
+\label{eq:bayes}
+P(\mathbf{w}|D, \mathcal{H}_{i}) = 
+\frac{P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H})}{P(D|\mathcal{H}_{i})},
+\end{equation}
+%
+where D, the target data, should constitute experimental data. 
+Eq.~\ref{eq:bayes} MacKay summarises as:
+%
+\begin{equation}
+{\rm Posterior} = \frac{{\rm Likelihood} \times {\rm Prior}}{{\rm Evidence}}
+\end{equation}
+%
+\begin{equation}
+\label{eq:bayesH}
+P(\mathcal{H}_{i}|D) \propto P(D|\mathcal{H}_{i})P(\mathcal{H}_{i})
+\end{equation}
+%
+\begin{equation}
+\label{eq:bayesH}
+P(D|\mathcal{H}_{i}) = \int P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H}_{i})d\mathbf{w}
+\end{equation}
+%
+Models (hypotheses) of material systems can then be ranked according to Eq.~\ref{eq:bayesH},  

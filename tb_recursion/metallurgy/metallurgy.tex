@@ -6,9 +6,10 @@ Cottrell, for his part, observed that
 metallurgy would require a ``theory... which explains
 the properties of metallic solids and the explanation of the origin of this
 structure from the structures of individual atoms." Similarly in Vol. 35
-Heine noted "What we lack is a fundamental quantum theory of the cohesion
-and structure of a wide diversity of solids." Perhaps the most telling comes
-from Wigner and Seitz: "If one had a great calculating machine, one might 
+Heine noted ``What we lack is a fundamental quantum theory of the cohesion
+and structure of a wide diversity of solids." 
+The development of such a theory must heed the early warning of Wigner and Seitz: 
+"If one had a great calculating machine, one might 
 apply it to the problem of solving the Schr\"odinger equation for each metal
 and obtain thereby the interesting physical quantities... It is not clear, however,
 that a great deal would be gained by this. Presumably the results would agree
@@ -17,10 +18,10 @@ to have... a simple description of the essence of the factors which determine co
 and an understanding of the origins of variation in properties from metal to metal."\cite{wigner55}.
 
 The previous chapters, though hopefully enjoyable in their own right, 
-were really just meant to bring
-us to the stage where we can start using the principles of locality
+were really just meant to bring us to the stage where we can start 
+using the principles of locality
 and recursion methods to compute the structural and 
-mechanical properties of extended solids.
+mechanical properties of extended solids. 
 
 This chapter will focus on determining which properties and trends we would like
 to calculate and how to go about calculating them.
@@ -34,17 +35,16 @@ to calculate and how to go about calculating them.
 %The nuclei on each side of the concentrated charge are each strongly attracted to it.
 %Thus they are in effect attracted towards each other. 
 %
-The calculation of the cohesive
-energy and lattice constant of metallic sodium\cite{wigner33,wigner34,frolich37}.
+\section{A Condensed Historical Interlude}
+The calculation of the cohesive energy and lattice constant of 
+metallic sodium\cite{wigner34a, wigner33,wigner34b}.
 by Wigner and Seitz can be viewed as the initiation of the field
 of theoretical materials science.
 
 Subsequent work in this field by Fuchs extended Wigner and Seitz's analysis
-to the cohesive and elastic properties of monovalent
-metals like sodium, lithium, \cite{fuchs36} and by dealing
-with copper by only treating the outer s-shell \cite{fuchs35}. Around
-the same time the young quantum theory was being
-used to explain the appearance of different phases in alloys in terms 
+to the cohesive and elastic properties of monovalent metals \cite{fuchs35, fuchs36} 
+Around the same time quantum theory was being
+applied to explain the appearance of different phases in alloys in terms 
 of Brillouin zones \cite{bethe29, bouckhaert36, owen33, jones34}. 
 
 Born's work provides the standard treatment of 
@@ -53,17 +53,27 @@ vibrations by considering general analytic forms for the interatomic potentials\
 with other workers again making extensions of the theory to particular
 lattice types \cite{power41, nabarro52}. The work of Brockhouse, which led to the 1994
 Nobel Prize in Physics, and others on neutron spectroscopy provided striking 
-experimental confirmation
-of the predicted properties of lattice vibrations\cite{brockhouse62}.
+experimental confirmation of the predicted properties of lattice vibrations\cite{brockhouse62}.
 
-Cohesive energies in the transition metal series were an important early
-test of the validity of local density functional based methods\cite{moruzzi77}.
+With the rise of, what Friedel called the `computational lobby', the prospect 
+of obtaining numerical solutions to the wave equations governing the motion of 
+electrons in solids began to appear increasingly attractive. It is at this
+point the two, increasingly divergent, schools of thought in electronic structure
+come in to focus. On the one hand workers like Pettifor \cite{pettifor69} sought
+to rationalize trends in the transition metals with a minimal analytic models capable of 
+capturing the physical mechanisms dictating the bonding properties this in paralell
+with the workers obtaining numerical solutions to the wave equations \cite{andersen75, jepsen75}
+Friedel wrote a paper emphasising the complimentary usefulness of the two schools of thought
+\cite{friedel73}.
 
-\cite{gelatt77}. The results of these studies
-were particular satisfying in that cohesive energies, bulk moduli,
-and equilibrium nuclear separation could all be predicted accurately 
-by the density functional theory. 
+Towards the end of the 1970s the first systematic tests of local density 
+functional based methods in a metallurgical context began to appear.
+It appeared that the methods were capable of obtaining \cite{moruzzi77, gelatt77}. 
+particularly satisfying agreement with experimental data available for 
+cohesive energies, bulk moduli, and equilibrium nuclear separation across 
+the transition metal series.
 
+\section{Crystal Structure}
 In keeping with the unifying theme of the book the targeted quantities
 will first be described and formulated in general terms and then mapped
 on to a set of recursion calculations. From these calculations it will be
@@ -76,7 +86,6 @@ we apply the calculations to a particular model for embrittlement. This
 will set us up nicely for the next (and final) chapter when we apply
 recursive techniques to determine more macroscopic parameters. 
 
-\section{Crystal Structure}
 Step number uno in the field of theoretical metallurgy is a theory that correctly
 describes the crystal structures formed by different pure metals. 
 Often the first three lattices encountered by students of metallurgy 
@@ -139,21 +148,22 @@ These sources easily equip us with the expressions required. These expressions p
 point for the inclusion of higher order terms in the vibrational spectra
 the so called anharmonic effects which can become important at high temperatures.
 
-\section{Stress, Strain, and Elasticity}
+\section{Elastic Tensors}
 Shearing, straining, Young's modulus, poisson ratio, elastic tensors these are the
 stuff of every undergraduate materials mechanics course.
 Imagine you have some tensor $\epsilon$ and you apply a virtual pure strain to a collection atoms.
 
 The present section will demonstrate how to compute some of the elastic properties
-of a BCC crystal using recursion techniques. There are a couple approaches.
+of a BCC crystal using recursion techniques. We will look at two approaches.
 One of them involves looking at the changes in the total energy with
 respect to a deformation of the lattice and picking out the 
-second derivative of this change which, depending on the deformation chosen,
+second derivative of this change, which, depending on the deformation chosen,
 will correspond to an element of the elastic tensor. The second approach
-proceeds directly from the Hamiltonian that has been chosen. Second order
-perturbation theory allows us to explicitly calculate the contributions of
-the Hamiltonian to the elastic constants. The second approach has distinct
-numerical and conceptual advantages.
+proceeds directly from the Hamiltonian that has been chosen and employs second order
+perturbation theory to calculate the contributions of
+the interatomic force constants to the elastic tensor. 
+The second approach has some distinct numerical 
+and conceptual advantages.
 
 \subsection{The Expressions We Need}
 In the author's opinion elasticity is made difficult by the appearance of a variety
@@ -341,13 +351,13 @@ The contribution to the IJ component of the stress tensor is:
 %
 The pair contributions can be added to obtain the full stress tensor. 
 But if we are only interested in the electronic contributions
-Eq.~\ref{eq:atomstress} is already good enough. For an application of the 
+Eq.~\ref{eq:atomstress} is already good enough
+for an application of the local stress tensor,
 see Ref.~\cite{ohta90}
 
 %As usual we need to know the $R$ dependence of our
 %integrals, both hopping and on-site, which we went to the trouble 
 %of learning in Chapter~\ref{chap:wannier}.
-
 %Ref.~\cite{terakura84} demonstrates how the recursion method
 %may be used to compute the elastic constants of a material.
 
@@ -355,7 +365,7 @@ The interaction of dislocations and defects reveals one of the most difficult pr
 in theoretical materials science: the coupling of long range elastic fields
 with local chemical changes. This coupling of length scales makes
 reliable quantitative calculations difficult. Variations in the electronic structure
-inducing strains in the metal matrix which feed back into the electronic structure. 
+induce strains in the metal matrix which feed back into the electronic structure. 
 It appears that one requires a theory with quantum accuracy on the scale of an 
 interatomic bond that simultaneously takes into account the long range elastic 
 field.

@@ -1366,25 +1366,103 @@ curves, the local formulation still has a great deal of
 interprative value, and crucially, will remain valid
 in situations where Bloch's theorem does not.
 
-The bond order between atoms has a long history
-beginning with Coulson's study of carbonyl 
-chains in Ref.~\cite{coulson39,coulson47}. 
-It is a good exercise to compare the derivative of Eq.~\ref{eq:tbtoten} with respect
-to the hopping integral and the Green's function,
-with Coulson's definition of the bond order\cite{coulson39}. 
-The correlation of the experimental data in the form of bond lengths
-with the concept of a bond order in polyenes and aromatic molecules
-is an elegant demonstration of a theory and application closely
-linked to experimental data, and studying the trend in a property
-of homologous materials.
+\section{The Bond Order}
+\index{bond order}
+The concept of a bond order has a long history.
+It begins with Coulson's study of polyenes and aromatic 
+molecules \cite{coulson39,coulson47}. Coulson's definition 
+of the bond order begins from a molecular orbital picture. The molecular
+orbital is a linear combination of atom centered orbitals $\psi_{n}$:
+%
+\begin{equation} 
+\Psi = a_1\psi_1 + a_2\psi_{2} + ... +a_{n}\psi_{n},
+\end{equation}
+%
+where $\sum_{n} a^{*}_{n}a_{n} = 1$, in Coulson's notation the bond order
+then becomes:
+%
+\begin{equation}
+\Theta_{ij}  = \frac{1}{2}[a_{i}a^{*}_{j} + a^{*}_{i}a_{j}].
+\end{equation}
+%
+(where we have changed the notation of the bond order to the greek capital
+theta rather than Coulson's preferred $p_{ij}$).
+He goes on to examine the bond order in benzene, cyclobutadiene, 
+and the alkyl chains C$_{\rm 2n}$H$_{\rm 2n+2}$ and alkyl radical chains 
+$C_{2n+1}H_{2n+3}$ see Fig.~\ref{fig:coulsonmolecules}. 
 
-\footnote{The obituary of C.A.Coulson\cite{altmann74} 
-is highly recommended reading. His obituary gives an insight into 
-how wave mechanics was imported to the study of 
-complex molecules and crystals at the earliest stage. Coulson's 
-immense contribution to the study of electronic structure
-begins near the inception of quantum theory. As mentioned in Ref.~\cite{altmann74}
-Coulson is supposed to have attended a seminar given by Dirac 
+The case of a hydrogen molecule $H_{2}$ is the simplest to 
+visualize (panel Fig.~\ref{coulsonmolecules}). We build a wave function:
+%
+\begin{equation}
+\Psi = \frac{1}{\sqrt 2}(\psi_{1} \pm \psi_{2})
+\end{equation}
+%
+and the bond order is $\Theta_{ij} = \pm \frac{1}{2}$.
+
+We may also consider $H_{2}^{+}$ and build a wave function:
+%
+\begin{equation}
+\Theta_{ij} = \frac{\lambda\psi_{1} + \mu\psi_{2}}{(\lambda^{2} + \mu^{2})^{\frac{1}{2}}},
+\end{equation}
+%
+the bond order is maximized when $\lambda=\mu$, the two nuclei share the 
+single electron equally. 
+
+As a second example imagine a benzene molecule and we have a nearest neighbour 
+hopping integral of $\beta$ (neglect any overlap of the orbitals).
+We can build up the following molecular orbitals:
+%
+\begin{align}
+\psi^{(1)} = \frac{1}{\sqrt{6}}[\psi_{1} +\psi_{2} +\psi_{3} + \psi_{4} + \psi_{5} + \psi_{6}],\quad \epsilon=-2\beta\\
+\psi^{(2)} = \frac{1}{\sqrt{6}}[\psi_{1} + w\psi_{2} + w^2\psi_{3} + w^3\psi_{4} + w^4\psi_{5} + w^5\psi_{6}],\quad \epsilon=-\beta\\
+\psi^{(3)} = \frac{1}{\sqrt{6}}[\psi_{1} + w^5\psi_{2} +w^4\psi_{3} + w^3\psi_{4} + w^2\psi_{5} + w\psi_{6}]\quad \epsilon=-\beta
+\end{align}
+%
+the factor of $w=e^{\frac{i\pi}{3}}$, i.e. the roots of unity, ensures we have a normalized wavefunction. 
+From the coefficient of the wavefunction the bond order can be computed directly and the total energy,
+what Coulson calls the total ``mobile energy", but what would be called the band energy today is
+given by:
+%
+\begin{equation}
+\epsilon = -2\sum_{ij}\Theta_{ij}\beta_{ij}
+\end{equation}
+%
+\begin{figure}
+\begin{center}
+\includegraphics[scale=1.0]{./invariance/coulsonbondorders.png}
+\caption{An intuitive picture of the bond order can 
+be grasped by considering some simple molecules: (a) H$_{2}$,
+(b), cyclobutadiene, (c) benzene, and (d) alkyl radicals.
+Coulson was able to make convincing quantitative 
+arguments about the variation of the bond lengths and energetics
+in these types of systems from the point of view of the bond order. 
+\label{fig:coulsonmolecules}}
+\end{center}
+\end{figure}
+
+Coulson's correlation of experimental data in the form of bond lengths
+with the concept of the bond order in polyenes and aromatic molecules
+is an elegant demonstration of a theory and application closely
+linked to experimental data, and studying trends in a class of
+homologous materials. A very deep understanding of the energetics of 
+hydrocarbon chains is made.
+
+The bond order quantifies the accumulation or depletion of charge between
+atoms as the coefficients of the orbitals are tuned to minimize the total energy.
+Coupled with Feynman's intuition of positive nuclei being attracted to regions
+of accumulated negative charge we begin to understand how solids are held together\cite{feynman39}.
+It is of further interest to note that Coulson's paper requires the calculation of 
+the determinate for a tridiagonal Hamiltonian (see also Ref.~\cite{coulson38}). 
+The mathematics involved will be familiar to those happy students 
+who have studied the linear chain model.
+
+\footnote{Altmann and Bowens biographical sketch of C.A.Coulson\cite{altmann74} 
+is highly recommended reading. As a contemporary of Dirac at Cambridge
+Coulson witnessed first hand the early developments of quantum theory.\index{Coulson, C.A.} 
+He would go on to play an early role in the application of wave mechanics 
+to the study of molecules and crystals. 
+In fact, Coulson is supposed to have attended a seminar given by Dirac 
 where Dirac was discussing the uncertainty relation: $xp-px=ih$.
 When Coulson inquired when this work had been done Dirac replied, 
 ``Last night." In 1938 Coulson may have performed what was
@@ -1403,7 +1481,7 @@ constitute a textbook onto itself.}
 
 The order of a given bond is a measure
 of the force tending to change the length of a given bond
-for small variation of the bond length.
+for a small variation of the bond length.
 
 Defined in terms of Green's functions, the bond order is the integrated 
 energy difference between a symmetric and anti-symmetric combination 

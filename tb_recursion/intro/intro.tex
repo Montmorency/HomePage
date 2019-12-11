@@ -693,65 +693,17 @@ function itself.
 %models of condensed matter systems was over taken by {\it ab initio} 
 %calculations based on density functional theory. 
 %Heralded in Finnis \cite{andersen89}  with reference to \cite{payne87}.
-
-\section{Bayesian Materials Science}
-The ubiquity of access to {\it ab initio} data has had a significant impact on 
-Ehrenreich's first point: experimental corroboration. 
-Cursory surveys of the literature demonstrate the increasing frequency of 
-appearance of publications which contain no original experimental work. 
-
-This is partly down to the high level of specialization of contemporary 
-researchers and research groups. Previously, the distinction between
-an experimental materials scientist and a theoretical one was not so clear cut. 
-%This paragraph needs research:
-%In addition many important theoretical developments came 
-%from the context of attempting to explain a new set of experimental data.
-%Bethe's calculation of the hyperfine? shift, the recursion work on the magnetic 
-%moment of $FeAl_{3}$, I think Bardeen mentioned his work on superconductivity was
-%initiated when they were trying, Shockley's work on the transistor. (A good source 
-%for these sorts of anecdotal history can be found in Nobel prize banquet speeches.)
+%The ubiquity of access to {\it ab initio} data has had a significant impact on 
+%Ehrenreich's first point: experimental corroboration. 
+%Cursory surveys of the literature demonstrate the increasing frequency of 
+%appearance of publications which contain no original experimental work. 
 
 Ehrenreich's four points clarify the desired objective for materials modelling:
 a minimal theoretical model informed by {\it ab initio} calculations that accounts for 
 experimental data, and {\it predicts quantitatively} trends in material properties
-across homologous series. 
-
-In these notes the possibility of exploiting the invariance theorem 
+across homologous series. In these notes the possibility of exploiting the invariance theorem 
 and recursion techniques is assessed as the optimal framework
 for achieving this objective. 
-
-A metric for determining what is meant by a minimal model
-can be found in Bayesian probability theory. The Bayesian framework 
-lets us define a metric that increases as the number of free 
-parameters in the model is reduced, and the reproduction of 
-target experimental data is increased, with a bound on optimal predictions.
-
-The posterior on the parameters of the model can be assessed:
-%
-\begin{equation}
-\label{eq:bayes}
-P(\mathbf{w}|D, \mathcal{H}_{i}) = 
-\frac{P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H})}{P(D|\mathcal{H}_{i})},
-\end{equation}
-%
-where D, the target data, should constitute experimental data. 
-Eq.~\ref{eq:bayes} MacKay summarises as:
-%
-\begin{equation}
-{\rm Posterior} = \frac{{\rm Likelihood} \times {\rm Prior}}{{\rm Evidence}}
-\end{equation}
-%
-\begin{equation}
-\label{eq:bayesH}
-P(\mathcal{H}_{i}|D) \propto P(D|\mathcal{H}_{i})P(\mathcal{H}_{i})
-\end{equation}
-%
-\begin{equation}
-\label{eq:bayesH}
-P(D|\mathcal{H}_{i}) = \int P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathcal{H}_{i})d\mathbf{w}
-\end{equation}
-%
-Models (hypotheses) of material systems can then be ranked according to Eq.~\ref{eq:bayesH},  
 
 \section{Prospective}
 The purpose of these notes is to collect established tools into 
@@ -771,13 +723,19 @@ Density Functional Theory is the primary {\it ab initio} engine that will
 provide the interaction parameters required in recursion formulations.
 Alongside the standard DFT presentation in Chapter~\ref{chap:gw} we will
 introduce a more advanced treatment for the correlation of electrons in materials.
-This is called, ominously and (to the uninitiated) confusingly, $GW$ theory.
+This is called, ominously, and (to the uninitiated) confusingly, $GW$ theory.
 
 Chapter~\ref{chap:wannier} is a whistle stop tour 
 on modern techniques for preparing localized wave packets in the 
 form of Wannier functions. The focus of this chapter is on 
 ways of deducing the coefficients of a sparse Hamiltonian
 appropriate for performing recursion type calculations.
+
+%Perhaps the most ambitious objective is to couple
+%quantum-mechanical modeling of small, critical regions of a 
+%system (such as a dislocation core) with a less rigorous modeling
+%of the noncritical regions ( which could be modeled using
+%classical elasticity theory). \cite{payne92}
 
 %We will then discuss the outlines of an idea for 
 %including many-body corrections to the standard 
@@ -802,10 +760,11 @@ using recursion techniques.
 Finally, Chapter \ref{chap:bayes} extends recursion techniques
 to the mechanical regime and points out some Bayesian techniques 
 for selecting material models and ranking them according 
-to a mathematical criterion. Married with recursive techniques
-it is possible to identify novel atomistic configurations
-and extend our knowledge of materials system by "learning on the fly" 
-in the sense it was intended by Alessandro De Vita.
+to a mathematical criterion. 
+%Married with recursive techniques
+%it is possible to identify novel atomistic configurations
+%and extend our knowledge of materials system by "learning on the fly" 
+%in the sense it was intended by Alessandro De Vita.
 
 All of these techniques have been developed by other workers 
 over a number of years. Collecting them into a single place 
@@ -833,6 +792,10 @@ it environment, forming new combinations. It is this process which
 generates the braids and chains which link atoms together into new structures 
 with new properties.
 
+%From Adrian's biographical sketch of Friedel
+% Could only think about crystals in reciprocal space
+% `owing to an overdose of X-ray scattering.'
+
 %Gibb's has suggested that:
 %
 %\begin{quote}
@@ -854,9 +817,9 @@ requirement of this type of physics is to understand every formula that
 one writes down physically both as to its intellectual content and to its context.
 \end{quote}
  
-It is hoped this close marriage of physical insight and mathematical technique
-will point to a framework where engineers, informed by the
-structure and composition of a material, can consult a simple table of
+It is hoped the close marriage of physical insight and mathematical technique 
+afforded by the recursion method will point to a framework where engineers, informed by the
+structure, connectivity, and composition of a material, can consult a simple table of
 coefficients and directly perform their computations, perhaps even with 
 pen and paper. The result of these computations should yield accurate 
 properties of their system derived from quantum mechanics.
