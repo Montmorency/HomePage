@@ -628,7 +628,7 @@ is determined by the choice of $\chi$.
 
 \subsection{Mathematical Origin}
 The trick of the recursion method, if you like to think of things in terms of tricks, 
-or its generating feature, if you prefer, is that from the outset the `Greenian', the element
+or its generating feature, if you prefer, is that from the outset the `Greenian', the matrix element
 of the Green's function we are interested in, is restricted to a particular matrix element: 
 %
 \begin{equation}
@@ -659,7 +659,7 @@ b_1 & a_1 & b_2 & 0 & 0 &  ...\\
 \end{equation}
 
 %
-The determinants and sub-determinants etc. of the matrix can be nested:
+The determinants and sub-determinants of the matrix can be nested:
 %
 $$
 \newcommand*{\temp}{\multicolumn{1}{|c|}{b_1}}
@@ -671,7 +671,7 @@ $$
 a_0 & b_1 & 0 & 0 & 0 & 0  & D_0 \\ \cline{2-6} 
 \temp & a_1 & b_2 & 0 & 0 & 0 & D_1 \\ \cline{3-6} 
 0 & \tempa & a_2 & b_3 & 0 & 0 & D_2 \\ \cline{4-6}
-0 & \tempc &  \tempb &  a_3 & b_4 & ... & D_3
+0 & \tempc &  \tempb &  a_3 & b_4 & ... & D_3.
 \end{array}
 $$
 
@@ -682,14 +682,14 @@ Eq.~\ref{eq:greenian} can be rewritten in terms of its determinants:
 \bra u_{0}|[E-H]^{-1}|u_{0}\ket = \frac{{\rm det}|D_{1}|}{{\rm det}|D_{0}|},
 \end{equation}
 %
-or, equivalently, be written as:
+or, by flipping the fraction on its head:
 %
 \begin{equation}
 \label{eq:greendet}
 \bra u_{0}|[E-H]^{-1}|u_{0}\ket = \frac{1}{\frac{{\rm det}|D_{0}|}{{\rm det}|D_{1}|}}.
 \end{equation}
 %
-Appeal is then made to \index{Cauchy}\footnote{Baron Augustin-Louis Cauchy FRS FRSE (21 August 1789 – 23 May 1857)} 
+Appeal is then made to Cauchy \index{Cauchy}\footnote{Baron Augustin-Louis Cauchy FRS FRSE (21 August 1789 – 23 May 1857)} 
 for the following expansion:
 %
 \begin{equation}
@@ -725,6 +725,12 @@ and
 \begin{equation}
 b_{n} = \bra u_{n}|H|u_{n-1} \ket.
 \end{equation}
+
+This at least is the rationale given in Vol.~35. In the appendix we pursue an
+alternative derivation of the recursion method that makes the connection
+with some different mathematical techniques a little more explicit. For the connection
+to tridiagonal matrices and expansions in terms of determinants
+is good enough to satisfy our mathematical curiousity.
 
 \section{Analytic Recursion}
 \subsection{The Constant Chain}
@@ -1558,7 +1564,7 @@ The matrix elements of the Hamiltonian with the non-orthogonal states takes
 the form:
 %
 \begin{equation}
-H_{\alpha \beta} = \bra \psi_{\alpha}|H|\psi_{\beta}\ket
+H_{i\alpha j\beta} = \bra \psi_{i\alpha}|H|\psi_{j\beta}\ket
 \end{equation}
 
 The inverse of the overlap matrix is defined:
@@ -1571,7 +1577,7 @@ The inverse of the overlap matrix is defined:
 Naturally, the elements of the inverse overlap matrix $S^{-1}$ are chosen 
 such that they produce the identity matrix upon multiplication $S$.
 
-The dual set of basis vectors is:
+The dual set of basis vectors are then:
 %
 \begin{equation}
 |\psi^{i\alpha}\ket = \sum_{j\beta}|\psi_{j\beta}\ket(S^{-1})^{j\beta i\alpha}.
@@ -1584,7 +1590,8 @@ on your naming preference) are equal.
 
 The two most important aspects of any basis set
 are {\it representation} and {\it normalization}. 
-We can {\it represent} an arbitrary vector $|u\ket$ as:
+We can {\it represent} an arbitrary physical 
+vector $|u\ket$ as:
 %
 \begin{equation}
 |u\ket = \sum_{i\alpha}u^{i\alpha}|\psi_{i\alpha}\ket = \sum_{i\alpha}u_{i\alpha}|\psi^{i\alpha}\ket.
@@ -1610,16 +1617,18 @@ The Hamiltonian in a mixed representation takes the form:
 %
 \begin{equation}
 \label{eq:mixedH}
-H^{\alpha}\ _{\beta} = \sum_{\gamma}(S^{-1})^{\alpha\gamma}H_{\gamma\beta}.
+H^{i\alpha}\ _{j\beta} = \sum_{\gamma}(S^{-1})^{i\alpha k\gamma}H_{k\gamma j\beta}.
 \end{equation}
 %
-This form of the Hamiltonian matrix is sometimes referred to as $D$ \cite{weeks73}.
+In the literature this form of the Hamiltonian matrix is sometimes referred to as $D$ 
+not to be confused with $D$ as it applies to the force constant matrix in Ref.~\cite{weeks73}
+and Sec.~\ref{sec:recphonon}.
 
 The reason for going to all this trouble of defining upper and lower
 indexed vectors and a tensor notation is illustrated by considering how the Schr\"odinger
 equation looks in different representations. If one works with
 the easily instantiated, in the sense that one has the Hamiltonian and
-overlap matrix elements to hand, but non-orthogonal basis set the Schrodinger
+overlap matrix elements to hand, but non-orthogonal basis set, then the Schr\"odinger
 equation takes the form:
 %
 \begin{equation}
@@ -1635,23 +1644,25 @@ H^{\mbox{\large .}}.\psi^{\mbox{\large .}}=\epsilon\psi^{\mbox{\large .}}
 %
 the overlap matrix disappears and the eigenvalue problem is in a 
 more familiar form. The Hamiltonian in the mixed representation 
-is that obtained from Eq.~\ref{eq:mixedH}. The price? The Hamiltonian
-is no longer necessarily Hermitian.
+is that obtained from Eq.~\ref{eq:mixedH}. The price is the Hamiltonian
+is no longer necessarily Hermitian and the overlap matrix has to be inverted.
 
 The starting vector for the recursion will often be a lower indiced
 vector corresponding with the basis set chosen to represent the electron
 states.
 
-Ballentine and Koclar conclude by giving the trace of an operator:
+Ballentine and Koclar conclude by giving the trace of an operator
+(roman site indices are suppressed):
 \begin{align}
 {\rm Tr}A =& \sum_{\alpha\beta}S_{\alpha\beta}A^{\beta\alpha}\\
           =& \sum_{\alpha\beta}(S^{-1})^{\alpha\beta}A_{\beta\alpha} \\
-          =& \sum_{\alpha}A^{\alpha}_{\alpha}
+          =& \sum_{\alpha}A^{\alpha}\ _{\alpha}
 \end{align}
 
 The trace of the Hamiltonian or density operator would be necessary 
 if one wished to compute, for example, the total band energy 
-or the density. Depending on which matrix elements one has to hand, 
+or the charge density. Computationally the way of proceeding will
+depending on which matrix elements one has to hand, 
 the lower indiced being the more accessible generally. 
 
 As mentioned the trouble with the mixed representation of the Hamiltonian is,
@@ -1717,6 +1728,7 @@ MX = ESX
 The Greenian computed is:
 %
 \begin{equation}
+\label{eq:greenianno}
 \bra u_{0}S|[SE-M]^{-1}|Su_{0}\ket
 \end{equation}
 %
@@ -1728,7 +1740,8 @@ The \texttt{RECNO} algorithm then proceeds according to the following steps:
 b^{2}_{1} = & \bra u_{0}|\psi_{0} \ket \\
 \end{flalign}
 
-Then we recur:
+Then we recur updating the coefficients, $a_n$ and $b_n$, 
+and the vector $u_n$:
 %
 \begin{flalign}
  a_{n} = \frac{\bra u_{n}|M|u_{n}\ket}{\bra u_{n}|\psi_{n} \ket}&\\
@@ -1740,15 +1753,17 @@ Then we recur:
 The Gauss-Seidel Algorithm \index{Gauss-Seidel} is used 
 in the final step to compute the application of the inverse 
 of the overlap matrix to the recursion vector. 
+
 The matrix vector product is computed by repeated application
-(indexed by $i$) of the strict left and right triangular parts of $S$:
+(indexed by iteration number $i$) of the strict left and 
+strict right triangular parts of $S$:
 %
 \begin{equation}
-\label{eq:gaussseidelS}
+\label{eq:gaussseidel}
 u_{n+1}^{i} = \psi_{n+1} - Lu_{n+1}^{i} - Ru^{i-1}_{n+1}.
 \end{equation}
 %
-Eq.~\ref{eq:gaussseidelS} involves tracking the convergence with respect
+Eq.~\ref{eq:gaussseidel} involves tracking the convergence with respect
 to the number of iterations of Gauss-Seidel steps. The more strongly
 diagonally dominant the matrix is the quicker it will converge.
 
@@ -1765,17 +1780,17 @@ S_{il} = & L_{il}L_{ll}    & i>l\\
 S_{ij} = & \sum_{k \leq j}L_{ik}L_{jk} & j\leq i
 \end{align}
 
-$U_{i}$ in Eq.~\ref{eq:} is then found by solving for $q$:
+$u_{n}$ in Eq.~\ref{eq:gaussseidel} is then found by solving for $q$:
 %
 \begin{equation}
 \sum_{k\leq i} L_{ik}q_{k} = \psi_{i}
 \end{equation}
 %
 
-followed by:
+followed by solving for $u$:
 %
 \begin{equation}
-\sum_{k\leq i} L_{ik}U_{k} = q_{i}
+\sum_{k\leq i} L_{ik}u_{k} = q_{i}
 \end{equation}
 %
 using back substitution. 
@@ -1789,10 +1804,8 @@ L_{ij} =& \frac{1}{L_{jj}}(S_{ij}-\sum_{k=1}^{j-1}L_{ik}L^{*}_{jk})
 \end{align}
 %
 The forward substitution can proceed column wise or row wise. 
-See Ref.~\cite{wilkinson68} for a discussion of the 
-stability of this procedure.
-
-\subsubsection{}
+See Ref.~\cite{wilkinson68} for a discussion of the stability 
+of this procedure.
 
 Both the Gauss-Seidel and Cholesky processes emphasise the physical consequence
 of applying $S^{-1}$ to the recursion vector at each step.
@@ -1827,7 +1840,7 @@ The starting vector $u_{0}$ and the recursion coefficients
 $a_{n}$ and $b_{n}$ from the scalar case are transformed to
 matrices denoted by capital letters $U_{0}$, $A_{n}$, and $B_{n}$
 in the case of block recursion. Where recursion coefficents could be
-inverted by simple division the block matrices require matrix inversion.
+inverted by scalar division the block matrices require matrix inversion.
 
 \subsubsection{Transforming Like a Tensor}
 By picking a single orbital and turning the wheel on the recursion method a
@@ -1836,7 +1849,7 @@ of the matrix vector products mean the accumulation of numerical noise
 generated by the artifical truncation of the recurrence
 can disrupt underlying symmetries. This can be demonstrated where there are 
 deviations in the density of states computed for a given orbital if the z-axis 
-is changed For some historical insight into the need for block recursion formulation
+is changed. For some historical insight into the need for block recursion formulation
 we quote from Finnis' article in Ref.~\cite{andersen89}:
 
 \begin{quote}
@@ -1848,7 +1861,7 @@ when the perfect lattice was reoriented to set up the (310) grain boundary, the
 perfect part of the structure was no longer in equilibrium! Our forces were not transforming
 properly as vectors under rotations. In fact, neither was the energy rotationally invariant.
 The cause of the problem was that although the exact Green function would transform as a tensor,
-the approximate Green function matrix elements obtained by termination or quadrature
+the approximate Green's function matrix elements obtained by termination or quadrature
 methods do not transform exactly into their symmetry related combinations under lattice 
 rotations.
 \end{quote}
@@ -1858,7 +1871,7 @@ in their formulation of the block recursion method\cite{inoue87}.
 It is useful to incorporate their discussion of the underlying 
 symmetries of the Green's function and Greenians.
 
-Their notation follows Edminson, where a rotation of the co-ordinate axis
+Their notation follows Edminson where a rotation of the co-ordinate axis
 of the system by the Euler angles $\alpha$,$\beta$, and $\gamma$ is denoted:
 
 \begin{equation}
@@ -2051,6 +2064,7 @@ is a diagonal matrix with the corresponding
 terminators for the scalar case along the diagonals.
 
 \subsection{Phonon Recursion}
+\label{sec:recphonon}
 With a simple modification phonon spectra can be computed directly 
 using the recursion technique. Instead of localized orbitals, localized 
 displacements are introduced, and in the place of on-site and hopping

@@ -170,26 +170,39 @@ Matrix Elements for interatomic distances from Bullett.
 
 https://doi.org/10.1080/14786437508221674
 
-
 From Van der Lage's and Bethe paper:
-In this connection the authors are indebted to Professor S. H. Caldwell of M.I.T. in making available the 
-use of the mechanical Bush Differential Analyzer; to Mr. P. O. Crawford who as a graduate assistant (1940) 
-made the work possible by operating the machine; to Dr. Martin Schwarzschild who ran an independent 
-check on two of the functions at the Thomas Watson Computing Bureau at Columbia University.
+In this connection the authors are indebted to Professor S. H. Caldwell of M.I.T. in making 
+available the use of the mechanical Bush Differential Analyzer; to Mr. P. O. Crawford who as a 
+graduate assistant (1940) made the work possible by operating
+the machine; to Dr. Martin Schwarzschild who ran an independent check on two of the functions at the 
+Thomas Watson Computing Bureau at Columbia University.
 
 From Altmann and Bradley A note on the calculation of the matrix elements of the
-rotation group. A program has been written for the Mercury computer to calculate 
-the coefficients.
+rotation group. A program has been written for the Mercury computer to calculate the coefficients.
 
 Ferranti Mercury Computer see Altmann and Cracknells Rev. Mod. Phys artice 1965
 for obtaining normalized symmetry-adapted harmonics for the cubic groups.
 
-We are grateful to Professor L. Fox for the grant of 
-computing time on the Oxford University Computer.
+We are grateful to Professor L. Fox for the grant of computing time on the Oxford University Computer.
 
 Coulson again:
 Band Structure in Graphite
 "We should like to acknowledge the provision of a calculating machine by the 
 British Iron and Steel Research Association,"
+"We should like to acknowledge the provision of a calculating machine by the British 
+Iron and Steel Research Association,"
+@article{Coulson_1952}
 
-@article{Coulson_1952,
+Tue  1 Oct 2019 15:17:46 IST
+Found some recent and very relevant papers on the fixed points of recurrence terms
+Moroz and... Alphonse! With an interesting reference to William of Orange at the beginning
+of his chat. Anyway the picture is become clearing of connecting fixed points/morse topology
+to the groups generating the recursion coefficients. I think the first port of call is
+band edges and internal van hove singularities. The latter could act as a sorting metric
+for the alloy design/Hume Rothery rules.
+
+ 986002 3.48723 H3_Relax   mmm0007      qw    11/22/2019 17:14:07                                   96
+ 986014 0.00000 H3_Relax   mmm0007      qw    11/22/2019 17:26:51                                   96
+
+
+
