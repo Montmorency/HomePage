@@ -376,7 +376,7 @@ complicating the process of choosing the coefficients of the tight binding matri
 For the optimal, energy independent, set of coefficients that can be 
 chosen see the work of Pettifor. There is a close parallel with the resonant
 scattering of d-wave electrons in materials and Feshbach resonances Ref.~\cite{chin10}.
-[Figure Taken from D.W. Bullet Solid State Physics Vol. 35 pg. 197.]}
+[Figure after D.W. Bullet Solid State Physics Vol. 35 pg. 197.]}
 \end{figure}
 %
 
@@ -389,7 +389,7 @@ L_{l}(\epsilon) \equiv \frac{u'_{l}(r_{0},\epsilon)}{u_{l}(r_{0},\epsilon)} = \f
 (\kappa r_{0}) - \tan \eta_{l} n'_{l}(\kappa r_{0})]} {j_{l}(\kappa r_{0}) - \tan \eta_{l} n_{l}'(\kappa r_{0})]},
 \end{equation}
 %
-where
+wherer:
 %
 \begin{equation}
 \label{eq:phaseshift}
@@ -424,11 +424,11 @@ and plane waves.
 
 This means an appropriate model Hamiltonian must account for the various states as
 %
-\begin{eqnarray}
+\begin{align}
 \label{eq:d-hamiltonian}
-H =  d-d  &  d-PW \\
-     PW-D & PW-PW 
-\end{eqnarray}
+H =  d-d  |&  d-PW \\
+     PW-D |& PW-PW 
+\end{align}
 %
 where d-d and PW-PW are of the tight-binding and plane-wave 
 pseudopotential form and hybridization occurring in the 
@@ -458,7 +458,7 @@ Chapter~\ref{chap:odlro} for further discussion of this and related points.
 The `best' approximations to the explicit formulas for $dd\sigma$, $dd\pi$ and $dd\delta$ and the phase
 shift $d_{0}'$ of the diagonal tight-binding elements 
 These difficulty have been addressed in a number of works 
-\cite{hubbard67}, \cite{hubbard68}, \cite{hubbard69} \footnote{Another computational
+\cite{hubbard67,mueller67}, \cite{hubbard68}, \cite{hubbard69} \footnote{Another computational
 snapshot comes from Ref.~\cite{hubbard69}, "...smaller secular 
 equations are used, taking about one second per k point on an IBM  360/65." The
 main storage capacity of those machines was 524 kilobytes. See Fig.~\ref{fig:ibm360}
@@ -2340,23 +2340,32 @@ for the microscopic properties are then deduced.
 
 \section{Chains and Moments}
 Before concluding this chapter there are a few 
-pictorial and heuristics comments on the relation of 
-the recursion method to other related methods.
+pictorial and heuristic comments on the relation of 
+the recursion method to other methods.
 
-The recursion method produces the eigenvalue spectrum
-for a given Hamiltonian and gives access to accurate
-integrals over this spectrum. 
+The recursion method is a numerically stable way of producing 
+the eigenvalue spectrum associated with a given Hamiltonian and 
+gives access to accurate integrals over this spectrum. 
 
 The mathematics of the technique are uniquely consistent
 with the physical idea of an electron exploring
 the space around it as it diffuses according to Schr\"odinger's
-equation guided by the interactions present in the Hamiltonian.
+equation. This diffusion process is guided by the interactions present in the Hamiltonian.
 These excursions begin from some prepared localized starting state
 and as the electron (or phonon, or magnon, etc...) hops from atom to atom
-the spectral properties of the system come into sharper and sharper relief.
+the spectral properties of the system come into sharper relief.
 
-The closest relation to the recursion method is the method of moments.
-This method is directly obtained by expanding the 
+The closest relation to the recursion method is the method of moments
+\cite{cyrotlackmann67, ducastelle70,ducastelle71}. Cyrot-Lackmann first applied
+moments based methods to obtain some estimates of the electronic density of
+states in liquid metals\cite{cyrotlackmann67}. This work was then extended
+to incorporate d electrons and investigate cohesive energies and stacking
+fault energies in crystalline structures. David Pettifor placed the moment's 
+theorem as a central section of his textbook\cite{pettifor94} under the heading
+``The Origin of Structural Trends: a moments theorem" which gives some indication
+of the importance he accorded these ideas.
+
+The method can be directly obtained by expanding the 
 Green's function as a geometric series in the energy and the Hamiltonian:
 %
 \begin{equation}
