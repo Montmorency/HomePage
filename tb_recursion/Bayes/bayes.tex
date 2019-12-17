@@ -45,3 +45,23 @@ P(D|\mathcal{H}_{i}) = \int P(D|\mathbf{w}, \mathcal{H}_{i})P(\mathbf{w}|\mathca
 \end{equation}
 %
 Models (hypotheses) of material systems can then be ranked according to Eq.~\ref{eq:bayesH},  
+
+\section{Harmonic Approximations to the Free Energy and Entropy}
+The crystal structure that is formed at a given temperature is that which
+minimizes the Gibbs Free Energy of the system. Most electronic structure calculations
+however are done at 0K. A systematic and computationally manageable way of obtaining
+finite temperature energies, i.e. free energies is required.
+
+Given a density of states . It is pleasing to report that the recursion method
+is ideally suited to computing integrals of exactly that form, rapidly and accurately,
+using quadrature methods. Given we now know how to compute electronic and 
+vibrational density of states we are in the position to obtain, at no relative additional 
+computational cost, vibrational entropies and Free Energies.
+
+The work of Ref.~\cite{wheeler68} combined quadrature approaches
+with the calculated moments of vibrational spectra to compute
+thermodynamic quantites. For a comprehensive review
+of entropic effects in metals and alloys see Ref.~\cite{fultz10}. 
+These sources easily equip us with the expressions required. These expressions provide a starting
+point for the inclusion of higher order terms in the vibrational spectra
+the so called anharmonic effects which can become important at high temperatures.
