@@ -19,8 +19,8 @@ and an understanding of the origins of variation in properties from metal to met
 
 The previous chapters, though hopefully enjoyable in their own right, 
 were really just meant to bring us to the stage where we can start 
-using the principles of locality
-and recursion methods to compute the structural and 
+using the principles of locality and recursion methods to compute 
+the structural and 
 mechanical properties of extended solids. 
 
 This chapter will focus on determining which properties and trends we would like
@@ -125,28 +125,61 @@ compounds of Molybdenum chalcogenides Ref.~\cite{bullet77}.
 and the structures of the compounds in the Lave phases 
 in Ref.~\cite{johannes76}.
 
+\section{Crystal Properties: A Momentous Triumph}
+For a metallurgist the first set
+of homologous series we would like to explain is
+the structures formed by the elementary transition metals
+and a quantitative theory of the defect energetics in the
+close packed materials.
+In this section we will employ the moments formulation of 
+the tight binding method to rationalize the behaviour of
+BCC and close packed crystals (See.\ref{sec:relatedmethods}).
+At the end of the section a number of computational excercises
+are set in order to compare the theoretical predictions
+with experimental data.
+
+In Fig.~\ref{fig:fccvshcp} the two close packed structures 
+Face Centered Cubic and Hexagonal Close packed are compared.
+\begin{figure}
+\includegraphics[scale=1.0]{./metallurgy/closepacked.pdf}
+\caption{The close packed structures and the different stacking patterns
+in the hexagonal close packed and face centered cubic crystals.\label{fig:fccvshcp}}
+\end{figure}
+
+In Fig.~\ref{fig:fcchcppaths} the paths contributing to the 
+\begin{figure}
+\includegraphics[scale=1.0]{./metallurgy/fccvshcppaths.png}
+\caption{$\mu_{4}$ The paths involving three neighbouring planes 
+in the fcc lattice can be separated into three types: 
+Type I: 1-3-1-5-1, Type II: 1-3-2-4-1, Type III:1-3-1-4-1.
+The equivalent HCP paths can be obtained by substituting 
+$3\rightarrow 3'$. After: Ducastelle and 
+Cyrot-Lackmann~\cite{ducastelle71}. \label{fig:fcchcppaths}}
+\end{figure}
+
+%\exercise{Using the recursion library examine the energy differences in the HCP, BCC, and FCC 
+%structures. The recursion method allows us to obtain numerically stable results, 
+%reasoning in terms of chains and moments gives us physical insight.}
+
+\subsection{$c/a$ Ratio in Hexagonal Close Packed Metals}
+
+\subsection{Stacking Faults}
+%
+The stacking sequences can get mixed up from time to time
+in the close packed materials.o
+%
+\begin{table}
+\begin{tabular}{c c c}
+Defect Type  &  F.C.C.     &  H.C.P.  \\
+intrinsic  &  ABCBCA     &  BABCACA   \\  
+extrinsic  &  ABCBABC    &  AABCABA  \\ 
+twin       &  ABCBAC     &  BABCBC   \\
+\end{tabular}
+\caption{The different stacking fault types in close packed lattices.\label{tab:stackingfaults}}
+\end{table}
+
 \section{Lattice Vibrations}
 %insight into \cite{varma79a, varma79b}.
-
-\section{Harmonic Approximations to the Free Energy and Entropy}
-The crystal structure that is formed at a given temperature is that which
-minimizes the Gibbs Free Energy of the system. Most electronic structure calculations
-however are done at 0K. A systematic and computationally manageable way of obtaining
-finite temperature energies, i.e. free energies is required.
-
-Given a density of states . It is pleasing to report that the recursion method
-is ideally suited to computing integrals of exactly that form, rapidly and accurately,
-using quadrature methods. Given we now know how to compute electronic and 
-vibrational density of states we are in the position to obtain, at no relative additional 
-computational cost, vibrational entropies and Free Energies.
-
-The work of Ref.~\cite{wheeler68} combined quadrature approaches
-with the calculated moments of vibrational spectra to compute
-thermodynamic quantites. For a comprehensive review
-of entropic effects in metals and alloys see Ref.~\cite{fultz10}. 
-These sources easily equip us with the expressions required. These expressions provide a starting
-point for the inclusion of higher order terms in the vibrational spectra
-the so called anharmonic effects which can become important at high temperatures.
 
 \section{Elastic Tensors}
 Shearing, straining, Young's modulus, poisson ratio, elastic tensors these are the
@@ -275,8 +308,7 @@ be the first port of call. For the crystal to be stable $B,C',C_{44}$ must all b
 greater than 0 so that gives a definite sanity check on the model. 
 
 Let us apply these deformations to a BCC crystal and see what comes out.
-
-First we'll make a few observations. The deformation matrices for
+First we make a few observations. The deformation matrices for
 $C'$ will not change the relative positions of the first nearest neighbours.
 This deformation will, however, alter the second nearest neighbour positions so we may expect
 that the $C'$ shear will be largely determined by the second nearest neighbour interactions. 
@@ -287,13 +319,15 @@ plane participate in a $T^{(100)}$ distortion.
 If we wish to approximate the second derivative of the total energies with 
 respect to $\gamma$ we are going to have to be careful. We won't be able
 to obtain it by doing a single total energy difference calculation. That
-will not contain enough information. We could accomplished it by assuming
+will not contain enough information. We could obtain an estimate by assuming
 an expression of the form: 
+%
 \begin{equation}
 \Delta E(\epsilon) = 2\epsilon^{2} E^{(2)} + \epsilon^{4} E^{(4)},
 \end{equation}
-and solving for $E^{(2)}$. Or we could do multiple energy calculations for a sequence 
-of distortions and fit a polynomial to the results extracting
+%
+and solving for $E^{(2)}$. Or we could do multiple energy calculations for 
+a sequence of distortions and fit a polynomial to the results extracting
 the second difference from the polynomial fit.
 
 If you have worked your way through Sec.~\ref{sec:vibrations} you might already have
@@ -324,14 +358,16 @@ Phonon Branch  & Elastic Constant \\
 \hline
 \end{tabular}
 
-\caption{Correspondence of phonon branch with combinations of elastic constants.}
+\caption{Correspondence of phonon branches with combinations of elastic constants.}
 \end{center}
 \end{table}
 
 Notice that the factor of $n^{2}$ means you have to be quite confident in the accuracy of
 the force constants connecting distant pairs of atoms. Otherwise any error
-in your calculation will be rapidly amplified. You should also hope your force
-constants are decaying will some alacrity perhaps at least as quickly as $n^{-4}$.
+in your calculation will be rapidly amplified as you move to more distant neighbours. 
+The force constants must be decaying with some alacrity 
+(perhaps at least as quickly as $n^{-4}$) in order for this to be a numerically convergent
+approach.
 
 \subsection{Local Stress Fields}
 The TBB Model \cite{nielsen83, sutton88} gives us a means of defining and calculating 
@@ -391,7 +427,7 @@ The change in the local bonding picture induced by a vacancy in Fe was examined 
 
 \section{Grain Boundaries}
 The analysis of Read and Shockley in Ref.~\cite{read50} serves as a comprehensive
-introduction to the field of interfaces in condensed matter. The 
+introduction to the field of interfaces in condensed matter. The modern
 standard reference on the subject of interfaces in materials is Sutton and 
 Baluffi Ref.~\cite{sutton95}.
 
@@ -400,15 +436,13 @@ grain boundaries but efficient and accurate means of determining
 the orientation relationships between grains remains an outstanding problem.
 For an analysis of the statistic arrangement of grains using quaternion
 algebra see Ref.~\cite{sutton96}.
-%structural unit model sutton 89
+%structural unit model \cite{sutton89} random interfaces?
 The possibility of examining grain boundaries atomistically has interested
 researchers since it became practical to perform atomistic simulations
 with realistic potentials see Refs.~\cite{bristowe75,wolf83,paxton87,paxton88,paxtonsutton88,
 kohyama88,kohyama94,paxton96,rittner96,tschopp07,momida13,du11,du12,mceniry18} for a
 snapshot of the way computational studies of interfacial structure 
 has evolved over time.
-
-There is incredible scope for behaviour at the boundarys.
 
 \subsection{Discrete Boundary Dislocation Networks}
 Combining isotropic elasticity with discrete dislocation networks
@@ -418,7 +452,7 @@ theory next to a large angle grain boundary.
 
 These expressions are given in Ref.~\cite{sutton95} and derived here.
 
-\subsubsection{Grain Boundary Algebra}
+\subsubsection{Analytic Treatment of Strain Fields}
 \label{gbalgebra}
 %Just for reference, the algebra is similar for all other components of the stress, and
 %can be extended to cases where we have a traveling edge dislocation i.e. instead of
@@ -426,7 +460,7 @@ These expressions are given in Ref.~\cite{sutton95} and derived here.
 First we introduce the function:
 %
 \begin{equation}
-f(z) =  \pi\cot(\pi z)\frac{(Y-z)(3x^{2} + (Y-z)^{2})}{(X^{2} + (Y-z)^{2})^{2}}
+f(z) =  \pi\cot(\pi z)\frac{(Y-z)(3x^{2} + (Y-z)^{2})}{(X^{2} + (Y-z)^{2})^{2}}.
 \end{equation}
 %
 This has simple poles at $z = 0, \pm 1, \pm 2,...$. It also has two 2nd 
@@ -435,7 +469,7 @@ be found from the following expression:
 %
 \begin{equation}
 {\rm Res}(z_{2}) = \lim_{z\rightarrow z_{2}}\frac{d}{dz}(z-z_{2})^{2}
-\frac{\cot(\pi z)(Y-z)(3X^{2}+(Y-z)^2)}{(z-z_{1})^{2}(z-z_{2})^{2}}
+\frac{\cot(\pi z)(Y-z)(3X^{2}+(Y-z)^2)}{(z-z_{1})^{2}(z-z_{2})^{2}}.
 \end{equation}
 
 
@@ -443,13 +477,13 @@ be found from the following expression:
 \label{eq:2ndstep}
 {\rm Res}(z_{2})&=\frac{\pi^{2}}{\sin^{2}(\pi z_{2})}\left[\frac{(Y-z_{2})(3x^{2}+(Y-z_{2})^{2})}{(z_{2}-z_{1})^{2}}\right]\\
   &+\frac{\pi\cot(\pi z_{2})}{(z_{2}-z_{1})^{2}}\left[-(3x^{2} + (Y-z_{2})^{2})-2(Y-z_{2})^{2}\right] \\
-  &+\frac{2\pi\cot(\pi z)(Y-z_{2})(3X^{2}+(Y-z_{2})^{2})}{(z_{2} - z_{1})^{3}}
+  &+\frac{2\pi\cot(\pi z)(Y-z_{2})(3X^{2}+(Y-z_{2})^{2})}{(z_{2} - z_{1})^{3}}.
 \end{align}
 %
 The second term in Eq.~\ref{eq:2ndstep} evaluates to zero and the remaining terms can be simplified to:
 %
 \begin{equation}
-{\rm Res}(z_{2}) = \frac{\pi}{4\sin^{2}(\pi(Y-iX))}(i\pi X - \sin(2\pi(Y-iX)))
+{\rm Res}(z_{2}) = \frac{\pi}{4\sin^{2}(\pi(Y-iX))}(i\pi X - \sin(2\pi(Y-iX))).
 \end{equation}
 %
 The residue at $z_{1}$ can be found in a similar manner.
@@ -464,37 +498,52 @@ second order residues.\label{fig:polediagram}}
 \end{center}
 \end{figure}
 
-
 We can write down the sum as the difference of the two second order residues.
 
 \subsubsection{Jordan's lemma}
 We must consider the behaviour of the function $f(z)$ on the countours carefully in order to determine their contribution to the $\oint f(z) dz$ as we expand the semi-circular contours out to $\infty$.  Jordan's lemma says if we are able to write $f(z) = \exp(iaz)g(z)$ for positive $a$ then an upper-bound for the integral over the semi-circular contour in the upper-half plane is given by
+%
 \begin{equation}
-\left|\int_{C_{1}}f(z)dz\right| \leq \frac{\pi}{|a|}\text{max}_{\theta\in [0,\pi]}\left|g(Re^{i\theta})\right|
+\left|\int_{C_{1}}f(z)dz\right| \leq \frac{\pi}{|a|}\text{max}_{\theta\in [0,\pi]}\left|g(Re^{i\theta})\right|.
 \end{equation}
+%
 A similar results holds for the lower-half plane, provided we now make $a<0$.  We now consider expansions for $\cot(\pi z)$:
+%
 \begin{eqnarray}
 \cot(\pi z)&=&-i(e^{i2\pi z}+1)(1-e^{i2\pi z})^{-1}=-i(1+e^{i2\pi z})(1+e^{i2\pi z}+e^{i4\pi z}+\ldots)\label{eq:upper}\\
-&=&i(1+e^{-i2\pi z})(1-e^{-i2\pi z})^{-1}=i(1+e^{-i2\pi z})(1+e^{-i2\pi z}+e^{-i4\pi z}+\ldots)\label{eq:lower}
+&=&i(1+e^{-i2\pi z})(1-e^{-i2\pi z})^{-1}=i(1+e^{-i2\pi z})(1+e^{-i2\pi z}+e^{-i4\pi z}+\ldots)\label{eq:lower}.
 \end{eqnarray}
-Focusing first on the upper-half plane we replace $\cot(\pi z)$ with equation~\ref{eq:upper}.  Since $g(z)=f(z)/\cot(\pi z)$ goes to zero as $z\rightarrow\infty$ we can apply Jordan's lemma and ignore the contributions on $C_{1}$ from all positive powers of $e^{i2\pi z}$.  However we still need to consider the $-i$ term, where Jordan's lemma doesn't apply.  Substituting $z=Re^{i\theta}$ and taking the limit as $R\rightarrow\infty$ we obtain:
+%
+Focusing first on the upper-half plane we replace $\cot(\pi z)$ with equation~\ref{eq:upper}.  
+Since $g(z)=f(z)/\cot(\pi z)$ goes to zero as $z\rightarrow\infty$ we can apply Jordan's 
+lemma and ignore the contributions on $C_{1}$ from all positive powers of $e^{i2\pi z}$.  
+However we still need to consider the $-i$ term, where Jordan's lemma doesn't apply.  
+Substituting $z=Re^{i\theta}$ and taking the limit as $R\rightarrow\infty$ we obtain:
 \begin{equation}
-\int_{C_{1}}f(z)dz = \int_{\theta=0}^{\pi}d\theta iRe^{i\theta}*\frac{(i\pi R^{3}e^{3i\theta}}{R^{4}e^{4i\theta}} = -\pi^{2}
+\int_{C_{1}}f(z)dz = \int_{\theta=0}^{\pi}d\theta iRe^{i\theta}*\frac{(i\pi R^{3}e^{3i\theta}}{R^{4}e^{4i\theta}} = -\pi^{2}.
 \end{equation}
-We now instead focus on $C_{2}$ and replace $\cot(\pi z)$ with equation~\ref{eq:lower}.  Once again Jordan's lemma allows us to ignore the powers of $e^{-i2\pi z}$.  However we still need to focus on the $i$ term.  Substituting $z=Re^{i\theta}$ and taking the limit as $R\rightarrow\infty$ we obtain:
+We now instead focus on $C_{2}$ and replace $\cot(\pi z)$ with equation~\ref{eq:lower}.  
+Once again Jordan's lemma allows us to ignore the powers of $e^{-i2\pi z}$.  
+However we still need to focus on the $i$ term.  Substituting $z=Re^{i\theta}$ and 
+taking the limit as $R\rightarrow\infty$ we obtain:
+%
 \begin{equation}
-\int_{C_{2}}f(z)dz = \int_{\theta=2\pi}^{\pi}d\theta iRe^{i\theta}\times\frac{(-i\pi R^{3}e^{3i\theta})}{R^{4}e^{4i\theta}} = -\pi^{2}
+\int_{C_{2}}f(z)dz = \int_{\theta=2\pi}^{\pi}d\theta iRe^{i\theta}\times\frac{(-i\pi R^{3}e^{3i\theta})}{R^{4}e^{4i\theta}} = -\pi^{2}.
 \end{equation}
 
 Let $I=\int_{\Gamma_{1}}f(z)dz$, then closing on the upper-half plane we have:
+%
 \begin{equation}
-I-\pi^{2} = 2\pi i\left[Res(z_{1})+\sum_{n=-\infty}^{\infty}Res(z=n)\right]
+I-\pi^{2} = 2\pi i\left[Res(z_{1})+\sum_{n=-\infty}^{\infty}Res(z=n)\right].
 \end{equation}
+%
 While closing on the lower-half plane gives:
+%
 \begin{equation}
-I-\pi^{2} = -2\pi i Res(z_{2})
+I-\pi^{2} = -2\pi i Res(z_{2}),
 \end{equation}
-(note, negative sign is since the contour goes clockwise on the lower-half plane).
+%
+the negative sign arising because the contour goes clockwise on the lower-half plane.
 
 \subsection{Dislocation-Interstitial Interactions}
 Coupling of the hydrogen defects to the screw and edge dislocations can be
@@ -504,14 +553,14 @@ be calculated from the work done by moving each face of a cell a distance
 $d_{i}$ against a force $F_{i}$ exerted by the stress field:
 %
 \begin{equation}
-U_{DC} =+\sum_{i}F_{i}d_{i}
+U_{DC} =+\sum_{i}F_{i}d_{i}.
 \end{equation}
 %
 If the components of the stress tensor are assumed constant along the distance $a$
 this energy can be written:
 %
 \begin{equation}
-U_{\rm{DC}} = -(T_{D},S_{H})a^{3}= -\sum_{ik} \sigma_{ik}^{D}\epsilon^{H}_{ik} a^{3}
+U_{\rm{DC}} = -(T_{D},S_{H})a^{3}= -\sum_{ik} \sigma_{ik}^{D}\epsilon^{H}_{ik} a^{3}.
 \end{equation}
 %
 
@@ -538,7 +587,7 @@ which is the inverse of the matrix constructed by stacking up
 the basis vectors in the new coordinate system,
 %
 \begin{equation}
-\epsilon'_{ij} = \mathbf{R} \epsilon_{ij} \mathbf{R}^{\rm T}
+\epsilon'_{ij} = \mathbf{R} \epsilon_{ij} \mathbf{R}^{\rm T}.
 \end{equation}
 %
 In \cite{cochardt55} the strain tensor for a carbon atom in
@@ -549,7 +598,7 @@ a conventional rectangular unit cell for BCC iron is:
 \begin{array}{ccc}
  a & 0 & 0 \\
  0 & b & 0 \\
- 0 & 0 & c  \\
+ 0 & 0 & c  \\.
 \end{array}
 \right),
 \end{equation}
@@ -564,7 +613,7 @@ T^{x',y',z'}_{D}=
 \begin{array}{ccc}
 0 & 0 & 1 \\
 0 & 0 & 0 \\
-1 & 0 & 0 \\
+1 & 0 & 0 \\,
 \end{array}
 \right)
 \end{equation}
@@ -579,7 +628,7 @@ T^{x',y',z'}_{D}=
 \cos\psi\cos 2\psi & \sin\psi\cos 2\psi & 0 \\
 0 & 0 & -2\nu\sin\psi \\
 \end{array}
-\right)
+\right).
 \end{equation}
 %
 where the components of the tensor are estimated from X-ray measurements
@@ -612,68 +661,9 @@ and the transformed strain tensor is given as:
 \right).
 \end{equation}
 
-%\subsection{Pile Ups}
-%Another interesting case is discussed in Ref.~\cite{eshelby} 
-%where free dislocations pile up next to a pinned dislocation.
-
-\section{Alloys}
-The application of the recursion method to random lattices is described.
-\cite{glaser81}
-%
-\begin{equation}
-H_{nm} = e_{n}\delta_{nm} + V_{nm}
-\end{equation}
-%
-Mookerjee and Haydock extended the recursion method to the case of random alloys.
-The developement of the recursion method to handle random material systems is 
-itself quite ingenious \cite{mookerjee, haydock74}. The Hamiltonian is extended
-so that tight binding hops on a real lattice are made along with potential hops
-on a "field" lattice. The field lattice can be cast in tridiagonal form to represent
-the underlying statistical distribution of the random alloy. Different graphs are available
-to represent rectangular random distributions, binary distributions, Gaussian distributions
-etc. Fig.~\ref{fig:fieldsite.png} gives an example of the first few hops on a "field-site" 
-lattice to obtain the averaged value of a Green's function. The hopping of the recursion method
-is now coupling lattice sites and taking into account the underlying distribution of 
-the underlying parameters.
-
-Despite its elegance the number of paths now emanating from an initial orbital, both
-for electrons to hop from orbital to orbital (lattice hops) and for the hops between 
-statistical configurations (field hops) are considerable and simplifying approximations 
-need to be found due to the difficulty of enumerating all the possible paths.
-
-Early work on DOS of alloys \cite{cubiotti77}. 
-
-\section{Metallic Surfaces}
-Elegant experimentation can access some surprisingly delicate quantities \cite{whipp34}.
-See \cite{bullet77} for calculations of the adsorption energy of H on W and Pt.
-
 \section{Conclusion}
 In this chapter we have looked at a number of the important quantities that
 arise in metallurgy and how the recursion method is ideally suited to their 
 computation. The motion of dislocations, the structure of grain boundaries, 
 and alloying. 
 
-%Masuda-Jindo ISIJ 28, 843 (1988)
-%Dilute Alloys
-%J Friedel Adv. Phys. 3, 446 (1954)
-%Non-Hermitian Matrices
-%R. Haydock and M.J. Kelly. J. PHys. C 8, L290
-%R. Haydock, J. Phys. A 7, 2120 (1974)
-%Lave Phases:
-%A. K. Sinha, Prog. Mater. Sci. 15, 81 (1972)
-%Anderson Localization
-%R. Haydock Philos. Mag. [Part] B 37, 97 (1978)
-%R. Haydock and A. Mookerejee, J. Phys. C 7, 3001 (1974)
-%UV Photoemission
-%R. K. C. McLean and R. Haydock, J. Phys. C 10, 1929 (1977)
-%https://materialscience.uoregon.edu/wp-content/uploads/2016/02/tightbind.pdf
-%Self-Consistent Tight Binding Orbitals
-%Philos. Mag [8] 35, 845 (1977) #
-%Binary Alloys 
-%R. L. Jacobs, J. Phys. F 3, 933 (1973)
-%and stacking in La \cite{duthie77}.
-%Atomic stress tensors:
-%Sutton 88
-%Nielsen O H and Martin R M 1983 Phys. Rev. Lett. 50 697
-%Nielsen O H and Martin R M 1985a Phys. Rev. B 32 3780
-%-                          1985b Phys. Rev. B 32 3792

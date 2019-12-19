@@ -1286,9 +1286,11 @@ The Harris Foulkes functional:
 E^{(1)}_{\rm HF}[\rho] = \sum_{i} \bra i |\hat{H}^{\rm in}|i\ket + E_{\rm xc}^{\rm in} - \int \rho^{\rm in}V^{\rm in}_{\rm xc} - E^{\rm in}_{H} + E_{ZZ}
 \end{equation}
 
-is variationally minimal with respect to the wave functions, which is equivalent, to it being variationally minimal
-with respect to the output density at fixed $rho^{in}$. So it has two co-ordinates that
-we can vary to minimize it. The $V^{in}_{eff}$ is a thisd co=ordinate that can be minimized
+is variationally minimal with respect to the wave functions, which is equivalent, 
+to it being variationally minimal
+with respect to the output density at fixed $rho^{in}$. So it has 
+two co-ordinates that we can vary to minimize it. 
+$V^{in}_{eff}$ is a third co-ordinate that can be minimized
 
 The generalized Harris-Foulkes functional can be viewed in these terms:
 %
@@ -1296,12 +1298,15 @@ The generalized Harris-Foulkes functional can be viewed in these terms:
 E^{HFG}[\rho^{out}, \rho^{in}, V_{eff}] = \sum_{i}f_{i}\epsilon_{i}-\rho^{in}V_{eff}+\rho^{in}V_{ext}+E_{xc}^{in}+E_{H}^{in}+E_{ZZ}
 \end{equation}
 %
-$\rho_{in}$ and $V_{eff}$ can strictly speaking be anything you want them to be. This is where the 
-craft comes into materials modelling and really choosing them is only dictated by what you
+$\rho_{in}$ and $V_{eff}$ can strictly speaking be anything you want them to be. 
+This is where the craft comes into materials modelling and really 
+choosing them is only dictated by what you
 want to calculate and how accurately you would like to calculate it. 
-
 However the functional is only minimized when $\rho^{in} = \rho^{out}$ and $V_{eff}=V_{in}$.
-In Fig.~\ref{fig:hfg} a graphical representation of the co-ordinate of the functional.
+
+To get some idea of what wandering around in this co-ordinate space
+looks like we provide in Fig.~\ref{fig:hfg} a 
+graphical representation of the functional space.
 %
 \begin{figure}
 \begin{center}
@@ -1313,11 +1318,12 @@ for different functionals. The blue dot indicates the stationary point for the
 LDA Kohn-Sham functional with the exact density $\rho^{ex}$, 
 and exact Kohn-Sham energy functional. The green dot gives a stationary point
 for a hypothetical "optimal functional". The red dot is a stationary point
-for the Kohn-Sham Functional using the local density approximation. The sense in which it is optimal 
-is discussed in the text and in Chap.~\ref{chap:manybodyrec}. The
-right panel divides the space of effective potentials into a coordinate 
-composed of only local Hermitian potentials and an orthogonal co-ordinate 
-of non-Hermitian non-local potentials. This is in the spirit of Ref.~\cite{sohrab10}. 
+for the Kohn-Sham Functional using the local density approximation. 
+The right panel divides the space of effective potentials into a coordinate 
+composed of only local Hermitian potentials, which tend 
+to be easier to work with computationally, and an orthogonal co-ordinate 
+of non-Hermitian, non-local potentials, which are more problematic. 
+This is in the spirit of Refs.~\cite{sohrab10, patrick12}. 
 The figure demonstrates how one can approach an optimal
 potential which minimizes the distance to the true functional 
 while retaining desirable computational properties like being Hermitian and local
@@ -1343,35 +1349,98 @@ See \cite{wolfsberger52} for a useful approximation to the repulsive part of
 the potential.
 
 %If we re-write the total energy following Finnis:
-%If $\rho_{in}$ in Eq.~\ref{eq:rewrittenHFG} is the charge density for the sum of spherical atomic 
-%charges then the interacting ion terms will correspond to pair potentials that are rapidly screened. 
+%If $\rho_{in}$ in Eq.~\ref{eq:rewrittenHFG} is the charge density 
+%for the sum of spherical atomic 
+%charges then the interacting ion terms will correspond to pair potentials 
+%that are rapidly screened. 
 %These considerations will be developed further in Chapter~\ref{chap:wannier}.
+
+\section{TB Justification}
+The reason for the preceding discussion is that we are now in
+the position of being able to build our tight-binding formulation
+of electronic structure on the rock of Hohenberg-Kohn's Theorem and
+the LDA rather than the sand of interpolation and post hoc reasoning.
+
+The local formulation of the total energy takes the form:
+%
+\begin{equation}
+E_{0}^{\rm TB} = \sum_{i}\epsilon_{i} + \frac{1}{2}\sum_{\alpha} \sum_{\beta \ne \alpha}U(|R_{\alpha} -R_{\beta}|)
+\end{equation}
+%
+
+which we can compare directly with the HKS expression for the total energy:
+
+\begin{equation}
+E_{0}^{\rm DFT} = \sum_{i}\epsilon_{i} + F[n(\r)] - \int \frac{\delta F}{\delta n}n(\r)d^{3}\r
+\end{equation}
+
+Let's start be expanding the total energy around a stationary point:
+%
+\begin{equation}
+E[n_{0} + \delta n] = E[n_{0}] + \frac{1}{2}\int\int \frac{\delta^{2} E}{\delta n(\r) \delta n(\r')} \delta n(\r)\delta n(\r')d\rd\r'
+\end{equation}
+%
+
+The input potential, the potential the electrons see, is given:
+%
+\begin{align}
+V_{in}(\r)  & = \frac{\delta F} {\delta n}|_{n_in} \\
+            & = V_{\rm Nucl}(\r) + V_{\rm H}(n(\r)) + \mu_{xc}[n_{\rm in}(\r)]
+\end{align}
+%
+a similar potential can be obtained using an output density $n_{\rm out}$
+that is the density formed by the independent electronic wave functions
+computed from $V_{in}$.
+
+Let $\Delta n = n_{out}-n_{in}$. We may write:
+
+As an aside we remain free to choose the input potential:
+%
+\begin{equation}
+E[n_{in},V_{in}] = E_{0} + \frac{1}{2} \frac{\delta^{2}}{\delta n}\delta n_{\rm out} n_{\in} 
+\frac{1}{2}\int (V[n_{\rm in}](\r) - V_{\rm in}(\r))\delta n(\r) d\r 
+\end{equation}
+%
+
+\subsection{The Structural Energy Difference Theorem}
+Pettifor's structural energy difference theorem\cite{pettifor86} 
+allows us to isolate the contribution of the quantum mechanical bonding contribution
+to the cohesive energy of solids and in the process rationalize
+the structural trends across a range of s-p, s-d, p-d, AB alloys.
+
+the first term is the magic the second is the meat and potatoes.
+
+The alert reader will have recognized the similarity with the Lennard-Jones
+potential, in some respects the first and simplest interatomic potential, 
+but one that encapsulates the idea that atoms attract each other
+when they are a certain distant apart and repel each 
+other when they are squeezed together. Teasing out and quantifying this
+atomic behaviour will be the work of the remainded of these notes. 
 
 \section{Conclusion}
 \noindent
 This chapter begain by introducing the Hohenberg-Kohn theorem. This theorem,
 which states the ground-state energy of an interacting electronic system 
-is a functional of the charge density is the basis of all the
-subsequent discussion. 
+is a functional of the charge density is the basis of density functional theory
+and much of the subsequent discussion. It provides us with a theorem upon which we may
+build more elaborate methods of calculation.
 
-We have discussed various schemes for extending DFT, a theory for the ground state,
-to describe excited state properties and give us a better treatment of the exchange
-and correlation in real systems. We then discussed an approach based on Green's function methods 
-to accurately treat processes involving electron addition and removal.
+We have discussed various schemes for extending DFT
+to describe excited state properties and give us a better treatment of
+the many body problem in extended systems. We then discussed 
 Along these lines we presented a detailed discussion
 of the analytic properties of the Green's function and a full derivation of Hedin's
-equations which define the $GW$ approximation. Hopefully now the reason it is called
+equations which defines the $GW$ approximation. Hopefully now the reason it is called
 $GW$ is less mysterious \footnote{If the naming remains mysterious you 
 should go back and read that section again.}.
 
-For a given configuration of ions it is now commonplace to send a calculation 
-off to a computing machine and within a few minutes, hours, or 
+For a given configuration of ions it is now commonplace to send a 
+DFT or GW calculation off to a computing machine and within a few minutes, hours, or 
 days (depending on the size of the system) come back to directories 
 full of eigenvalues, charge densities, wavefunctions, forces, and total energies.
-Helping to make sense of this data and exploit the data to aid materials design is the 
-objective of this book.
-
-The formal transformation from the total energy methods based on the LDA and GW 
-to functionals amenable to being described in terms of local short range interactions 
-amenable to recursion type calculations was begun in Sec.~\ref{sec:usefulfunctionals}. 
+The formal transformation from these {\emph global}, total energy methods 
+based on the LDA and GW to a {\emph local representation} amenable 
+to being described in terms of interatomic bonds and which are 
+amenable to recursion type calculations 
+was begun in Sec.~\ref{sec:usefulfunctionals}. 
 These ideas will be developed further throughout the rest of the book.
