@@ -2,6 +2,7 @@
 \label{chap:gw}
 \noindent
 \section{Introduction}
+
 In this chapter we discuss the theory underlying the 
 the $GW$ approximation to obtain a quantitative {\it ab initio} 
 description of electronic excitations. Density functional theory
@@ -10,8 +11,10 @@ performing $GW$ calculations. The guiding principle for treating electron
 correlation followed here is to start from the ``best possible" ground state description
 that can be calculated precisely. This may be a Hartree-Fock ground state,
 a DFT ground state, a ground state computed using some mixture of exact exchange
-and DFT, or interesting, a non-selfconsistent ground state made up of a superposition
-of atomic orbitals. While the Green's function formalism allows for systematic
+and DFT, or even, a ground state made up of a superposition
+of atomic orbitals. 
+
+While the Green's function formalism allows for systematic
 inclusion of higher and higher order interactions in keeping with the ``materials
 science as a craft" approach it is much more efficient to start from the most 
 favourable position possible: i.e., the best single particle description we can obtain.
@@ -23,9 +26,6 @@ framework for accomplishing and justifying this connection is given by the Harri
 functional and its generalizations. The final section of this chapter
 introduces the work done using these functionals to justify
 the analytic forms for purely local representations of Hamiltonians.
-A connection between the $GW$ method and the Harris-Foulkes functional 
-is also made which clarifies ideas about the various justifications 
-for self-consistent and non-self-consistent schemes.
 
 \section{Density Functional Theory}
 \subsection{Hohenberg-Kohn theorem}
@@ -343,14 +343,16 @@ P(\r,t,\rp,t') = |\bra N|\cfield(\r',t')\field(\r,t)|N\ket|^{2} \qquad t'>t.
 \end{equation}
 %
 The above expression gives the probability amplitude that if we remove an electron from the 
-position eigenstate $\r$ at time $t$ it will propagate to the point $\r',t'$. Reversing the time
-arguments and field operators would correspond to the addition of an electron at point $\r'$ and 
-removing it at point $\r$.
-%
-If we let $\r' \rightarrow \r$, $t' \rightarrow t^{+}$ 
-the Green's function reduces to the charge density of the system.\footnote{$t^{+} = t + \delta$, the 
+position eigenstate $\r$ at time $t$ the hole, you can think of the hole as playing the same
+role as a bubble in a liquid, that is left will propagate to the space-time point $\r',t'$. Reversing the time
+arguments and field operators would correspond to the addition of an electron at point $\r',t'$ and 
+removing it at point $\r,t$.
+ 
+If we take the limits $\r' \rightarrow \r$ and $t' \rightarrow t^{+}$ 
+then the Green's function reduces to the charge density of the system.
+\footnote{$t^{+} = t + \delta$, the 
 current time plus an infinitesimal; this is to avoid confusion 
-with the definition of the Heaviside step function}
+with the definition of, $\Theta$, the Heaviside step function.}
 
 In the case of a non-interacting single-particle Hamiltonian 
 the time-dependence of the field operators can be expressed in terms of the 
@@ -375,8 +377,10 @@ from the non-interacting unoccupied electronic states of the system, the second 
 coming from the non-interacting occupied electronic states of the system ($\epsilon_{f}$
 denotes the energy of the highest occupied state). A Fourier 
 transform of Eq.~\ref{eq:nonintergr} then yields the pole structure in 
-Fig.~\ref{fig:greenpoles} as will be discussed in the next 
-section for the interacting Green's function.
+Fig.~\ref{fig:greenpoles}. In an extended system the set of poles will merge into
+branch cuts similarly positioned in the complex plane.
+This will be discussed further in the next section  
+in the context of the interacting Green's function.
 
 \subsection{Analytic structure of the Green's function}
 \noindent
@@ -384,7 +388,7 @@ The Green's function has two particularly useful properties.
 The first is it effectively encodes all the response properties of the 
 system to an external perturbation. The second is that the 
 poles of the Green's function in the frequency domain, are
-equal to the energies required to excite the N electron system to
+equal to the energies required to excite the $N$ electron system to
 a particular state of the $N+1$ or $N-1$ electron system.
 %
 \begin{figure}[tb]
@@ -392,8 +396,7 @@ a particular state of the $N+1$ or $N-1$ electron system.
 \includegraphics[scale=1.0]{./gw/greenpoles.pdf}
 \end{center}
 \caption{\small \label{fig:greenpoles} Pole structure 
-of the Green's function. 
-The occupied electronic states are
+of the Green's function. The occupied electronic states are
 slightly above the real frequency axis and below the chemical 
 potential $\mu$, the unoccupied states are located above the Fermi
 level and slightly below the real axis. The poles of the Green's 
@@ -1279,8 +1282,7 @@ where $V_{\rm eff}^{(2)}=V^{\rm in}_{\rm eff}(\r) + C_{in}(\r,\r')\delta \rho(\r
 %\end{equation}
 
 \subsection{Generalization of the Harris-Foulke Functional}
-
-The Harris Foulkes functional:
+The Harris-Foulkes functional:
 %
 \begin{equation}
 E^{(1)}_{\rm HF}[\rho] = \sum_{i} \bra i |\hat{H}^{\rm in}|i\ket + E_{\rm xc}^{\rm in} - \int \rho^{\rm in}V^{\rm in}_{\rm xc} - E^{\rm in}_{H} + E_{ZZ}
@@ -1344,9 +1346,8 @@ Finally, the reader may recall the mystery around the first term
 of Eq.~\ref{tb:force} in Chapter~\ref{chap:invariance}. This term is required to complement
 the band energy contribution which we can calculate with the recursion technique. However it is
 less obvious what form this potential should take. It is often approximated as a pair potential.
-
-See \cite{wolfsberger52} for a useful approximation to the repulsive part of 
-the potential.
+In the next section we will examine the justification for this procedure as described by
+Foulkes and Haydock
 
 %If we re-write the total energy following Finnis:
 %If $\rho_{in}$ in Eq.~\ref{eq:rewrittenHFG} is the charge density 
@@ -1355,33 +1356,34 @@ the potential.
 %that are rapidly screened. 
 %These considerations will be developed further in Chapter~\ref{chap:wannier}.
 
-\section{TB Justification}
+\section{Connecting Density Functional Theory and Tight Binding}
 The reason for the preceding discussion is that we are now in
 the position of being able to build our tight-binding formulation
 of electronic structure on the rock of Hohenberg-Kohn's Theorem and
-the LDA rather than the sand of interpolation and post hoc reasoning.
+the LDA rather than the sand of intuition, interpolation, and post hoc success.
 
-The local formulation of the total energy takes the form:
+In the tight binding formulation total energy is decomposed into two terms:
 %
 \begin{equation}
-E_{0}^{\rm TB} = \sum_{i}\epsilon_{i} + \frac{1}{2}\sum_{\alpha} \sum_{\beta \ne \alpha}U(|R_{\alpha} -R_{\beta}|)
+E_{0}^{\rm TB} = \sum_{i}\epsilon_{i} + \frac{1}{2}\sum_{\alpha} \sum_{\beta \ne \alpha}U(|R_{\alpha} -R_{\beta}|).
 \end{equation}
 %
 
-which we can compare directly with the HKS expression for the total energy:
-
+We can compare these directly with the HKS expression for the total energy:
+%
 \begin{equation}
 E_{0}^{\rm DFT} = \sum_{i}\epsilon_{i} + F[n(\r)] - \int \frac{\delta F}{\delta n}n(\r)d^{3}\r
 \end{equation}
+%
 
-Let's start be expanding the total energy around a stationary point:
+Again we expand the total energy functional around a stationary point:
 %
 \begin{equation}
-E[n_{0} + \delta n] = E[n_{0}] + \frac{1}{2}\int\int \frac{\delta^{2} E}{\delta n(\r) \delta n(\r')} \delta n(\r)\delta n(\r')d\rd\r'
+E[n_{0} + \delta n] = E[n_{0}] + \frac{1}{2}\int\int \frac{\delta^{2} E}{\delta n(\r) \delta n(\r')} \delta n(\r)\delta n(\r')d\r d\r'
 \end{equation}
 %
 
-The input potential, the potential the electrons see, is given:
+The potential, i.e. the potential the electrons see, is given:
 %
 \begin{align}
 V_{in}(\r)  & = \frac{\delta F} {\delta n}|_{n_in} \\
@@ -1401,21 +1403,69 @@ E[n_{in},V_{in}] = E_{0} + \frac{1}{2} \frac{\delta^{2}}{\delta n}\delta n_{\rm 
 \frac{1}{2}\int (V[n_{\rm in}](\r) - V_{\rm in}(\r))\delta n(\r) d\r 
 \end{equation}
 %
+Let us now build an input density by superimposing a collection of charge densities
+corresponding to a single atom: $n_{in} = \sum_{i}n_{\alpha}(R_i)$. The electrostatic
+contributions break down into a free atom Hartree term, an ionic term, and a valence
+Hartree term:
+%
+\begin{equation}
+U_{\rm es}[n_{v}] = -E_{H}[n_{\rm atom}] + \frac{1}{2}\sum_{ij} \left[ \frac{Z_{i}Z_{j}}{|R_{i}-R_{j}|} - \int\int\frac{n_{v\alpha}(R_{i})n_{v\alpha}(R_{j})}{|\r-\r'|}d\r d\r'\right]
+\end{equation}
 
-\subsection{The Structural Energy Difference Theorem}
-Pettifor's structural energy difference theorem\cite{pettifor86} 
-allows us to isolate the contribution of the quantum mechanical bonding contribution
-to the cohesive energy of solids and in the process rationalize
-the structural trends across a range of s-p, s-d, p-d, AB alloys.
+The exchange-correlation contributions to the double-counting potential are non-linear in the charge density:
+%
+\begin{equation}
+\label{eq:xcdc}
+U_{\rm xc}[n_v] = \int[\epsilon_{xc}(n_{v})-\mu_{xc}(n_{v})]n_{v}(\r) d\r 
+\end{equation}
 
-the first term is the magic the second is the meat and potatoes.
+Foulkes and Haydock make the assumption that if only small areas of the material have 
+three atom overlap then Eq.\ref{eq:xcdc} can be expanded as:
+%
+\begin{equation}
+\label{eq:xcdc2}
+U_{\rm xc} = \sum_{i} Dxc[n_{v\alpha}(\R_i)] + \frac{1}{2}\sum_{ij} D_{xc}[n_{v\alpha}(\R_i) + n_{v\beta}(\R_j)] - D_{xc}[n_{v\alpha}(\R_i)]
+- D_{xc}[n_{v\alpha}(\R_j)] + f(\R_i,\R_j,\R_k),
+\end{equation}
+
+where $f(\R_i,\R_j,\R_k)$ is a function of three atomic co-ordinates.
+%Can we choose this term to cancel effectively with the neglect of three center overlap terms?
+
+Eq. \ref{eq:esdc} and Eq.~\ref{eq:xcdc2} end the analysis.
+The double counting corrections have been wrestled into a two-center 
+approximation which is enough work for now. In the next chapter, Chap.~\ref{chap:wannier},
+we will look at a procedure for obtaining the matrix elements of the 
+Hamiltonian, $H_{i\alpha j\beta}$, required for the contribution to the total
+energy arising from the electronic coordinates.
+
+\subsection{Pettifor's Maps and The Structural Energy Difference Theorem}
+Before concluding this chapter we will mention some of the work that has been done
+to directly connect DFT, local formulations of the electronic structure,
+with a wealth of experimental data. 
+
+To this end we may mention David Pettifor's phenomenological structure maps \cite{pettifor84, pettifor86a},
+reproduced in Fig.~\ref{fig:structuremap}. These maps represent a distinct success for 
+theoretical materials science; each aspect of Ehrenreich's criteria are met.
+The properties of entire homologous series can be predicted from a set of two dimensional
+coordinates and the experimental comparisons are immediate.
+Beyond agreement with experiment, Pettifor's structure maps take the crucial next step for 
+theoretic materials science by acting as an effective guide for the creation of new materials. 
+
+The structure maps found usage in addressing the technical challenges encountered 
+when producing ductile alloys that could withstand the high temperatures in 
+jet engines\cite{sutton19}. 
+
+For a theorist each region of the structure map can be studied from first principles.  
+Through the 1980s Pettifor, his co-workers, and others in the field were able to 
+explain the structural trends across the range of s-p\cite{cressoni91}, p-d\cite{pettifor86b}, 
+and the full range of stoichiometric AB alloys\cite{bieber81,pettifor86a}.
 
 The alert reader will have recognized the similarity with the Lennard-Jones
 potential, in some respects the first and simplest interatomic potential, 
 but one that encapsulates the idea that atoms attract each other
 when they are a certain distant apart and repel each 
 other when they are squeezed together. Teasing out and quantifying this
-atomic behaviour will be the work of the remainded of these notes. 
+atomic behaviour will be the work of the remainder of these notes. 
 
 \section{Conclusion}
 \noindent
