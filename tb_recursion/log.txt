@@ -206,3 +206,16 @@ for the alloy design/Hume Rothery rules.
 
 
 
+Tue 21 Jan 2020 16:38:43 GMT
+-----------------------------
+Total melt head with socket calculator for the bit I 
+am trying to finish for Tony and Seb. That has never worked 
+for me really. Oh well. 
+
+Academia linked me to Turchi's volume on the tight-binding 
+method from the mid-90s. Selfconsistent TB from Tony and Mike, 
+as well as a paper on Grainboundaries and gap states in silicon. 
+
+
+
+
