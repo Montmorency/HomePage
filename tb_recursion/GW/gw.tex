@@ -69,22 +69,19 @@ functional of the density can be written:
 %
 \begin{equation}
 \label{eq:hkenergy}
-E[n] = \int v(\r) n(\r)d\r + \frac{1}{2}\int \frac{n(\r)n(\r')}{|\r-\r'|}d\r d\r' + G[n].
+E[n] = \int v(\r) n(\r)d\r + F[n].
 \end{equation}
 %
 Eq.~\ref{eq:hkenergy} divides the total energy functional $E[n]$ into different contributions.
-$\int v(\r)n(\r)d\r$ is the energy contribution from the external potential $v(\r)$.
-The term $\frac{1}{2}\int\frac{n(\r)n(\r')}{|\r-\r'|}d\r d\r'$ is the Hartree energy,
-i.e. the classical Coulomb repulsion energy associated with the
-electron density. $G[n]$ is a universal functional of the 
-density accounting for all the remaining electron-electron 
-interaction effects.
+$\int v(\r)n(\r)d\r$ is the energy contribution from the external potential $v(\r)$. $F[n]$ 
+is a functional containing the Hartree energy along with all
+the remaining electron-electron interaction effects.
 %
-If an explicit expression for $G[n]$ is provided, then 
+If an explicit expression for $F[n]$ is provided, then 
 Eq.~\ref{eq:hkenergy} can be minimized with respect 
 to variations of the density $\delta n$.
 
-Hohenberg and Kohn begin from a Hamiltonian for the interacting electronic system of the form:
+Hohenberg and Kohn began from a Hamiltonian for the interacting electronic system of the form:
 %
 \begin{equation}
 \hat{H} = \hat{H}_{0} + \hat{H}_{\rm{int}} + v(\r),
@@ -106,28 +103,29 @@ can then be demonstrated that this gives rise to a contradiction in the ground-s
 energies for the two different external potentials. The only way to resolve the contradiction
 is to accept that the external potential is uniquely determined by the ground-state density to 
 within a constant. The corollary of this is also true and the Hamiltonian is uniquely determined
-as a functional of the ground-state density~\cite{martin}. The original proof is only valid
-for non-degenerate grounds states the use of constrained searches generalizes the proof
+as a functional of the ground-state density~\cite{martin}. 
+The original proof is valid
+for non-degenerate grounds states. 
+The use of constrained searches generalizes the proof
 to arbitrary ground-states~\cite{levy79, levy82, lieb83}.
 
-The Hohenberg-Kohn theorem gives us an existence proof
-for a total energy functional of the electronic density.
-We are also in possession of another constraint the conservation of charge:
-$\int\rho(\r)d^{3}\r = N$. The integral of the charge
-density over all of space must equal the number of electrons 
-in the system. 
+The Hohenberg-Kohn theorem gives us an existence proof.
+that there is a universal functional of the electronic density
+from which we can obtain information about the ground state properties
+of a system given an external potential..
+We are also in possession of another constraint: the conservation of charge.
 
 We may combine the total energy functional with 
 the charge density constraint using a Lagrange multiplier:
 %
 \begin{equation}
-\frac{\delta}{\delta \rho} \left[E[\rho] - \mu(\int \rho(\r)d\r - N)\right] = 0,
+\frac{\delta}{\delta n(\r)} \left[E[n(\r)] - \lambda(\int n(\r)d\r - N)\right] = 0,
 \end{equation}
 %
 which leads to:
 %
 \begin{equation}
-\frac{\delta E[\rho]}{\delta \rho}= \mu.
+\frac{\delta E[n(\r)]}{\delta n(\r)}= \lambda.
 \end{equation}
 
 Armed with the local density approximation, a computer, 
@@ -282,7 +280,7 @@ removal of an electron present in the
 exact functional \cite{perdew83, sham83, godby86}. There
 are a number of possible approaches for extending the DFT
 formalism to access excited state properties. Hybrid functionals
-~\cite{rinke05, friedrich12} and $\Delta$~SCF methods \cite{gunnarsson76, jones89}
+~\cite{rinke05, friedrich12} and $\Delta$SCF methods~\cite{gunnarsson76, jones89}
 go someway towards providing a formalism for accurately calculating
 excitation energies. 
 
@@ -337,20 +335,21 @@ from the system at $\r,t$. For the case $(t'-t)>0$ the Green's function describe
 of a hole.
 
 %
-To get a physical idea of what Eq.~\ref{eq:green} represents we consider the following expression:
+We will dwell a little bit longer on what Eq.~\ref{eq:green} represents. 
+Cconsider the following expression:
 \begin{equation}
 P(\r,t,\rp,t') = |\bra N|\cfield(\r',t')\field(\r,t)|N\ket|^{2} \qquad t'>t.
 \end{equation}
 %
-The above expression gives the probability amplitude that if we remove an electron from the 
-position eigenstate $\r$ at time $t$ the hole, you can think of the hole as playing the same
-role as a bubble in a liquid, that is left will propagate to the space-time point $\r',t'$. Reversing the time
-arguments and field operators would correspond to the addition of an electron at point $\r',t'$ and 
-removing it at point $\r,t$.
+which is interpreted as the probability that if we remove an electron from the 
+position eigenstate $\r$ at time $t$, then the remaining hole in the electron liquid, 
+which plays a similar role to a bubble in a liquid, will propagate to the space-time point $\r',t'$. 
+Reversing the time arguments and field operators would correspond to the 
+addition of an electron at point $\r',t'$ and removing it at point $\r,t$.
  
-If we take the limits $\r' \rightarrow \r$ and $t' \rightarrow t^{+}$ 
-then the Green's function reduces to the charge density of the system.
-\footnote{$t^{+} = t + \delta$, the 
+We may also take the limits $\r' \rightarrow \r$ and $t' \rightarrow t^{+}$ 
+in Eq.~\ref{eq:green}. In this case the Green's function reduces to the 
+charge density of the system.\footnote{$t^{+} = t + \delta$, the 
 current time plus an infinitesimal; this is to avoid confusion 
 with the definition of, $\Theta$, the Heaviside step function.}
 
@@ -374,8 +373,8 @@ G(\r,t,\rp, t') = -i\Theta(t-t')\sum_{\epsilon_n>\epsilon_{f}}\phi_{n}(\r)\phi^{
 Therefore in this case the Green's function separates naturally into 
 two contributions, the first term in Eq.~\ref{eq:nonintergr} coming
 from the non-interacting unoccupied electronic states of the system, the second term 
-coming from the non-interacting occupied electronic states of the system ($\epsilon_{f}$
-denotes the energy of the highest occupied state). A Fourier 
+coming from the non-interacting occupied electronic states of the 
+system ($\epsilon_{f}$ denotes the energy of the highest occupied state). A Fourier 
 transform of Eq.~\ref{eq:nonintergr} then yields the pole structure in 
 Fig.~\ref{fig:greenpoles}. In an extended system the set of poles will merge into
 branch cuts similarly positioned in the complex plane.
@@ -406,8 +405,8 @@ excitations and an energy gap between occupied and unoccupied states
 of $E_{g}$.}
 \end{figure}
 %
-To demonstrate this it is necessary to Fourier transform the Green's from the time
-domain to the frequency domain. This can be accomplished by 
+To demonstrate this it is necessary to Fourier transform the Green's function
+from the time domain to the frequency domain. This can be accomplished by 
 rewriting the field operators in the Heisenberg representation:
 %
 \begin{equation}
@@ -454,7 +453,7 @@ and represent the Green's function in the frequency domain:
 \begin{eqnarray}
 \label{eq:greenfreq}
 G(\r,\rp;\omega) & = &\sum_{s} \frac{\bra N|\field(\r) |N',s\ket \bra N',s|\cfield(\r')| N \ket}{\omega - (E^{s}_{N'} - E^{0}_{N}) + i\delta} \nonumber \\
-	  		   & - & \sum_{s}\frac{\bra N|\cfield(\r') |N',s\ket \bra N',s|\field(\r)| N \ket}{\omega + (E^{s}_{N'} - E^{0}_{N}) - i\delta}.
+	  		     & - & \sum_{s}\frac{\bra N|\cfield(\r') |N',s\ket \bra N',s|\field(\r)| N \ket}{\omega + (E^{s}_{N'} - E^{0}_{N}) - i\delta}.
 \end{eqnarray}
 %
 The infinitesimal factors of $i\delta$ ensure that the Fourier 
@@ -721,7 +720,7 @@ This will be done in the next two sections.
 At this point it is useful to introduce the following functional relationships 
 which define the dielectric function in a many-body system.
 We will switch back to labeling time and space coordinates as $\r,t$ 
-here for ease of reference Section~\ref{sec:nscfstern}. 
+here for ease of reference with a later section (Section~\ref{sec:genfunctionals}). 
 
 The effective potential acting on the electrons is:
 %
@@ -783,6 +782,7 @@ Alternatively we can introduce the dielectric function in its non-inverted form 
 
 \subsection{Hedin's equations}
 \noindent
+\label{sec:hedineqs}
 While the Coulomb repulsion between electrons remains the bare Coulomb interaction, 
 the dielectric function provides a route to interpreting 
 an auxiliary system of electrons interacting via a \emph{screened} Coulomb interaction.
@@ -1070,8 +1070,7 @@ These results are mentioned here because they provide a direct
 connection between experimental probes and the mathematical 
 formalism of the $GW$ approximation.
 
-\section{Alternative Functionals and Tight Binding}
-\section{Total Energy Functionals and Forces}
+\section{Total Energy Functionals}
 As was discussed in the introductory chapter 
 a lot of work in theoretical and computational 
 materials science throughout the 1980s and the early 1990s
@@ -1098,7 +1097,7 @@ E^{\rm KS}_{tot}[\{\psi_i\},\{\R_{i}\}] =  & \sum_{i}\bra -\nabla^{2} + V^{NL} \
                                            &+ E_{\rm xc}[n] + \int d\r V^{ion}_{loc}(\r)n(\r) + E_{ZZ}({\R_{i}})
 \end{align}
 
-There are some additional technical details that arise at this point which we need only make reference to.
+There are some additional technical details that arise at this point.
 The first is that the interaction of the electrons with the nuclei are handled via a pseudopotential
 in this case an ultra-soft pseudopotential\cite{vanderbilt90}. The Kohn-Sham electrons are 
 seeing an ionic potential given by:
@@ -1176,9 +1175,11 @@ Harris's approach \cite{harris85} comes from the perspective of bringing togethe
 "interacting fragments". As recognized by Mattheiss the one electron potential
 felt by electrons in weakly correlated systems could be well approximated
 by the superposition of atomic charge densities. \cite{mattheis64, haydock79}
-\footnote{The idea had been treated in K. Nikulin, Zh. Tekhn. Fiz. XLI, 41 (1971) 
-[Sov. Phys. — Techn. Phys. 16, 28 (1971)]; R. G. Gordon and Y. S. Kim, J. Chem. Phys. 56,3122 (1972)
-see also Wendel and Martin \cite{wenel79}.}
+\footnote{Similer ideas have been treated in 
+K. Nikulin, Zh. Tekhn. Fiz. XLI, 41 (1971) 
+[Sov. Phys. — Techn. Phys. 16, 28 (1971)]; 
+R. G. Gordon and Y. S. Kim, J. Chem. Phys. 56,3122 (1972)
+as well as Wendel and Martin \cite{wendel79}.}
 Two separate fragments for which we can obtain the density are brought together. 
 The new effective potential is generated from the sum of the fragment's densities, 
 and the single particle eigenvalues are recomputed.
@@ -1215,13 +1216,13 @@ We will develop these ideas in the following sections but the idea of
 interacting fragments gives a useful, physically intuitive picture of
 the ideas.
 
-\subsection{Generalization of the Harris-Foulke Functional}
+\subsection{Generalization of the Harris-Foulkes Functional}
 The Harris-Foulkes functional:
 %
 \begin{equation}
 E^{(1)}_{\rm HF}[\rho] = \sum_{i} \bra i |\hat{H}^{\rm in}|i\ket + E_{\rm xc}^{\rm in} - \int \rho^{\rm in}V^{\rm in}_{\rm xc} - E^{\rm in}_{H} + E_{ZZ}
 \end{equation}
-
+%
 is variationally minimal with respect to the wave functions 
 and with respect to the output density at fixed $rho^{in}$. 
 This immediately suggests we have two co-ordinates that we can vary to minimize it. 
@@ -1230,7 +1231,7 @@ The effective potential is another one that can be varied $V^{in}_{eff}$.
 The generalized Harris-Foulkes functional can be viewed in these terms\cite{methfessel95,haydock97}:
 %
 \begin{equation}
-E^{HFG}[\rho^{out}, \rho^{in}, V_{eff}] = \sum_{i}f_{i}\epsilon_{i}-\rho^{in}V_{eff}+\rho^{in}V_{ext}+E_{xc}^{in}+E_{H}^{in}+E_{ZZ}
+E^{HFG}[n(\r)_{\rm out}, n(\r)_{\rm in}, V_{eff}] = \sum_{i}f_{i}\epsilon_{i}-\rho^{in}V_{eff}+\rho^{in}V_{ext}+E_{xc}^{in}+E_{H}^{in}+E_{ZZ}
 \end{equation}
 %
 The extremal properties of the Harris-Foulkes functional are discussed 
@@ -1273,60 +1274,168 @@ of electronic structure on the rocks of Hohenberg and Kohn's Theorem,
 variational principles, and the rock-like LDA, rather than on the 
 sands of intuition, faith, interpolation, and post hoc success.
 
-In the tight binding formulation total energy is decomposed into two terms:
+In the tight-binding formulation the total energy is decomposed into two terms:
 %
 \begin{equation}
+\label{eq:totentb}
 E_{0}^{\rm TB} = \sum_{i}\epsilon_{i} + \frac{1}{2}\sum_{\alpha} \sum_{\beta \ne \alpha}U(|R_{\alpha} -R_{\beta}|).
 \end{equation}
 %
 
-We now compare this directly with the HKS expression for the total energy:
+We may compare this directly with the Hohenberg-Kohn-Sham expression for the total energy:
 %
 \begin{equation}
-E_{0}^{\rm DFT} = \sum_{i}\epsilon_{i} + F[n(\r)] - \int \frac{\delta F}{\delta n}n(\r)d^{3}\r
+\label{eq:totendft}
+E_{0}^{\rm DFT} = \sum_{i}\epsilon_{i} - \int \frac{\delta F}{\delta n}n(\r)d^{3}\r + F[n(\r)] 
 \end{equation}
 %
+that is the sum over the eigenvalues of the non-interacting electron system (which gives us our kinetic
+energy), minus the double counting bits, and adding the rest.
 
-We now expand the total energy functional around a stationary point:
+We now expand the total energy functional around a stationary density $n_0$:
 %
 \begin{equation}
 E[n_{0} + \delta n] = E[n_{0}] + \frac{1}{2}\int\int \frac{\delta^{2} E}{\delta n(\r) \delta n(\r')} \delta n(\r)\delta n(\r')d\r d\r'
 \end{equation}
 %
 
-There is a great deal of scope for connecting second order Kohn-Sham functionals,
-linear response theory, and the self-consistent tight binding method.
-For a proper development of these points the reader must consult Finnis.
 
-The potential, i.e. the potential the electrons see, is given:
+When we begin our calculations we must choose an initial density and from this
+define an initial potential, i.e. the potential the electrons see:
 %
 \begin{align}
 V_{in}(\r)  & = \frac{\delta F} {\delta n}|_{n_in} \\
-            & = V_{\rm Nucl}(\r) + V_{\rm H}(n(\r)) + \mu_{xc}[n_{\rm in}(\r)]
+            & = V_{\rm nucl}(\r) + V_{\rm H}(n(\r)) + \mu_{xc}[n_{\rm in}(\r)]
 \end{align}
 %
-a similar potential can be obtained using an output density $n_{\rm out}$
-that is the density formed by the independent electronic wave functions
-computed from $V_{in}$.
 
-Let $\Delta n = n_{out}-n_{in}$. We may write:
-
-It is important to stress we are also free to vary the input potential:
+When the auxiliary set of non-interacting electron Schr\"odinger equations are solved using this potential
+a new density can be generated. We will call this $n_{\rm out}$. The total energy in terms
+of $n_{\rm out}$ is written:
 %
 \begin{equation}
-E[n_{in},V_{in}] = E_{0} + \frac{1}{2} \frac{\delta^{2}}{\delta n}\delta n_{\rm out} n_{\in} 
-\frac{1}{2}\int (V[n_{\rm in}](\r) - V_{\rm in}(\r))\delta n(\r) d\r 
+\label{eq:totennout}
+E[n_{\rm out}]= \sum_{i}\epsilon_{i} - \int \frac{\delta F}{\delta n}|_n_{\rm in}n_{\rm out} d\r + F[n_{out}].
+\end{equation}
+%
+Note well that we are accustomed to iterating the process until $n_{out}=n_{in}$, i.e.
+until self consistency has been reached. The point of the present discussion is we would like
+to avoid this iterative process. We would like to do less work.
+
+%A similar potential can be obtained using an output density $n_{\rm out}$
+%that is the density formed by the independent electronic wave functions
+%computed from $V_{in}$.
+
+Towards this end we now let $\Delta n = n_{out}-n_{in}$ and expand $F[n_{\rm out}]$ 
+at $n_{\rm in}$ Eq.~\ref{eq:totenenout}:
+%
+\begin{equation}
+\label{eq:toten2}
+E[n_{\rm out}]= \sum_{i}\epsilon_{i} - \int \frac{\delta F}{\delta n}|_n_{\rm in}n_{\rm in} d\r + F[n_{\rm in }] 
++ \frac{1}{2}\int\int  \frac{\delta^{2} F}{\delta n^2}|_{n_{\rm in}}\Delta n \Delta n.
+\end{equation}
+%
+A useful exercise for the reader is to start from an expansion of $E[n_{\rm in}]$
+rather than $E[n_{\rm out}]$. In this case a second order expansion of the kinetic energy part of the functional. 
+Grouping the first three 
+
+Discarding the second order term gives us the Harris-Foulkes Functional: 
+%
+\begin{equation}
+\label{eq:HF}
+E^{HF}[n_{\rm in}] = \sum_{i}\epsilon_{i} - \int \frac{\delta F}{\delta n}|_n_{\rm in}n_{\rm in} d\r + F[n_{\rm in }] + O((\Delta n)^{2}), 
 \end{equation}
 %
 
-The combined functional is variational and it is {\emph minimal} with respect to the density
-and {\emph maximal} with respect to the potential. See Ismail-Beigi\cite{sohrab10} and 
-Methfessel\cite{methfessel95} for some interesting numerical demonstrations of the latter property.
+The interesting feature of Eq.~\ref{eq:HF} is that by solving the non-interacting
+electron equations at the input density and evaluating the total energy
+at the input density we only need to expect an error that is of the 
+second order in $\Delta n$.
 
+\subsection{The Second Order Variation: Dielectric Interlude}
+There is a great deal of scope for connecting the second order variation in the Kohn-Sham functional
+and linear response theory. Working through the steps leads to the self-consistent tight-binding method.
+For a proper development of these points the reader must consult the relevant sections of 
+Finnis\cite{finnis}. 
+
+Here we will highlight the discussion of Wendel and Martin\cite{wendel78}\footnote{It would
+probably be fair to call the Harris-Foulkes functional the Wendel-Martin-Harris-Foulkes functional.} 
+to make the connection between the variation of the exchange-correlation functional and 
+the dielectric response of the material this is to be compared with Sec.~\ref{sec:dielfun}.
+
+Wendel and Martin begin from the Hohenberg-Kohn scheme writing everything in terms of the total energy functional:
+%
+\begin{equation}
+\label{eq:martin1}
+E[n] =\int (v(\r)+\Delta v(\r))(n(\r)+\Delta n(\r)) + T_{s}[n(\r)+\Delta n(\r)] + F[n(\r) +\Delta n(\r)].
+\end{equation}
+%
+and expanding this expression to second order in terms of first order variations of the external potential,
+$v(\r)$, and the density, $n(\r)$. 
+
+Expansion of Eq.~\ref{eq:martin1} leads to the following contribution to the total energy that is second order in
+the small density variation.
+%
+\begin{equation}
+\label{eq:martin2}
+\frac{\delta^{2} F}{\delta n(\r) \delta n(\r')}
+\Delta E^(2) = \int\int \left[\frac{1}{|\r-\r'|} + \frac{\delta^{2} T_{s}}{\delta n(\r)\delta n(\r')}+\frac{\delta^{2} E_{xc}}
+{\delta n(\r)\delta n(\r')}|_{n_0}\right]{\Delta n(\r) \Delta n(\r')}
+\end{equation}
+%
+As mentioned in Section \ref{sec:hedineqs} in the GW method we considered a system of independent electrons
+interacting via a screened Coulomb interaction.
+
+To establish the relationship between the electron-electron interactions encoded in the second order variation
+of the Hartree, kinetic energy functional, and exchange-correlation functional, and the inverse dielectric constant.
+
+Note we are now working with the static dielectric function unlike in Sec.~\ref{sec:dielecfun}
+when we included the time dependence of this operator. Working with the density is a little simpler than
+the Green's function.
+
+With Harris-Foulkes we are seeking to justify the form of the tight-binding expression
+for the total energy, Eq.~\ref{eq:totentb}, and ascertain the errors we expect by not iterating
+our solution to self-consistency. We will complete the work of the former aim in the next section,
+and we have already seen that the error will be second order in $\Delta n$. Unfortunately 
+as anyone who has performed a self-consistent electronic structure calculation starting from 
+atomic charge densities will know that there could be anywhere between 20 and 100 iterations 
+of the whole processthe charge mixing strategies. In particular we mention the Broyden type mixing approaches 
+of Vanderbilt and Louie \cite{vanderbilt84} and Johnson \cite{johnson88} which, with each
+step of an iterative process, improve the approximation to the dielectric matrix.
+%
+\begin{equation}
+\epsilon^{-1}(\r,\r') = \delta(\r-\r')  + \int d \r'' \frac{1}{|\r-\r''|}\chi(\r'',\r')
+\end{equation}
+%
+We may view the dielectric function as the Hessian of the charge density. 
+Furthermore a knowledge of the variation of Eq.~\ref{eq:dielexch} with respect 
+to atomic co-ordinates encodes the harmonic vibrational and elastic properties of a system.
+One suggestion would be to use the generalized HF functional to choose 
+$V_{\rm in}$ to be generated from $\tilde{n}_{0}$ rather than $n_{\in}$.
+%
+\begin{equation}
+n^{1}_{out}-n^{0}_{out} = -\chi(n_{in}^{1}-n_{in}^{0})
+\end{equation}
+%
+We want $n^{1}_{\rm out}$
+%
+\begin{equation}
+n^{1}_{\rm in} = n^{0}_{in} + \chi^{-1}n^{0}_{out}
+\end{equation}
+
+As a final note we point out that the Hartree Energy is quadratic in the density variation
+but the exchange-correlation functional is non-linear. 
+This non-linearity affects the Jacobian matrix generating new search directions.
+This is important for random structure searching. If subsequent densities 
+are not being modified with this non-linearity they will lead somewhere predictable. It is interesting
+to contemplate whether even more general paramterizations of the exchange correlation functional
+would stabilize more exotic structures. But this leads us further afield.
+
+\subsection{Superposition of Atomic Charge Densities}
 Let us now build an input density by superimposing a collection of charge densities
 corresponding to a single atom: $n_{in} = \sum_{i}n_{\alpha}(R_i)$. The electrostatic
-contributions break down into a free atom Hartree term, an ionic term, and a valence
-Hartree term:
+contributions to the total energy break down into a free atom Hartree term, an ionic term, 
+and a valence Hartree term:
 %
 \begin{equation}
 U_{\rm es}[n_{v}] = -E_{H}[n_{\rm atom}] + \frac{1}{2}\sum_{ij} \left[ \frac{Z_{i}Z_{j}}{|R_{i}-R_{j}|} - \int\int\frac{n_{v\alpha}(R_{i})n_{v\alpha}(R_{j})}{|\r-\r'|}d\r d\r'\right]
@@ -1338,9 +1447,10 @@ The exchange-correlation contributions to the double-counting potential are non-
 \label{eq:xcdc}
 U_{\rm xc}[n_v] = \int[\epsilon_{xc}(n_{v})-\mu_{xc}(n_{v})]n_{v}(\r) d\r 
 \end{equation}
+%
 
-To proceed Foulkes and Haydock make the assumption that if only small areas of the material have 
-significant charge density contributions arising from three atom 
+To proceed Foulkes and Haydock make the assumption that if only small 
+areas of the material have significant charge density contributions arising from three atom 
 overlaps then Eq.\ref{eq:xcdc} can be expanded as:
 %
 \begin{align}
@@ -1359,32 +1469,75 @@ we will look at a procedure for obtaining the matrix elements of the
 Hamiltonian, $H_{i\alpha j\beta}$, required for the contribution to the total
 energy arising from the electronic coordinates.
 
-To conclude this section we add a brief note on the crucial difference between
-repulsive band models and repulsive bond models. Finnis, in his textbook, makes
-a distinction between $U(|\R_I - \R_J|)$ as a parametric two-center 
-functional fit of the double counting terms in Eq.~\ref{eq:} which he terms the Repulsive Band Model.
-He distinguishes this from the repulsive contribution that arises in the Tight Binding Bond Model\cite{sutton88}, 
-favouring the latter. The distinction is made clear by noting in the Bond Model the total energy which is described
-is the cohesive energy: that is the difference between the energy of the bonded system
-and the same system decomposed into individual atoms. In the Band Model the repulsive contribution
-is parameterizing a total system energy which will need to be defined by technical details of the calculation,
-and the charge transfer effects implicit in the use of the Harris-Foulkes eigenvalues are exagerrated.
-The Bond Model isolates energy terms that arise from the difference between a free atom and an atom
+We add a brief note on what definition of the repulsive energy we are using.
+As stressed by Finnis there is a crucial difference between what he terms the
+repulsive {\emph band} model and the repulsive {\emph bond} model. 
+In the former $U(|\R_I - \R_J|)$ is a parametric two-center 
+functional fit of the double counting terms in Eq.~\ref{eq:xcdc} and Eq.~\ref{eq:xcdc2}.
+He distinguishes this from the repulsive contribution that arises in the tight-binding bond model\cite{sutton88} 
+favouring the latter. The distinction is made clear by noting in the {\emph bond} 
+model the total energy which is described
+is a cohesive energy: that is the difference between the energy of the bonded system
+and the same system decomposed into individual atoms. In the band model the repulsive contribution
+is parameterizing a total system energy, which is problematic in its own right and
+will need to be defined by technical details of the calculation.
+In the band model the charge transfer effects implicit in the use of 
+the Harris-Foulkes functional at a non-selfconsistent density 
+are uncompensated.  This can lead to substantial errors.
+The bond model isolates energy terms that arise from the difference between a free atom and an atom
 in a condensed system and imposes a local charge conservation condition on the individual atoms.
 This leaves only terms that can more appropriately be handled by a pair potential to be fitted.
 
 A further discussion of these terms had better be left until Chapter~\ref{chap:wannier}.
-As will be seen we will make them explicit in the construction of our local models. 
-It will be seen that our splitting of the energy functional is 
-consistent with the repulsive bond model which, in agreement with Finnis, we find to be the less 
-repulsive\footnote{In the non-physical sense of the word repulsive.} of the two choices.
+As will be seen we will make these on-site terms explicit in the construction 
+of our local models of the electronic structure. 
+
+\subsection{Generalized Functionals}
+Haydock \cite{haydock97} has discussed a quite general functional,
+$\Phi[\{\psi_{\alpha},n(\r),V_{\rm in}(\r) \}]$. The stationary points of
+this functional summarize the key features for our rigorous formulation of local methods
+requires and which have been discussed up to this point.
+
+The variation of the functional with respect to the electrons 
+for the auxilliary non-interacting system is zero:
+%
+\begin{align}
+ \frac{\delta \Phi}{\psi_{\alpha}(\r)} & = \left[-\frac{1}{2}\nabla^{2} + V_{\rm in}(\r) \right]\psi_{\alpha} -\epsilon_{\alpha}\psi_{alpha}&=& 0.
+\end{align}
+
+The variation with respect to the density leads to a connection between the effective potential
+the non-interacting electronic system experiences and the exchange-correlation functional.
+%
+\begin{align}
+ \frac{\delta \Phi}{\delta n(\r)}  & =  \frac{\delta F[n(\r)]}{\delta n(\r)} - V_{\rm in}(\r) &=& 0.
+\end{align}
+
+
+\begin{align}
+ \frac{\delta \Phi}{\delta V_{\rm in}(\r)} & = \sum_{\alpha}|\psi_{\alpha}|^{2} - n(\r) &=& 0
+\end{align}
+
+The stationary point of this function is minimal with respect to the basis set and
+the density and maximal with respect to the effective potential $V_{\rm in}$ \cite{methfessel95}.
+For an interesting demonstration of the variational properties with respect to the 
+effective potential in the context of GW calculations see Ref.~\cite{sohrab10}.
+
+%It is important to stress we are also free to vary the input potential:
+%\begin{equation}
+%E[n_{in},V_{in}] = E_{0} + \frac{1}{2} \frac{\delta^{2}}{\delta n}\delta n_{\rm out} n_{\in} 
+%\frac{1}{2}\int (V[n_{\rm in}](\r) - V_{\rm in}(\r))\delta n(\r) d\r 
+%\end{equation}
+%The combined functional is variational and it is {\emph minimal} with respect to the density
+%and {\emph maximal} with respect to the potential. See Ismail-Beigi\cite{sohrab10} and 
+%Methfessel\cite{methfessel95} for some interesting numerical demonstrations of the latter property.
+
 
 \subsection{Pettifor's Maps and The Structural Energy Difference Theorem}
 Before concluding this chapter we will mention some of the work that has been done
-to directly connect DFT, local formulations of the electronic structure,
-with a wealth of experimental data. 
+to directly connect DFT, a local formulation of electronic structure and
+a huge swathe of experimental data. 
 
-To this end we may mention David Pettifor's phenomenological structure maps \cite{pettifor84, pettifor86a},
+We begin with David Pettifor's phenomenological structure maps \cite{pettifor84, pettifor86a},
 reproduced in Fig.~\ref{fig:structuremap}. These maps represent a distinct success for 
 theoretical materials science; each aspect of Ehrenreich's criteria are met.
 The properties of entire homologous series can be predicted from a set of two dimensional
