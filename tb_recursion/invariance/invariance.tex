@@ -102,6 +102,7 @@ n(E,\r) = -\frac{1}{\pi}{\rm Im}~G(\r,\r,E)
 %
 
 \section{Matching Green's Functions}
+\label{sec:matchinggreens}
 The following treatment has been developed by Heine which in turn follows the 
 work of Garcia-Moliner and Rubio, and, Velicky and Bartos, Refs.~\cite{garcia69, velicky71, garcia71},
 along with the work of Inglesfield in Refs.~\cite{inglesfield71,inglesfield81}.
@@ -112,166 +113,17 @@ practical applications. Entire subfields of materials science which at first app
 are in effect just different methods of solving the Schr\"odinger equations in a convenient
 basis for one region and matching it at the boundary to a convenient basis 
 for a solution in another region. Embedding one potential in another, treating impurities,
-the interaction between valence electrons and core electrons bound tight to the nucleus all
+the interaction between valence electrons and core electrons all
 involve in one way or another matching Green's functions across a surface.
 
-%The perspective that Heine introduces in Vol. 35 of Solid State Physics 
+The perspective that Heine introduces in Vol. 35 of Solid State Physics and the derivation
+he presents there is worth working through in full. We will only outline the final form
+the solutions should take with an example.
 
-First a change of variables is perform from $\r$ to $\r''$ in 4.1 
-and $\r$ to $\r''$ and $\r'$ to $\r$ in 4.3:
-%
-\begin{equation}
-\label{eq:greentot}
-[-\frac{1}{2}\nabla^{2}_{\r''} + V(\r'') - E]G(\r'',\r',E)= -\delta(\r''-\r')
-\end{equation}
-%
-\begin{equation}
-\label{eq:greenA}
-[-\frac{1}{2}\nabla^{2}_{\r''} + V(\r'') - E]G_{A}(\r,\r'',E)= -\delta(\r''-\r')
-\end{equation}
-
-Now multiply Eq.~\ref{eq:greentot} by $G_{A}$ and Eq.
-\ref{eq:greenA} by $G$ Then integrate over $\r''$ over region A using
-Green's theorem:
-%
-\begin{equation}
-\label{eq:greenthm}
-\int\int\int(\phi\nabla^{2}\psi - \psi\nabla^{2}\phi)d^{3}\r 
-= \int(\phi\nabla\psi-\psi\nabla\phi)d{\mathbf{S}}
-\end{equation}
-%
-We suppress the energy arguments from here on in assuming them to be contained in G. 
-
-obtained by expressions for $G$ by integrating $\r''$ over region $A$.
-%
-\begin{equation}
-\label{eq:green1a}
-G(\r,\r') = G_{A}(\r,\r') + \frac{1}{2} \int d\mathbf{S} 
-[\frac{\partial G_{A}(\r,\r_{s})}{\partial n_{S}}G(\r_{S},\r') - G_{A}(\r,\r_{S})\frac{\partial G(\r_{S},\r')}{\partial n_{S}}] [\r, \r' \in A]
-\end{equation}
-
-$\frac{\partial}{\partial n_{S}}$ denotes the normal component of grad across
-the surface S and $\r_{S}$ is a point on S. (The grad term is a directional component
-so the sign can change depending on the orientation.)
-
-And in region B:
-%
-\begin{equation}
-\label{eq:green1b}
-G(\r,\r') = G_{B}(\r,\r') - \frac{1}{2} \int d\mathbf{S} 
-[\frac{\partial G_{B}(\r,\r_{s})}{\partial n_{S}}G(\r_{S},\r')
-- G_{B}(\r,\r_{S})\frac{\partial G(\r_{S},\r')}{\partial n_{S}}] [\r, \r' \in B]
-\end{equation}
-%
-
-A further property has been used:
-%
-\begin{equation}
-G(\r,\r',E) = G(\r',\r,E),
-\end{equation}
-%
-which is often justified on the ground of a time reversal theorem applying 
-to the wave functions in the system.
-
-Finally consideration of the case where $\r'$ and $\r''$ are in different regions is required.
-
-With $\r''$ in B and $\r'$ in A Eq.~\ref{eq:greentot} becomes:
-%
-\begin{equation}
-[-\frac{1}{2}\nabla^{2}_{\r''} + V(\r'') - E]G(\r'',\r') = 0,
-\end{equation}
-%
-the delta function is uniformally zero with those spatial constraints.
-
-The next case restricts $\r$ in B:
-%
-\begin{equation}
-[-\frac{1}{2}\nabla^{2}_{\r''} + V(\r'') - E]G_B(\r,\r'')= \delta(\r-\r''),
-\end{equation}
-%
-
-A similar cross multiplying trick gives:
-%
-\begin{equation}
-\label{eq:green1c}
-G(\r,\r') = -\frac{1}{2} \int dS[\frac{\partial G_{B}(\r, \r_{S}}{\partial n_{S}} G(\r_{S},\r')
-- G_{B}(\r, \r_{S})\frac{\partial G(\r_{S},\r')}{\partial n_{S}}] \quad [\r~{\rm in}~B, \r'~{\rm in}~A],
-\end{equation}
-%
-and a similar relation for [$\r$ in A and $\r'$ in B].
-
-Eq.~\ref{green1a} and Eq.~\ref{green1b} give solutions for G but 
-aren't very useful until the terms $G(\r_S,\r)$ and 
-$\frac{\partial G}{\partial n_{S}}$ are eliminated.
-
-From Eq.~\ref{eq:green1a} we let $\r$ tend to the boundary so $\r = \r_{S}$
-%
-\begin{equation}
-\label{eq:greensys1}
-G(\r'',\r') = G_{A}(\r''_{S}, \r') + \frac{1}{2} \int d{S}
-[\frac{\partial G_{A}(\r''_{S}, \r_{S})}{\partial n_{S}} G(\r_{S},\r) - 
-G_{A}(\r''_{S},\r_{S})\frac{\partial{G(\r_{S}, \r')}}{\partial n_{S}}].
-\end{equation}
-%
-
-The second relation comes from Eq.\ref{eq:green1c} with 
-$\r$ in region B and letting $\r$ tend to $\r^{''}_{S}$.
-%
-\begin{equation}
-\label{eq:greensys2}
-G(\r''_{S}, \r') = -\frac{1}{2}\int dS [\frac{\partial G_{B}(\r''_{S}, \r_{S})}{\partial n_{S}}
--G_{B}(\r''_{S},\r_{S})\frac{\partial G(\r_{S},\r')}{\partial n_{S}}]
-\end{equation}
-%
-
-We now dump the cumbersome indices on the position attributes. These
-were necessary to motivate the physical argument for how we have a Green's function
-description in one region of space, a Green's function description in another, 
-and the joined physical system should be some combination of these two descriptions
-which match at the interface. The final step is to write Eq.~\ref{eq:greensys1} 
-and Eq.~\ref{eq:greensys2} as matrices:
-%
-\begin{align}
-\label{eq:operator1}
-g = g_{A} + \frac{1}{2}\G'_{A}g - \frac{1}{2}\G_{A}g' \\
-g = -\frac{1}{2}\G'_{B}g + \frac{1}{2}\G_{B}g' \\
-\end{align}
-%
-\begin{align}
-\label{eq:operator2}
-g & = & [\G^{-1}_{A}(1-\frac{1}{2}\G'_{A}) + \G^{-1}_{B}(1+\frac{1}{2}\G'_{B})]^{-1} \G^{-1}_{A}g_{A} \\
-g' & = & [(1-\frac{1}{2}\G'_{A})^{-1}\G_{A} + (1+\frac{1}{2}\G'_{B})^{-1}]^{-1}(1 - \frac{1}{2}\G'_{A})^{-1}2g_{A}
-\end{align}
-%
-$g$, $g_{A}$, $g'$ are vectors in a space $\{\r_{S}\}$ with components $G(\r_{S},\r')$,
-$G_{A}(\r_{S},\r')$, $\partial G(\r_{S},\r')/\partial n_{S}$ with $\r'$ fixed.
-
-$\G_{A}$, $\G'_{A}$ are operators in the space with matrix elements
-$G_(A)(\r''_{S}, \r_{S})$, $\partial G_{A}(\r''_{S}, \r_{S})/\partial n_{S}$.
-
-Where the inverse in Eq.~\ref{eq:operator1, eq:operator2} 
-doesn't exist there is a pole. This is the condition for a discrete energy level 
-of the Schrodinger equation for the combined A + B systems. 
-
-Equations written in the form of \ref{eq:green1a} are of the type required for the invariance theorem namely:
-%
-\begin{equation}
-G(\r,\r';E) = G_{A}(\r,\r';E) + {\rm boundary ~ corrections},
-\end{equation}
-%
-where we have restored the energy argument.
-These considerations provide a reasonable mathematical framework for 
-investigating electronic structure from the point of view of the local environment.
-Indeed as Heine himself says: 
-
-\begin{quote}
-The importance of this approach would lie in the fact that
-one has a single entity $G_{A}$ to represent an element in anything 
-from a small molecule to a complex alloy.
-\end{quote}
-
-As a practical example the success of planewave and pseudopotential methods 
-is reliant on finding decent approximations to the quantity $G_{A}$. The plane waves
+Let us consider the pseudopotential method.
+This approach is reliant on finding decent approximations to the Green's function in one
+region $G_{A}$ near the atoms and another $G_{B}$ that is valid in the interstitial
+regions between atoms. The plane waves
 in the interstitial regions must match the Green's function for the atomic system
 at a particular radial cutoff and energy. If a function can be found that 
 describes the scattering of these waves across a suitable energy range the approximation 
@@ -290,6 +142,25 @@ atomic wave functions. Another approach would involve matching the $G_{A}$
 and $G_{B}$ explicitly at each stage of the calculation until self-consistency is obtained.}
 \end{center}
 \end{figure}
+
+Equations written in the form of \ref{eq:green1a} are of the type required for the invariance theorem namely:
+%
+\begin{equation}
+G(\r,\r';E) = G_{A}(\r,\r';E) + {\rm boundary ~ corrections},
+\end{equation}
+%
+where we have restored the energy argument.
+
+These considerations provide a reasonable mathematical framework for 
+investigating electronic structure from the point of view of the local environment.
+Indeed, as Heine himself says: 
+
+\begin{quote}
+The importance of this approach would lie in the fact that
+one has a single entity $G_{A}$ to represent an element in anything 
+from a small molecule to a complex alloy.
+\end{quote}
+
 %
 Heine's ambition turns on this:
 %
@@ -305,7 +176,7 @@ function in a certain region of space being independent of the size and shape
 of the container and the boundary conditions.
 
 \section{Slater-Koster Tight Binding}
-  Let us denote the translation operator $\hat{T}$
+Let us denote the translation operator $\hat{T}$
 as the operator which displaces all the coordinates of a vector 
 by a crystal lattice vector $\R_{i}$ we require 
 firstly that $[\hat{T},\hat{H}]=0$, i.e. that the 

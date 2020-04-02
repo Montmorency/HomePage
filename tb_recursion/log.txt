@@ -217,5 +217,9 @@ method from the mid-90s. Selfconsistent TB from Tony and Mike,
 as well as a paper on Grainboundaries and gap states in silicon. 
 
 
+Wed  1 Apr 2020 17:37:25 IST
+-----------------------------
+Working on font. Apparently the one i like from PRB 93-95 is
+called ansinew? 
 
 

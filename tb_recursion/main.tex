@@ -15,6 +15,9 @@
 \usepackage{subfigure}
 \usepackage{enumerate}
 \usepackage{makeidx}
+\usepackage{accents}
+\usepackage{mathrsfs}
+\usepackage[nofancy]{rcsinfo}
 \usepackage{hyperref}
 %\hypersetup{
 %    colorlinks,
@@ -23,9 +26,18 @@
 %    linkcolor=black,
 %    urlcolor=black
 %}
+
+
+\usepackage[all]{xy}       % Include XY-pic
+      \SelectTips{cm}{10}     % Use the nicer arrowheads
+      \everyxy={<2.5em,0em>:} % Sets the scale I like
+
 \include{tools/dimensions}
 \include{tools/defs}
 \include{tools/hmod}
+
+%\fontfamily{ansinew}\selectfont
+%\usepackage[ansinew]{inputenc}
 
 \usepackage[sort&compress]{natbib}
 \setlength{\bibsep}{0.0pt}
