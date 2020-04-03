@@ -1593,33 +1593,47 @@ effective potential in the context of GW calculations see Ref.~\cite{sohrab10}.
 %The combined functional is variational and it is {\emph minimal} with respect to the density
 %and {\emph maximal} with respect to the potential. See Ismail-Beigi\cite{sohrab10} and 
 
-Before we conclude this chapter we will introduce some diagrammatic representations due
-to Methfessel which may help the reader picture what we have discussed\cite{methfessel95}.
-The process involved in doing a self consistent calculation can be represented:
+Before we conclude this chapter we will introduce some diagrammatic representations introduced
+by Methfessel which may help the reader picture what we have discussed\cite{methfessel95}.
+We extend these diagrams so that we can show the importance of incorporating some knowledge of 
+the materials dielectric properties into a calculation:
 %
 \[\xymatrix{
-	\cdots \ar[r] & V^{0} \ar[r] & n^{0} \ar[r] & V^{1} \ar[r] & n^{1} \ar[r]  & \cdots \\
+&             &                   &                 &   \cdots \ar[r]     &       n^{2}_{m+1} = n^{1}_{m+1} + \chi(V^{1}_{m+1} - V^{1}_{m}) \ar[r]  & V^{2}_{m+1} \ar[r] & \cdots \\
+&             & \cdots \ar[r] & n^{1}_{m}=n^{0}_{m} + \chi(V^{0}_{m} - V^{0}_{m-1}) \ar[r] & V^{1}_{m} \ar[r] \ar[ur] & n^{1}_{m+1} \ar[u] \ar[r] & V^{1}_{m+1} \ar[ul] \ar[r] & \cdots    \\
+\cdots \ar[r] & n^{0}_{m-1} \ar[r] & V^{0}_{m-1} \ar[ur] \ar[r] & n^{0}_{m}\ar[u] \ar[r] & V^{0}_{m} \ar[ul] \ar[r] & \cdots &  & \\
 }
 \]
 %
-These sort of diagrams are similar to exact sequences \cite{whitehead50} in algebraic 
-topology. The chain continues until it stabilizes at $n^{i+1}=n^{i}$. In practice
-there might be a hundred steps in the chain before this stabilization occurs and
-the expense of manipulating the representations of $V$ and $n$ can be considerable.
+The subscript represents the iteration number and the superscript 
+represents `the stage of mixing'. 
+These sort of diagrams bare a resemblance to exact sequences \cite{whitehead50} in algebraic topology.
+One does not typically have $\chi$
+fully calculated and to hand so, initially, some approximation is required.
+One approximation to $\chi$ could be a simple 
+scalar (linear mixing) of the input and output density at a given potential. 
+We may exploit Broyden's technique which allows us to build an estimate of $\chi$
+from the observed variations in the total density and potentials.
+The chain continues until it stabilizes at 
+$n^{i}_{m+1}=n^{i}_{m}$ or an equivalent condition for the potential.
+In practice without any mixing bottom chain, with no density mixing, may never stabilize. 
+Working out the optimal way of approximating and storing $\chi$ played an important role
+in enabling large scale ab initio simulations \cite{vanderbilt84, johnson88}.
 
-We can wrap the sequence Eq.~\ref{eq:exactseq1} and inject projection operators:
+The sequence of potentials and densities may also be wrapped around on itself:
+%
 \[\xymatrix{
 	V \ar[r] & n_{\rm out}[V] \ar[r] & \hat{P}_{n_{\rm out}}[V] \ar[d] \\
 	\hat{P}_{v}[V_{\rm eff}[n]] \ar[u] & V_{\rm eff}[n] \ar[l] & n\ar[l] \\
 }
 \]
 
-From this sequence we are looking to define projection operations, 
-$\hat{P}_{n}$ and $\hat{P}_{V}$, that preserve as much of the 
-exactness of the original sequence as possible. If we can build the density out
-of a few atom centered functions and represent our potentials with a few scalars,
-possibly with some simple functional dependence, we will have obtained
-a very useful compression of the ab initio data.
+In this sequence we have inserted two 
+projections $\hat{P}_{n}$ and $\hat{P}_{V}$ which act on the density and the potential. 
+The hope is that these projection operations will preserve as much of the 
+exactness of the original sequence as possible. If we can project the ab initio density 
+onto a local representation we will have taken an important step towards forming
+a basis for our recursion calculations.
 
 \section{Conclusion}
 \noindent
