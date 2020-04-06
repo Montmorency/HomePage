@@ -25,7 +25,6 @@ This work, Wannier noted, was initiated by Eugene Wigner's suggestion that,
 for electrons, and that such a reconciliation would probably be useful in 
 understanding the spectra of insulators." 
 
-
 However Wannier's transformation amounted to a gauge transformation
 and did not result in a unique local description of the electronic states.
 Koster proposed a variational procedure for the determination 
@@ -195,7 +194,7 @@ orbitals, which are orthogonalized to their neighbours, transform according to t
 symmetry operations as the spherical harmonics.
 
 \section{TB-NN}
-Wannier functions are just a gauge. Starting from an orthonormal set
+Starting from an orthonormal set
 of Bl\"och wave vectors a unitary matrix is formed such that it rotates the
 extended waves into an optimally localized state.
 Any gauge that can arrange Bl\"och orbitals which are spread 
@@ -230,62 +229,81 @@ we can choose the eight sp3 wannier functions as a basis and infer the parameter
 of their interactions with the 12 nearest neighbour cells of the type a(110). Then instead
 of assigning the two center integrals $(ss\sigma)$ etc. to a particular atom, 
 i.e. $(ss\sigma)_1$, we assign the two groups to the valence manifold and low lying conduction manifold 
-$(ss\sigma)_{v}$. The fitting procedure then seek to fit the disposable constants to the W
-annierized Hamiltonian matrix elements. Again a two center approximation can be used in the first pass
+$(ss\sigma)_{v}$. The fitting procedure then seek to fit the disposable constants to the 
+Wannierized Hamiltonian matrix elements. Again a two center approximation can be used in the first pass
 resulting in 8 neurons in the hidden layer, and then a second fit which makes use of 
 all the disposable constants. The hope is that the MLWF basis will provide an optimal one in the
 sense of the rapid spatial decay of the matrix elements between neighbouring unit cells 
-(which for sp3 semi-conductors is pracitcally assured), and that the contributions of the three center
+(which for sp3 semi-conductors is promising), and that the contributions of the three center
 integrals will be negligible in this basis. Slater-Koster found that the two center approximation in their
 basis was not a particularly good one and unable to interpolate the results obtained
 from an orthogonalized plane wave calculation, however the atom centered spherical harmonic orbitals is likely 
 to suffer from this deficiency, the requirement that neighbouring orbitals are orthogonal would lead to 
 the formation of actual orbitals with non-zero components on neighbouring shells of atoms. 
 
-
 The second nearest neighbour s-interaction is found to have the opposite sign.
-
 %\section{Oh, What Larks}
 %There is little need to motivate the theoretical investigations of semiconductors
 %their technological relevance is undisputed. Nor is there a shortage of interesting
 %problems to consider like; surface reconstructions, donor acceptor levels, 
 %disorder \cite{hass40}, inversion layers.
 
-\subsection{Pettifor's Maps and The Structural Energy Difference Theorem}
-Before concluding this chapter we will mention a theorem due to Pettifor
-that helps connect the local formulation of electronic structure and
-a huge swathe of experimental data. 
+\section{Pettifor's Maps and The Structural Energy Difference Theorem}
+\label{sec:structendiff}
+Before concluding this chapter it is high time we mention a theorem due to Pettifor
+that will help us connect the local formulation of electronic structure and
+a huge swathe of experimental data: the structural energy difference theorem. 
 
-We begin with David Pettifor's phenomenological structure maps \cite{pettifor84, pettifor86a},
-reproduced in Fig.~\ref{fig:structuremap}. These maps represent a distinct success for 
-theoretical materials science; each aspect of Ehrenreich's criteria are met.
-The properties of entire homologous series can be predicted from a set of two dimensional
-coordinates. The experimental comparisons are immediate.
-Pettifor's structure maps are a key waypoint for
-theoretic materials science and have found application in alloy design. 
+The Wannier Formulation discussed here has given
+us a rigorous procedure for obtaining electron hopping integrals.
+The recursion method then allow us to calculate the band contribution to the total energy.
+Fascinating as this band contribution is, as we learned in Chapter.~\ref{chap:gw}, 
+it is only part of the contribution to the total energy. The repulsive contribution to the energy
+also plays an important role. 
 
-The Wannier formulation gives
-us a rigorous procedure for obtaining the electron hopping integrals.
-These, in turn, allow us to calculate the band contribution to the total energy.
-As we learned in Chapter.~\ref{chap:gw} this is only part of the 
-contribution to the total energy. The repulsive contribution to the energy
-also plays an important role. Difference topological configurations for
-the same compound may possess different nearest neighbour bonds lengths.
-Depending on the geometry there will be small compensating changes in 
+For theoretical purposes we sometimes wish to concentrate only on the band energy 
+contribution to the energy difference between two given structures. 
+Let us denote the structures $I$ and $II$. To focus on the band contribution we make
+the following manipulations. Let the total energy of a structure be:
+%
+\begin{equation}
+U = U_{\rm rep} + U_{\rm bond}
+\end{equation}
+%
+We then adjust the first nearest neighbour bondlength of structure $II$ from
+$R^{(II)}_{0}$ to $R^{(II)}$ (we follow Pettifor's notation, the difference in the two terms
+arises from dropping the nought in the subscript in case that was missed). 
+We then impose the requirement that $U_{\rep}(R^{(II)})$ is chosen 
+equal to the repulsive energy of structure $I$ at its equilibrium: $U^{(I)}_{\rep}(R^{(I)}_0)$.
+The theorem is then that the error in the energy difference is second order with respect to the 
+difference $(R^{II} - R^{II}_{0})$. The proof of the theorem follows from a Taylor expansion. 
+We write the energy difference as:
+%
+\begin{equation}
+\Delta U^(1) = U^{(II)}_{\rm bond}(R^{(II)} - U_{\rm bond}^{(I)}(R^{I}_{0}),
+\end{equation}
+%
+this is sometimes abbreviated to $\Delta U^(1) = [\Delta U_{\rm bond}]_{\Delta U_{\rm rep}=0}$.
+
+This theorem has been used extensively by Pettifor and his co-workers who were able to 
+rationalize the structural trends across the range of sp\cite{cressoni91}, pd\cite{pettifor86b}, 
+and stoichiometric AB alloys\cite{bieber81,pettifor86a}.
+
+The theorem is useful because we may wish to determine what topological configurations a given set of atoms
+will take. Depending on the geometry there will be small compensating changes in 
 the band contribution and the repulsive contribution that are hard to
 unravel. The choice of nearest neighbour distance would then become
 somewhat arbitrary which is a black mark against the predictive powers of
-the model. Pettifor's solution to this is to compare the energetics,
+the model. Pettifor's theorem is useful for ensuring we are comparing apples with apples.
 
-
-The structure maps found usage in addressing the technical challenges encountered 
-when producing ductile alloys that could withstand the high temperatures in 
-jet engines\cite{sutton19}. 
-
-Pettifor and his co-workers were able to 
-explain the structural trends across the range of s-p\cite{cressoni91}, p-d\cite{pettifor86b}, 
-and the full range of stoichiometric AB alloys\cite{bieber81,pettifor86a}.
-
+%We begin with David Pettifor's phenomenological structure maps \cite{pettifor84, pettifor86a},
+%reproduced in Fig.~\ref{fig:structuremap}. These maps represent a distinct success for 
+%theoretical materials science; each aspect of Ehrenreich's criteria are met.
+%The properties of entire homologous series can be predicted from a set of two dimensional
+%coordinates. The experimental comparisons are immediate.
+%The structure maps have found industrial application in addressing the technical challenges encountered 
+%when producing ductile alloys that could withstand the high temperatures in 
+%jet engines\cite{sutton19}. 
 %The alert reader will have recognized the similarity with the Lennard-Jones
 %potential, in some respects the first and simplest interatomic potential, 
 %but one that encapsulates the idea that atoms attract each other
