@@ -1600,24 +1600,25 @@ the materials dielectric properties into a calculation:
 %
 \[\xymatrix{
 &             &                   &                 &   \cdots \ar[r]     &       n^{2}_{m+1} = n^{1}_{m+1} + \chi(V^{1}_{m+1} - V^{1}_{m}) \ar[r]  & V^{2}_{m+1} \ar[r] & \cdots \\
-&             & \cdots \ar[r] & n^{1}_{m}=n^{0}_{m} + \chi(V^{0}_{m} - V^{0}_{m-1}) \ar[r] & V^{1}_{m} \ar[r] \ar[ur] & n^{1}_{m+1} \ar[u] \ar[r] & V^{1}_{m+1} \ar[ul] \ar[r] & \cdots    \\
+&             & \cdots \ar[r] & n^{1}_{m}=n^{0}_{m} + \chi(V^{0}_{m} - V^{0}_{m-1}) \ar[r] & V^{1}_{m} \ar[r] \ar[ur] & n^{1}_{m+1} \ar[u] \ar[r] & V^{1}_{m+1} \ar[ul] \ar[r] & \cdots \\
 \cdots \ar[r] & n^{0}_{m-1} \ar[r] & V^{0}_{m-1} \ar[ur] \ar[r] & n^{0}_{m}\ar[u] \ar[r] & V^{0}_{m} \ar[ul] \ar[r] & \cdots &  & \\
 }
 \]
 %
-The subscript represents the iteration number and the superscript 
-represents `the stage of mixing'. 
+The subscript represents the iteration number and the superscript represents `the stage of mixing'. 
 These sort of diagrams bare a resemblance to exact sequences \cite{whitehead50} in algebraic topology.
 One does not typically have $\chi$
 fully calculated and to hand so, initially, some approximation is required.
 One approximation to $\chi$ could be a simple 
 scalar (linear mixing) of the input and output density at a given potential. 
-We may exploit Broyden's technique which allows us to build an estimate of $\chi$
+Another more sophisticate approach exploits Broyden's technique which allows 
+us to build an estimate of $\chi$
 from the observed variations in the total density and potentials.
 The chain continues until it stabilizes at 
 $n^{i}_{m+1}=n^{i}_{m}$ or an equivalent condition for the potential.
-In practice without any mixing bottom chain, with no density mixing, may never stabilize. 
-Working out the optimal way of approximating and storing $\chi$ played an important role
+In practice without any mixing the bottom chain, $n^{0}_{m}$, with no density mixing, 
+may never stabilize. 
+Working out the optimal way of approximating and storing $\chi$ plays an important role
 in enabling large scale ab initio simulations \cite{vanderbilt84, johnson88}.
 
 The sequence of potentials and densities may also be wrapped around on itself:
@@ -1628,34 +1629,40 @@ The sequence of potentials and densities may also be wrapped around on itself:
 }
 \]
 
-In this sequence we have inserted two 
-projections $\hat{P}_{n}$ and $\hat{P}_{V}$ which act on the density and the potential. 
-The hope is that these projection operations will preserve as much of the 
-exactness of the original sequence as possible. If we can project the ab initio density 
-onto a local representation we will have taken an important step towards forming
-a basis for our recursion calculations.
+In this sequence two projections, $\hat{P}_{n}$ and $\hat{P}_{V}$, which 
+act on the density and the potential have been inserted. 
+The hope is that these projection operations allow us to project the ab initio
+data onto a restricted subspace which will preserve as much of the 
+exactness of the original sequence as possible. 
+Obtaining this local representation will be an important 
+step towards forming a basis for our recursion calculations.
 
 \section{Conclusion}
 \noindent
 This chapter began by introducing the Hohenberg-Kohn theorem. 
 We then discussed the practical means of performing
-ab initio calculations using the Kohn-Sham system and the LDA was discussed,
-as well as improvements to this approach based on the $GW$ approximation.
-The Harris-Foulkes discussion provided the justification for a mapping procedure
-of the ab initio data onto a restricted space more amenable to calculation
-and human consideration. Finally we discussed the full generality of 
+ab initio calculations using the Kohn-Sham system and the local density
+approximation. The $GW$ approximation was introduced as a way of formally
+improving the density functional model according to a physically motivated
+perturbation expansion.
+
+The Harris-Foulkes discussion provides the justification for a mapping procedure
+of ab initio data onto a restricted space more amenable to recursive
+calculations.
+
+Finally we discussed some interesting properties of total 
 energy functionals. The hope is that the reader will see there is a wider
 scope for interpreting total energy functionals than simply iterating the Kohn-Sham LDA
-system to self-consistency over and over again. The input, output density, 
+system to self-consistency over and over again. The input and output density, 
 the effective potential, and the dielectric properties of the system are all 
 related to each other.
 
 For a given configuration of atoms it is now commonplace to send a 
-DFT or GW calculation off to a computing machine and within a few minutes, hours, or 
+DFT or $GW$ calculation off to a computing machine and within a few minutes, hours, or 
 days (depending on the size of the system) come back to directories 
 full of eigenvalues, charge densities, wavefunctions, forces, and total energies.
 The formal transformation from these  \textit{global}, total energy methods 
-based on the LDA and GW to \textit{local representations} amenable 
+based on the LDA and GW, to \textit{local representations} amenable 
 to a description in terms of interatomic bonds and 
 recursion type calculations has been initiated in this chapter. We
 will put it into practice in the next.
