@@ -2210,21 +2210,23 @@ force is recorded. The necessary implications of the observed reaction
 for the microscopic properties are then deduced.
 
 \section{Chains and Moments}
-Before concluding this chapter there are a few 
-pictorial and heuristic comments on the relation of 
-the recursion method to other methods.
+Before concluding this chapter we may make a few 
+comments on the relation of the recursion techniques 
+to other methods.
 
-The recursion method is a numerically stable way of producing 
-the eigenvalue spectrum associated with a given Hamiltonian and 
-gives access to accurate integrals over this spectrum. 
+The recursion method is a numerically stable way of obtaining information 
+about the distribution of eigenvalues associated with a given Hamiltonian. 
+The explicit formulation of the results as a continued fraction 
+gives us access to accurate integrals over the spectrum. 
 
-The mathematics of the technique are uniquely consistent
+Furthermore, the mathematics of the technique are uniquely consistent
 with the physical idea of an electron exploring
 the space around it as it diffuses according to Schr\"odinger's
 equation. This diffusion process is guided by the interactions present in the Hamiltonian.
-These excursions begin from some prepared localized starting state
+In practice we initiate these excursions from some prepared localized starting state, e.g. 
+we put the electron in an orbital localized on a particular atom,
 and as the electron (or phonon, or magnon, etc...) hops from atom to atom
-the spectral properties of the system come into sharper relief.
+the spectral properties of the system come into sharper and sharper relief.
 
 The closest relation to the recursion method is the method of moments
 \cite{cyrotlackmann67, ducastelle70,ducastelle71}. Cyrot-Lackmann first applied
@@ -2233,7 +2235,7 @@ states in liquid metals\cite{cyrotlackmann67}. This work was then extended
 to incorporate d electrons and investigate cohesive energies and stacking
 fault energies in crystalline structures. David Pettifor placed the moment's 
 theorem as a central section of his textbook\cite{pettifor94} under the heading
-``The Origin of Structural Trends: a moments theorem" which gives some indication
+``The Origin of Structural Trends: A Moments Theorem" which gives some indication
 of the importance he accorded these ideas.
 
 The method can be directly obtained by expanding the 
@@ -2272,14 +2274,69 @@ the matrix element can be written as a over closed paths of length $r$:
 0ijk...10 is a closed circuit through the lattice. Any circuit that takes hops between sites 
 that aren't connected by the Hamiltonian won't make any contribution to the matrix element
 in Eq.~\ref{eq:circuit}. A detailed discussion of the application of the recursion method 
-to a surface atom in Cubium is presented in Ref.~\cite{haydock75} where a number of the various
-paths emanating from the starting atom are presented. 
+to a surface atom in an idealized cubic lattic is presented in Ref.~\cite{haydock75} 
+where a number of the various paths emanating from the starting atom are presented. 
 
-The relation between the Green's function and path integral formulations is developed
-in Feynman and Hibbs \cite{feynmanhibbs64}. This connection suggests it may be fruitful to apply the recursion
-techniques to working out thermodynamic properties in analogy with the imaginary time
-path propagation techniques. Not much has been done in this direction to the author's 
-knowledge.
+\section{Path Integrals}
+There is another (surprisingly direct) connection between the Green's function and 
+the path integral formulation of Quantum Mechanics.
+This connection is developed in Feynman and Hibbs \cite{feynmanhibbs64}. It is worth
+reminding ourselves of the relationship because it provides an excellent mechanical
+correspondence that can guide physical intuition.
+
+Classically the action is defined as an integral over the Lagrangian:
+%
+\begin{equation}
+S=\int_{t_{a}}^{t_b} L(\dot{x}, x,t) dt \qquad L = m\dot{x}^{2}-V(x,t)
+\end{equation}
+%
+
+Feynman then defines the probability of a particle propagating from $a$ to $b$ as:
+%
+\begin{equation}
+G(b,a) = \int_{a}^{b} e^{(i/\hbar)S[b,a]} \mathcal{D}x(t),
+\end{equation}
+%
+where $\mathcal{D}x(t)$ indicates the integral is to be taken over every path from a to b.
+Depending on the path taken the contribution of the exponential to the integral will be proportional
+to the magnitude of the action S: the paths of least action will give larger contributions 
+to the total integral.
+
+Feynman exploits the following equality:
+%
+\begin{equation}
+\label{eq:picompose}
+S[2,1] = S[2,3] + S[3,1],
+\end{equation}
+%
+that is we can compose a path between two space time points out of intermediate paths.
+Because Eq.~\ref{eq:picompose} is valid for any choice of space-time points $1,2,3$
+we can choose infinitesimally spaced points in time, $t$ and $t+\epsilon$, 
+
+From these consideration we can work out a differential equation governing
+$G(b,a)$. This differential equation turns out to be the Schr\"odinger equation.
+Given a full basis set we can expand G(b,a):
+The probability of a particle propagating from a space-time point $a$ to a space time point
+$b$ is then written in terms of the eigenstates and eigen energies of the appropriate Hamiltonian:
+%
+\begin{equation}
+G(b,a) = \sum_{n} \phi_{n}(b)\phi_{n}^{*}(a)e^{iE(t_b - t_a)} \qquad t_b>t_a
+\end{equation}
+%
+This formulation will be revisted when we discuss the $GW$ approximation in Chapter~\ref{chap:GW}.
+
+The equivalence of Eq.~\ref{eq:greenschro} and Eq.~\ref{eq:PI} leads us to the fundamental relationship:
+%
+\begin{equation}
+\label{eq:PI}
+	\int_{a}^{b} e^{(i/\hbar)S[b,a]} \mathcal{D}x(t) = \sum_{n} \phi_{n}(b)\phi_{n}^{*}(a)e^{iE(t_b - t_a)} = G(b,a)
+\end{equation}
+%
+To the author it appears there is a great deal of scope for further investigation of Eq.~\ref{eq:PI}. 
+It suggests a natural harmony between some of the complex mechanical and thermodynamic problems
+which find a natural expression in terms of path integrals and the efficient recursive
+strategies we can develop for performing calculations: continued fraction expansions of
+path integrals would be a promising avenue of research.
 
 \section{Future Work}
 The references provided here and in Vol. 35 demonstrate the impact of
