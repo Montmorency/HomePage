@@ -1591,7 +1591,9 @@ effective potential in the context of GW calculations see Ref.~\cite{sohrab10}.
 %and {\emph maximal} with respect to the potential. See Ismail-Beigi\cite{sohrab10} and 
 
 Before we conclude this chapter we will introduce some diagrammatic representations introduced
-by Methfessel which may help the reader picture what we have discussed\cite{methfessel95}:
+by Methfessel which may help the reader picture what we have discussed\cite{methfessel95}.
+We will modify his diagrams so that we can show the importance of incorporating some knowledge of 
+the materials dielectric properties into a calculation:
 %
 \begin{displaymath} 
 \xymatrixcolsep{4mm}
@@ -1599,15 +1601,16 @@ by Methfessel which may help the reader picture what we have discussed\cite{meth
 	&             &                     \cdots \ar[r]     &       n^{2}_{m+1} \atop [n^{1}_{m+1} + \chi(V^{1}_{m+1} - V^{1}_{m})] \ar[r]  & V^{2}_{m+1} \ar[r] & \cdots & &\\
 	&              \cdots \ar[r] &  n^{1}_{m} \atop  [n^{0}_{m} + \chi(V^{0}_{m} - V^{0}_{m-1})] \ar[r]  & V^{1}_{m} \ar[r] \ar[u] & n^{1}_{m+1} \ar[ul] \ar[r] & V^{1}_{m+1} \ar[ull] \ar[r] & \cdots &    \\
 \cdots \ar[r] & n^{0}_{m-1} \ar[r] & V^{0}_{m-1} \ar[u] \ar[r] & n^{0}_{m}\ar[ul] \ar[r] & V^{0}_{m} \ar[ull] \ar[r] & \cdots &  & \\
+%
 }
 \end{displaymath}
 %
-These diagrams encode the iterative solution of the Kohn-Sham system: one generates a density, then
-a new potential from that density, and a new density based on the solution to the Kohn-Sham non-interacting
-system according to that potential. The numeral in the subscript increases linearly with each step (in this way we dispense with the
+These diagrams encode the iterative solution of the Kohn-Sham system: a density is generated, then
+a new potential from that density, and then a new density based on the Kohn-Sham non-interacting electronic states
+orbiting in that potential. The numeral in the subscript increases linearly with each step (in this way we dispense with the
 `in-out' notation for the density either side of a given potential). The numeral in the superscript 
 denotes the `stage of mixing'.
-Each successive row, counting from the bottom row up, represents a new density obtained from the previous iterates 
+Each successive row, counting from the bottom row up, represents a new density obtained from the previous density and potentials, 
 according to some mixing scheme. 
 
 The quantity $\chi$ discussed earlier can be exploited in 
@@ -1649,11 +1652,16 @@ a basis for our recursion calculations.
 \noindent
 This chapter began by introducing the Hohenberg-Kohn theorem. 
 We then discussed the practical means of performing
-ab initio calculations using the Kohn-Sham system and the LDA was discussed,
-as well as improvements to this approach based on the $GW$ approximation.
-The Harris-Foulkes discussion provided the justification for a mapping procedure
-of the ab initio data onto a restricted space more amenable to calculation
-and human consideration. Finally we discussed the full generality of 
+ab initio calculations using the Kohn-Sham system and the local density
+approximation. The $GW$ approximation was introduced as a way of formally
+improving the density functional model according to a physically motivated
+perturbation expansion.
+
+The Harris-Foulkes discussion provides the justification for a mapping procedure
+of ab initio data onto a restricted space more amenable to recursive
+calculations.
+
+Finally we discussed some interesting properties of total 
 energy functionals. The hope is that the reader will see there is a wider
 scope for interpreting total energy functionals than simply iterating the Kohn-Sham LDA
 system to self-consistency over and over again. The input density, output density, 
@@ -1661,7 +1669,7 @@ the effective potential, and the dielectric properties of the system are all
 intimately related to each other.
 
 For a given configuration of atoms it is now commonplace to send a 
-DFT or GW calculation off to a computing machine and within a few minutes, hours, or 
+DFT or $GW$ calculation off to a computing machine and within a few minutes, hours, or 
 days (depending on the size of the system) come back to directories 
 full of eigenvalues, charge densities, wavefunctions, forces, and total energies.
 The formal transformation from these  \textit{global}, total energy methods 
