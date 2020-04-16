@@ -260,7 +260,10 @@ Intuitively the rule is the following: where a little charge has accumulated
 the LDA contribution of this charge will lower the total energy. In the self-consistent
 scheme this means at the next iteration it may well be favourable to add a little more
 charge to that region, and in this way, the LDA encourages the pile up of electronic charge
-in bonds. It is sometimes said that the LDA tends to overbind systems.
+in bonds. If we are representing our wavefunctions with planewaves we can expect that 
+accumulating charge in a small region of space will require manipulating high energy plane waves,
+i.e. $|\G|$ very large, this will be penalized by the kinetic energy term in the Hamiltonian. The
+trick is to find the right balance as it turns out the LDA tends to overbind systems.
 
 A number of parametrizations for the function $\epsilon_{xc}(n(\r))$ exist.
 The earliest was given by Wigner\cite{wigner34a} who provided an interpolation formula

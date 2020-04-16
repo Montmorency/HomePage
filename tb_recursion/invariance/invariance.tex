@@ -72,7 +72,7 @@ a particular point are exponentially insensitive to the cavity walls.
 This analogy has been developed by Friedel [1954 Adv. Phys. 3 446] where
 the substition is electromagnetic modes for electronic wavefunctions and
 the probability density for finding an electron at a given point
-with a given energy replaces the local density of normal modes.\cite{annett94}
+with a given energy replaces the local density of normal modes\cite{annett94}.
 
 The analogy can be seen by writing the density of states,
 and the local density of states (for each spin direction) as:
@@ -854,9 +854,9 @@ for the square root and analytic terminator (TermDOS) schemes and \texttt{DENQD}
 for the QuadDOS termination scheme in the Cambridge Recursion Library 
 \cite{nex84,haydock84,haydock85}.
 The asymptotic behaviour of the continued fraction coefficients 
-are affected by the presence of singularities
-in the spectrum: e.g. band gaps, delta functions near the band edges,
-the band edges themselves, and Van Hove singularities.
+are determined by the presence, nature and position of singularities
+in the spectrum: band gaps, delta functions,
+band edges themselves, and Van Hove singularities.
 There is considerable literature on the topic of termination schemes 
 and the analytic structure of the asymptotic coefficients:
 \cite{hodges77,bylander80,turchi82,haydock84,luchini87,glanville88,
@@ -1060,6 +1060,8 @@ of the electronic structure at surfaces. These advances mean that the
 recursion techniques described in Refs.~\cite{burke76, haydock79, haydock81} 
 might be revisited with potentially profitable effect. 
 
+The interactions and forces of atoms adhered to surfaces are directly 
+observable experimentally see Fink~\cite{fink84}.
 For applications of orbital peeling to defects and the 
 computation of interaction energies and variations in the charge density
 see Refs.\cite{gibson93,gibson94}. However that work partially relies 
@@ -1103,6 +1105,7 @@ G_{AB}(E) = \frac{1}{2}[G_{++}(E)-G_{--}(E)].
 \end{equation}
 
 \subsection{The Tight Binding Bond Model}
+\label{sec:tbbm}
 To see how the off-diagonal elements contribute to the force on an 
 atom we follow Sec. 2.4 of Sutton \cite{sutton88} and Ohta \cite{ohta87}.
 First we reproduce their expression for the bond energy:
@@ -2205,9 +2208,44 @@ An experiment on a material takes the form of some kind of probe. In many cases 
 a photon or an electron that is launched in the direction of a sample. The scattering 
 of the probe is observed and the properties of the material are inferred.
 In other experiments a material is stretched or twisted and the 
-reaction of the material to the introduction of this external
-force is recorded. The necessary implications of the observed reaction
-for the microscopic properties are then deduced.
+reaction of the material is recorded.
+Based on the observed reactions
+we can make inferences about the microscopic properties of the material.
+For engineering purposes we would like to invert this procedure and deduce
+macroscopic reactions to perturbations given a model for microscopic configuration.
+
+In any case we would like a method for calculating the response of our material system
+to a probe and perturbation theory is ideally suited for this. In the language of quantum
+mechanics we would like to calculate the expectation values associated with the operator 
+describing a probe. The algebra of recursive perturbation theory has been worked out
+in Ref.\cite{haydock77} and, of course, Vol.~35\ref{vol35} (pg.~281). Some applications
+of perturbation theory to calculating operator expectations values was made in Ref.~\cite{mclean77,foulkes86}.
+Haydock applied the perturbation theory of chain models to study the electronic properties of disordered materials and 
+the phenomenon of Anderson localization (see Sutton \cite{sutton} for a description of this phenomenon),
+see Refs.~\cite{haydock78,haydock81b,haydock81c,haydock86}. 
+
+In this section we will mention just enough about perturbation theory and the recursion method so that
+the reader can use the \texttt{RECPER} routine with some confidence for performing calculations. 
+
+The Green's function we are looking to obtain is:
+%
+\begin{equation}
+G(E) = \left[E - \hat{H} - \lambda \hat{V}\right]^{-1},
+\end{equation}
+%
+where $\hat{V}$ is a local representation of the perturbation multiplied by some scalar $\lambda$
+that determines the strength of the perturbation. 
+If $\hat{V}$ breaks an underlying symmetry of the Hamiltonian the unperturbed chain sequence will
+terminate.
+
+We saw how to compute off-diagonal elements of the Green's function in Sec.~\ref{sec:tbbm} and
+we shall return to this in Chapter~\ref{chap:metallurgy} when we look more closely at vibrational
+and elastic properties of metals. As mentioned the full derivation of the perturbation method has been given
+in Vol.~35 and Ref.~\cite{haydock77} and there is little need to reproduce
+the details here. What we will include is the discussion of the calculation of matrix elements in the 
+recursion method. This is accomplished using the perturbation theory and is part of any well rounded recursors toolkit.
+The formalism appeared a few years after Vol.~\35 and is due to Foulkes and Haydock \cite{foulkes86} so it 
+is worth folding it in to the present discussion.
 
 \section{Chains and Moments}
 Before concluding this chapter we may make a few 
