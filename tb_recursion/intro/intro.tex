@@ -1,62 +1,100 @@
 \chapter{Introduction}
 \section{Electronic Structure for Materials Science}
-In 1987 Henry Ehrenreich published an article in Science called
+In 1987, Henry Ehrenreich, 
+editor of \textit{Solid State Physics}, the annual review documenting major advances in
+solid state science and technology, published an article in Science magazine titled 
 ``Electronic Theory for Materials Science"\cite{ehrenreich87}. The article begins
 with a bold statement:
-
+%
 \begin{quote}
 Theoretical Materials Science remains to be invented as a discipline, and for good reason.
 \end{quote}
-
-One of the reasons for this delayed maturity is that materials processing, 
-historically, was a craft.
+%
+One of the reasons he supplies for this delayed maturity is that materials engineering, 
+and its associated science, was, historically, a craft.
 
 It will serve present purposes to consider what exactly constitutes a craft. 
-There is some sense that the word craft in its common usage 
-is to be distinguished from both science and art.
+The word craft in its common usage is to be distinguished from both science and art.
 The word occupies a space somewhere between those two realms. 
 A craft may bear an element of science in its application. 
 The craftsman may possess a set of precision tools or 
-established practices. However the process remains fundamentally shaped by 
+established practices; however, the process remains fundamentally shaped by 
 the individual's choices. These choices are necessarily personal,
 and it is in the course of making these choices that aspects 
-of the craftsman's character is conferred to the final product. 
+of the craftsman's character is conferred to the final product. This
+personal aspect contains the art.
 
-The rise of automation and mechanization means that the 
-number of products bearing the mark of an individual craftsman's 
-character is diminished. The mechanical homogeneity of the manufacturing process
-become the distinguishing feature of the product. Where bespoke solutions are 
-required one may still turn to the blacksmith and masons, who have the knowledge 
-required to render from raw materials a composite product. In every case
-whether individually or commercially manufactured it is the subtle
-variations in the microstructure of a material which determines its 
+The techniques developed by craftsmen over the centuries to manipulate a
+materials properties transforming wrought iron to steel, glass to stained glass, 
+heavy ceramics or translucent porcelain, involve controlling variations in the microstructure of a material. 
+The variations that are effected are in the arrangement of the fundamental constituents of matter:
+that is, the arrangement of the atoms of which it is composed. These 
+arrangements determine the material's ultimate 
 strength, the way it reflects light, the way it conducts electricity, 
 whether it flexes or snaps, whether it is hard or soft or magnetic.
 
-In the realm of materials as craft we may take the example of Roman concrete.
-%
-Roman engineers learned to manufacture concrete from a 
+Yet the notion of atoms and a mathematical theory of their interaction comes relatively
+recently on the historical time scale. This recency suggests that the application of 
+art, manifested through accident, intuition, and invention, has greatly determined the history
+of materials manufacturing.
+
+Let us take take some examples from the Romans and the Greeks. 
+First the Romans. By the first century BC Roman engineers had 
+learned to manufacture concrete from a 
 particular mixture of volcanic sand called pozzolana,
-taking its name from its point of extracion near Pozzuoli near Napoli. 
+which took its name from its origin by Pozzuoli near Napoli. 
 %
 This pozzolana was mixed with quicklime, an aggregate, and seawater,
-to produce a concrete of striking quality: 
+to produce a concrete of striking quality. One that was
 particularly resistant to degradation in the presence of moisture.
 This concrete was manufactured without any modern knowledge of microstructure 
 and chemistry. Yet the people producing it must have been manipulating in their
-mind some model of the underlying composition of the material and the effect of 
-varying the proportions of the concretes constituents. 
+mind some mental model of the underlying composition to tune the desired properties.
 %
 %The pantheon today remains standing built with the same concrete poured centuries before.
 %Is this true?
 %
-\footnote{For a description of Roman concrete and its use at the port at Pouzol see: Mariano Vasi, 
-Itineraire Instructif de Rome à Naples, ou, Description Generale des Monumens Anciens et Modernes, 
-Rome: [Mariano Vasi]. 1813, de Beer Itb 1815 V. For a broad perspective on metallurgical developments
-see Paxton's article in Physics World \cite{paxton92}.} 
+%\footnote{For a description of Roman concrete and its use at the port at Pouzol see: Mariano Vasi, 
+%Itineraire Instructif de Rome à Naples, ou, Description Generale des Monumens Anciens et Modernes, 
+%Rome: [Mariano Vasi]. 1813, de Beer Itb 1815 V. For a broad perspective on metallurgical developments
+%see Paxton's article in Physics World \cite{paxton92}.} 
 
-This concrete was manufactured without any modern knowledge of microstructure and 
-chemistry.
+Turning to the Greeks, in Ref.~\cite{paxton92} Paxton has suggested we 
+look back even further to find metallurgical craftsmanship documented in the Odyssey:
+%
+\begin{quote}
+        Seizing the olive pole, they drove its sharpened end into the Cyclops' eye...
+        [which] hissed round the olive stake in the same way that an axe or adze hisses
+        when a smith plunges it into cold water to quench and strengthen the iron.
+        \textit{Odyssey IX 393 tr. E V Rieu}
+\end{quote}
+%
+We instantly recognize the Greeks of two and one half millenia ago 
+as masters of the martensitic transition that confers
+to iron the hardness one desires of an axe. Yet their technique relies on a
+transformation in crystalline structure the mechanism for which is not determined
+in a fully satisfactory way to this day.
+
+%There is further materials lore. The cold work hardened steel of the American railways 
+%was rumoured to have been discovered when a labourer in one of Andrew Carnegie's factories 
+%dropped his crowbar into a rolling press. 
+
+In these notes it is our hope to present a useful synthesis of art and science that may aid the 
+design of materials in the 21st century. We wish to have some scientific theory that enhances our
+understanding of the properties of `classical' materials like concrete and steel 
+as well as modern electronics like semiconductors and superconductors.
+
+Starting from Ehrenreich's observation we will identify
+the necessary ingredients of a useful theoretical science of materials. 
+As we shall see, there are four
+elements to this identification that will help us determine what 
+we are looking for in a theory. 
+
+Having determined what we desire of our scientific theory 
+we will then propose a suitable restricted framework for performing calculations of
+sufficient generality and accuracy to investigate the properties of materials
+that interest us.
+
 %See a history of concrete and a history of energy
 %\footnote{For a description of Roman concrete and its use at the port at Pouzol see: Mariano Vasi, 
 %Itineraire Instructif de Rome à Naples, ou, Description Generale des Monumens Anciens et Modernes, 
@@ -71,15 +109,10 @@ chemistry.
 %Again the theoretical model they worked with 
 %lacked the modern conception of atomic composition 
 %and microstructure.
-%
-
-Their expertise was developed based on part trial and error, 
-part common sense, and part notion or, in a word, craft.
-
-The underlying picture a theoretical materials scientist manipulates today
-is a world composed of atoms interacting via electronic forces,
-repelling each other when squeezed together, attracting each other at some
-distance apart. 
+%The underlying picture a theoretical materials scientist manipulates today
+%is a world composed of atoms interacting via electronic forces,
+%repelling each other when squeezed together, attracting each other at some
+%distance apart. 
 
 \subsection{First Principles}
 A comprehensive quantum theory describing the way atoms bind, the forces acting on them, 
@@ -107,35 +140,40 @@ the expectation value of every experimental
 observable of the system from that information.
 \end{quote}
 
-The philosophy bears a resemblance to the classical idea
-that so long as the position and momentum of all particles 
-is specified with arbitrary accuracy their subsequent 
-trajectories could be predicted. 
+The ambitious scope of this hypothesis bears a resemblance 
+to the ambitious scope of classical mechanics. In particular the hope 
+that so long as the position and momentum of all the particles 
+in a system are specified to arbitrary accuracy their subsequent 
+trajectories are determined to arbitrary accuracy. 
 
 Just as the classical ideas of complete mechanical determinism were
 overthrown by the quantum theory I strongly suspect this
-basic contention of {\it ab initio modelling} 
-will be severely qualified itself. Fortunately, the 
-state of {\it ab initio} modelling is such a long, long, way from being
-able to predict observables from atomic position and number
-in a truly non ad hoc fashion that this need not concern us. 
-Only when that state has been attained
-will some new ideas come along that mean 
+basic contention of {\it ab initio} modelling will be severely qualified itself. 
+Fortunately, the state of {\it ab initio} modelling is such a long, long, way from being
+able to predict experimental observables from atomic position and number
+{\it in a truly non ad hoc fashion} that this suspicion need not concern us. 
+Only when ab initio modelling has progressed significantly from its current status 
+is it likely that some new ideas will come along that mean 
 we have to start all over again. It is to this end we strive.
 
 The extent to which materials science has evolved to the point of being 
-a truly 'first principles' theory is one of the themes of 
-these notes \cite{finnis12, ismailbeigi2017}.
+a 'first principles' theory is one of the themes of 
+this chapter. For contemporary reviews of the field see Refs.~\cite{finnis12, ismailbeigi2017}.
 %
 %Tracking the evolution of theoretical materials science may also allow 
 %researchers to identify the avenues of research that are inefficient, 
 %that are potentially obscuring knowledge, and convoluting 
 %what is already understood. 
 %
-Ehrenreich's survey of the field from 30 years ago will provide the framework 
-for charting the evolution of this field.
-He identified four points that either characterized the state 
-of the field of theoretical material science at the time or constituted essential principles 
+
+For the moment we will stick with Ehrenreich's survey of the field from 30 years ago. 
+This will provide the framework 
+for charting the evolution of this fascinating field and sharpen our ideas about 
+what we would like to develop our `theory of materials science for the craftsman'.
+
+Ehrenreich identified four points that either characterized the state 
+of the field of materials science, at the time he was writing, 
+or constituted some essential principle 
 that a satisfactory theory of materials must possess:
 %
 \begin{enumerate}[i)]
@@ -149,10 +187,11 @@ that a satisfactory theory of materials must possess:
       is a crucial ingredient of a credible theoretical framework.
 \end{enumerate}
 %
-Unpacking the content of these four statements reveals where 
-materials modelling has been successful, where it is lacking,
-and what is required so that theoretical analysis becomes a driving
-force in the development and manufacturing of novel materials.
+Unpacking the content of these four statements will help reveal where 
+materials modelling has been successful and where it is lacking.
+We will take each of these points in turn, but first we will consider 
+the relevant lengt and time scales we need to transit to arrive at a macroscopich
+theory of materials.
 
 \subsection{Scales of Materials Modelling}
 What are the scales involved in materials modelling?
@@ -160,9 +199,10 @@ On what length scale is it important to treat the interactions
 using quantum mechanics? What are the time scales? 
 What is a typical number of particles?
 
-To begin we consider the typical number of particles that are interacting.
-Chemists arrived at the mol as a convenient unit for describing
-quantities of atoms. A mol is on the order of $10^{23}$ atoms with
+To begin we consider the typical number of particles 
+that are interacting in a macroscopic ensemble.
+To quantify this number chemists have arrived at the mol as a convenient unit. 
+A mol is on the order of $10^{23}$ atoms with
 the precise number called the Avogadro Constant. While not strictly relevant
 it is worth mentioning that Avogadro possesses one of the most
 interesting scientific profile pictures. This picture is, quite rightly, reproduced
@@ -176,126 +216,155 @@ in Fig.~\ref{fig:avogadro}.
 \caption{Count Amadeo Avogadro.}
 \end{figure}
 %
-$10^{23}$ is by everyday standards an incredibly large number. 
-It should go without saying, but often doesn't, that setting 
-up a single system of equations to describe the motion of and mutual 
-interactions of each individual particle in such an ensemble is not
-a practical or meaningful endeavour, nor is it even necessary.
-For such large aggregates of particles their mechanical behaviour seems 
-well described by collective laws like ideal gas laws or continuum mechanics. 
-So at what stage does it become necessary to describe the properties of the material
-using quantum mechanics? 
+%$10^{23}$ is by everyday standards an incredibly large number. 
+%It should go without saying, but often doesn't, that setting 
+%up a single system of equations to describe the motion of and mutual 
+%interactions of each individual particle in such an ensemble is not
+%a practical or meaningful endeavour.
+%For such large aggregates of particles their mechanical behaviour is
+%described by collective systems of equations: e.g. ideal gas laws 
+%and continuum mechanics. 
+%At what stage does it become necessary to describe the properties of the material
+%using quantum mechanics? 
 
-In order to be more concrete about things let us consider a macroscopic specimen 
-to be on the order of 200 nm$^{3}$ of material. A sample of material of this size 
-is approaching the wavelength of visible light and could be
-resolved with an optical microscope (using some focusing tricks). 
-Assuming an atomic spacing of 2 tenths 
-of a nanometer a dynamical simulation of around $10^{9}$ atoms 
-done using quantum mechanics could be considered a quantum mechanical 
-simulation of a macroscopic system. $10^{9}$, one billion, is a number
-much more familiar than $10^{23}$.
+In order to be more `concrete' let us consider Fig~\ref{fig:britannia} which depict the two
+extreme ends of the length scales, angstroms to meters, and the time scales, femtoseconds to years,
+that we wish to consider.
+%
+\begin{figure}
+\begin{center}
+\includegraphics[scale=1.0]{./intro/IronBritanniaFig.png}
+\end{center}
+\caption{On the left we have a diagram of a vacancy in body centered cubic iron. That is one iron 
+         atom removed from its usual place in the crystal lattice, and two hydrogen 
+         atoms placed in the vicinity of the vacancy. This example is chosen because the influence of
+         hydrogen on the properties of metals is a problem of enduring interest in materials science.
+         On the right we have a cross section view of the Britannia Bridge which is a good example of a 19th 
+         century bridge with malleable iron-plate girders in I sections.\label{fig:britannia}
 
-To give an idea of the time required to perform such a simulation 
-we may give an example of what, in the literature, would be considered 
-a numerically well converged quantum simulation of sufficient accuracy. 
-We will leave the notions of well-converged and accuracy intentionally vague
-at this point suggesting only that were the results of this calculation
-to be submitted to a referee they would not object outright to their
-description as converged and accurate.
+\end{figure}
 
-Simulating the forces on 250 quantum Fe atoms arranged in a particular crystal structure
-required 4 hours of computing time on the local computing cluster (96 nodes).
-There are 2000 electrons in the simulation which must be allowed
-to rearrange themselves so they find their energetic minimum. 
-%If computer technology continues developing at the same rate it has
-%over the previous 30 years than within 60 years, with 
-%no developements in the numerical techniques, 
-%quantum mechanical simulations, to the same level 
-%of accuracy, of millions of atoms should be feasible within a 
-%similar amount of computing time. 
+%to be on the order of 200 nm$^{3}$ of material. A sample of material of this size 
+%is approaching the wavelength of visible light and could be
+%resolved with an optical microscope (using some focusing tricks). 
+%Assuming an atomic spacing of 2 tenths 
+%of a nanometer a dynamical simulation of around $10^{9}$ atoms 
+%done using quantum mechanics could be considered a quantum mechanical 
+%simulation of a macroscopic system. $10^{9}$, one billion, is a number
+%much more familiar than $10^{23}$.
+
+%To give an idea of the time required to perform such a simulation 
+%we may give an example of what, in the literature, would be considered 
+%a numerically well converged quantum simulation of sufficient accuracy. 
+%We will leave the notions of well-converged and accuracy intentionally vague
+%at this point suggesting only that were the results of this calculation
+%to be submitted to a referee they would not object outright to their
+%description as converged and accurate.
+
+The system on the right, the macroscopic engineering problem, a train, a river, a bridge, is what we
+are interested in. We wish to connect the problem to the atomistic regime by asking questions about
+what materials are ideal for our bridge. What can we construct out of stone and wrought iron, or steel,
+or rubber? How much will it bend when we run the train over the bridge? How will these materials wear over time?
+To see how mathematicians and engineers have grappled with these problems Timoshenko's 
+History of Materials is the definitive overview. The Young's moduli and elastic tensors, the fatigue properties,
+which enter the civil engineers calculations are what we wish to be able to compute from first principles
+this brings us to the system on the left of Fig.~\ref{fig:britannia}. This panel is representative of the domain 
+where quantum mechanics dominates and first principles can say something interesting. If we are to build
+our bridge out of iron how will the cracks and defects vacancies and dislocations present in the crystal
+respond to stresses? To exposure to new elements like oxygen and hydrogen? What are the tensile properties?
+We have many questions.
+
+To begin answering them we would like to compute the energy associated with the particular 
+arrangement of atoms and the forces on the atoms and from this data start finding expressions
+for the system's observables. These expression will feed into the macroscopic description of our system.
+
+For reference, at the time of writing one of the authors performed just such a calculation. Obtaining  
+the forces on the 249 iron atoms and 2 hydrogens arranged as depicted in the left panel of 
+Fig.~\ref{fig:britannia} required 4 hours of computing time on 96 quadcore processors.
+This ab initio calculation requires allowing about two thousand independently minded electrons
+to rearrange themselves into their energetic minimum. We will discuss the relevant
+theory for these calculations in Chapter\ref{chap:GW}. Suffice to say that the accessibility
+of ab initio calculations has improved greatly since Ehrenreich's review.
+However we still have a very long way to go in order to deduce macroscopic material properties.
 
 A single iteration of these equations will not provide us with 
-much information. If it is desired to watch the collective 
-motion of the atoms these calculations must be repeated with
-the atomic positions updated according to the mechanical model chosen.
-To resolve the vibrations of individual atoms  
-time steps between iterations of a femtosecond, ($(10^{-15})$s),
-are required. So every four hours of computing time yields $10^{15}$s
-of atomic evolution.
+much information. To resolve the vibrations of the individual atoms  
+requires repeated calculations of the forces and propagation of the atomic coordinates
+for time steps on the order of a femtosecond, ($(10^{-15})$s).
+Put another way every four hours of computing time yields $10^{-15}$s
+of atomic motion.
 
 To see the atoms do anything except complete a few oscillations around
 their equilibrium position, i.e., if we wish to see something more interesting
-in the simulation, like a dislocation
-move through the crystal, a crack in the material begin to form, or
+in the simulation, like watch the vacancy
+move through the crystal, or a crack in the material begin to form, or
 molecules adhered to a surface migrate and begin assembling something new,
-would require thousands of femtoseconds, to arrive at a picosecond of data ($(10^{-12})$s).
-For these sorts of computations we must reserve 5 months computing time on machine.
-Another 12 orders of magnitude efficiency would remain to be found to 
-simulate the motion of particles on time scales even approaching 
-everyday experience.
+this would require thousands of thousands of femtoseconds i.e. a few nanoseconds ($10^{-9}$s).
+For these sorts of computations we must now reserve five months computing time on our machine.
 
-These considerations are artificial for two important reasons. 
-The first is I strongly suspect computational power will not continue 
-developing at the rate seen over the previous 30 years. 
-The second is that even if computational resources did continue growing 
-at an equivalent rate; simulations of this nature would be of little value.
+Beyond the expense there is an even more worrying objection to carrying out this work. That is that 
+each of these simulations also only samples an infinitesimal region of phase space
+and we must repeat the simulation for multiple trajectories to accumulate useful statistics.
+Furthermore, we are interested in the properties of iron over the span of the river and the 
+time span of the bridge which may be 30 years. Running these simulations begins to take on
+the feeling of a symphony in the fashion of John Cage where one note is played for a thousand years.
+%like a john cage symphony
 
-They would be of little value because were 
-a simulation of this magnitude to be performed the
-job of the theoretical material scientist would change. 
-The task would now become the design of algorithms to identify 
-processes of interest that occur within the data generated by 
-these giant simulations. 
-However, if the simulations are correct, these should correspond 
-to the interesting processes observed in nature, which is why we wanted to
-perform the simulations in the first place. We would be in the situation
-of having done an enormous number of calculations at great computational
-expense and we would be in exactly 
-the same place we began. 
+The point we are labouring is there is little hope of arriving at any 
+kind of meaningful understanding of materials properties by 
+simulating femotsecond by femtosecond the evolution of the atomistic 
+structure of a material.
 
-We would not have a theory that captures the mechanisms
-underlying the behaviour of the system in a condensed mathematical notation. Nor 
-would we would have an obvious way of inferring the likely experimental
-observables for a homologous series of the material in question.
+It is an unfortunate fact that massive 
+simulations generate such a quantity 
+of data they can obscure reasoning and consume 
+resources without providing insight or general principles. 
+By performing them we are not working towards a theory that captures the mechanisms
+underlying the behaviour of material systems in a condensed mathematical notation. Nor 
+do we obtain information about the experimental 
+observables for a homologous series.
 
-The objective of {\it ab initio} modeling is to extract meaningful information
-about the essential parameters governing trends and characteristic properties 
-of different classes of materials. Massive simulations generate such a quantity 
-of data they can obscure reasoning and consume resources without providing insight 
-and general principles. This observation stems directly from one of the
-most fundamental tools for materials research: the periodic table. The 
-organization of the table into groups and periods captures a huge range 
-of phenomenon and possesses predictive power with little more computational
-work than counting positive integers and a clever mode of tabulation.
+The point can be made more directly. As an engineer tasked with designing a 
+new material would you prefer a computer with a computer package for performing
+ab initio calculations or a periodic table?
+
+A chemist would certainly answer the periodic table. By organising the elements
+into groups and periods a huge range 
+of phenomena can be predicted with little more computational
+work than counting positive integers.
 The field of chemistry has made good use of that single table to guide
 discovery and propose mechanisms.
 
-Given that studying trends in homologous materials 
-is a necessary component of a satisfactory
-theory computer simulations have to be repeated 
-over and over again, for every element in a group,
+We are now arriving at the required synthesis. We would like a 
+formalism that does not require the computational expense of 
+a full ab initio calculation but that gives us the breadth of insight
+of the periodic table with the opportunity of quantifying deductions.
+The precision of these deduction can be refined with ab initio calculation
+but the theory, initially, should operate on a higher level.
+The required formalism should also lend itself to 
+studying trends in homologous materials.  
+Which is the final, and in some ways, most important point of Ehrenreich's program.
+
+It is this requirement which should allow us to deduce the properties
+for a class of material based on the groups of its elements, 
 for each compound in a series, for each different structural conformation,
-for differing alloy concentrations and so on. The ``one-off" character of 
-numerical calculations makes them unsuitable as the basis for an actual 
+for differing alloy concentrations and so on. 
+
+We wish to eliminate the disposable``one-off" character of 
+numerical calculations and seek a more permanent basis for an actual 
 theory of the measurable properties of homologous classes of materials.
 
-There is another strange aspect to the properties of materials.
-That is that many properties of materials can be described by a scalar, 
-like Young's modulus, Poisson ratios, or small tensors to 
-describe the elasticity. 
-Electronic properties can be described using a single number 
-like the dielectric constant of a material.
-All these properties of systems are made up of many tiny degrees of freedom.
-yet at some point all these variables merge into macroscopic parameters.
-A satisfactory ab initio theory must capture this notion of {\it retraction on to} of
-the multidimensional wavefunction in a many electron material onto easily manipulated
-scalars or few indiced tensors.
+We are getting closer to a specification for our theoretical framework. 
+Before continuing its development let us turn to how ab initio calculations have been 
+transformed by the evolution of digital computers. 
 
-It may sound as if computers are coming in for undue criticism. Not so! They
-are the essential tool for theoretical materials science. What is being criticised
-is the hypothetical user who would initiate a massive program of calculations without a
-plan to harness the data generated so that the calculation need never be repeated.
+\section{Digital Computation}
+\label{sec:riseofcomp}
+
+\begin{itemize}
+\item Ab initio calculations without approximations are virtually impossible 
+      except in model systems.
+\end{itemize}
 
 Since Ehrenreich's article the development in computing hardware is easily charted. 
 Clock speed, transistor density, storage, and the proliferation of high 
@@ -306,8 +375,8 @@ simply by providing more computational horse power.
 Along with advances in hardware there have been a number
 of methodological developments. These include compiler 
 optimization, modern programming languages, 
-shared libraries, object orientation, and stable open source 
-platforms for code development, testing, and sharing. 
+shared libraries of algorithms, parallel computing environments, and 
+stable open source platforms for code development.
 
 It is the important theoretical advances, i.e., the physical principles and
 mathematical techniques that enable theoretical materials science 
@@ -318,13 +387,6 @@ In the following sections, we describe in some more detail the
 actual scale of the increase in computing power and then we will
 attempt to identify the major theoretical pillars of 
 materials modelling.
-
-\section{Digital Computation}
-\label{sec:riseofcomp}
-\begin{itemize}
-\item Ab initio calculations without approximations are virtually impossible 
-      except in model systems.
-\end{itemize}
 
 The second of Ehrenreich's points addresses the state of
 {\it ab initio} calculations in 1988 and the inherent 
