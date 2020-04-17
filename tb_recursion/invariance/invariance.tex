@@ -2204,25 +2204,29 @@ The Classical Harmonic Chain: Solution via Laplace Transforms and Continued Frac
 (https://arxiv.org/pdf/1608.00616).}
 
 \section{Recursive Perturbation Theory:\texttt{RECPER}}
-An experiment on a material takes the form of some kind of probe. In many cases the probe is
-a photon or an electron that is launched in the direction of a sample. The scattering 
-of the probe is observed and the properties of the material are inferred.
-In other experiments a material is stretched or twisted and the 
-reaction of the material is recorded.
-Based on the observed reactions
+A measurement of a material property takes the form of some kind of probe. 
+The probe may be a photon or an electron that is launched in the direction of a sample. 
+The scattering of the probe by the material is observed and inferences about the material
+property are drawn. In other experiments a material is stretched or 
+twisted and the reaction of the material is recorded.
+Again, based on the observed reactions
 we can make inferences about the microscopic properties of the material.
 For engineering purposes we would like to invert this procedure and deduce
-macroscopic reactions to perturbations given a model for microscopic configuration.
+macroscopic material properties for a given microscopic configuration of atoms.
 
 In any case we would like a method for calculating the response of our material system
-to a probe and perturbation theory is ideally suited for this. In the language of quantum
+to a probe. Perturbation theory is ideally suited for this. Switching to the language of quantum
 mechanics we would like to calculate the expectation values associated with the operator 
-describing a probe. The algebra of recursive perturbation theory has been worked out
-in Ref.\cite{haydock77} and, of course, Vol.~35\ref{vol35} (pg.~281). Some applications
-of perturbation theory to calculating operator expectations values was made in Ref.~\cite{mclean77,foulkes86}.
-Haydock applied the perturbation theory of chain models to study the electronic properties of disordered materials and 
+which describes a probe. Since we are primarily interested in recursion theory we would like
+our perturbation theory to resemble what we have discussed so far. We want to work with a tri-diagonalized
+matrix and continued fractions. Haydock has derived the necessary results.
+The algebra of recursive perturbation theory has been worked out
+in Ref.\cite{haydock77} and, of course, Vol.~35\ref{vol35} (pg.~281). Applications
+of perturbation theory to calculating operator expectations values has been made in Ref.~\cite{mclean77,foulkes86}.
+Perhaps the most significant application of the perturbation theory, in the form described in this section,
+has been to Haydock's study of the electronic properties of disordered materials and 
 the phenomenon of Anderson localization (see Sutton \cite{sutton} for a description of this phenomenon),
-see Refs.~\cite{haydock78,haydock81b,haydock81c,haydock86}. 
+see Refs.~\cite{haydock78,haydock81b,haydock81c,haydock86}.
 
 In this section we will mention just enough about perturbation theory and the recursion method so that
 the reader can use the \texttt{RECPER} routine with some confidence for performing calculations. 
@@ -2230,22 +2234,139 @@ the reader can use the \texttt{RECPER} routine with some confidence for performi
 The Green's function we are looking to obtain is:
 %
 \begin{equation}
-G(E) = \left[E - \hat{H} - \lambda \hat{V}\right]^{-1},
+G(E) = \left[E - \hat{H} - \lambda \hat{F}\right]^{-1},
 \end{equation}
 %
-where $\hat{V}$ is a local representation of the perturbation multiplied by some scalar $\lambda$
+where $\hat{F}$ is a local representation of the perturbation multiplied by some scalar $\lambda$
 that determines the strength of the perturbation. 
-If $\hat{V}$ breaks an underlying symmetry of the Hamiltonian the unperturbed chain sequence will
-terminate.
 
-We saw how to compute off-diagonal elements of the Green's function in Sec.~\ref{sec:tbbm} and
+We have already seen how to compute off-diagonal elements of the Green's function in Sec.~\ref{sec:tbbm} and
 we shall return to this in Chapter~\ref{chap:metallurgy} when we look more closely at vibrational
-and elastic properties of metals. As mentioned the full derivation of the perturbation method has been given
+and elastic properties of metals. That approach involves the calculation of a large number of these off-diagonal
+elements. Sometimes, as we shall see, this is desirable because it allows us to directly `observe' which electronic
+mechanisms are responsible for certain vibrational or elastic responses. However if we are only interested in expectation
+values Haydock's method is the more efficient, as we shall now see.
+
+The full derivation of the perturbation method has been given
 in Vol.~35 and Ref.~\cite{haydock77} and there is little need to reproduce
-the details here. What we will include is the discussion of the calculation of matrix elements in the 
+the details here. What is worth including is the discussion of the calculation of matrix elements in the 
 recursion method. This is accomplished using the perturbation theory and is part of any well rounded recursors toolkit.
-The formalism appeared a few years after Vol.~\35 and is due to Foulkes and Haydock \cite{foulkes86} so it 
-is worth folding it in to the present discussion.
+The formalism appeared a few years after Vol.~35 and is due to Foulkes and Haydock \cite{foulkes86} so it 
+is worthwhile folding it in to the present discussion in the spirit of collecting all things recursion related into one place.
+
+The expectation value of our perturbing operator can be written:
+%
+\begin{equation}
+\bra \hat{F}_{i} \ket = \sum_{\epsilon}\bra\psi_{i}|\hat{F}|\psi_{i}\ket,
+\end{equation}
+%
+we can rewrite this as a contour integral:
+%
+\begin{equation}
+\label{eq:contourpert}
+        \bra \hat{F}_{i} \ket = \int_{C_{f}} {\rm Tr} \{ \hat{F}^{i}\ _{j} \underbrace{\left[E-\hat{H}\right]^{-1j}\ _{i}}_{G^{j}\ _{i}(E)} \} \frac{dE}{2\pi i}.
+\end{equation}
+%
+We have written the matrix elements in the mixed representation (cf. Sec.~\ref{sec:tensornotation}) so
+the results are appropriate for a non-orthogonal basis. Eq.~\ref{eq:contourpert} involves the calculation
+of a large number of off-diagonal Greenian elements which we may want to avoid.
+
+To do this we use the following relationship:
+%
+\begin{equation}
+\frac{d}{d\lambda} [E-\hat{H}-\lambda \hat{F}]^{-1} \Bigr|_{\lambda = 0} = [E-\hat{H}]^{-1}\hat{F}[E-\hat{H}]^{-1}
+\end{equation}
+%
+
+Using this relationship we can rewrite Eq.~\ref{eq:contourpert} as:
+%
+\begin{equation}
+        \bra \hat{F} \ket = \int E \frac{d}{d\lambda} {\rm Tr}\underbrace{[E-\hat{H}-\lambda \hat{F}]^{-1}}_{\tilde{G}(E)} \frac{dE}{2\pi i},
+\end{equation}
+%
+where we have identified $\tilde{G}(E)$ as the new perturbed Greenian that we require. 
+
+The definition chosen for the new recurrence is quite natural:
+%
+\begin{equation}
+        [\hat{H} + \lambda \hat{F}] u_{0}(\lambda) = a_{0}(\lambda)u_0(\lambda=0) + b_1(\lambda)u_{1}(\lambda),
+\end{equation}
+%
+we could included higher order corrections but first order is all that is required for the expectation values.
+
+The convergents of the continued fraction are then generated recursively from the relations
+$P_{-1}=Q_{0}=0$ and $P_{0}=Q_{1}=1$:
+\begin{align}
+b_{n+1}P_{n+1} = (E-a_{n})P_{n} - b_{n}P_{n-1}\\
+b_{n+1}Q_{n+1} = (E-a_{n})Q_{n} - b_{n}Q_{n-1}
+\end{align}
+
+The perturbed convergents also take a simple form:
+%
+\begin{align}
+P_{n}(E,\lambda) = P^{(0)}_{n}(E) + \lambda P_{n}^{(1)}(E) + \lambda^{2}P_{n}^{(2)}(E) + \cdots \\
+Q_{n}(E,\lambda) = Q^{(0)}_{n}(E) + \lambda Q_{n}^{(1)}(E) + \lambda^{2}Q_{n}^{(2)}(E) + \cdots 
+\end{align}
+%
+
+The expectation value is calculated from the perturbed and unperturbed convergents as:
+%
+\begin{equation}
+        \bra \hat{F} \ket = - \int_{C_{f}} \frac{P_{N+1}^{(1)}}{P_{N+1}^{(0)}} \frac{dE}{2\pi i}
+\end{equation}
+
+The denominator has poles at the eigenvalues of the unperturbed system so the contour integral can be evaluated
+as a sum over the residue at these poles:
+%
+\begin{equation}
+        \bra \hat{F} \ket = - \sum_{\epsilon_{i} < \epsilon_{f}} \frac{P^{(1)}_{N+1}(\epsilon_{i})}{P'^{(0)}_{N+1}(\epsilon_{i}}
+\end{equation}
+
+To avoid the need for recursing until the chain states have covered the entire matrix
+an approximate matrix element is calculated. The approximation is that after a certain number
+of steps the localized perturbation will die out leaving only the unperturbed chain. We
+write the approximate matrix element as:
+%
+\begin{equation}
+\bra \tilde{F} \ket = -\int \frac{\tilde{P}_{N=1}(E)}{P_{N+1}^{(0)}} \frac{dE}{2\pi i}
+\end{equation}
+%
+
+The $\tilde{P}(E)$ can be generated as follows. Say we have computed $N+1$ iterations of the recursion method.
+Choose $n$ smaller than $N+1$ and compute the coefficients, $a_{0},b_{0},...,a(\lambda)_{n},b(\lambda)_{n}$
+up to whatever order of $\lambda$ is desired. We will state
+the expressions for these shortly. For the remaining terms,$n+1...N+1$, 
+the coefficients and terminator are to be generated from the unperturbed chain.
+
+After some considerable algebraic flourishes, the details best left to the experts, see Haydock Vol. 35 pg. 281 and 
+subsequent, we can write the expectation value in terms of the perturbed and unperturbed convergents and the unperturbed
+density of states:
+%
+\begin{equation}
+\bra \hat{F} \ket = \int_{-\infty}^{\epsilon_{f}}b_{n+1,0}\left[P_{n+1}^{(0)}\tilde{P}_{n}^{(1)}(E) - P_{n}^{(0)}\tilde{P}_{n+1}^{(1)}(E) \right]n_{0}(E)dE
+\end{equation}
+%
+
+All that remains is to see the expressions required for computing our perturbed chain states and coefficients.
+To conclude this section we detail these steps.
+The subroutine for computing these quantities is \texttt{RECPER}.
+
+The quantities of interest are: 
+$u_{n}(\lambda)=\sum_{m}u_{n}^{(m)}\lambda^{m}$, 
+$a_{n}(\lambda)=\sum_{m}a_{n}^{(m)}\lambda^{m}$, and 
+$b_{n}(\lambda)=\sum_{m}b_{n}^{(m)}\lambda^{m}$. 
+
+The method is derived by applying the Hamiltonian and the perturbation to the chain state expanded in $\lambda$
+and then taking care to collect terms to the same order in $\lambda$ together for the next iteration.
+
+\begin{align}
+        a_{n}^{(l)} = \sum_{m=0}^{l} u_{n}^{(m)\dagger } S\hat{H} u_{n}^{(l-m)} + \sum_{m=0}^{l-1} u_{n}^{(m)\dagger}S\hat{F} u_{n}^{(l-m)} \\
+        x_{n}^{(l)} = \hat{H} u_{n}^{(l)} + \hat{F} u_{n}^{(l-1)} - \sum_{m=0}^{l}\left[ a_{n}^{(m)}u_{n}^{l-m} + b_{n}^{(m)}u_{n-1}^{(l-m)} \right] \\
+        b_{n+1}^{(l)} = \left[ \sum_{m=0}^{l} x^{(m)\dagger }_{n}S x^{l-m}_{n} - \sum_{m=1}^{l-1} b_{n+1}^{(m)} b_{n+1}^{(l-m)} \right]\frac{1}{2b_{n+1}^{(0)}} \\
+        u_{n+1}^{(l)} = \left[ x_{n}^{(l)} - \sum_{m=0}^{l-1} b^{(l-m)}_{n+1} u^{(m)}_{n+1} \right] \frac{1}{b_{n+1}^{(0)}} 
+\end{align}
+
+where the intermediate vector $x_{n}{^(l)}$ has been introduced to simplify the expressions
 
 \section{Chains and Moments}
 Before concluding this chapter we may make a few 
