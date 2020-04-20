@@ -1,25 +1,78 @@
 \chapter{The Local Atomic Environment}
 \label{chap:invariance}
 \section{Introduction}
-Vol.~35 of Solid State Physics is dedicated to electronic structure
+If you travel in certain material's scientists circles there is a book 
+that comes up for discussion now and then and is  
+generally referred to only as `Vol.~35'. 
+The full title of this remarkable book 
+is \textit{Solid State Physics: Advances in Research and Applications
+Volume 35}. It appeared in 1980 and is
+dedicated to, `the exposition of real space methods.' The editors 
+of the series were Henry Ehrenreich, whom we met in the previous chapter,
+Frederick Seitz and David Turnbull.
+
+What is meant by, `...the exposition of real space methods.'?
+To some skeptics the term `real space' (what other type of space is there?) 
+recalls the `campaign for real time' in Douglas
+Adam's Hitchhikers Guide to the Galaxy series. In that work time travel had become
+so prevalent that the continuity of existence was becoming dangerously 
+fractured and reality was becoming intolerably improbably. 
+For Materials scientist real space is the corollary of reciprocal space.
+The use of reciprocal spaces arises naturally in crystalline systems, 
+which have some periodic structure. The interpretation
+of diffraction patterns is most easily accomplished in reciprocal space. That
+is we look for the characteristic diffraction spots which give indications of the 
+spacing of the atomic planes. Electronic waves in crystals experience a similarly
+periodic potential and Bl\"ochs theorem allows us to enumerate and solve for the 
+eigenvalues of the electronic system in reciprocal space as well. For perfectly
+periodic systems reciprocal space is a natural representation to work in. However
+what gains are made in mathematical convenience leads to costs in physical intuition. 
+
+In real space we adopt the perspective of the chemist. The chemist places electrons on
+one atom electrons on another atom and asks what happens when we place those two atoms
+next to each other? For small molecules we may hope this approach will lead us somewhere
+but as the size of our systems increases we must account for the diffusion of the electrons
+throughout the system to obtain an accurate quantitative and qualitative picture of the 
+physics. What we require is an intermediate representation between a strictly localized
+picture of bonding electrons attached to individual atoms and Bloch's picture of 
+electron waves delocalized throughout an entire crystal.
+
+One of the primary early expositors of the
+real space approach to electronic structure was Jacques Friedel who joked
+many materials scientists could only think about crystals in reciprocal space
+`owing to an overdose of X-ray scattering.' \cite{sutton}.
+
+Vol.~35 is dedicated to electronic structure
 theory from the point of view of the local environment. This perspective
 has a long tradition in physical and chemical electronic structure theory.
 This chapter is purely a summary of the work developed there.
+In this chapter we will assume we are given a 
+Hamiltonian in a suitably localized format. 
+That is it only involves terms between
+an atom and its closest neighbours. 
+In Chapter~\ref{chap:gw}
+and Chapter~\ref{chap:wannier} we will look at ways of generating such a Hamiltonian.
+Given such a Hamiltonian Haydock's Recursion method then gives a rapidly convergent 
+scheme for computing quantities of interest. 
 
-Given a Hamiltonian Haydock's Recursion method gives a rapidly convergent 
-scheme for computing quantities of interest. The primary quantity of interest 
-is the density of states. When this has been computed comparisons between the energetics of 
-structures can be made. The method is applicable in situations where Bloch's theorem no longer holds.
-A situation which arises at surfaces, in glasses, disordered structures, in structures with a substantial
-quantity of impurites, vacancies, defects and dislocations. In short the method is applicable
-in realistic physical situations and yields quantities which can be interpreted directly.
+One of the primary quantities of interest 
+is the density of states (DOS) and the partial density of states (PDOS). 
+This data tabulates the permissible energies that electronic states can take in a solid
+and is the condensed matter analogue of the hydrogen spectral lines. The way this quantity
+is generated is also intrinsically local so we obtain information about the electronic
+environment around an individual atom.
+
+The real space method is applicable in situations where Bl\"och's theorem no longer holds.
+This is a situation which arises at surfaces, in glasses, disordered structures, 
+in structures with impurities
+vacancies, defects and dislocations. In short the method is applicable
+to any realistic physical situation and in all cases of engineering relevance.
 
 %Topics that are often discussed at the beginning of introductory physics courses include:
 %the study of black body radiation, photoemission phenomenon, De Broghlie waves,
 %electron diffraction experiments and the structure of the hydrogen atom.
 %Examination of these topics constitute a suitable foundation 
 %for understanding the formalism and experimental justification for the theory.
-
 %It is natural to hope that from the understanding of the electronic states of hydrogen the
 %understanding of larger atomic systems, containing progressively more electrons, might emerge. 
 %However as the number of electrons in a system grows the wave function becomes 
@@ -34,7 +87,8 @@ in realistic physical situations and yields quantities which can be interpreted 
 %of some of these we can name here as: tight binding and linear combination of atomic orbitals (LCAO), 
 %linear muffing tin orbitals (LMTO), plane waves and pseudopotentials, Gaussian orbitals, and 
 %Kohn-Kuttinger-Rostiger theory.
-%While successful in a number of respects numerical work can be tedious and, more importantly, can obscure underlying
+%While successful in a number of respects numerical work can be tedious 
+%and, more importantly, can obscure underlying
 %mechanisms. There is also a tendency for people working in numerical methods to become 
 %excessively obsessed with algorithmic details and, most importantly,
 %the results of a single calculation may not provide a framework that accounts for a range
@@ -43,19 +97,29 @@ in realistic physical situations and yields quantities which can be interpreted 
 %that results for homologous materials should be computed
 %wherever possible and the results should be compared). 
 
-An example of the economy of explanatory expression afforded by the recursion method
-and a physical formulation in terms of the local atomic environment
-is Ref.~\cite{johannes76}. In that work 76 crystal structures are correctly predicted 
-with a model containing 5 coefficients derived from first principles.
+We have a few objectives in this chapter. The first is to 
+attempt to summarize the incredible range and
+detail of theory and application covered in Vol.~35 of Solid State Physics.
+We have also collected work directly related to the recursion method 
+which appeared shortly after Vol.~35. In this way we can collect 
+all the developments in the technique: local density of states calculations,
+off-diagonal elements, block recursion, perturbation theory, and non-orthogonal recursion,
+under one roof.
+The second purpose is to indicate where the attached computer 
+routines in the \texttt{CamRecLib} package can be employed. 
+For many of the sections in this chapter there is an associated example
+which the reader can work through using the attached computational library.
+The reader can then adopt these examples to perform `industrial' calculations 
+for whatever applications may interest them.
 
-The purpose of this chapter is two fold: firstly to attempt to summarize the incredible range and
-detail of theory and application covered in Vol. 35 of Solid State Physics. The secondly
-purpose is to speculate on where it should be possible to exploit modern 
-computational advantages and the new understanding which has emerged in materials 
-to systematically improve descriptions of quantum systems based
-on the local environment. 
-
-%
+To begin we discuss the physical justification for a description of a materials 
+properties in terms of the local environment. This justification stems from
+what Volker Heine has called the `Invariance Principle'. We then work through
+the derivation of the recursion method and the algebra underlying its application
+to the physical problems we are interested in. As it turns out the recursion method
+is closely connected to the theory of continued fractions and orthogonal polynomials.
+The necessary mathematical exposition has been included in Appendix~\ref{appen} 
+which the reader may wish to cross reference as required.
 
 \section{The Invariance Theorem}
 \label{sec:invariance}
