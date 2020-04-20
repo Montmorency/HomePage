@@ -222,4 +222,9 @@ Wed  1 Apr 2020 17:37:25 IST
 Working on font. Apparently the one i like from PRB 93-95 is
 called ansinew? 
 
+https://en.wikipedia.org/wiki/Picard–Fuchs_equation
+https://www.dpmms.cam.ac.uk/~stcs/courses/fcm/handouts/papperitz.pdf
 
+Alan Turing and His Contemporaries. Apparently JHC Whitehead was impressed
+by one of his unpublished results on Groups.
+https://blackwells.co.uk/bookshop/product/9781780171050
