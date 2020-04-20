@@ -65,6 +65,9 @@ functional of the density, can be written:
 E[n] = \int v(\r) n(\r)d\r + F[n].
 \end{equation}
 %
+As a quick reminder a functional takes a function as an argument (in this case the density function),
+and returns a real number. \footnote{Alternatively the mathematical minded reader may like to use Hadamard's definition of a functional: an
+operator which to each point of a given abstract space returns a real number \cite{leray38}.}
 Eq.~\ref{eq:hkenergy} divides the total energy functional $E[n]$ into different contributions.
 $\int v(\r)n(\r)d\r$ is the energy contribution from the external potential $v(\r)$. $F[n]$ 
 is a functional containing the Hartree energy along with all
@@ -257,7 +260,10 @@ Intuitively the rule is the following: where a little charge has accumulated
 the LDA contribution of this charge will lower the total energy. In the self-consistent
 scheme this means at the next iteration it may well be favourable to add a little more
 charge to that region, and in this way, the LDA encourages the pile up of electronic charge
-in bonds. It is sometimes said that the LDA tends to overbind systems.
+in bonds. If we are representing our wavefunctions with planewaves we can expect that 
+accumulating charge in a small region of space will require manipulating high energy plane waves,
+i.e. $|\G|$ very large, this will be penalized by the kinetic energy term in the Hamiltonian. The
+trick is to find the right balance as it turns out the LDA tends to overbind systems.
 
 A number of parametrizations for the function $\epsilon_{xc}(n(\r))$ exist.
 The earliest was given by Wigner\cite{wigner34a} who provided an interpolation formula
@@ -272,7 +278,7 @@ some of which improve upon the aforementioned overbinding tendency at the expens
 increased meddling.
 
 \subsection{Anticipating $GW$}
-\cite{kohnshamII}
+\ref{sec:kohnshamII}
 The generalization of the exchange and correlation operator beyond the LDA 
 in order to allow for non-locality and the energy dependence of the exchange and
 correlation potential is also discussed in, the relatively overlooked, Ref.~\cite{shamkohn66}. 
@@ -313,6 +319,7 @@ approximation.
 %excitation energies. 
 
 \section{$GW$}
+\label{sec:GW}
 The $GW$ formalism takes its name from the the Green's function, denoted~$G$, and the 
 screened Coulomb interaction,~$W$\cite{hedin65}. The $GW$ formulation is due
 to Lars Hedin with the presidential address coming in:
@@ -1139,9 +1146,9 @@ the electronic wave functions and the atomic coordinates:
 
 \begin{align}
 \label{eq:kstotenUSPP}
-E^{\rm KS}_{\rm tot}[\{\psi_i\},\{\R_{i}\}] =  & \sum_{i}\bra -\nabla^{2} + V^{\rm NL} \ket
-                                           &+ \frac{1}{2}\int\int \frac{n(\r)n(\r')}{|\r-\r'|}
-                                           &+ E_{\rm xc}[n] + \int d\r V^{\rm ion}_{\rm loc}(\r)n(\r) + E_{ZZ}({\R_{i}})
+	E^{\rm KS}_{\rm tot}[\{\psi_i\},\{\R_{i}\}] =  & \sum_{i}\bra \psi_{i} |-\nabla^{2} + V^{\rm NL} | \psi_{i}\ket
+                                               + \frac{1}{2}\int\int \frac{n(\r)n(\r')}{|\r-\r'|} \nonumber \\
+					       &+ E_{\rm xc}[n] + \int d\r V^{\rm ion}_{\rm loc}(\r)n(\r) + E_{ZZ}({\R_{i}}) 
 \end{align}
 
 There are some additional technical details that arise at this point.
@@ -1192,10 +1199,11 @@ observed materials properties and guide experimental design?"
 To accomplish this we will return to a geometric picture. We envision
 a set of atoms with lobes of electronic charge arranged around the atoms in certain patterns.
 We then begin sticking atoms together allowing the charge density patterns to overlap.
-We now ask what calculations can we perform based on this picture and how accurate will
-they be compared to the ab initio calculations with full self-consistency? The following
+We now ask what calculations can we perform based on this picture? How accurate will
+energies computed from this arrangement be compared 
+to the ab initio calculations where the charges are allowed to rearrange? The following
 discussion will demonstrate we have reason to expect, with judicious choices, that we can obtain
-a very good approximation to the total energy from this approach.
+very good approximations to the total energy from this approach.
 
 \subsection{Gluing Pieces of Charge: Harris Fragments}
 We can formalize and extend the notion of gluing atoms together by following 
@@ -1223,7 +1231,7 @@ eigenvalues of the Kohn-Sham non-interacting system.
 and compute a total energy for the combined system:
 %
 \begin{equation}
-E_{R} = \sum_{i}\tilde{\epsilon_{i}} - \int d\r n_{f}[\frac{1}{2}V_{\rm H}(n_{f})+\mu_{xc}[n_{f}]+E_{\rm xc}[n_f]+E_{\rm ion}
+	E_{R} = \sum_{i}\tilde{\epsilon_{i}} - \int d\r n_{f} \left[\frac{1}{2}V_{\rm H}(n_{f})+\mu_{xc}[n_{f}]+E_{\rm xc}[n_f]+E_{\rm ion}\right]
 \end{equation}
 %
 What has been accomplished? Well it seems a little like the trick of adding
@@ -1282,7 +1290,7 @@ When we begin our calculations we must choose an initial density and from this
 define an initial potential, i.e. the potential the electrons see:
 %
 \begin{align}
-V_{\rm in}(\r)  & = \frac{\delta F} {\delta n}|_{n_{\rm in}} \\
+V_{\rm in}(\r)  & = \frac{\delta F} {\delta n}\Bigr|_{n_{\rm in}} \\
                 & = V_{\rm nucl}(\r) + V_{\rm H}(n(\r)) + \mu_{xc}[n_{\rm in}(\r)]
 \end{align}
 %
@@ -1293,7 +1301,7 @@ of $n_{\rm out}$ is written:
 %
 \begin{equation}
 \label{eq:totennout}
-E[n_{\rm out}]= \sum_{i}\epsilon_{i} - \int \frac{\delta F}{\delta n}|_{n_{\rm in}} n_{\rm out} d\r + F[n_{out}].
+E[n_{\rm out}]= \sum_{i}\epsilon_{i} - \int \frac{\delta F}{\delta n}\Bigr|_{n_{\rm in}} n_{\rm out} d\r + F[n_{out}].
 \end{equation}
 %
 Note well that we are generally accustomed to iterating this process until $n_{\rm out}=n_{\rm in}$, i.e.
@@ -1309,8 +1317,8 @@ around $n_{\rm in}$ Eq.~\ref{eq:totenenout}:
 %
 \begin{equation}
 \label{eq:toten2}
-	E[n_{\rm out}]= \sum_{i}\epsilon_{i} - \int \frac{\delta F}{\delta n}|{n_{\rm in}}n_{\rm in} d\r + F[n_{\rm in }] 
-+ \frac{1}{2}\int\int  \frac{\delta^{2} F}{\delta n^2}|_{n_{\rm in}}\Delta n \Delta n.
+	E[n_{\rm out}]= \sum_{i}\epsilon_{i} - \int \frac{\delta F}{\delta n}\Bigr|{n_{\rm in}}n_{\rm in} d\r + F[n_{\rm in }] 
++ \frac{1}{2}\int\int  \frac{\delta^{2} F}{\delta n^2}\Bigr|_{n_{\rm in}} \Delta n \Delta n.
 \end{equation}
 %
 A useful exercise for the reader is to start from an expansion of $E[n_{\rm in}]$
@@ -1321,10 +1329,12 @@ Discarding the second order term gives us the Harris-Foulkes Functional:
 %
 \begin{equation}
 \label{eq:HF}
-	E^{HF}[n_{\rm in}] = \sum_{i}\epsilon_{i} - \int \frac{\delta F}{\delta n}|_{n_{\rm in}}n_{\rm in} d\r + F[n_{\rm in }] + O((\Delta n)^{2}), 
+	E^{\rm Har}[n_{\rm in}] = \sum_{i}\epsilon_{i} - \underbrace{\int \frac{\delta F}{\delta n} \Bigr|_{n_{\rm in}}n_{\rm in} d\r + F[n_{\rm in }]}_{U(|R_{ij}|)} + O((\Delta n)^{2}), 
 \end{equation}
 %
 
+where we have identified the pairwise repulsive contribution in the total energy functional(cf. Eq.~\ref{eq:totentb}).
+We will discuss the eigenvalue problem in the next chapter.
 The interesting feature of Eq.~\ref{eq:HF} is that by solving the eigenvalue problem
 for a set of non-interacting electrons with a Hamiltonian generated from the 
 input density, and evaluating the total energy expression,
@@ -1435,15 +1445,15 @@ it follows from the above discussion that if we know the system dielectric funct
 compute the total energy to second order in the difference between the input and output densities.
 We refer the reader to Finnis for the details.
 
-
-
-\subsection{Superposition of Atomic Charge Densities}
-Let us now build an input density by superimposing a collection of charge densities
+\subsection{Approximating $U(|R|)$: Superposition of Atomic Charge Densities}
+Let us now examine the repulsive pairwise contribution identified in Eq.~\ref{eq:HF}. 
+We will do this by building an input density by superimposing a collection of charge densities
 corresponding to a single atom: $n_{in} = \sum_{i}n_{\alpha}(R_i)$. The electrostatic
 contributions to the total energy break down into a free atom Hartree term, an ionic term, 
 and a valence Hartree term:
 %
 \begin{equation}
+\label{eq:esdc}
 U_{\rm es}[n_{v}] = -E_{H}[n_{\rm atom}] + \frac{1}{2}\sum_{ij} \left[ \frac{Z_{i}Z_{j}}{|R_{i}-R_{j}|} - \int\int\frac{n_{v\alpha}(R_{i})n_{v\alpha}(R_{j})}{|\r-\r'|}d\r d\r'\right]
 \end{equation}
 
@@ -1461,8 +1471,8 @@ overlaps then Eq.\ref{eq:xcdc} can be expanded as:
 %
 \begin{align*}
 \label{eq:xcdc2}
-U_{\rm xc} = \sum_{i} D_{\rm xc}[n_{v\alpha}(\R_{i})] + & \frac{1}{2}\sum_{ij} D_{xc}[n_{v\alpha}(\R_i) + n_{v\beta}(\R_{j})]  \\ 
-	     & - D_{xc}[n_{v\alpha}(\R_i)] - D_{xc}[n_{v\alpha}(\R_j)] + f(\R_i,\R_j,\R_k),
+U_{\rm xc} = \sum_{i} U_{\rm xc}[n_{v\alpha}(\R_{i})] + & \frac{1}{2}\sum_{ij} U_{xc}[n_{v\alpha}(\R_i) + n_{v\beta}(\R_{j})]  \\ 
+	     & - U_{xc}[n_{v\alpha}(\R_i)] - U_{xc}[n_{v\alpha}(\R_j)] + f(\R_i,\R_j,\R_k),
 \end{align*}
 %
 where $f(\R_i,\R_j,\R_k)$ is a function of three atomic co-ordinates.
@@ -1476,7 +1486,7 @@ Hamiltonian, $H_{i\alpha j\beta}$, required for the contribution to the total
 energy arising from the electronic coordinates.
 
 We add a brief note on what definition of the repulsive energy we are using.
-As stressed by Finnis there is a crucial difference between what he terms the
+As stressed by Finnis, (pg.198 and subsequent), there is a crucial difference between what he terms the
 repulsive \textit{band} model and the repulsive \textit{bond} model. 
 In the former $U(|\R_I - \R_J|)$ is a parametric two-center 
 functional fit of the double counting terms in Eq.~\ref{eq:xcdc} and Eq.~\ref{eq:xcdc2}.
@@ -1555,24 +1565,17 @@ The blue dot corresponds to $\rho^{\rm ex}$, and $V^{\rm ex}_{\rm eff}$. The red
 represents the stationary point for the HKS functional using the LDA.
 Haydock \cite{haydock97} has discussed a quite general functional,
 $\Phi[\{\psi_{\alpha},n(\r),V_{\rm in}(\r) \}]$. The stationary points of
-this functional summarize the key features for our rigorous formulation of local methods
-requires and which have been discussed up to this point.
-
-
-The variation of the functional with respect to the electrons 
-for the auxilliary non-interacting system is zero:
+have a few interesting physical properties:
 %
 \begin{align}
- \frac{\delta \Phi}{\psi_{\alpha}(\r)} & = \left[-\frac{1}{2}\nabla^{2} + V_{\rm in}(\r) \right]\psi_{\alpha} -\epsilon_{\alpha}\psi_{alpha}&=& 0.
-\end{align}
-
-The variation with respect to the density leads to a connection between the effective potential
-the non-interacting electronic system experiences and the exchange-correlation functional.
-%
-\begin{align}
+ \frac{\delta \Phi}{\delta \psi_{\alpha}(\r)} & = \left[-\frac{1}{2}\nabla^{2} + V_{\rm in}(\r) \right]\psi_{\alpha} -\epsilon_{\alpha}\psi_{\alpha}  &=& 0 \\
  \frac{\delta \Phi}{\delta n(\r)}  & =  \frac{\delta F[n(\r)]}{\delta n(\r)} - V_{\rm in}(\r) &=& 0 \\
  \frac{\delta \Phi}{\delta V_{\rm in}(\r)} & = \sum_{\alpha}|\psi_{\alpha}|^{2} - n(\r) &=& 0
 \end{align}
+%
+The variation of the functional with respect to the single particle states leads to the Kohn-Sham system,
+the variation with respect to the density leads to a connection between the effective potential and the functional,
+and the variation with respect to the potential is the charge conservation constraint.
 
 The stationary point of this function is minimal with respect to the basis set and
 the density and maximal with respect to the effective potential $V_{\rm in}$ \cite{methfessel95}.
@@ -1595,33 +1598,48 @@ effective potential in the context of GW calculations see Ref.~\cite{sohrab10}.
 
 Before we conclude this chapter we will introduce some diagrammatic representations introduced
 by Methfessel which may help the reader picture what we have discussed\cite{methfessel95}.
-We extend these diagrams so that we can show the importance of incorporating some knowledge of 
+We will modify his diagrams so that we can show the importance of incorporating some knowledge of 
 the materials dielectric properties into a calculation:
 %
-\[\xymatrix{
-&             &                   &                 &   \cdots \ar[r]     &       n^{2}_{m+1} = n^{1}_{m+1} + \chi(V^{1}_{m+1} - V^{1}_{m}) \ar[r]  & V^{2}_{m+1} \ar[r] & \cdots \\
-&             & \cdots \ar[r] & n^{1}_{m}=n^{0}_{m} + \chi(V^{0}_{m} - V^{0}_{m-1}) \ar[r] & V^{1}_{m} \ar[r] \ar[ur] & n^{1}_{m+1} \ar[u] \ar[r] & V^{1}_{m+1} \ar[ul] \ar[r] & \cdots \\
-\cdots \ar[r] & n^{0}_{m-1} \ar[r] & V^{0}_{m-1} \ar[ur] \ar[r] & n^{0}_{m}\ar[u] \ar[r] & V^{0}_{m} \ar[ul] \ar[r] & \cdots &  & \\
-}
-\]
+\begin{displaymath} 
+\xymatrixcolsep{4mm}
+\xymatrix{
+	&             &                     \cdots \ar[r]     &       n^{2}_{m+1} \atop [n^{1}_{m+1} + \chi(V^{1}_{m+1} - V^{1}_{m})] \ar[r]  & V^{2}_{m+1} \ar[r] & \cdots & &\\
+	&              \cdots \ar[r] &  n^{1}_{m} \atop  [n^{0}_{m} + \chi(V^{0}_{m} - V^{0}_{m-1})] \ar[r]  & V^{1}_{m} \ar[r] \ar[u] & n^{1}_{m+1} \ar[ul] \ar[r] & V^{1}_{m+1} \ar[ull] \ar[r] & \cdots &    \\
+\cdots \ar[r] & n^{0}_{m-1} \ar[r] & V^{0}_{m-1} \ar[u] \ar[r] & n^{0}_{m}\ar[ul] \ar[r] & V^{0}_{m} \ar[ull] \ar[r] & \cdots &  & \\
 %
-The subscript represents the iteration number and the superscript represents `the stage of mixing'. 
-These sort of diagrams bare a resemblance to exact sequences \cite{whitehead50} in algebraic topology.
+}
+\end{displaymath}
+%
+These diagrams encode the iterative solution of the Kohn-Sham system: a density is generated, then
+a new potential from that density, and then a new density based on the Kohn-Sham non-interacting electronic states
+orbiting in that potential. The numeral in the subscript increases linearly with each step (in this way we dispense with the
+`in-out' notation for the density either side of a given potential). The numeral in the superscript 
+denotes the `stage of mixing'.
+Each successive row, counting from the bottom row up, represents a new density obtained from the previous density and potentials, 
+according to some mixing scheme. 
+
+The quantity $\chi$ discussed earlier can be exploited in 
+an efficient mixing strategy. Each new density is composed, as indicated by the arrows, 
+from previously acquired knowledge.
+
 One does not typically have $\chi$
 fully calculated and to hand so, initially, some approximation is required.
 One approximation to $\chi$ could be a simple 
 scalar (linear mixing) of the input and output density at a given potential. 
-Another more sophisticate approach exploits Broyden's technique which allows 
-us to build an estimate of $\chi$
-from the observed variations in the total density and potentials.
-The chain continues until it stabilizes at 
-$n^{i}_{m+1}=n^{i}_{m}$ or an equivalent condition for the potential.
-In practice without any mixing the bottom chain, $n^{0}_{m}$, with no density mixing, 
-may never stabilize. 
-Working out the optimal way of approximating and storing $\chi$ plays an important role
-in enabling large scale ab initio simulations \cite{vanderbilt84, johnson88}.
 
-The sequence of potentials and densities may also be wrapped around on itself:
+More commonly we exploit Broyden's technique which allows us to build an estimate of $\chi$
+from the observed variations in the total density and potentials. This technique is a generalization
+of Newton's method to vector spaces (\ref{sec:newtonsmethod}).
+The chain continues until it stabilizes at a fixed point density 
+$n^{i}_{m+1}=n^{i}_{m}$ or an equivalent condition for the potential.
+In practice without any mixing the bottom chain may never stabilize. 
+Working out an optimal way of approximating $\chi$ played an important role
+in enabling large scale ab initio simulations \cite{vanderbilt84, johnson88}.
+Many material modellers will be familiar with the process of tuning their mixing schemes 
+in the hope of finding a fixed point density for their material system as quickly as possible. 
+
+Another useful diagram involves wrapping the sequence of potentials and densities around on itself:
 %
 \[\xymatrix{
 	V \ar[r] & n_{\rm out}[V] \ar[r] & \hat{P}_{n_{\rm out}}[V] \ar[d] \\
@@ -1629,13 +1647,12 @@ The sequence of potentials and densities may also be wrapped around on itself:
 }
 \]
 
-In this sequence two projections, $\hat{P}_{n}$ and $\hat{P}_{V}$, which 
-act on the density and the potential have been inserted. 
-The hope is that these projection operations allow us to project the ab initio
-data onto a restricted subspace which will preserve as much of the 
-exactness of the original sequence as possible. 
-Obtaining this local representation will be an important 
-step towards forming a basis for our recursion calculations.
+In this sequence we have inserted two 
+projections $\hat{P}_{n}$ and $\hat{P}_{V}$ which act, respectively, on the density and the potential. 
+The hope is that these projection operations will preserve as much of the 
+exactness of the original sequence as possible. If we can accurately project the ab initio density 
+onto a local representation we will have taken an important step towards forming
+a basis for our recursion calculations.
 
 \section{Conclusion}
 \noindent
@@ -1653,16 +1670,16 @@ calculations.
 Finally we discussed some interesting properties of total 
 energy functionals. The hope is that the reader will see there is a wider
 scope for interpreting total energy functionals than simply iterating the Kohn-Sham LDA
-system to self-consistency over and over again. The input and output density, 
+system to self-consistency over and over again. The input density, output density, 
 the effective potential, and the dielectric properties of the system are all 
-related to each other.
+intimately related to each other.
 
 For a given configuration of atoms it is now commonplace to send a 
 DFT or $GW$ calculation off to a computing machine and within a few minutes, hours, or 
 days (depending on the size of the system) come back to directories 
 full of eigenvalues, charge densities, wavefunctions, forces, and total energies.
 The formal transformation from these  \textit{global}, total energy methods 
-based on the LDA and GW, to \textit{local representations} amenable 
+based on the LDA and $GW$, to \textit{local representations} amenable 
 to a description in terms of interatomic bonds and 
-recursion type calculations has been initiated in this chapter. We
+recursion calculations has been initiated in this chapter. We
 will put it into practice in the next.

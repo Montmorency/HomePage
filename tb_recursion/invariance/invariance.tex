@@ -1,25 +1,78 @@
 \chapter{The Local Atomic Environment}
 \label{chap:invariance}
 \section{Introduction}
-Vol.~35 of Solid State Physics is dedicated to electronic structure
+If you travel in certain material's scientists circles there is a book 
+that comes up for discussion now and then and is  
+generally referred to only as `Vol.~35'. 
+The full title of this remarkable book 
+is \textit{Solid State Physics: Advances in Research and Applications
+Volume 35}. It appeared in 1980 and is
+dedicated to, `the exposition of real space methods.' The editors 
+of the series were Henry Ehrenreich, whom we met in the previous chapter,
+Frederick Seitz and David Turnbull.
+
+What is meant by, `...the exposition of real space methods.'?
+To some skeptics the term `real space' (what other type of space is there?) 
+recalls the `campaign for real time' in Douglas
+Adam's Hitchhikers Guide to the Galaxy series. In that work time travel had become
+so prevalent that the continuity of existence was becoming dangerously 
+fractured and reality was becoming intolerably improbably. 
+For Materials scientist real space is the corollary of reciprocal space.
+The use of reciprocal spaces arises naturally in crystalline systems, 
+which have some periodic structure. The interpretation
+of diffraction patterns is most easily accomplished in reciprocal space. That
+is we look for the characteristic diffraction spots which give indications of the 
+spacing of the atomic planes. Electronic waves in crystals experience a similarly
+periodic potential and Bl\"ochs theorem allows us to enumerate and solve for the 
+eigenvalues of the electronic system in reciprocal space as well. For perfectly
+periodic systems reciprocal space is a natural representation to work in. However
+what gains are made in mathematical convenience leads to costs in physical intuition. 
+
+In real space we adopt the perspective of the chemist. The chemist places electrons on
+one atom electrons on another atom and asks what happens when we place those two atoms
+next to each other? For small molecules we may hope this approach will lead us somewhere
+but as the size of our systems increases we must account for the diffusion of the electrons
+throughout the system to obtain an accurate quantitative and qualitative picture of the 
+physics. What we require is an intermediate representation between a strictly localized
+picture of bonding electrons attached to individual atoms and Bloch's picture of 
+electron waves delocalized throughout an entire crystal.
+
+One of the primary early expositors of the
+real space approach to electronic structure was Jacques Friedel who joked
+many materials scientists could only think about crystals in reciprocal space
+`owing to an overdose of X-ray scattering.' \cite{sutton}.
+
+Vol.~35 is dedicated to electronic structure
 theory from the point of view of the local environment. This perspective
 has a long tradition in physical and chemical electronic structure theory.
 This chapter is purely a summary of the work developed there.
+In this chapter we will assume we are given a 
+Hamiltonian in a suitably localized format. 
+That is it only involves terms between
+an atom and its closest neighbours. 
+In Chapter~\ref{chap:gw}
+and Chapter~\ref{chap:wannier} we will look at ways of generating such a Hamiltonian.
+Given such a Hamiltonian Haydock's Recursion method then gives a rapidly convergent 
+scheme for computing quantities of interest. 
 
-Given a Hamiltonian Haydock's Recursion method gives a rapidly convergent 
-scheme for computing quantities of interest. The primary quantity of interest 
-is the density of states. When this has been computed comparisons between the energetics of 
-structures can be made. The method is applicable in situations where Bloch's theorem no longer holds.
-A situation which arises at surfaces, in glasses, disordered structures, in structures with a substantial
-quantity of impurites, vacancies, defects and dislocations. In short the method is applicable
-in realistic physical situations and yields quantities which can be interpreted directly.
+One of the primary quantities of interest 
+is the density of states (DOS) and the partial density of states (PDOS). 
+This data tabulates the permissible energies that electronic states can take in a solid
+and is the condensed matter analogue of the hydrogen spectral lines. The way this quantity
+is generated is also intrinsically local so we obtain information about the electronic
+environment around an individual atom.
+
+The real space method is applicable in situations where Bl\"och's theorem no longer holds.
+This is a situation which arises at surfaces, in glasses, disordered structures, 
+in structures with impurities
+vacancies, defects and dislocations. In short the method is applicable
+to any realistic physical situation and in all cases of engineering relevance.
 
 %Topics that are often discussed at the beginning of introductory physics courses include:
 %the study of black body radiation, photoemission phenomenon, De Broghlie waves,
 %electron diffraction experiments and the structure of the hydrogen atom.
 %Examination of these topics constitute a suitable foundation 
 %for understanding the formalism and experimental justification for the theory.
-
 %It is natural to hope that from the understanding of the electronic states of hydrogen the
 %understanding of larger atomic systems, containing progressively more electrons, might emerge. 
 %However as the number of electrons in a system grows the wave function becomes 
@@ -34,7 +87,8 @@ in realistic physical situations and yields quantities which can be interpreted 
 %of some of these we can name here as: tight binding and linear combination of atomic orbitals (LCAO), 
 %linear muffing tin orbitals (LMTO), plane waves and pseudopotentials, Gaussian orbitals, and 
 %Kohn-Kuttinger-Rostiger theory.
-%While successful in a number of respects numerical work can be tedious and, more importantly, can obscure underlying
+%While successful in a number of respects numerical work can be tedious 
+%and, more importantly, can obscure underlying
 %mechanisms. There is also a tendency for people working in numerical methods to become 
 %excessively obsessed with algorithmic details and, most importantly,
 %the results of a single calculation may not provide a framework that accounts for a range
@@ -43,19 +97,29 @@ in realistic physical situations and yields quantities which can be interpreted 
 %that results for homologous materials should be computed
 %wherever possible and the results should be compared). 
 
-An example of the economy of explanatory expression afforded by the recursion method
-and a physical formulation in terms of the local atomic environment
-is Ref.~\cite{johannes76}. In that work 76 crystal structures are correctly predicted 
-with a model containing 5 coefficients derived from first principles.
+We have a few objectives in this chapter. The first is to 
+attempt to summarize the incredible range and
+detail of theory and application covered in Vol.~35 of Solid State Physics.
+We have also collected work directly related to the recursion method 
+which appeared shortly after Vol.~35. In this way we can collect 
+all the developments in the technique: local density of states calculations,
+off-diagonal elements, block recursion, perturbation theory, and non-orthogonal recursion,
+under one roof.
+The second purpose is to indicate where the attached computer 
+routines in the \texttt{CamRecLib} package can be employed. 
+For many of the sections in this chapter there is an associated example
+which the reader can work through using the attached computational library.
+The reader can then adopt these examples to perform `industrial' calculations 
+for whatever applications may interest them.
 
-The purpose of this chapter is two fold: firstly to attempt to summarize the incredible range and
-detail of theory and application covered in Vol. 35 of Solid State Physics. The secondly
-purpose is to speculate on where it should be possible to exploit modern 
-computational advantages and the new understanding which has emerged in materials 
-to systematically improve descriptions of quantum systems based
-on the local environment. 
-
-%
+To begin we discuss the physical justification for a description of a materials 
+properties in terms of the local environment. This justification stems from
+what Volker Heine has called the `Invariance Principle'. We then work through
+the derivation of the recursion method and the algebra underlying its application
+to the physical problems we are interested in. As it turns out the recursion method
+is closely connected to the theory of continued fractions and orthogonal polynomials.
+The necessary mathematical exposition has been included in Appendix~\ref{appen} 
+which the reader may wish to cross reference as required.
 
 \section{The Invariance Theorem}
 \label{sec:invariance}
@@ -72,7 +136,7 @@ a particular point are exponentially insensitive to the cavity walls.
 This analogy has been developed by Friedel [1954 Adv. Phys. 3 446] where
 the substition is electromagnetic modes for electronic wavefunctions and
 the probability density for finding an electron at a given point
-with a given energy replaces the local density of normal modes.\cite{annett94}
+with a given energy replaces the local density of normal modes\cite{annett94}.
 
 The analogy can be seen by writing the density of states,
 and the local density of states (for each spin direction) as:
@@ -854,9 +918,9 @@ for the square root and analytic terminator (TermDOS) schemes and \texttt{DENQD}
 for the QuadDOS termination scheme in the Cambridge Recursion Library 
 \cite{nex84,haydock84,haydock85}.
 The asymptotic behaviour of the continued fraction coefficients 
-are affected by the presence of singularities
-in the spectrum: e.g. band gaps, delta functions near the band edges,
-the band edges themselves, and Van Hove singularities.
+are determined by the presence, nature and position of singularities
+in the spectrum: band gaps, delta functions,
+band edges themselves, and Van Hove singularities.
 There is considerable literature on the topic of termination schemes 
 and the analytic structure of the asymptotic coefficients:
 \cite{hodges77,bylander80,turchi82,haydock84,luchini87,glanville88,
@@ -1060,6 +1124,8 @@ of the electronic structure at surfaces. These advances mean that the
 recursion techniques described in Refs.~\cite{burke76, haydock79, haydock81} 
 might be revisited with potentially profitable effect. 
 
+The interactions and forces of atoms adhered to surfaces are directly 
+observable experimentally see Fink~\cite{fink84}.
 For applications of orbital peeling to defects and the 
 computation of interaction energies and variations in the charge density
 see Refs.\cite{gibson93,gibson94}. However that work partially relies 
@@ -1103,6 +1169,7 @@ G_{AB}(E) = \frac{1}{2}[G_{++}(E)-G_{--}(E)].
 \end{equation}
 
 \subsection{The Tight Binding Bond Model}
+\label{sec:tbbm}
 To see how the off-diagonal elements contribute to the force on an 
 atom we follow Sec. 2.4 of Sutton \cite{sutton88} and Ohta \cite{ohta87}.
 First we reproduce their expression for the bond energy:
@@ -2201,30 +2268,188 @@ The Classical Harmonic Chain: Solution via Laplace Transforms and Continued Frac
 (https://arxiv.org/pdf/1608.00616).}
 
 \section{Recursive Perturbation Theory:\texttt{RECPER}}
-An experiment on a material takes the form of some kind of probe. In many cases the probe is
-a photon or an electron that is launched in the direction of a sample. The scattering 
-of the probe is observed and the properties of the material are inferred.
-In other experiments a material is stretched or twisted and the 
-reaction of the material to the introduction of this external
-force is recorded. The necessary implications of the observed reaction
-for the microscopic properties are then deduced.
+A measurement of a material property takes the form of some kind of probe. 
+The probe may be a photon or an electron that is launched in the direction of a sample. 
+The scattering of the probe by the material is observed and inferences about the material
+property are drawn. In other experiments a material is stretched or 
+twisted and the reaction of the material is recorded.
+Again, based on the observed reactions
+we can make inferences about the microscopic properties of the material.
+For engineering purposes we would like to invert this procedure and deduce
+macroscopic material properties for a given microscopic configuration of atoms.
+
+In any case we would like a method for calculating the response of our material system
+to a probe. Perturbation theory is ideally suited for this. Switching to the language of quantum
+mechanics we would like to calculate the expectation values associated with the operator 
+which describes a probe. Since we are primarily interested in recursion theory we would like
+our perturbation theory to resemble what we have discussed so far. We want to work with a tri-diagonalized
+matrix and continued fractions. Haydock has derived the necessary results.
+The algebra of recursive perturbation theory has been worked out
+in Ref.\cite{haydock77} and, of course, Vol.~35\ref{vol35} (pg.~281). Applications
+of perturbation theory to calculating operator expectations values has been made in Ref.~\cite{mclean77,foulkes86}.
+Perhaps the most significant application of the perturbation theory, in the form described in this section,
+has been to Haydock's study of the electronic properties of disordered materials and 
+the phenomenon of Anderson localization (see Sutton \cite{sutton} for a description of this phenomenon),
+see Refs.~\cite{haydock78,haydock81b,haydock81c,haydock86}.
+
+In this section we will mention just enough about perturbation theory and the recursion method so that
+the reader can use the \texttt{RECPER} routine with some confidence for performing calculations. 
+
+The Green's function we are looking to obtain is:
+%
+\begin{equation}
+G(E) = \left[E - \hat{H} - \lambda \hat{F}\right]^{-1},
+\end{equation}
+%
+where $\hat{F}$ is a local representation of the perturbation multiplied by some scalar $\lambda$
+that determines the strength of the perturbation. 
+
+We have already seen how to compute off-diagonal elements of the Green's function in Sec.~\ref{sec:tbbm} and
+we shall return to this in Chapter~\ref{chap:metallurgy} when we look more closely at vibrational
+and elastic properties of metals. That approach involves the calculation of a large number of these off-diagonal
+elements. Sometimes, as we shall see, this is desirable because it allows us to directly `observe' which electronic
+mechanisms are responsible for certain vibrational or elastic responses. However if we are only interested in expectation
+values Haydock's method is the more efficient, as we shall now see.
+
+The full derivation of the perturbation method has been given
+in Vol.~35 and Ref.~\cite{haydock77} and there is little need to reproduce
+the details here. What is worth including is the discussion of the calculation of matrix elements in the 
+recursion method. This is accomplished using the perturbation theory and is part of any well rounded recursors toolkit.
+The formalism appeared a few years after Vol.~35 and is due to Foulkes and Haydock \cite{foulkes86} so it 
+is worthwhile folding it in to the present discussion in the spirit of collecting all things recursion related into one place.
+
+The expectation value of our perturbing operator can be written:
+%
+\begin{equation}
+\bra \hat{F}_{i} \ket = \sum_{\epsilon}\bra\psi_{i}|\hat{F}|\psi_{i}\ket,
+\end{equation}
+%
+we can rewrite this as a contour integral:
+%
+\begin{equation}
+\label{eq:contourpert}
+        \bra \hat{F}_{i} \ket = \int_{C_{f}} {\rm Tr} \{ \hat{F}^{i}\ _{j} \underbrace{\left[E-\hat{H}\right]^{-1j}\ _{i}}_{G^{j}\ _{i}(E)} \} \frac{dE}{2\pi i}.
+\end{equation}
+%
+We have written the matrix elements in the mixed representation (cf. Sec.~\ref{sec:tensornotation}) so
+the results are appropriate for a non-orthogonal basis. Eq.~\ref{eq:contourpert} involves the calculation
+of a large number of off-diagonal Greenian elements which we may want to avoid.
+
+To do this we use the following relationship:
+%
+\begin{equation}
+\frac{d}{d\lambda} [E-\hat{H}-\lambda \hat{F}]^{-1} \Bigr|_{\lambda = 0} = [E-\hat{H}]^{-1}\hat{F}[E-\hat{H}]^{-1}
+\end{equation}
+%
+
+Using this relationship we can rewrite Eq.~\ref{eq:contourpert} as:
+%
+\begin{equation}
+        \bra \hat{F} \ket = \int E \frac{d}{d\lambda} {\rm Tr}\underbrace{[E-\hat{H}-\lambda \hat{F}]^{-1}}_{\tilde{G}(E)} \frac{dE}{2\pi i},
+\end{equation}
+%
+where we have identified $\tilde{G}(E)$ as the new perturbed Greenian that we require. 
+
+The definition chosen for the new recurrence is quite natural:
+%
+\begin{equation}
+        [\hat{H} + \lambda \hat{F}] u_{0}(\lambda) = a_{0}(\lambda)u_0(\lambda=0) + b_1(\lambda)u_{1}(\lambda),
+\end{equation}
+%
+we could included higher order corrections but first order is all that is required for the expectation values.
+
+The convergents of the continued fraction are then generated recursively from the relations
+$P_{-1}=Q_{0}=0$ and $P_{0}=Q_{1}=1$:
+\begin{align}
+b_{n+1}P_{n+1} = (E-a_{n})P_{n} - b_{n}P_{n-1}\\
+b_{n+1}Q_{n+1} = (E-a_{n})Q_{n} - b_{n}Q_{n-1}
+\end{align}
+
+The perturbed convergents also take a simple form:
+%
+\begin{align}
+P_{n}(E,\lambda) = P^{(0)}_{n}(E) + \lambda P_{n}^{(1)}(E) + \lambda^{2}P_{n}^{(2)}(E) + \cdots \\
+Q_{n}(E,\lambda) = Q^{(0)}_{n}(E) + \lambda Q_{n}^{(1)}(E) + \lambda^{2}Q_{n}^{(2)}(E) + \cdots 
+\end{align}
+%
+
+The expectation value is calculated from the perturbed and unperturbed convergents as:
+%
+\begin{equation}
+        \bra \hat{F} \ket = - \int_{C_{f}} \frac{P_{N+1}^{(1)}}{P_{N+1}^{(0)}} \frac{dE}{2\pi i}
+\end{equation}
+
+The denominator has poles at the eigenvalues of the unperturbed system so the contour integral can be evaluated
+as a sum over the residue at these poles:
+%
+\begin{equation}
+        \bra \hat{F} \ket = - \sum_{\epsilon_{i} < \epsilon_{f}} \frac{P^{(1)}_{N+1}(\epsilon_{i})}{P'^{(0)}_{N+1}(\epsilon_{i}}
+\end{equation}
+
+To avoid the need for recursing until the chain states have covered the entire matrix
+an approximate matrix element is calculated. The approximation is that after a certain number
+of steps the localized perturbation will die out leaving only the unperturbed chain. We
+write the approximate matrix element as:
+%
+\begin{equation}
+\bra \tilde{F} \ket = -\int \frac{\tilde{P}_{N=1}(E)}{P_{N+1}^{(0)}} \frac{dE}{2\pi i}
+\end{equation}
+%
+
+The $\tilde{P}(E)$ can be generated as follows. Say we have computed $N+1$ iterations of the recursion method.
+Choose $n$ smaller than $N+1$ and compute the coefficients, $a_{0},b_{0},...,a(\lambda)_{n},b(\lambda)_{n}$
+up to whatever order of $\lambda$ is desired. We will state
+the expressions for these shortly. For the remaining terms,$n+1...N+1$, 
+the coefficients and terminator are to be generated from the unperturbed chain.
+
+After some considerable algebraic flourishes, the details best left to the experts, see Haydock Vol. 35 pg. 281 and 
+subsequent, we can write the expectation value in terms of the perturbed and unperturbed convergents and the unperturbed
+density of states:
+%
+\begin{equation}
+\bra \hat{F} \ket = \int_{-\infty}^{\epsilon_{f}}b_{n+1,0}\left[P_{n+1}^{(0)}\tilde{P}_{n}^{(1)}(E) - P_{n}^{(0)}\tilde{P}_{n+1}^{(1)}(E) \right]n_{0}(E)dE
+\end{equation}
+%
+
+All that remains is to see the expressions required for computing our perturbed chain states and coefficients.
+To conclude this section we detail these steps.
+The subroutine for computing these quantities is \texttt{RECPER}.
+
+The quantities of interest are: 
+$u_{n}(\lambda)=\sum_{m}u_{n}^{(m)}\lambda^{m}$, 
+$a_{n}(\lambda)=\sum_{m}a_{n}^{(m)}\lambda^{m}$, and 
+$b_{n}(\lambda)=\sum_{m}b_{n}^{(m)}\lambda^{m}$. 
+
+The method is derived by applying the Hamiltonian and the perturbation to the chain state expanded in $\lambda$
+and then taking care to collect terms to the same order in $\lambda$ together for the next iteration.
+
+\begin{align}
+        a_{n}^{(l)} = \sum_{m=0}^{l} u_{n}^{(m)\dagger } S\hat{H} u_{n}^{(l-m)} + \sum_{m=0}^{l-1} u_{n}^{(m)\dagger}S\hat{F} u_{n}^{(l-m)} \\
+        x_{n}^{(l)} = \hat{H} u_{n}^{(l)} + \hat{F} u_{n}^{(l-1)} - \sum_{m=0}^{l}\left[ a_{n}^{(m)}u_{n}^{l-m} + b_{n}^{(m)}u_{n-1}^{(l-m)} \right] \\
+        b_{n+1}^{(l)} = \left[ \sum_{m=0}^{l} x^{(m)\dagger }_{n}S x^{l-m}_{n} - \sum_{m=1}^{l-1} b_{n+1}^{(m)} b_{n+1}^{(l-m)} \right]\frac{1}{2b_{n+1}^{(0)}} \\
+        u_{n+1}^{(l)} = \left[ x_{n}^{(l)} - \sum_{m=0}^{l-1} b^{(l-m)}_{n+1} u^{(m)}_{n+1} \right] \frac{1}{b_{n+1}^{(0)}} 
+\end{align}
+
+where the intermediate vector $x_{n}{^(l)}$ has been introduced to simplify the expressions
 
 \section{Chains and Moments}
-Before concluding this chapter there are a few 
-pictorial and heuristic comments on the relation of 
-the recursion method to other methods.
+Before concluding this chapter we may make a few 
+comments on the relation of the recursion techniques 
+to other methods.
 
-The recursion method is a numerically stable way of producing 
-the eigenvalue spectrum associated with a given Hamiltonian and 
-gives access to accurate integrals over this spectrum. 
+The recursion method is a numerically stable way of obtaining information 
+about the distribution of eigenvalues associated with a given Hamiltonian. 
+The explicit formulation of the results as a continued fraction 
+gives us access to accurate integrals over the spectrum. 
 
-The mathematics of the technique are uniquely consistent
+Furthermore, the mathematics of the technique are uniquely consistent
 with the physical idea of an electron exploring
 the space around it as it diffuses according to Schr\"odinger's
 equation. This diffusion process is guided by the interactions present in the Hamiltonian.
-These excursions begin from some prepared localized starting state
+In practice we initiate these excursions from some prepared localized starting state, e.g. 
+we put the electron in an orbital localized on a particular atom,
 and as the electron (or phonon, or magnon, etc...) hops from atom to atom
-the spectral properties of the system come into sharper relief.
+the spectral properties of the system come into sharper and sharper relief.
 
 The closest relation to the recursion method is the method of moments
 \cite{cyrotlackmann67, ducastelle70,ducastelle71}. Cyrot-Lackmann first applied
@@ -2233,7 +2458,7 @@ states in liquid metals\cite{cyrotlackmann67}. This work was then extended
 to incorporate d electrons and investigate cohesive energies and stacking
 fault energies in crystalline structures. David Pettifor placed the moment's 
 theorem as a central section of his textbook\cite{pettifor94} under the heading
-``The Origin of Structural Trends: a moments theorem" which gives some indication
+``The Origin of Structural Trends: A Moments Theorem" which gives some indication
 of the importance he accorded these ideas.
 
 The method can be directly obtained by expanding the 
@@ -2272,14 +2497,69 @@ the matrix element can be written as a over closed paths of length $r$:
 0ijk...10 is a closed circuit through the lattice. Any circuit that takes hops between sites 
 that aren't connected by the Hamiltonian won't make any contribution to the matrix element
 in Eq.~\ref{eq:circuit}. A detailed discussion of the application of the recursion method 
-to a surface atom in Cubium is presented in Ref.~\cite{haydock75} where a number of the various
-paths emanating from the starting atom are presented. 
+to a surface atom in an idealized cubic lattic is presented in Ref.~\cite{haydock75} 
+where a number of the various paths emanating from the starting atom are presented. 
 
-The relation between the Green's function and path integral formulations is developed
-in Feynman and Hibbs \cite{feynmanhibbs64}. This connection suggests it may be fruitful to apply the recursion
-techniques to working out thermodynamic properties in analogy with the imaginary time
-path propagation techniques. Not much has been done in this direction to the author's 
-knowledge.
+\section{Path Integrals}
+There is another (surprisingly direct) connection between the Green's function and 
+the path integral formulation of Quantum Mechanics.
+This connection is developed in Feynman and Hibbs \cite{feynmanhibbs64}. It is worth
+reminding ourselves of the relationship because it provides an excellent mechanical
+correspondence that can guide physical intuition.
+
+Classically the action is defined as an integral over the Lagrangian:
+%
+\begin{equation}
+S=\int_{t_{a}}^{t_b} L(\dot{x}, x,t) dt \qquad L = m\dot{x}^{2}-V(x,t)
+\end{equation}
+%
+
+Feynman then defines the probability of a particle propagating from $a$ to $b$ as:
+%
+\begin{equation}
+G(b,a) = \int_{a}^{b} e^{(i/\hbar)S[b,a]} \mathcal{D}x(t),
+\end{equation}
+%
+where $\mathcal{D}x(t)$ indicates the integral is to be taken over every path from a to b.
+Depending on the path taken the contribution of the exponential to the integral will be proportional
+to the magnitude of the action S: the paths of least action will give larger contributions 
+to the total integral.
+
+Feynman exploits the following equality:
+%
+\begin{equation}
+\label{eq:picompose}
+S[2,1] = S[2,3] + S[3,1],
+\end{equation}
+%
+that is we can compose a path between two space time points out of intermediate paths.
+Because Eq.~\ref{eq:picompose} is valid for any choice of space-time points $1,2,3$
+we can choose infinitesimally spaced points in time, $t$ and $t+\epsilon$, 
+
+From these consideration we can work out a differential equation governing
+$G(b,a)$. This differential equation turns out to be the Schr\"odinger equation.
+Given a full basis set we can expand G(b,a):
+The probability of a particle propagating from a space-time point $a$ to a space time point
+$b$ is then written in terms of the eigenstates and eigen energies of the appropriate Hamiltonian:
+%
+\begin{equation}
+G(b,a) = \sum_{n} \phi_{n}(b)\phi_{n}^{*}(a)e^{iE(t_b - t_a)} \qquad t_b>t_a
+\end{equation}
+%
+This formulation will be revisted when we discuss the $GW$ approximation in Chapter~\ref{chap:GW}.
+
+The equivalence of Eq.~\ref{eq:greenschro} and Eq.~\ref{eq:PI} leads us to the fundamental relationship:
+%
+\begin{equation}
+\label{eq:PI}
+	\int_{a}^{b} e^{(i/\hbar)S[b,a]} \mathcal{D}x(t) = \sum_{n} \phi_{n}(b)\phi_{n}^{*}(a)e^{iE(t_b - t_a)} = G(b,a)
+\end{equation}
+%
+To the author it appears there is a great deal of scope for further investigation of Eq.~\ref{eq:PI}. 
+It suggests a natural harmony between some of the complex mechanical and thermodynamic problems
+which find a natural expression in terms of path integrals and the efficient recursive
+strategies we can develop for performing calculations: continued fraction expansions of
+path integrals would be a promising avenue of research.
 
 \section{Future Work}
 The references provided here and in Vol. 35 demonstrate the impact of

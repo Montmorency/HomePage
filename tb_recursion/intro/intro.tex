@@ -1,62 +1,100 @@
 \chapter{Introduction}
 \section{Electronic Structure for Materials Science}
-In 1987 Henry Ehrenreich published an article in Science called
+In 1987, Henry Ehrenreich, 
+editor of \textit{Solid State Physics}, the annual review documenting major advances in
+solid state science and technology, published an article in Science magazine titled 
 ``Electronic Theory for Materials Science"\cite{ehrenreich87}. The article begins
 with a bold statement:
-
+%
 \begin{quote}
 Theoretical Materials Science remains to be invented as a discipline, and for good reason.
 \end{quote}
-
-One of the reasons for this delayed maturity is that materials processing, 
-historically, was a craft.
+%
+One of the reasons he supplies for this delayed maturity is that materials engineering, 
+and its associated science, was, historically, a craft.
 
 It will serve present purposes to consider what exactly constitutes a craft. 
-There is some sense that the word craft in its common usage 
-is to be distinguished from both science and art.
+The word craft in its common usage is to be distinguished from both science and art.
 The word occupies a space somewhere between those two realms. 
 A craft may bear an element of science in its application. 
 The craftsman may possess a set of precision tools or 
-established practices. However the process remains fundamentally shaped by 
+established practices; however, the process remains fundamentally shaped by 
 the individual's choices. These choices are necessarily personal,
 and it is in the course of making these choices that aspects 
-of the craftsman's character is conferred to the final product. 
+of the craftsman's character is conferred to the final product. This
+personal aspect contains the art.
 
-The rise of automation and mechanization means that the 
-number of products bearing the mark of an individual craftsman's 
-character is diminished. The mechanical homogeneity of the manufacturing process
-become the distinguishing feature of the product. Where bespoke solutions are 
-required one may still turn to the blacksmith and masons, who have the knowledge 
-required to render from raw materials a composite product. In every case
-whether individually or commercially manufactured it is the subtle
-variations in the microstructure of a material which determines its 
+The techniques developed by craftsmen over the centuries to manipulate a
+materials properties transforming wrought iron to steel, glass to stained glass, 
+heavy ceramics or translucent porcelain, involve controlling variations in the microstructure of a material. 
+The variations that are effected are in the arrangement of the fundamental constituents of matter:
+that is, the arrangement of the atoms of which it is composed. These 
+arrangements determine the material's ultimate 
 strength, the way it reflects light, the way it conducts electricity, 
 whether it flexes or snaps, whether it is hard or soft or magnetic.
 
-In the realm of materials as craft we may take the example of Roman concrete.
-%
-Roman engineers learned to manufacture concrete from a 
+Yet the notion of atoms and a mathematical theory of their interaction comes relatively
+recently on the historical time scale. This recency suggests that the application of 
+art, manifested through accident, intuition, and invention, has greatly determined the history
+of materials manufacturing.
+
+Let us take take some examples from the Romans and the Greeks. 
+First the Romans. By the first century BC Roman engineers had 
+learned to manufacture concrete from a 
 particular mixture of volcanic sand called pozzolana,
-taking its name from its point of extracion near Pozzuoli near Napoli. 
+which took its name from its origin by Pozzuoli near Napoli. 
 %
 This pozzolana was mixed with quicklime, an aggregate, and seawater,
-to produce a concrete of striking quality: 
+to produce a concrete of striking quality. One that was
 particularly resistant to degradation in the presence of moisture.
 This concrete was manufactured without any modern knowledge of microstructure 
 and chemistry. Yet the people producing it must have been manipulating in their
-mind some model of the underlying composition of the material and the effect of 
-varying the proportions of the concretes constituents. 
+mind some mental model of the underlying composition to tune the desired properties.
 %
 %The pantheon today remains standing built with the same concrete poured centuries before.
 %Is this true?
 %
-\footnote{For a description of Roman concrete and its use at the port at Pouzol see: Mariano Vasi, 
-Itineraire Instructif de Rome à Naples, ou, Description Generale des Monumens Anciens et Modernes, 
-Rome: [Mariano Vasi]. 1813, de Beer Itb 1815 V. For a broad perspective on metallurgical developments
-see Paxton's article in Physics World \cite{paxton92}.} 
+%\footnote{For a description of Roman concrete and its use at the port at Pouzol see: Mariano Vasi, 
+%Itineraire Instructif de Rome à Naples, ou, Description Generale des Monumens Anciens et Modernes, 
+%Rome: [Mariano Vasi]. 1813, de Beer Itb 1815 V. For a broad perspective on metallurgical developments
+%see Paxton's article in Physics World \cite{paxton92}.} 
 
-This concrete was manufactured without any modern knowledge of microstructure and 
-chemistry.
+Turning to the Greeks, in Ref.~\cite{paxton92} Paxton has suggested we 
+look back even further to find metallurgical craftsmanship documented in the Odyssey:
+%
+\begin{quote}
+        Seizing the olive pole, they drove its sharpened end into the Cyclops' eye...
+        [which] hissed round the olive stake in the same way that an axe or adze hisses
+        when a smith plunges it into cold water to quench and strengthen the iron.
+        \textit{Odyssey IX 393 tr. E V Rieu}
+\end{quote}
+%
+We instantly recognize the Greeks of two and one half millenia ago 
+as masters of the martensitic transition that confers
+to iron the hardness one desires of an axe. Yet their technique relies on a
+transformation in crystalline structure the mechanism for which is not determined
+in a fully satisfactory way to this day.
+
+%There is further materials lore. The cold work hardened steel of the American railways 
+%was rumoured to have been discovered when a labourer in one of Andrew Carnegie's factories 
+%dropped his crowbar into a rolling press. 
+
+In these notes it is our hope to present a useful synthesis of art and science that may aid the 
+design of materials in the 21st century. We wish to have some scientific theory that enhances our
+understanding of the properties of `classical' materials like concrete and steel 
+as well as modern electronics like semiconductors and superconductors.
+
+Starting from Ehrenreich's observation we will identify
+the necessary ingredients of a useful theoretical science of materials. 
+As we shall see, there are four
+elements to this identification that will help us determine what 
+we are looking for in a theory. 
+
+Having determined what we desire of our scientific theory 
+we will then propose a suitable restricted framework for performing calculations of
+sufficient generality and accuracy to investigate the properties of materials
+that interest us.
+
 %See a history of concrete and a history of energy
 %\footnote{For a description of Roman concrete and its use at the port at Pouzol see: Mariano Vasi, 
 %Itineraire Instructif de Rome à Naples, ou, Description Generale des Monumens Anciens et Modernes, 
@@ -71,15 +109,10 @@ chemistry.
 %Again the theoretical model they worked with 
 %lacked the modern conception of atomic composition 
 %and microstructure.
-%
-
-Their expertise was developed based on part trial and error, 
-part common sense, and part notion or, in a word, craft.
-
-The underlying picture a theoretical materials scientist manipulates today
-is a world composed of atoms interacting via electronic forces,
-repelling each other when squeezed together, attracting each other at some
-distance apart. 
+%The underlying picture a theoretical materials scientist manipulates today
+%is a world composed of atoms interacting via electronic forces,
+%repelling each other when squeezed together, attracting each other at some
+%distance apart. 
 
 \subsection{First Principles}
 A comprehensive quantum theory describing the way atoms bind, the forces acting on them, 
@@ -107,35 +140,40 @@ the expectation value of every experimental
 observable of the system from that information.
 \end{quote}
 
-The philosophy bears a resemblance to the classical idea
-that so long as the position and momentum of all particles 
-is specified with arbitrary accuracy their subsequent 
-trajectories could be predicted. 
+The ambitious scope of this hypothesis bears a resemblance 
+to the ambitious scope of classical mechanics. In particular the hope 
+that so long as the position and momentum of all the particles 
+in a system are specified to arbitrary accuracy their subsequent 
+trajectories are determined to arbitrary accuracy. 
 
 Just as the classical ideas of complete mechanical determinism were
 overthrown by the quantum theory I strongly suspect this
-basic contention of {\it ab initio modelling} 
-will be severely qualified itself. Fortunately, the 
-state of {\it ab initio} modelling is such a long, long, way from being
-able to predict observables from atomic position and number
-in a truly non ad hoc fashion that this need not concern us. 
-Only when that state has been attained
-will some new ideas come along that mean 
+basic contention of {\it ab initio} modelling will be severely qualified itself. 
+Fortunately, the state of {\it ab initio} modelling is such a long, long, way from being
+able to predict experimental observables from atomic position and number
+{\it in a truly non ad hoc fashion} that this suspicion need not concern us. 
+Only when ab initio modelling has progressed significantly from its current status 
+is it likely that some new ideas will come along that mean 
 we have to start all over again. It is to this end we strive.
 
 The extent to which materials science has evolved to the point of being 
-a truly 'first principles' theory is one of the themes of 
-these notes \cite{finnis12, ismailbeigi2017}.
+a 'first principles' theory is one of the themes of 
+this chapter. For contemporary reviews of the field see Refs.~\cite{finnis12, ismailbeigi2017}.
 %
 %Tracking the evolution of theoretical materials science may also allow 
 %researchers to identify the avenues of research that are inefficient, 
 %that are potentially obscuring knowledge, and convoluting 
 %what is already understood. 
 %
-Ehrenreich's survey of the field from 30 years ago will provide the framework 
-for charting the evolution of this field.
-He identified four points that either characterized the state 
-of the field of theoretical material science at the time or constituted essential principles 
+
+For the moment we will stick with Ehrenreich's survey of the field from 30 years ago. 
+This will provide the framework 
+for charting the evolution of this fascinating field and sharpen our ideas about 
+what we would like to develop our `theory of materials science for the craftsman'.
+
+Ehrenreich identified four points that either characterized the state 
+of the field of materials science, at the time he was writing, 
+or constituted some essential principle 
 that a satisfactory theory of materials must possess:
 %
 \begin{enumerate}[i)]
@@ -149,10 +187,11 @@ that a satisfactory theory of materials must possess:
       is a crucial ingredient of a credible theoretical framework.
 \end{enumerate}
 %
-Unpacking the content of these four statements reveals where 
-materials modelling has been successful, where it is lacking,
-and what is required so that theoretical analysis becomes a driving
-force in the development and manufacturing of novel materials.
+Unpacking the content of these four statements will help reveal where 
+materials modelling has been successful and where it is lacking.
+We will take each of these points in turn, but first we will consider 
+the relevant lengt and time scales we need to transit to arrive at a macroscopich
+theory of materials.
 
 \subsection{Scales of Materials Modelling}
 What are the scales involved in materials modelling?
@@ -160,9 +199,10 @@ On what length scale is it important to treat the interactions
 using quantum mechanics? What are the time scales? 
 What is a typical number of particles?
 
-To begin we consider the typical number of particles that are interacting.
-Chemists arrived at the mol as a convenient unit for describing
-quantities of atoms. A mol is on the order of $10^{23}$ atoms with
+To begin we consider the typical number of particles 
+that are interacting in a macroscopic ensemble.
+To quantify this number chemists have arrived at the mol as a convenient unit. 
+A mol is on the order of $10^{23}$ atoms with
 the precise number called the Avogadro Constant. While not strictly relevant
 it is worth mentioning that Avogadro possesses one of the most
 interesting scientific profile pictures. This picture is, quite rightly, reproduced
@@ -176,128 +216,167 @@ in Fig.~\ref{fig:avogadro}.
 \caption{Count Amadeo Avogadro.}
 \end{figure}
 %
-$10^{23}$ is by everyday standards an incredibly large number. 
-It should go without saying, but often doesn't, that setting 
-up a single system of equations to describe the motion of and mutual 
-interactions of each individual particle in such an ensemble is not
-a practical or meaningful endeavour, nor is it even necessary.
-For such large aggregates of particles their mechanical behaviour seems 
-well described by collective laws like ideal gas laws or continuum mechanics. 
-So at what stage does it become necessary to describe the properties of the material
-using quantum mechanics? 
+%$10^{23}$ is by everyday standards an incredibly large number. 
+%It should go without saying, but often doesn't, that setting 
+%up a single system of equations to describe the motion of and mutual 
+%interactions of each individual particle in such an ensemble is not
+%a practical or meaningful endeavour.
+%For such large aggregates of particles their mechanical behaviour is
+%described by collective systems of equations: e.g. ideal gas laws 
+%and continuum mechanics. 
+%At what stage does it become necessary to describe the properties of the material
+%using quantum mechanics? 
 
-In order to be more concrete about things let us consider a macroscopic specimen 
-to be on the order of 200 nm$^{3}$ of material. A sample of material of this size 
-is approaching the wavelength of visible light and could be
-resolved with an optical microscope (using some focusing tricks). 
-Assuming an atomic spacing of 2 tenths 
-of a nanometer a dynamical simulation of around $10^{9}$ atoms 
-done using quantum mechanics could be considered a quantum mechanical 
-simulation of a macroscopic system. $10^{9}$, one billion, is a number
-much more familiar than $10^{23}$.
+In order to be more `concrete' let us consider Fig~\ref{fig:britannia} which depict the two
+extreme ends of the length scales, angstroms to meters, and the time scales, femtoseconds to years,
+that we wish to consider.
+%
+\begin{figure}
+\begin{center}
+\includegraphics[scale=1.0]{./intro/IronBritanniaFig.png}
+\end{center}
+\caption{On the left we have a diagram of a vacancy in body centered cubic iron. That is one iron 
+         atom removed from its usual place in the crystal lattice, and two hydrogen 
+         atoms placed in the vicinity of the vacancy. This example is chosen because the influence of
+         hydrogen on the properties of metals is a problem of enduring interest in materials science.
+         On the right we have a cross section view of the Britannia Bridge which is an example of a 19th 
+         century bridge built with malleable iron-plate girders in I sections. The contention of materials
+         modelling is that processes like the diffusion of our vacancy in iron on the left. Processes 
+         occurring on length scales of $10^{-10}$m and timescales of $10^{-12}$s \textit{are
+         relevant} to the properties of iron I-beams supporting bridges across the length scale of
+         rivers and the timescales of decades. \label{fig:britannia}}
+\end{figure}
+%
+%to be on the order of 200 nm$^{3}$ of material. A sample of material of this size 
+%is approaching the wavelength of visible light and could be
+%resolved with an optical microscope (using some focusing tricks). 
+%Assuming an atomic spacing of 2 tenths 
+%of a nanometer a dynamical simulation of around $10^{9}$ atoms 
+%done using quantum mechanics could be considered a quantum mechanical 
+%simulation of a macroscopic system. $10^{9}$, one billion, is a number
+%much more familiar than $10^{23}$.
+%To give an idea of the time required to perform such a simulation 
+%we may give an example of what, in the literature, would be considered 
+%a numerically well converged quantum simulation of sufficient accuracy. 
+%We will leave the notions of well-converged and accuracy intentionally vague
+%at this point suggesting only that were the results of this calculation
+%to be submitted to a referee they would not object outright to their
+%description as converged and accurate.
 
-To give an idea of the time required to perform such a simulation 
-we may give an example of what, in the literature, would be considered 
-a numerically well converged quantum simulation of sufficient accuracy. 
-We will leave the notions of well-converged and accuracy intentionally vague
-at this point suggesting only that were the results of this calculation
-to be submitted to a referee they would not object outright to their
-description as converged and accurate.
+The system on the right, the macroscopic engineering problem, a train, a river, a bridge, is what we
+are interested in. We wish to connect the problem to the atomistic regime by asking questions about
+what materials are ideal for our bridge. What can we construct out of stone and wrought iron, or steel,
+or rubber? How much will it bend when we run the train over the bridge? How will these materials wear over time?
+To see how mathematicians and engineers have grappled with these problems Timoshenko's 
+History of Materials is the definitive overview. The Young's moduli and elastic tensors, the fatigue properties,
+which enter the civil engineers calculations are what we wish to be able to compute from first principles
+this brings us to the system on the left of Fig.~\ref{fig:britannia}. This panel is representative of the domain 
+where quantum mechanics dominates and first principles can say something interesting. If we are to build
+our bridge out of iron how will the cracks and defects vacancies and dislocations present in the crystal
+respond to stresses? To exposure to new elements like oxygen and hydrogen? What are the tensile properties?
+We have many questions.
 
-Simulating the forces on 250 quantum Fe atoms arranged in a particular crystal structure
-required 4 hours of computing time on the local computing cluster (96 nodes).
-There are 2000 electrons in the simulation which must be allowed
-to rearrange themselves so they find their energetic minimum. 
-%If computer technology continues developing at the same rate it has
-%over the previous 30 years than within 60 years, with 
-%no developements in the numerical techniques, 
-%quantum mechanical simulations, to the same level 
-%of accuracy, of millions of atoms should be feasible within a 
-%similar amount of computing time. 
+To begin answering them we would like to compute the energy associated with the particular 
+arrangement of atoms and the forces on the atoms and from this data start finding expressions
+for the system's observables. These expression will feed into the macroscopic description of our system.
+
+For reference, at the time of writing one of the authors performed just such a calculation. Obtaining  
+the forces on the 249 iron atoms and 2 hydrogens arranged as depicted in the left panel of 
+Fig.~\ref{fig:britannia} required 4 hours of computing time on 96 quadcore processors.
+This ab initio calculation requires allowing about two thousand independently minded electrons
+to rearrange themselves into their energetic minimum. We will discuss the relevant
+theory for these calculations in Chapter\ref{chap:GW}. Suffice to say that the accessibility
+of ab initio calculations has improved greatly since Ehrenreich's review.
+However we still have a very long way to go in order to deduce macroscopic material properties.
 
 A single iteration of these equations will not provide us with 
-much information. If it is desired to watch the collective 
-motion of the atoms these calculations must be repeated with
-the atomic positions updated according to the mechanical model chosen.
-To resolve the vibrations of individual atoms  
-time steps between iterations of a femtosecond, ($(10^{-15})$s),
-are required. So every four hours of computing time yields $10^{15}$s
-of atomic evolution.
+much information. To resolve the vibrations of the individual atoms  
+requires repeated calculations of the forces and propagation of the atomic coordinates
+for time steps on the order of a femtosecond, ($(10^{-15})$s).
+Put another way every four hours of computing time yields $10^{-15}$s
+of atomic motion.
 
 To see the atoms do anything except complete a few oscillations around
 their equilibrium position, i.e., if we wish to see something more interesting
-in the simulation, like a dislocation
-move through the crystal, a crack in the material begin to form, or
+in the simulation, like watch the vacancy
+move through the crystal, or a crack in the material begin to form, or
 molecules adhered to a surface migrate and begin assembling something new,
-would require thousands of femtoseconds, to arrive at a picosecond of data ($(10^{-12})$s).
-For these sorts of computations we must reserve 5 months computing time on machine.
-Another 12 orders of magnitude efficiency would remain to be found to 
-simulate the motion of particles on time scales even approaching 
-everyday experience.
+this would require thousands of thousands of femtoseconds i.e. a few nanoseconds ($10^{-9}$s).
+For these sorts of computations we must now reserve five months computing time on our machine.
 
-These considerations are artificial for two important reasons. 
-The first is I strongly suspect computational power will not continue 
-developing at the rate seen over the previous 30 years. 
-The second is that even if computational resources did continue growing 
-at an equivalent rate; simulations of this nature would be of little value.
+Beyond the expense there is an even more worrying objection to carrying out this work. That is that 
+each of these simulations also only samples an infinitesimal region of phase space
+and we must repeat the simulation for multiple trajectories to accumulate useful statistics.
+Furthermore, we are interested in the properties of iron over the span of the river and the 
+time span of the bridge which may be 30 years. Running these simulations begins to take on
+the feeling of a symphony in the fashion of John Cage where one note is played for a thousand years.
+%like a john cage symphony
 
-They would be of little value because were 
-a simulation of this magnitude to be performed the
-job of the theoretical material scientist would change. 
-The task would now become the design of algorithms to identify 
-processes of interest that occur within the data generated by 
-these giant simulations. 
-However, if the simulations are correct, these should correspond 
-to the interesting processes observed in nature, which is why we wanted to
-perform the simulations in the first place. We would be in the situation
-of having done an enormous number of calculations at great computational
-expense and we would be in exactly 
-the same place we began. 
+The point we are labouring is there is little hope of arriving at any 
+kind of meaningful understanding of materials properties by 
+simulating femotsecond by femtosecond the evolution of the atomistic 
+structure of a material.
 
-We would not have a theory that captures the mechanisms
-underlying the behaviour of the system in a condensed mathematical notation. Nor 
-would we would have an obvious way of inferring the likely experimental
-observables for a homologous series of the material in question.
+It is an unfortunate fact that massive 
+simulations generate such a quantity 
+of data they can obscure reasoning and consume 
+resources without providing insight or general principles. 
+By performing them we are not working towards a theory that captures the mechanisms
+underlying the behaviour of material systems in a condensed mathematical notation. Nor 
+do we obtain information about the experimental 
+observables for a homologous series.
 
-The objective of {\it ab initio} modeling is to extract meaningful information
-about the essential parameters governing trends and characteristic properties 
-of different classes of materials. Massive simulations generate such a quantity 
-of data they can obscure reasoning and consume resources without providing insight 
-and general principles. This observation stems directly from one of the
-most fundamental tools for materials research: the periodic table. The 
-organization of the table into groups and periods captures a huge range 
-of phenomenon and possesses predictive power with little more computational
-work than counting positive integers and a clever mode of tabulation.
+The point can be made more directly. As an engineer tasked with designing a 
+new material would you prefer a computer with a computer package for performing
+ab initio calculations or a periodic table?
+
+A chemist would certainly answer the periodic table. By organising the elements
+into groups and periods a huge range 
+of phenomena can be predicted with little more computational
+work than counting positive integers.
 The field of chemistry has made good use of that single table to guide
 discovery and propose mechanisms.
 
-Given that studying trends in homologous materials 
-is a necessary component of a satisfactory
-theory computer simulations have to be repeated 
-over and over again, for every element in a group,
+We are now arriving at the required synthesis. We would like a 
+formalism that does not require the computational expense of 
+a full ab initio calculation but that gives us the breadth of insight
+of the periodic table with the opportunity of quantifying deductions.
+The precision of these deduction can be refined with ab initio calculation
+but the theory, initially, should operate on a higher level.
+The required formalism should also lend itself to 
+studying trends in homologous materials.  
+Which is the final, and in some ways, most important point of Ehrenreich's program.
+
+It is this requirement which should allow us to deduce the properties
+for a class of material based on the groups of its elements, 
 for each compound in a series, for each different structural conformation,
-for differing alloy concentrations and so on. The ``one-off" character of 
-numerical calculations makes them unsuitable as the basis for an actual 
+for differing alloy concentrations and so on. 
+
+We wish to eliminate the disposable``one-off" character of 
+numerical calculations and seek a more permanent basis for an actual 
 theory of the measurable properties of homologous classes of materials.
 
-There is another strange aspect to the properties of materials.
-That is that many properties of materials can be described by a scalar, 
-like Young's modulus, Poisson ratios, or small tensors to 
-describe the elasticity. 
-Electronic properties can be described using a single number 
-like the dielectric constant of a material.
-All these properties of systems are made up of many tiny degrees of freedom.
-yet at some point all these variables merge into macroscopic parameters.
-A satisfactory ab initio theory must capture this notion of {\it retraction on to} of
-the multidimensional wavefunction in a many electron material onto easily manipulated
-scalars or few indiced tensors.
+We are getting closer to a specification for our theoretical framework. 
+Before continuing its development let us turn to how ab initio calculations have been 
+transformed by the evolution of digital computers. 
 
-It may sound as if computers are coming in for undue criticism. Not so! They
-are the essential tool for theoretical materials science. What is being criticised
-is the hypothetical user who would initiate a massive program of calculations without a
-plan to harness the data generated so that the calculation need never be repeated.
+\section{Digital Computation}
+\label{sec:riseofcomp}
+We now turn to the second of Ehrenreich's points:
+%
+\begin{itemize}
+\item Ab initio calculations without approximations are virtually impossible 
+      except in model systems.
+\end{itemize}
+%
+For our purposes for a calculation of a material property to be considered ab initio 
+the electrons must be treated as wave functions. Analytic solutions of electron wave equations
+for multiple atom systems are relatively limited so numerical approaches are often employed 
+to compute eigenvalues, total energies, and the forces acting on atoms. The size of a system
+that can be treated numerically is dependent on the speed and storage capacity of the 
+computing system available.
 
-Since Ehrenreich's article the development in computing hardware is easily charted. 
+Since Ehrenreich's article the development in computing hardware has been enormous. 
 Clock speed, transistor density, storage, and the proliferation of high 
 performance computing clusters with fast interconnects have greatly extended 
 the range of problems that can be treated with numerical simulations
@@ -306,113 +385,146 @@ simply by providing more computational horse power.
 Along with advances in hardware there have been a number
 of methodological developments. These include compiler 
 optimization, modern programming languages, 
-shared libraries, object orientation, and stable open source 
-platforms for code development, testing, and sharing. 
+shared libraries of algorithms, parallel computing environments, and 
+stable open source platforms for code development.
 
-It is the important theoretical advances, i.e., the physical principles and
-mathematical techniques that enable theoretical materials science 
-which are more difficult to identify. It is difficult to identify what exactly 
-the kernel of the theoretical idea is, and what precisely that idea has enabled. 
-
-In the following sections, we describe in some more detail the 
-actual scale of the increase in computing power and then we will
-attempt to identify the major theoretical pillars of 
-materials modelling.
-
-\section{Digital Computation}
-\label{sec:riseofcomp}
-\begin{itemize}
-\item Ab initio calculations without approximations are virtually impossible 
-      except in model systems.
-\end{itemize}
-
-The second of Ehrenreich's points addresses the state of
-{\it ab initio} calculations in 1988 and the inherent 
-difficulties in performing them. The subsequent thirty years 
-has seen an enormous extension of computing capacity. 
-Before discussing the development of machines in the three decades since the 1980s it
-is to worthwhile to reflect on the development of the machines in two
+It is worth remembering, however, the advances that had already 
+taken place in electronic computing in 1988 when Ehrenreich's article appeared.
+Before discussing the development of machines in the three decades since the 1980s 
+we may reflect on the development of the machines in two
 sets of three decades before the 1980s. 
+
+%It is the important theoretical advances, i.e., the physical principles and
+%mathematical techniques that enable theoretical materials science 
+%which are more difficult to identify. It is difficult to identify what exactly 
+%the kernel of the theoretical idea is, and what precisely that idea has enabled. 
+
+%In the following sections, we describe in some more detail the 
+%actual scale of the increase in computing power and then we will
+%attempt to identify the major theoretical pillars of 
+%materials modelling.
+
+%The second of Ehrenreich's points addresses the state of
+%{\it ab initio} calculations in 1988 and the inherent 
+%difficulties in performing them. The subsequent thirty years 
+%has seen an enormous extension of computing capacity. 
 
 %For an entertaing introduction to the history of computing see 
 %George Dyson's Turing's Cathedral~\cite{dyson12} 
 %and the references therein. For a technical review of 
 %the state of computing in 1980 see Ref.~\cite{metropolis80}.
 
-A suitable place to begin a potted history of $20^{\rm th}$
+A suitable place to begin our potted history of $20^{\rm th}$
 century computing is in 1936 with Alan Turing's, ``On Computable Numbers, 
 With An Application to the Entsheidungsproblem"
 \cite{turing36a}. Turing's concerns were in the domain of pure mathematics and
-formal logic. However his method of tackling the problems in his chosen field by
-invoking a black box machine capable of performing certain tasks by discrete operations,
-would have transformative consequences for science and technology. 
+formal logic. 
 
-Turing's hypothetical machine could advance and rewind a long,
-segmented piece of tape one space to the left or one space to the right iteratively. 
-The machine could print or erase a symbol on each segment of the tape and alter 
-and maintain an internal state.
-This abstract black box would serve as a computer and could be programmed 
-to calculate. Turing made no formal engineering specifications for 
-how that box should be built. 
+To place this in the context of materials science Wigner's work on
+the cohesive energy of metallic sodium \cite{wigner33,bouckaert36} and Fuchs' work on
+the energetics and elastic constants of monovalent metals \cite{fuchs36} appeared in 
+adjacent years.
+Charles Coulson's self-consistent field calculation for molecular hydrogen would appear 
+two years later \cite{coulson38} (see Fig.~\ref{fig:coulsonh2} for representative results 
+from 1938). This was possibly the first self-consistent calculation of the electronic structure
+of a molecular system. Hartree's self-consistent field work had focused 
+on atomic systems like He, Rb$^{b+}$, Na$^{+}$, Cl$^{-}$ atom\cite{hartree28} and
+Brillouin had also concentrated on the ionasition energies of atomic systems for
+which there was abundant experimental data\cite{brillouin34}.
+%
+\begin{figure}
+\begin{center}
+\includegraphics[scale=1.0]{./intro/coulsonh2.png}
+\caption{Charles Coulson's self-consistent field calculation of an $H_2$ 
+         molecule leading to graphical data on the wavefunctions and charge density.
+         These sorts of figures abound in the literature for increasingly complex arrangements
+         of atoms.\label{fig:coulson2}}
+\end{center}
+\end{figure}
+%
+The numerical integrals that arose in these 
+works were tabulated by hand, and in Coulson's case, these tables 
+would be shared between authors. Fig.~\ref{fig:coulsonh2} and the paper it originates
+from is interesting in that it forms a sort of template for innumerable subsequent publications.
+The information presented, the shape of the wavefunctions and the charge density
+profile and energetics is the same all that changes is
+increasingly complex arrangements of atoms are considered. This subsequent work is enable
+by the mechanization of the numerical workload implicit in these figures. 
 
-The journey from this magic theory box to a machine capable of manipulating
-numbers is the history of modern computing. From this basic set of processes
-all the mechanisms to add, subtract, multiply, divide, take square roots, 
-cubed roots, to take logs, to store, copy, and erase numbers, had to be 
-invented. As Turing noted the important point about
-these machines is that they are discrete, the fact that they are electronic
-is an engineering choice; a choice made for speed.
+%However his method of tackling the problems in his chosen field by
+%invoking a black box machine capable of performing certain tasks by discrete operations,
+%would have transformative consequences for science and technology. 
+%Turing's ideal computing machine, a black box, which 
+%could advance or rewind a long
+%segmented piece of tape one space to the left or one space to the right iteratively. 
+%The machine could print or erase a symbol on each segment of the tape and alter 
+%and maintain an internal state.
+%This abstract black box would serve as a computer and could be programmed 
+%to calculate. Turing made no formal engineering specifications for 
+%how that box should be built. 
 
+The journey from Turing's idealized machine to a physical machine capable of manipulating
+numbers is the history of modern computing. From a set of fundamental operations
+the mechanisms required to add, to subtract, to multiply, to divide, to take square roots, 
+to take logarithms, to store numbers and instructions,to copy, and to erase numbers, had to be 
+invented. 
+
+%As Turing noted the important point about
+%these machines is that they are discrete, the fact that they are electronic
+%is an engineering choice; a choice made for speed.
+
+This work began in earnest towards the end of World War II and through the 1940s and early 1950s,
+and from that point progress in computer engineering has followed an exponential growth pattern.
 A figure to set the scale for the rise in the accesibility of digitial computing 
 in the 20$^{\rm th}$ century is given in a report
 by the U.S. Office of Naval Research. Seventeen years after Turing's paper 
 was published in March of 1953 there were 53 kilobytes of 
 random access memory on Earth.\cite{dyson12, usonr53}
 These kilobytes were scattered across a few private and government machines. 
+The reader will likely carry about six orders of magnitude times that capacity in their pocket.
 
-One of the first major attempts to construct a physical computing machine was 
-undertaken in Princeton. The machine was named \texttt{MANIAC} 
-(Mathematical and Numerical Integrator and Computer).
-The types of computations that were performed in the early days of the MANIAC 
-were for thermonuclear applications. In an almost too perfect juxtaposition.
-in the early hours of the night, between simulations of 
-the shockwaves required to trigger thermonuclear explosions, Nils Baricelli 
-would squeeze in the first computational biology simulations of how genes mutated
-and combined to understand how living organisms might have emerged
-and evolved. \cite{dyson12, barricelli54, barricelli62}.
+%One of the first major attempts to construct a physical computing machine was 
+%undertaken in Princeton. The machine was named \texttt{MANIAC} 
+%(Mathematical and Numerical Integrator and Computer).
+%The types of computations that were performed in the early days of the MANIAC 
+%were for thermonuclear applications. In an almost too perfect juxtaposition.
+%in the early hours of the night, between simulations of 
+%the shockwaves required to trigger thermonuclear explosions, Nils Baricelli 
+%would squeeze in the first computational biology simulations of how genes mutated
+%and combined to understand how living organisms might have emerged
+%and evolved. \cite{dyson12, barricelli54, barricelli62}.
+%The computational scientist of the early 1950s working
+%on the MANIAC had a number of additional 
+%technical difficulties to overcome beyond those of present day programmers. 
+%For instance programming errors, where reprogramming often meant physically rewiring
+%the machine, had to be surmounted along side exploding
+%vacuum tubes and mice meeting their untimely demise in the circuitry.
 
-The computational scientist of the early 1950s working
-on the MANIAC had a number of additional 
-technical difficulties to overcome beyond those of present day programmers. 
-For instance programming errors, where reprogramming often meant physically rewiring
-the machine, had to be surmounted along side exploding
-vacuum tubes and mice meeting their untimely demise in the circuitry.
-
-As the physical development of these machines progressed 
-the algorithms that would be run on them had to be created.
-One algorithm with which these notes will be particularly concerned was published by
-Cornelius Lanczos: ``An Iteration Method for the Solution of the Eigenvalue Problem of Linear
+As the physical development of these machines has progressed 
+the algorithms that were to run on them had to be created.
+One algorithm with which we will repeatedly turn to in these notes 
+was published by Cornelius Lanczos: ``An Iteration Method for the Solution of the Eigenvalue Problem of Linear
 Differential and Integral Operators"\cite{lanczos50}. In timely fashion, Lanczos described 
-an iterative algorithm for determining the eigenvalues and eigenvectors for a given
-matrix using a method particularly well suited to a computer. 
-This iterative approach to determining the spectral properties of operators 
-should become fairly familiar by the end of these notes. 
-The algorithm itself and the way it is related to the computation
-of material properties will be the first port of call in 
-Chapter~\ref{eq:invariance}. 
+an iterative algorithm for determining the eigenvalues and eigenvectors of
+matrices using a method particularly well suited to a computer. 
+Iterative approaches to determining the spectral properties of operators 
+will become fairly familiar by the end of these notes. 
+%The algorithm itself and the way it is related to the computation
+%of material properties will be the first port of call in 
+%Chapter~\ref{eq:invariance}. 
 
 Interestingly, for the purposes of our story, 
 Cornelius Lanczos had also made an important contribution in the early
 days of Quantum Mechanics. He was one of the early workers
-to recognize the equivalence between the Schr\"odinger and Heisenberg
+to recognize the equivalence of the Schr\"odinger and Heisenberg
 formulations of quantum mechanics\cite{lanczos26}. %see Zeitschrift fur Physik 35, 812 (1926). 
 The means by which he related Heisenberg's matrix mechanics to
 Schr\"odinger's wave equation was by exploiting a Green's function formalism. In addition
 to the iterative approach to the solution of linear equations the use of Green's functions
-will form a central topic of study in these notes. 
+will form a central topic.
 
-We now jump forward to 1987. The vacuum tubes have
-now been replaced by solid state transistors. Our chosen 
+Let us now return to 1988. The vacuum tubes of the late 1940s have
+now been replaced by solid state transistors. A top of the line machine 
 representative from this era is the Connection Machine.
 \footnote{One of the employees at Thinking Machines Corporation,
 the company building the connection machine, was Richard Feynman
@@ -425,16 +537,17 @@ Hillis' article in Physics Today 42, 2, 78 (1989).}
 
 For those interested in such things we may list off specifications of 
 that machine and compare them with a machine from 2017. The 
-CM-2 was launched in 1987 and was configured with 512 MB of RAM and 25 GB of RAID
-hard disk space. It had 65K microprocessors (each with 600 bytes of memory). 
+Connection Machine-2 was launched in 1987 and was configured with 512 MB of RAM and 25 GB of RAID
+hard disk space. 
+It had 65 thousand microprocessors (each with 600 bytes of memory). 
 By contrast the HPC machine presently accessible to the author 
 is more easily measured in nodes. Each node in a machine has 2x12 core Intel Broadwell processors.
 Each {\emph node} has 128 GB RAM and 120 GB static storage. The machine has in total 720 nodes. 
 The processors themselves have up to 10 cores with clock speeds, the rate at which 
-instructions can be executed, on the order of 3 GHz. A clock speed of 12.5 MHz 
-would be representative in 1987. 
+instructions can be executed, on the order of 3 GHz versus 
+a clock speed of 12.5 MHz for the connection machine. 
 Each processor, on the `modern' machine, has a cache 
-space of 10x 256 KiB L2 Cache, and 25 MiB of L3 cache,
+space, memory that can rapidly accessed, of 10x 256 KiB L2 Cache, and 25 MiB of L3 cache,
 this is to be compared with 600 bytes in the connection machine. 
 Nowadays there could be on the order of 3 billion transistors in a 
 single microprocessor; in 1987 that number would be closer to 100,000. 
@@ -443,11 +556,11 @@ Listing specifications like RAM and clock speeds doesn't necessarily clarify
 how much more powerful machines have become, 
 but it is striking that in terms of speed, storage, and transistor density 
 there are 3-5 orders of magnitude improvements in each category. 
-The stability and optimization of compilers and the ease of programmability
-of the machines has also improved.
 
-A tour of the literature over the years reveals the changing nature of computation.
-Perhaps the first ab initio determination of the electronic eigenvalues and eigenstates
+Comparisons of this sort, that is comparing the types of machines available to different researchers
+over the years, reveals the changing nature of computation. References to the machines (or in some cases
+the people) who performed the numerical work supporting a publication are scattered throughout the literature.
+For instance we may take this from an ab initio determination of the electronic eigenvalues and eigenstates
 in sodium using numerical techniques comes from a paper by von der Lage and Bethe in 1947:
 %
 \begin{quote}
@@ -458,18 +571,23 @@ check on two of the functions at the Thomas Watson Computing Bureau at Columbia 
 \end{quote}
 %
 
-%From C. A. Coulson from 1952 in a paper calculating the band structure of graphite, 
-%``We should like to acknowledge the provision of a calculating machine by the
-%British Iron and Steel Research Association..."
+From C. A. Coulson from 1952 in a paper calculating the band structure of graphite, 
+%
+\begin{quote}
+We should like to acknowledge the provision of a calculating machine by the
+British Iron and Steel Research Association..."
+\end{quote}
 
 The ability to distribute and adapt code has also changed significantly. 
 Code repositories, versioning systems, and the internet mean entire software
 packages can be cloned, branched, modified, and shipped. We may compare the
-present state of affairs with the following advertisement of an early version
-of the Recursion Library (to be dealt with in detail soon):
+present state of affairs where software can be accessed instantly over the internet
+with the following advertisement of an early version
+of the Cambridge Recursion Library (to be dealt with in detail soon) which appeared
+in Solid State Physics Vol. 35:
 
 \begin{quote}
-C. M. M. Nex, Cambridge Recursion Method Library of computer
+[please contact] C. M. M. Nex, [re:] Cambridge Recursion Method Library of computer
 programs in FORTRAN, available from the Secretary, T.C.M. Group,
 Cavendish Laboratory, Madingley Road, Cambridge CB3 0HE, England,
 at a price of \pounds 5, \$ 10, or the equivalent to cover handling costs.
@@ -478,49 +596,61 @@ The library continues to be improved, the latest version
 as in the present volume.
 \end{quote}
 
-This constant and transforming development of computation that 
+The constant and transforming development of computers
 has played an important component in enabling {\it ab initio} 
-calculations. 
-It is this constant and dramatic development of computing capacity that 
-means we may conclude that {\it ab initio} 
-calculations are nowadays more routine then they when Ehrenreich was writing.
-This constitutes an area of real progress in the field of theoretical
+calculations and constitutes an area of real progress in the field of theoretical
 materials science. 
 
 It would be unreasonable to hope 
 the availability of computational resources will continue to develop
-at the pace of the last thirty years. In these notes we will prefer to
+at the pace of the last thirty, or sixty, years. In these notes we will prefer to
 consider ab initio calculations as having reached a satisfactory
 plateau from which we can extract the essential data to build
 the models that will underly our approach to theoretical
 materials science.
 
+If we consider computers to be our automobiles then researchers are their drivers.
+In the next section we will turn away from the engineering triumphs
+achieved in improving the vehicles to the skills and techniques of the pilots
+which they must employ to discover something useful.
+
 \section{Computational Craft}
 What sort of computations might a theoretical material scientist
 wish to compute? One wish list has been provided by O.K. Andersen:
 a material scientist may wish to:
+%
 \begin{quote}
 ... compute groundstate properties such as cohesive energies, interatomic forces, 
 charge transfer, and magnetic moments, and also excitation spectra described 
 by the one-electron Green's function\cite{anderson75}.
 \end{quote}
+%
 
-The theoretical engines driving progress in numerical simulations of materials systems are
-largely based on obtaining descriptions the electronic eigenstates 
-of a system through mean field theories, the effective separation of core and 
-valence electronic interactions to reduce the number of degrees of freedom, 
-the choice of optimal basis sets for describing electronic states, 
-and the various numerical algorithms for 
-computing the eigenstates of electrons in material systems.
+We would like to categorize some of the theoretical techniques driving progress in numerical 
+simulations of materials systems. These techniques are often concerned
+with the steps required to obtaining descriptions of the electronic eigenstates 
+of a system. Mean field theories are often the first technique encountered
+for studying many electron systems e.g. Hartree, Hartree-Fock, and density functional theory. 
 
-As a guide to which developments are considered important we may
-use the citation metrics as a first approximation. The high level of 
-activity in the field of materials science 
+Once these techniques have been encountered the student will start coming to grips
+with more technical aspects of an electronic structure calculation. For instance the effective 
+separation of core electronic states, i.e., those bound tightly to the nucleus and unlikely
+to participate directly in the formation of chemical bonds, from the 
+valence electrons. This is an important practical point to make calculations feasible.
+
+Also on the side of technique is the choice of representation for your electrons.
+The question of how to represent electronic states and manipulating those representations
+occupies a huge tract of the literature.
+
+To highlight some of the central papers a student may wish to familiarize themselves with,
+and as a guide to which developments are considered important, we may
+use some rough citation metrics as a first approximation. 
+
+The high level of activity in the field of materials science 
 means that foundational papers number their citations in the tens of thousands. 
-
 Table~\ref{tab:foundation} lists some of the papers in the field which, as
 their citation count implies, have enabled subsequent research. 
-These techniques are divided into three categories, 
+We have divided these techniques into three categories, 
 they are either theoretical justification for a calculation scheme, the description of
 a technique that allows for more expedient and/or accurate calculations to be performed, 
 or parameterizations of the exchange-correlation functional which permit the determination
@@ -552,15 +682,15 @@ The actual number of citations are much higher.
 \label{tab:theoreticalpapers}}
 \end{table}
 
-There are no doubt many valid criticisms of Table~\ref{tab:foundation}.
-One obvious criticism is that it is biased towards a particular approach to electronic structure
-based on the description of electronic states using plane waves, pseudopotentials, and density
-functional theory. These methods are suitable for crystalline systems with periodicity and can be pushed 
-to describe more disordered systems on the order, as discussed in Sec.\ref{sec:riseofcomp}, 
-of one thousand atoms. These sorts of techniques are also often favoured by workers 
-studying metallurgical systems from first principles and materials with potential 
-electronic applications.
-
+%There are no doubt many valid criticisms of Table~\ref{tab:foundation}.
+%One obvious criticism is that it is biased towards a particular approach to electronic structure
+%based on the description of electronic states using plane waves, pseudopotentials, and density
+%functional theory. 
+%However these methods are suitable for crystalline systems with periodicity and can be pushed 
+%to describe more disordered systems on the order, as discussed in Sec.\ref{sec:riseofcomp}, 
+%of one thousand atoms. These sorts of techniques are also often favoured by workers 
+%studying metallurgical systems from first principles and materials with potential 
+%electronic applications.
 %To broadly categorize the workers we can say a material scientist 
 %is interested in crystals, alloys, ceramics, glasses, and, possibly, rubbers and elastomers. 
 %Chemists are interested in molecules, 
@@ -572,19 +702,19 @@ electronic applications.
 %Ising and Hubbard models, and the general positions of resonances 
 %and asymptotes in very cold materials and won't be discussed further. 
 
-\section{Justification by Utility}
-The observation that materials processing has evolved in the manner 
+Ehrenreich's observation that materials processing has evolved in the manner 
 of a craft has been imitated in the development of the 
 theory of materials science. Much of first principles modelling is reliant on
-the realization that certain approximations work well. The first is 
-the separatation of degrees of freedom. That is that some electrons in a solid are
+the realization that certain approximations work well. 
+
+The first is, as we have already mentioned, 
+the separation of degrees of freedom. That is that some electrons in a solid are
 tightly bound to a nucleus and behave similarly to how they might behave in an atom.
-This allows these "core electrons" to be frozen out of a calculation, 
+This allows these ``core electrons" to be frozen out of a calculation, 
 via some transformation, and only valence electrons need to be considered. 
 This is an important realization in chemistry as well where it has 
 been long recognized that chemical trends are dominated by
-the valence electrons of atoms. Accordingly, chemical elements are 
-grouped together in the table by their valency. 
+the valence electrons of atoms. 
 
 \begin{table}
 \resizebox{\columnwidth}{!}{%
@@ -597,7 +727,7 @@ that match atomic eigenvalues. & Pseudopotentials \\
 Soft self-consistent pseudopotentials in a generalized 
 eigenvalue formalism \cite{vanderbilt90} & 11,560 & Effective pseudopotentials for 
 first row and transition-metal systems. & Pseudopotentials \\
-Projector augmented-wave method \cite{blochl94paw} & 19,194 & Generalizes pseudopotential 
+Projector augmented-wave method \cite{blochl94} & 19,194 & Generalizes pseudopotential 
 and LAPW methods; allows reconstruction of wavefunctions at nucleus. & Pseudopotentials \\
 Efficacious Form for Model Pseudopotentials \cite{kleinman82} & 3,709 & Reduces number of 
 integrals which need to be calculated in pseudopotential calculations. & Pseudopotentials \\
@@ -620,33 +750,35 @@ treat the same problems but failed to "catch on", or describe techniques which d
 in an incremental way to the works cited here. \label{tab:foundation}}
 \end{table}
 
-\subsection{Exchange and Correlation}
-Without wishing to get bogged down in the technical details of Chapter~\ref{chap:manybodygw}
-we will only remark that to obtain a description of the electronic states of material requires
-a reasonable description of how the electrons in a material interact. Electrons interact
+Without wishing to get bogged down in the technical details of Chapter~\ref{chap:gw}
+we will make the natural remark that to obtain a reasonable 
+description of the electronic states of material requires
+a reasonable description of how the electrons in a material interact. 
+Electrons interact
 with each other via the Coulomb potential which is simple enough. However the long range of 
 this potential, the singularities when the electrons overlap and the difficulty of evaluating
 matrix elements of a many body wavefunction with the coulomb potential have motivated alternative
-approach to incorporating the effect of the interaction of the electrons in material.
-If we look at the work done based on parameterization of the exchange correlation functional 
+approach to incorporating the effect of the interaction of the electrons in material. These
+are mean field theories where we can work with one electron at a time interacting with a mean field.
+One particularly popular description of the mean field comes from density functional theory.
+A functional is parameterized such that given the electron density in a particular region of space
+the functional can tell us the potential an electron travelling through that region of space will feel.
+This sounds too good to be true and it sort of is. Anyone who can come up with a 
+`better' parameterization of this functional can expect to make a lot of new friends. 
+If we look at the work done to parameterize of the exchange correlation functional 
 we see the number of citations approaches 100,000.
-%Naturally that figure includes significant 
-%double counting of citing work, on the other hand we have not included cross citations 
-%between journals in many of the figures quoted, so with some lucky 
-%cancellation the number is probably representative. 
 
-The parameterization is based on what may be considered an abstract question,
-``What might happen if we start squeezing electrons into an imaginary box?".
-We have moved from Turing's computing box to an imaginary box of electrons
-which has been pondered for close to a century now. In passing 
-we observe that the practical utility of these speculative 
-boxes is unreasonable. 
+%The parameterization is based on what may be considered an abstract question,
+%``What might happen if we start squeezing electrons into an imaginary box?".
+%We have moved from Turing's computing box to an imaginary box of electrons
+%which has been pondered for close to a century now. In passing 
+%we observe that the practical utility of these speculative 
+%boxes is unreasonable. 
+%
 
-One outcome of the box of electrons is a family of 
-unremarkable curves that describe the relationship between
-the density of electrons in the box and a total energy. 
-
-The practical consequence is this curve enables the
+The present paramterization of this function results in a set of
+unremarkable curves displayed in Fig.~\ref{fig:ldapz}.
+However, the practical consequence of these curves is they enables the
 structural, electronic, and vibrational properties of an 
 enormous class of materials to be calculated with creditable accuracy.
 %
@@ -685,24 +817,22 @@ or describe techniques which differ in an incremental way to the works cited her
 \label{tab:foundation}}
 \end{table}
 %
-Just how creditable this approach is returns again to point three. 
+
+Just how creditable this approach is brings us back to Ehrenreich's third point.
 The theoretical justifications for the success of the approach are
 secondary to the fact that prior and ongoing experience suggests 
 these techniques capture the quantitative and qualitative features
-of experimental observation. The rate of their acceptance 
-and adoption seems to have tracked their usage in a positive 
-feedback loop. 
-
-If you look through a typical density functional based electronic structure code 
+of experimental observation. 
+\footnote{If you look through a typical density functional based electronic structure code 
 it is interesting to look at the routine responsible for calculating 
-the local exchange correlation potential. 
-The input required is the electronic density at a point in space \footnote{Beyond the local density
-approximation there a range of increasingly complex parameterizations and
-approximations to the exchange-correlation functional. For instance some functionals
-require the gradient of the density at a point in space.} 
-This  density is inserted as the argument of a subroutine and a single number is returned
-representing an energy. The curve as a function of density 
-has little more structure than that given in Fig.~\ref{fig:ldapz}. 
+the local exchange correlation potential. The routine will be a tiny fraction of the code base.}
+%The input required is the electronic density at a point in space \footnote{Beyond the local density
+%approximation there a range of increasingly complex parameterizations and
+%approximations to the exchange-correlation functional. For instance some functionals
+%require the gradient of the density at a point in space.} 
+%This  density is inserted as the argument of a subroutine and a single number is returned
+%representing an energy. The curve as a function of density 
+%has little more structure than that given in Fig.~\ref{fig:ldapz}. 
 %
 \begin{figure}
 \begin{center}
@@ -727,50 +857,64 @@ band gaps, etc. with varying degrees of success.
 %Despite its apparent simplicity, in all manner of crystalline systems, 
 %this functional enables the theoretical
 %prediction of accurate ground state properties and structures entirely from first principles. 
-There are trends at the moment to reparameterize the simplest exchange-correlation functional
-in order that simulations return a better description of experimental data. The extent
-to which this reparameterization is helpful is debateable. 
-Part of the appeal of the simplest local density approximations is that it is universal. 
-Where a calculation fails to reproduce an experimental data point, and this failure is 
-attributed to the exchange correlation functional, it will be argued that 
-applying a more sophisticated treatment of exchange and correlation is 
-preferred to introducing a complicated reparameterization of the exchange correlation
-function itself.
 
+%In this work we take a strong stance against reparameterizing the simplest exchange-correlation functional
+%in order to improve the agreement of peoples calculations with 
+%experimental data. The extent to which this reparameterization is helpful is debateable. 
+%Part of the appeal of the simplest local density approximations is that it is universal. 
+%Where a calculation fails to reproduce an experimental data point, and this failure is 
+%attributed to the exchange correlation functional, it will be argued that 
+%applying a more sophisticated treatment of exchange and correlation is 
+%preferred to introducing a complicated reparameterization of the exchange correlation
+%function itself.
+
+To conclude this section we refer the reader to Fig.~\ref{fig:loctoglob}.
+%
 \begin{figure}
 \includegraphics[scale=0.35]{./intro/TimelineLocaltoGlobal.png}
 \caption{A selection of papers from 1980 to 1992 that representative of two differing schools of thought. 
 Above the line, global methods based on total energy functionals and large scale computing, below the 
-line local models of interatomic forces and structures. The two approaches are complementary.}
+        line local models of interatomic forces and structures. The two approaches are complementary.
+        \label{fig:loctoglob}}
 \end{figure}
-
-%\section{The Cross-Over}
-%A component of the thesis which inspired these notes is 
-%that there was at some point a crossover where local semi-empirical
-%models of condensed matter systems was over taken by {\it ab initio} 
-%calculations based on density functional theory. 
-%Heralded in Finnis \cite{andersen89}  with reference to \cite{payne87}.
-%The ubiquity of access to {\it ab initio} data has had a significant impact on 
-%Ehrenreich's first point: experimental corroboration. 
-%Cursory surveys of the literature demonstrate the increasing frequency of 
-%appearance of publications which contain no original experimental work. 
-
-Ehrenreich's four points clarify the desired objective for materials modelling:
-a minimal theoretical model informed by {\it ab initio} calculations that accounts for 
-experimental data, and {\it predicts quantitatively} trends in material properties
-across homologous series. In these notes the possibility of exploiting the invariance theorem 
-and recursion techniques is assessed as the optimal framework
-for achieving this objective. 
+%
+Much of what we have discussed to this point has been about computers and ab initio technique.
+A component of the thesis which inspired these notes is 
+that there was, at some point near to when Ehrenreich's article appeared, 
+a crossover where \textit{local} semi-empirical
+models of material systems, (representative papers from this school appear 
+above the line) in Fig.~\ref{fig:loctoglob}, was over taken by {\it ab initio} 
+\textit{global} calculations based on density functional theory (with representative papers
+from this school appearing below the line). 
+This crossover, and the subsequent ubiquity of access to {\it ab initio} data, 
+has had a negative impact on the immediacy of experimental corroboration 
+and the ability of workers to identify trends in homologous materials.
+One important purpose of these notes is to reaffirm the complementary nature of these
+two schools.
 
 \section{Prospective}
-The purpose of these notes is to collect established tools into 
+In the preceding discussion we have used 
+Ehrenreich's four points to guide our analysis of the field of materials modelling
+and determine some requirements for what we want from a theory of materials modelling.
+We are looking for a minimal theoretical model, 
+informed by {\it ab initio} calculations, that accounts for 
+experimental data, and {\it predicts quantitatively} trends in material properties
+across homologous series. 
+
+The good news is many of the required techniques to accomplish this have
+already been developed. It is the purpose of these notes to collect 
+these established tools into 
 a framework for mapping first principles knowledge about material systems 
-onto concise mathematical models. 
+onto concise mathematical models. The techniques we will employ are built
+on the properties of invariance and recursion and we will have much more to 
+say about them in the coming chapters. Here we will give a brief overview
+of what to expect.
 
 In the first chapter the ideas underlying invariance and the 
 theory of the local atomic environment are presented along with references
-to the original work. The recursion technique is introduced. 
-Recursion techniques are viewed as the {\emph central unifying technique} in these
+to the original work much of it performed by Haydock and his contemporaries at Cambridge 
+throughout the 1970s. The recursion technique is introduced. 
+Recursion techniques are viewed as the \textit{central unifying technique} in these
 notes and all subsequent discussion is formulated with recursion in mind.
 
 After having spent some (considerable) time on invariance and recursion
@@ -810,8 +954,8 @@ appropriate for performing recursion type calculations.
 %local computations of the screened Coulomb and electron-phonon
 %coupling parameters required to compute transition temperatures.
 
-Chapter~\ref{chap:metallurgy} looks at metallurgical concepts 
-and a few interesting calculations which can be performed 
+In Chapter~\ref{chap:metallurgy} we turn to applications and
+look at metallurgical concepts a few interesting calculations which can be performed 
 using recursion techniques. 
 
 Finally, Chapter \ref{chap:bayes} extends recursion techniques
@@ -819,43 +963,39 @@ to the regime of macroscopic mechanical properties
 and points out some Bayesian techniques 
 for selecting material models and ranking them according 
 to a mathematical criterion. 
-%Married with recursive techniques
-%it is possible to identify novel atomistic configurations
-%and extend our knowledge of materials system by "learning on the fly" 
-%in the sense it was intended by Alessandro De Vita.
 
 All of these techniques have been developed by other workers 
-over a number of years. Collecting them into a single place 
-and working through some applications still seems a worthwhile 
-endeavour. 
+over a number of years. The only present contribution is to 
+collecting them into a single place 
+and work through some applications.
 
-As a companion to these notes a version of Chris Nex's and 
+As a companion to these notes a version of Chris Nex and 
 Roger Haydock's Cambridge Recursion Library
 has been imbedded in a python library. A number of practical examples 
 of calculations can be worked through using this library and these 
 exercises are indicated throughout the notes. 
 This companion calculator's value lies not only
 in the numbers it provides but the physical insight afforded by the 
-calculations. This valuable computational package can then be used for 
-whatever calculations one desires.
+calculations. The hope is that this valuable computational package can then be used for 
+whatever calculations the reader desires to perform.
 
 The recursion method placed in the broad context of twentieth century 
 condensed matter physics is admittedly niche. It has its practitioners, 
 its uses, its successes and limitations like any other field.
-However to the author its importance lies in the close connection between the mathematical
-technique and the reality it seeks to describe. That is the way 
+However to the authors its importance lies in the close connection between the mathematical
+technique and the reality it seeks to describe. As we shall see, 
+the recursion technique naturally captures the way 
 an electron may be associated with 
-one atom and then, through its excursions, hopping from atom to atom as it explores 
-it environment, forming new combinations. It is this process which
-generates the braids and chains which link atoms together into new structures 
-with new properties.
+one atom and then, through its excursions, hopping from atom to atom, 
+as it explores it environment, binding atoms together. 
+It is this process which
+generates the braids and chains which link atoms together 
+with new structures and with new properties.
 
 %From Adrian's biographical sketch of Friedel
 % Could only think about crystals in reciprocal space
 % `owing to an overdose of X-ray scattering.'
-
 %Gibb's has suggested that:
-%
 %\begin{quote}
 %One of the principal objects of theoretical research is to
 %find the point of view from which the subject appears in its
@@ -864,7 +1004,7 @@ with new properties.
 
 This complementarity of mathematical technique and physical reality 
 is best articulated by Heisenberg in a tribute to his friend Rudolf Peierls:
- 
+% 
 \begin{quote}
 In the case of theoretical physics, as we learned it primarily from
 Bohr, the essence neither consists of proofs
@@ -874,7 +1014,7 @@ what one calls physical insight or physical interpretation. The supreme
 requirement of this type of physics is to understand every formula that
 one writes down physically both as to its intellectual content and to its context.
 \end{quote}
- 
+% 
 It is hoped the close marriage of physical insight and mathematical technique 
 afforded by the recursion method will point to a framework where engineers, informed by the
 structure, connectivity, and composition of a material, can consult a simple table of
@@ -884,3 +1024,4 @@ properties of their system derived from quantum mechanics.
 Properties like band gaps, elasticity tensors, conductivities, 
 heat capacities, cohesive energies, adhesive energies, superconducting transition temperatures, 
 and so on. Such a framework would constitute a useful calculus for quantum engineers.
+

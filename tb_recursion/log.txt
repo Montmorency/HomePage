@@ -228,3 +228,19 @@ https://www.dpmms.cam.ac.uk/~stcs/courses/fcm/handouts/papperitz.pdf
 Alan Turing and His Contemporaries. Apparently JHC Whitehead was impressed
 by one of his unpublished results on Groups.
 https://blackwells.co.uk/bookshop/product/9781780171050
+
+Wed  8 Apr 2020 13:42:30 IST
+------------------------------
+Getting ready to write up perturbation theory results which reminds me
+why I started the Topology reading in the first place. I think 
+Perturbation theory should go with the appendix and some `light'
+topological demonstrations. The real topology comes in book number 2 
+anyway.
+
+So instead of doing the write up I've opend Milnor More Theory and Crowell and Fox
+on Knot Theory. This, I would argue, is not pure procrastination.
+
+Alphonse magnus homepage:
+	https://perso.uclouvain.be/alphonse.magnus/
+
+
