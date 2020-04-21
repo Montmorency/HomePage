@@ -1,73 +1,101 @@
 \chapter{The Local Atomic Environment}
 \label{chap:invariance}
 \section{Introduction}
-If you travel in certain material's scientists circles there is a book 
-that comes up for discussion now and then and is  
+If you travel in certain materials scientists circles there is a book 
+that comes up for discussion now and then. This book is  
 generally referred to only as `Vol.~35'. 
 The full title of this remarkable book 
 is \textit{Solid State Physics: Advances in Research and Applications
-Volume 35}. It appeared in 1980 and is
-dedicated to, `the exposition of real space methods.' The editors 
-of the series were Henry Ehrenreich, whom we met in the previous chapter,
+Volume 35}. 
+The editors of the series were Henry Ehrenreich, whom we met in the previous chapter,
 Frederick Seitz and David Turnbull.
+It appeared in 1980 and is dedicated to, `the exposition of real space methods.' 
 
 What is meant by, `...the exposition of real space methods.'?
-To some skeptics the term `real space' (what other type of space is there?) 
-recalls the `campaign for real time' in Douglas
-Adam's Hitchhikers Guide to the Galaxy series. In that work time travel had become
-so prevalent that the continuity of existence was becoming dangerously 
-fractured and reality was becoming intolerably improbably. 
-For Materials scientist real space is the corollary of reciprocal space.
-The use of reciprocal spaces arises naturally in crystalline systems, 
-which have some periodic structure. The interpretation
-of diffraction patterns is most easily accomplished in reciprocal space. That
-is we look for the characteristic diffraction spots which give indications of the 
-spacing of the atomic planes. Electronic waves in crystals experience a similarly
-periodic potential and Bl\"ochs theorem allows us to enumerate and solve for the 
-eigenvalues of the electronic system in reciprocal space as well. For perfectly
-periodic systems reciprocal space is a natural representation to work in. However
-what gains are made in mathematical convenience leads to costs in physical intuition. 
-
-In real space we adopt the perspective of the chemist. The chemist places electrons on
-one atom electrons on another atom and asks what happens when we place those two atoms
-next to each other? For small molecules we may hope this approach will lead us somewhere
-but as the size of our systems increases we must account for the diffusion of the electrons
-throughout the system to obtain an accurate quantitative and qualitative picture of the 
-physics. What we require is an intermediate representation between a strictly localized
-picture of bonding electrons attached to individual atoms and Bloch's picture of 
-electron waves delocalized throughout an entire crystal.
-
-One of the primary early expositors of the
+Some skeptics may object to the term `real space' Afterall, what other type of space is there? 
+To these skeptics `real space' may recall the `campaign for real time' in Douglas
+Adams' Hitchhiker's Guide to the Galaxy series. In that work time travel has become
+so prevalent that the continuity of history was becoming dangerously 
+fractured and reality was becoming intolerably improbable. As a result an organization
+was founded to campaign for restrictions on time travel. A similar issue could be
+argued to have developed in materials science.  
+In fact one of the primary early expositors of the
 real space approach to electronic structure was Jacques Friedel who joked
 many materials scientists could only think about crystals in reciprocal space
 `owing to an overdose of X-ray scattering.' \cite{sutton}.
+In some sense these notes are part of a manifesto for an organization which 
+advocates the use of `real space methods'.
 
-Vol.~35 is dedicated to electronic structure
-theory from the point of view of the local environment. This perspective
-has a long tradition in physical and chemical electronic structure theory.
-This chapter is purely a summary of the work developed there.
-In this chapter we will assume we are given a 
-Hamiltonian in a suitably localized format. 
-That is it only involves terms between
-an atom and its closest neighbours. 
-In Chapter~\ref{chap:gw}
-and Chapter~\ref{chap:wannier} we will look at ways of generating such a Hamiltonian.
-Given such a Hamiltonian Haydock's Recursion method then gives a rapidly convergent 
-scheme for computing quantities of interest. 
+There is a good reason for the ubiquitiy of reciprocal space techniques:
+the use of reciprocal spaces arises naturally in crystalline systems. 
+The periodic structure of crystals means a natural mathematical representation of
+wavefunctions, electronic charge densities, and the lattices themeselves can be found 
+as an expansion of those quantities by sets of sinusoidal waves. Each sinusoidal wave
+can be indexed by a wavenumber $\lambda_n$, e.g. $sin\lambda_{n} x$, which
+has units of inverse length,that is a reciprocal length, whence, reciprocal space. 
+Discussions of the periodic structure are simpler if we make reference directly
+to these wavenumbers.
+So from the earliest days of X-ray crystallography and Bragg reflections
+researchers became accustomed to working in reciprocal space.
+Reciprocal space techniques have proved essential in other branches of science. For instance
+James Watson recalls a note that Francis Crick wrote entitled `Fourier Transforms 
+for Birdwatchers' meant to acquaint biologists with the essential points of reciprocal space.
+In reciprocal space the characteristic diffraction spots give indications of the
+symmetry groups
+and the spacing of the atomic planes. Some honest detective work can then be done to 
+deduce the most likely structure. (See Ref.~\cite{dickinson23} for an  early example of the process
+of determining crystal structure from xray data in this example Molybdenite (MoS$_{2}$).
 
-One of the primary quantities of interest 
-is the density of states (DOS) and the partial density of states (PDOS). 
-This data tabulates the permissible energies that electronic states can take in a solid
-and is the condensed matter analogue of the hydrogen spectral lines. The way this quantity
-is generated is also intrinsically local so we obtain information about the electronic
-environment around an individual atom.
+The periodicity of the atomic lattice means the electronic waves in crystals experience 
+a similarly periodic potential. Bl\"ochs theorem allows us to enumerate and solve for the 
+eigenvalues of the electronic system in reciprocal space as well. 
 
-The real space method is applicable in situations where Bl\"och's theorem no longer holds.
-This is a situation which arises at surfaces, in glasses, disordered structures, 
-in structures with impurities
-vacancies, defects and dislocations. In short the method is applicable
+For perfectly
+periodic systems reciprocal space is a natural representation to work in. However
+what gains are made in mathematical convenience leads to costs in physical intuition. 
+It is difficult to picture an electron delocalized across an entire crystal.
+There is also one particularly awkward and reasonable question: 
+what happens if perfect periodicity is disrupted?
+
+Let us now adopt the perspective of a pragmatic chemist. The pragmatic chemist has the periodic table which
+assigns to each atom a certain number of electrons. The pragmatic chemist knows that the valence electrons
+are the only important electrons. The pragmatic chemists counts valence electrons on
+one atom, valence electrons on another atom, and then asks what happens when we place those two atoms
+next to each other. For small molecules the hope is this approach will lead somewhere.
+As the size of the system increases some account must be made for the diffusion of the electrons
+throughout the system. It turns out accounting for this diffusion is essential to 
+obtain an accurate quantitative and qualitative picture of the 
+physics. 
+
+What we require is an intermediate representation between a strictly localized
+picture of bonding electrons attached to individual atoms and Bl\"och's picture of 
+electron waves delocalized throughout an entire crystal.
+
+Just such a viewpoint is developed comprehensively in Vol.~35 
+and this chapter is purely a summary of the work developed there.
+By the end of this chapter 
+the reader should have some sense of the theory and the technique for calculating
+materials properties in real space.
+The method is applicable in situations where Bl\"och's theorem no longer holds;
+a situation which arises at surfaces, in glasses, in disordered structures, 
+in structures with impurities, 
+vacancies, defects, and dislocations. In short the method is applicable
 to any realistic physical situation and in all cases of engineering relevance.
 
+%In this chapter we will assume we are given a 
+%Hamiltonian in a suitably localized format. 
+%That is it only involves terms between
+%an atom and its closest neighbours. 
+%In Chapter~\ref{chap:gw}
+%and Chapter~\ref{chap:wannier} we will look at ways of generating such a Hamiltonian.
+%Given such a Hamiltonian Haydock's Recursion method then gives a rapidly convergent 
+%scheme for computing quantities of interest. 
+%One of the primary quantities of interest 
+%is the density of states (DOS) and the partial density of states (PDOS). 
+%This data tabulates the permissible energies that electronic states can take in a solid
+%and is the condensed matter analogue of the hydrogen spectral lines. The way this quantity
+%is generated is also intrinsically local so we obtain information about the electronic
+%environment around an individual atom.
 %Topics that are often discussed at the beginning of introductory physics courses include:
 %the study of black body radiation, photoemission phenomenon, De Broghlie waves,
 %electron diffraction experiments and the structure of the hydrogen atom.
@@ -109,17 +137,19 @@ The second purpose is to indicate where the attached computer
 routines in the \texttt{CamRecLib} package can be employed. 
 For many of the sections in this chapter there is an associated example
 which the reader can work through using the attached computational library.
-The reader can then adopt these examples to perform `industrial' calculations 
-for whatever applications may interest them.
+The reader should find these examples can be adapted to perform `industrial' calculations 
+for whatever applications may interest them in a fairly straightforward manner.
 
-To begin we discuss the physical justification for a description of a materials 
+Before we start calculating though we discuss the physical and mathematical
+justification for a description of a materials 
 properties in terms of the local environment. This justification stems from
-what Volker Heine has called the `Invariance Principle'. We then work through
-the derivation of the recursion method and the algebra underlying its application
-to the physical problems we are interested in. As it turns out the recursion method
+what Volker Heine has called the `Invariance Principle'. Once we are satisfied
+with the statement of this principle we can then work through
+the derivation of the recursion method and the algebra underlying its application.
+As it turns out the recursion method
 is closely connected to the theory of continued fractions and orthogonal polynomials.
 The necessary mathematical exposition has been included in Appendix~\ref{appen} 
-which the reader may wish to cross reference as required.
+which the reader may wish to cross reference as required. 
 
 \section{The Invariance Theorem}
 \label{sec:invariance}
@@ -133,7 +163,7 @@ radiation is contained in a cavity with dimensions greater than the wavelengths
 under consideration. Von Laue [1914 Ann. Phys. Lpz 44 1197] demonstrated that the local density of modes at 
 a particular point are exponentially insensitive to the cavity walls.
 
-This analogy has been developed by Friedel [1954 Adv. Phys. 3 446] where
+This analogy has been developed by Friedel \cite{friedel54} where
 the substition is electromagnetic modes for electronic wavefunctions and
 the probability density for finding an electron at a given point
 with a given energy replaces the local density of normal modes\cite{annett94}.
