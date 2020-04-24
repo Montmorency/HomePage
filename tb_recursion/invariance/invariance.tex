@@ -2,84 +2,121 @@
 \label{chap:invariance}
 \section{Introduction}
 If you travel in certain materials scientists circles there is a book 
-that comes up for discussion now and then. This book is  
-generally referred to only as `Vol.~35'. 
+that comes up for discussion and is  
+generally referred to only as \textit{Vol.~35}. 
 The full title of this remarkable book 
-is \textit{Solid State Physics: Advances in Research and Applications
-Volume 35}. 
+is \textit{Solid State Physics: Advances in Research and Applications Volume 35}. 
 The editors of the series were Henry Ehrenreich, whom we met in the previous chapter,
 Frederick Seitz and David Turnbull.
 It appeared in 1980 and is dedicated to, `the exposition of real space methods.' 
 
 What is meant by, `...the exposition of real space methods.'?
-Some skeptics may object to the term `real space' Afterall, what other type of space is there? 
+Some skeptics may object to the term `real space'. After all, what other type of space is there? 
 To these skeptics `real space' may recall the `campaign for real time' in Douglas
 Adams' Hitchhiker's Guide to the Galaxy series. In that work time travel has become
-so prevalent that the continuity of history was becoming dangerously 
+so prevalent that the continuity of history had become dangerously 
 fractured and reality was becoming intolerably improbable. As a result an organization
-was founded to campaign for restrictions on time travel. A similar issue could be
-argued to have developed in materials science.  
-In fact one of the primary early expositors of the
-real space approach to electronic structure was Jacques Friedel who joked
-many materials scientists could only think about crystals in reciprocal space
-`owing to an overdose of X-ray scattering.' \cite{sutton}.
-In some sense these notes are part of a manifesto for an organization which 
-advocates the use of `real space methods'.
+was founded to campaign for restrictions on time travel. 
 
-There is a good reason for the ubiquitiy of reciprocal space techniques:
-the use of reciprocal spaces arises naturally in crystalline systems. 
+A similar issue could be argued to have developed in materials science 
+with regards to the use of reciprocal space instead of real space.  
+Reciprocal spaces arises naturally in crystalline systems. 
 The periodic structure of crystals means a natural mathematical representation of
 wavefunctions, electronic charge densities, and the lattices themeselves can be found 
 as an expansion of those quantities by sets of sinusoidal waves. Each sinusoidal wave
-can be indexed by a wavenumber $\lambda_n$, e.g. $sin\lambda_{n} x$, which
-has units of inverse length,that is a reciprocal length, whence, reciprocal space. 
+can be indexed by a wavenumber $\lambda_n$, e.g. $\sin\lambda_{n} x$. The index $\lambda_n$
+has units of inverse length, i.e. a reciprocal length, whence, reciprocal space. 
 Discussions of the periodic structure are simpler if we make reference directly
 to these wavenumbers.
+
+In fact, one of the primary early expositors of the
+real space approach to electronic structure was Jacques Friedel who joked
+many materials scientists could only think about crystals in reciprocal space
+`owing to an overdose of X-ray scattering.' \cite{sutton15}.
+Similar to the campaign for real time these notes 
+are part of a manifesto for an organization which 
+advocates the use of `real space methods'.
+
 So from the earliest days of X-ray crystallography and Bragg reflections
 researchers became accustomed to working in reciprocal space.
-Reciprocal space techniques have proved essential in other branches of science. For instance
-James Watson recalls a note that Francis Crick wrote entitled `Fourier Transforms 
-for Birdwatchers' meant to acquaint biologists with the essential points of reciprocal space.
-In reciprocal space the characteristic diffraction spots give indications of the
-symmetry groups
+Reciprocal space techniques have proved essential in other branches of science
+like determination of protein structures. 
+In reciprocal space the characteristic diffraction spots give indications of the symmetry groups
 and the spacing of the atomic planes. Some honest detective work can then be done to 
 deduce the most likely structure. (See Ref.~\cite{dickinson23} for an  early example of the process
 of determining crystal structure from xray data in this example Molybdenite (MoS$_{2}$).
 
-The periodicity of the atomic lattice means the electronic waves in crystals experience 
-a similarly periodic potential. Bl\"ochs theorem allows us to enumerate and solve for the 
-eigenvalues of the electronic system in reciprocal space as well. 
+The crystalline structure means that the electrons experience 
+a periodic potential. It is also useful to estimate the wavelengths
+associated with an electron and and some atomic nuclei. In thermal equilibrium
+we can partition the energy between the translational degrees of freedom of our
+particles and use De Broglie's relationship to estimate the wavelength 
+associated with the particle:
+%
+\begin{equation}
+\lambda = \frac{h}{\sqrt{mk_{B}T}}
+\end{equation}
+%
+\begin{table}[!h]
+\center
+\begin{tabular}{|c| c| c| c| c|}
+\hline
+Element & M (a.u.)   & $\lambda$ (150K) & $\lambda$ (330 K) & $\lambda$ (700K) \\
+\hline
+electron   &   0.0005     &      49.4        &   35.9    & 22.47           \\
+H          &   1.01       &      1.1         &   0.8     & 0.5             \\
+C          &   12.01      &      0.3         &   0.2     & 0.1(5)          \\
+Fe         &   55.85      &      0.1(5)      &   0.1     & 0.0(7)          \\
+\hline
+\end{tabular}
+\caption{The wave lengths of free quantum particles in a thermal bath
+at a given temperature. Figures chosen for particles of particular relevance
+to materials scientists and a representative set of 
+temperatures. (1 amu = $1.66(1)\times10^{-27}$ Kg).
+\label{tab:thermalquantumcorrections}}
+\end{table}
+%
+The significant difference in mass of the electron and the atomic nucleii
+dictates the change in the wavelength. 
+Which is essentially a three dimensional diffraction grating of atoms
+with spacing on the order of $10^{-10}m$ we can expect significant 
+interference effects. Bl\"ochs theorem allows us to enumerate and solve for the 
+eigenvalues of the crystalline electronic system in reciprocal space as well. 
 
-For perfectly
-periodic systems reciprocal space is a natural representation to work in. However
+So, for perfectly periodic systems reciprocal space is a natural representation to work in. However
 what gains are made in mathematical convenience leads to costs in physical intuition. 
 It is difficult to picture an electron delocalized across an entire crystal.
-There is also one particularly awkward and reasonable question: 
-what happens if perfect periodicity is disrupted?
+We also frequently encounter situations where the periodicity of the lattice is 
+disrupted.
 
-Let us now adopt the perspective of a pragmatic chemist. The pragmatic chemist has the periodic table which
+Let us adopt the perspective of a pragmatic chemist. The pragmatic chemist has the periodic table which
 assigns to each atom a certain number of electrons. The pragmatic chemist knows that the valence electrons
 are the only important electrons. The pragmatic chemists counts valence electrons on
 one atom, valence electrons on another atom, and then asks what happens when we place those two atoms
-next to each other. For small molecules the hope is this approach will lead somewhere.
-As the size of the system increases some account must be made for the diffusion of the electrons
-throughout the system. It turns out accounting for this diffusion is essential to 
-obtain an accurate quantitative and qualitative picture of the 
-physics. 
+next to each other. For small molecules the hope is this approach will lead somewhere: simple arguments
+based on `closed shells' and the shapes of atomic orbitals helps rationalize a significant
+body of observed chemical behaviour.
 
-What we require is an intermediate representation between a strictly localized
+However as the size of the system increases from that of simple molecules
+some account must be made for the diffusion of the electrons
+throughout the system and their correlation across large distances. 
+It turns out accounting for diffusion and correlation is essential to 
+obtaining an accurate quantitative and qualitative picture of the 
+physics of the solid state.  
+
+To develop this picture we require an intermediate representation between a strictly localized
 picture of bonding electrons attached to individual atoms and Bl\"och's picture of 
 electron waves delocalized throughout an entire crystal.
 
-Just such a viewpoint is developed comprehensively in Vol.~35 
-and this chapter is purely a summary of the work developed there.
+It is just such a viewpoint that has been developed comprehensively in Vol.~35.
+This chapter collects some of the ideas presented in that text as well as
+work, both theoretical and applied, that appeared afterwards.
 By the end of this chapter 
-the reader should have some sense of the theory and the technique for calculating
-materials properties in real space.
+the reader should have some sense of the philosophy, theory,
+and the technique for calculating materials properties in real space.
 The method is applicable in situations where Bl\"och's theorem no longer holds;
 a situation which arises at surfaces, in glasses, in disordered structures, 
-in structures with impurities, 
-vacancies, defects, and dislocations. In short the method is applicable
+in structures with impurities,vacancies, defects, and dislocations. In short the method is applicable 
 to any realistic physical situation and in all cases of engineering relevance.
 
 %In this chapter we will assume we are given a 
@@ -125,20 +162,17 @@ to any realistic physical situation and in all cases of engineering relevance.
 %that results for homologous materials should be computed
 %wherever possible and the results should be compared). 
 
-We have a few objectives in this chapter. The first is to 
-attempt to summarize the incredible range and
-detail of theory and application covered in Vol.~35 of Solid State Physics.
-We have also collected work directly related to the recursion method 
-which appeared shortly after Vol.~35. In this way we can collect 
-all the developments in the technique: local density of states calculations,
-off-diagonal elements, block recursion, perturbation theory, and non-orthogonal recursion,
-under one roof.
-The second purpose is to indicate where the attached computer 
-routines in the \texttt{CamRecLib} package can be employed. 
+An additional goal of this chapter is to indicate where the computational 
+routines in the \texttt{CamRecLib} package can be employed in the service of
+real space calculations. 
 For many of the sections in this chapter there is an associated example
 which the reader can work through using the attached computational library.
 The reader should find these examples can be adapted to perform `industrial' calculations 
 for whatever applications may interest them in a fairly straightforward manner.
+The routines cover the calculation of: local density of states,
+off-diagonal elements of the Green's function, block recursion, 
+perturbation theory, and non-orthogonal recursion. All these terms will 
+be explained in the following.
 
 Before we start calculating though we discuss the physical and mathematical
 justification for a description of a materials 
@@ -146,56 +180,158 @@ properties in terms of the local environment. This justification stems from
 what Volker Heine has called the `Invariance Principle'. Once we are satisfied
 with the statement of this principle we can then work through
 the derivation of the recursion method and the algebra underlying its application.
-As it turns out the recursion method
+
+Finally, it should be mentioned that the recursion method
 is closely connected to the theory of continued fractions and orthogonal polynomials.
 The necessary mathematical exposition has been included in Appendix~\ref{appen} 
 which the reader may wish to cross reference as required. 
 
 \section{The Invariance Theorem}
 \label{sec:invariance}
-Heine presents an extended discussion of the invariance
-theorem. Heine's section begins, by way of introduction, by pointing 
-out an analogy between the the local density of states of a system of interacting
-electrons and the black body spectrum of electromagnetic radiation.
-Weyl [1911 Math. Ann. 71 441] demonstrated demonstrated the total density
-of modes is independent of the shape of the cavity so long as the
-radiation is contained in a cavity with dimensions greater than the wavelengths
-under consideration. Von Laue [1914 Ann. Phys. Lpz 44 1197] demonstrated that the local density of modes at 
-a particular point are exponentially insensitive to the cavity walls.
+Vol.~35 begins with Heine's presentation of the invariance
+theorem. The essential realization which underpins the theory is that
+there is a formal analogy between electrons considered as waves in a solid 
+and the black body spectrum of electromagnetic radiation in a hollow cavity.
+The existence of this analogy means we can apply a central theorem 
+derived for the blackbody spectrum by Weyl and Von Laue which states that
+the local properties of the system are formally insensitive to the boundary 
+conditions of our system. It is this theorem which allows us to construct
+solutions to the Schr\"odinger equation for electrons in a solid built
+out of the local electronic environment.
 
-This analogy has been developed by Friedel \cite{friedel54} where
-the substition is electromagnetic modes for electronic wavefunctions and
-the probability density for finding an electron at a given point
-with a given energy replaces the local density of normal modes\cite{annett94}.
+The origins of this result go back to the early days of quantum theory.
+We will discuss the results of Hermann Weyl, a student of Hilbert and his school 
+at G\"ottingen,and Max von Laue. 
 
-The analogy can be seen by writing the density of states,
-and the local density of states (for each spin direction) as:
+For some context these results were arrived at in light of Plank and Einsteins 
+work in radiation theory and special relativity had been established.
+The work was contemporaneous with Von Laue's nobel winning discovery of X-ray diffraction
+by crystals. A little historical digression is merited here.
+
+Ewald, who also made important contributions to X-ray crystallography,
+authored a biographical sketch of Von Laue. Ewalds suggests that it was assumed 
+by many scientists in Germany around 1910 that
+the thermal motion of atoms would obscure any clear diffraction resonances indicating
+crystalline structure. Von Laue was of the opinion that the experiment should be tried anyway, 
+with and the experimental work was carried out by W. Fridrich and P Knipping \cite{ewald}.
+As it happened they were able to obtain clear diffraction patterns and
+Von Laue was quickly able to provide a mathematical interpretation of the
+diffraction spots (no doubt others modified their theoretical objections 
+to demonstrate that the diffraction must occur). 
+Von Laue's formulation in terms of a three dimensional 
+diffraction grating was quickly complimented by the interpretations of 
+W. H. and W.L. Bragg and their essentially equivalent formulation 
+of the scattering as ocurring off of densely packed atomic planes.
+
+Ewald articulates the impact of Von Laue and the Braggs' work  beautifully:
+%
+\begin{quote}
+Together, these two ideas (those of Von Laue and Bragg) led to the construction of the 
+X-ray spectrometer by means of which plane after plane of a crystal
+structure could be investigated and measured out in terms of known wavelengths... 
+to unravel one crystal structure after the other and to a school of
+scientists who, whether they came from physics or chemistry, were mainly interested
+in deciphering the atomic arrangement in crystals and thereby to delve deeper 
+than ever before ino the mysteries of chemical interaction.
+\end{quote}
+%
+Although we started out this chapter hoping to move away from reciprocal space
+formulations, and still intend to, we are happy to pay tribute to the fundamental
+role it plays in diffraction and the elucidation of the atomic structure of materials.
+
+In any macroscopic material system there are a huge number of degrees of freedom.
+If we are no longer allowing ourselves to use periodic functions to reduce the
+numbers of degrees of freedom in the system we will have to account for each one
+individually.In order to make progress certain quantities are required that effectively
+characterize the physics. One central quantity is the electronic density of states:
 %
 \begin{eqnarray}
-n(E) = \sum_{n}\delta(E-E_{n}) \\
-n(E,\r) = \sum_{n} |\psi_{n}(\r)|^{2}\delta(E-E_{n})
+\label{eq:dos}
+n(E) = \sum_{n}\delta(E-E_{n}).
 \end{eqnarray}
 %
-The local density modes of black-body radiation alternatively can be written:
+This function accounts for all the permissible eigenenergies for electrons 
+in a material system. In an atomic system, for example for an hydrogen atom, the density of
+states will have single delta functions located at all the permissible energy levels
+of the hydrogen atom. These can be computed to good accuracy fairly easily using analytic techniques. 
+In a solid, as one might expect, involving many atoms arranged in complex patterns 
+the spectrum becomes more complicated; this ensures continuing work 
+for materials scientist who can calculate and interpret the distribution of permissible energies.
+
+Eq.~\ref{eq:dos} involves a sum over a macroscopic number $(10^{23})$ of permissible energies.
+Our objective is to restrict this quantity so we can reason about our system based on 
+the local atomic environment. To this end we introduce the local density of states (LDOS)
+\cite{friedel54}:
+%
+\begin{equation}
+\label{eq:ldos}
+n(E,\r) = \sum_{n} |\psi_{n}(\r)|^{2}\delta(E-E_{n}).
+\end{equation}
+%
+The difference between Eq.~\ref{eq:dos} and Eq.~\ref{eq:ldos} 
+is we have introduced the electronic wave functions $\psi_{n}(\r)$.
+The sum over n is still over the macroscopic number of electrons but we have introduced
+a coordinate system with $\r$. If we can demonstrate that the sum evaluated at 
+the point $\r$ is insensitive to changes in the systems more than a few wavelengths 
+away we will have obtained a huge reduction
+in the computational effort required. To accomplish 
+this we must exploit the analogy with blackbody radiation
+and enlist the help of Weyl and Von Laue.
+
+The local density of modes for black-body radiation can be written\cite{annett94}:
 %
 \begin{equation}
 \rho(\omega,\r)= \sum_{i} |\bra \r| \psi_{i}\ket|^{2}\delta(\omega-\omega_{i}),
 \end{equation}
 %
-with $\psi_{i}$ the eigenfunction (of an electromagnetic wave or a wavefunction) for an eigenvalue $\omega_{i}$.\cite{annett94}
-The normal modes of a system can be quite quite sensitive to disturbances but the 
-local density of modes, averaged over a small frequency interval, is a stable quantity 
-insensitive to disturbances more than a few wavelengths away.
+with $\psi_{i}$ the eigenfunction (of an electromagnetic wave or a wavefunction) 
+for an eigenvalue $\omega_{i}$.
 
-The local density of states is related in turn to the diagonal elements of
-the Green's function of a system:
-%
-\begin{equation}
-n(E,\r) = -\frac{1}{\pi}{\rm Im}~G(\r,\r,E)
-\end{equation}
-%
+The demonstrations of the required invariance principle according to Weyl and Von
+Laue proceed along different lines. For our purposes we favour Von Laue's derivation
+but menation a few points in connection with Weyl's work.
 
-\section{Matching Green's Functions}
+Weyl, who presented his results in 1912, 
+as a student of Hilbert's was extremely well versed in the 
+ideas of vector spaces and Green's functions. 
+He demonstrated that the the total density
+of modes is independent of the shape of the cavity so long as the
+radiation is contained in a cavity with dimensions greater than the wavelengths
+under consideration\cite{weyl1912}. The mathematics he employs appear the more modern
+compared with Von Laue's classical demonstration.
+This frequently cited paper by Weyl
+translates as,`Asymptotic distribution law 
+of the eigenvalues of linear partial differential equations with an application
+to the \textit{Holraumstrahlung}'. The germanic compound noun 
+translating literally as `radiation of a cavity with a small hole in it'. 
+This is often, although more obliquely, called a `black body' in English. 
+
+The interested reader, unless they wish to tackle Weyl's German and
+Green's function tour de force is recommended to read Weyl's later reflection on 
+the work in Ref.~\cite{weyl50} where he sketches the derivation of the asymptotic
+behaviour of the eigenvalues using more familiar terms and notation 
+(as well as doing it in English).
+At this point we wish to stress only that Weyl's asymptotic relations 
+\textit{ are not restricted to electromagnetic wave
+phenomenon, in fact, the asymptotic properties are valid in any
+situation where we
+have a linear wave equation leading to vibrations on an oscillating membrane:
+electromagnetic, electronic, or elastic. }
+As we shall see many of the techniques described in this chapter can
+be applied without any significant modification anywhere we have a linearized
+wave equation.
+
+Von Laue's derivation of the invariance principle originates 
+to a much greater degree in experiment and physical
+instituion then Weyl's approach which was of a purely mathematical character. 
+
+\textit{The essential point is that 
+while the normal modes of a system can be quite sensitive to disturbances the 
+local density of modes, when averaged over a small frequency interval, 
+is a stable quantity that is insensitive to disturbances more than a 
+few wavelengths away.}
+
+\section{Green's Functions}
 \label{sec:matchinggreens}
 The following treatment has been developed by Heine which in turn follows the 
 work of Garcia-Moliner and Rubio, and, Velicky and Bartos, Refs.~\cite{garcia69, velicky71, garcia71},
@@ -204,7 +340,7 @@ along with the work of Inglesfield in Refs.~\cite{inglesfield71,inglesfield81}.
 An intuitive grasp of the theory of matching Green's functions is a key component of a material
 modellers outlook. The theme will be returned to time and again throughout these notes and in
 practical applications. Entire subfields of materials science which at first appear distinct 
-are in effect just different methods of solving the Schr\"odinger equations in a convenient
+are in effect just different methods of solving the Schr\"odinger equation in a convenient
 basis for one region and matching it at the boundary to a convenient basis 
 for a solution in another region. Embedding one potential in another, treating impurities,
 the interaction between valence electrons and core electrons all
@@ -288,7 +424,6 @@ is placed on each atom in the crystal an un-normalized Bloch sum can be
 written as $\sum_{\R_{i}} e^{i\k\cdot\R_{i}}\phi_{n}(\r-\R_{i})$. For
 a given $\k$ there will be off-diagonal elements between Bloch sums
 for different atomic orbitals.
-
 
 The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ 
 are used instead of LCAOs, \cite{lowdin62}) gives:
