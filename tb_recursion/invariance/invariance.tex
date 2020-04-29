@@ -89,12 +89,19 @@ It is difficult to picture an electron delocalized across an entire crystal.
 We also frequently encounter situations where the periodicity of the lattice is 
 disrupted.
 
-Let us adopt the perspective of a pragmatic chemist. The pragmatic chemist has the periodic table which
-assigns to each atom a certain number of electrons. The pragmatic chemist knows that the valence electrons
-are the only important electrons. The pragmatic chemists counts valence electrons on
-one atom, valence electrons on another atom, and then asks what happens when we place those two atoms
-next to each other. For small molecules the hope is this approach will lead somewhere: simple arguments
-based on `closed shells' and the shapes of atomic orbitals helps rationalize a significant
+Let us adopt the perspective of a pragmatic chemist. 
+The pragmatic chemist has the periodic table which
+assigns to each atom a certain number of electrons. 
+The pragmatic chemist knows that the valence electrons
+are the only important electrons. The pragmatic chemists 
+counts valence electrons on
+one atom, valence electrons on another atom, and then asks 
+what happens when we place those two atoms
+next to each other. For small molecules, or small regions of large molecules, 
+the hope is this approach 
+will lead somewhere. This hope is well founded simple arguments
+based on `closed shells' and the shapes of atomic orbitals 
+helps rationalize a significant
 body of observed chemical behaviour.
 
 However as the size of the system increases from that of simple molecules
@@ -116,7 +123,8 @@ the reader should have some sense of the philosophy, theory,
 and the technique for calculating materials properties in real space.
 The method is applicable in situations where Bl\"och's theorem no longer holds;
 a situation which arises at surfaces, in glasses, in disordered structures, 
-in structures with impurities,vacancies, defects, and dislocations. In short the method is applicable 
+in structures with impurities,vacancies, defects, and dislocations. 
+In short the method is applicable 
 to any realistic physical situation and in all cases of engineering relevance.
 
 %In this chapter we will assume we are given a 
@@ -172,7 +180,8 @@ for whatever applications may interest them in a fairly straightforward manner.
 The routines cover the calculation of: local density of states,
 off-diagonal elements of the Green's function, block recursion, 
 perturbation theory, and non-orthogonal recursion. All these terms will 
-be explained in the following.
+be explained in the following. The focus is largely on technique at this stage
+and more concrete applications will be made in later chapters.
 
 Before we start calculating though we discuss the physical and mathematical
 justification for a description of a materials 
@@ -183,64 +192,72 @@ the derivation of the recursion method and the algebra underlying its applicatio
 
 Finally, it should be mentioned that the recursion method
 is closely connected to the theory of continued fractions and orthogonal polynomials.
-The necessary mathematical exposition has been included in Appendix~\ref{appen} 
+The necessary mathematical exposition has been included in Appendix~\ref{app:mathsandalgs} 
 which the reader may wish to cross reference as required. 
 
 \section{The Invariance Theorem}
 \label{sec:invariance}
 Vol.~35 begins with Heine's presentation of the invariance
-theorem. The essential realization which underpins the theory is that
-there is a formal analogy between electrons considered as waves in a solid 
+theorem. The essential observation which underpins the invariance theorem 
+is that there is a formal analogy between electrons considered as waves in a solid 
 and the black body spectrum of electromagnetic radiation in a hollow cavity.
-The existence of this analogy means we can apply a central theorem 
-derived for the blackbody spectrum by Weyl and Von Laue which states that
-the local properties of the system are formally insensitive to the boundary 
-conditions of our system. It is this theorem which allows us to construct
+The existence of this analogy, first recognized by Jacques Friedel\cite{friedel54},
+means we can make use of an important property
+of the blackbody spectrum determined by Weyl and Von Laue; i.e.,
+the local statistics of the radiation system, that is the 
+
+is formally insensitive to the boundary 
+conditions of the system so long as the boundary is more than a few
+wavelengths . This results from the destructive interference of the cavity modes 
+outside the small  region of space under consideration. 
+We shall present the gist of Von Laue's argument shortly.
+It is this theorem which will allow us to construct
 solutions to the Schr\"odinger equation for electrons in a solid built
 out of the local electronic environment.
 
 The origins of this result go back to the early days of quantum theory.
-We will discuss the results of Hermann Weyl, a student of Hilbert and his school 
+In particular the work of Hermann Weyl, a student of Hilbert and his school 
 at G\"ottingen,and Max von Laue. 
-
-For some context these results were arrived at in light of Plank and Einsteins 
+Historically these results were arrived at shortly after Plank and Einstein's 
 work in radiation theory and special relativity had been established.
-The work was contemporaneous with Von Laue's nobel winning discovery of X-ray diffraction
+In Von Laue's case his work was contemporaneous with the 
+nobel winning discovery of X-ray diffraction
 by crystals. A little historical digression is merited here.
 
-Ewald, who also made important contributions to X-ray crystallography,
-authored a biographical sketch of Von Laue. Ewalds suggests that it was assumed 
-by many scientists in Germany around 1910 that
-the thermal motion of atoms would obscure any clear diffraction resonances indicating
+Ewald, who made important contributions to X-ray crystallography,
+has authored a biographical sketch of Von Laue\cite{ewald60}. 
+In discussions with other physcists in Germany around 1910 there seemed to be a consensus
+that the thermal motion of atoms would obscure any clear diffraction resonances indicating
 crystalline structure. Von Laue was of the opinion that the experiment should be tried anyway, 
-with and the experimental work was carried out by W. Fridrich and P Knipping \cite{ewald}.
+and the experimental work was carried out by W. Fridrich and P Knipping.
 As it happened they were able to obtain clear diffraction patterns and
 Von Laue was quickly able to provide a mathematical interpretation of the
-diffraction spots (no doubt others modified their theoretical objections 
-to demonstrate that the diffraction must occur). 
+diffraction spots. No doubt the former basis for the theoretical objections 
+to the effect were altered to demonstrate that the diffraction must in fact occur. 
 Von Laue's formulation in terms of a three dimensional 
 diffraction grating was quickly complimented by the interpretations of 
-W. H. and W.L. Bragg and their essentially equivalent formulation 
-of the scattering as ocurring off of densely packed atomic planes.
-
-Ewald articulates the impact of Von Laue and the Braggs' work  beautifully:
+W. H. and W.L. Bragg, which Von Laue viewed as essentially equivalent to his own, 
+of the radiation beams being scattering off of densely packed atomic planes.
+Ewald articulates the impact of Von Laue and the Braggs' work beautifully:
 %
 \begin{quote}
 Together, these two ideas (those of Von Laue and Bragg) led to the construction of the 
 X-ray spectrometer by means of which plane after plane of a crystal
 structure could be investigated and measured out in terms of known wavelengths... 
 to unravel one crystal structure after the other and to a school of
-scientists who, whether they came from physics or chemistry, were mainly interested
+scientists whom, whether they came from physics or chemistry, were mainly interested
 in deciphering the atomic arrangement in crystals and thereby to delve deeper 
-than ever before ino the mysteries of chemical interaction.
+than ever before into the mysteries of chemical interaction.
 \end{quote}
 %
 Although we started out this chapter hoping to move away from reciprocal space
 formulations, and still intend to, we are happy to pay tribute to the fundamental
-role it plays in diffraction and the elucidation of the atomic structure of materials.
+role it has played in diffraction phenomena 
+and the elucidation of the atomic structure of materials.
 
-In any macroscopic material system there are a huge number of degrees of freedom.
-If we are no longer allowing ourselves to use periodic functions to reduce the
+\subsection{The Electronic Blackbody: Local Density of States}
+In any macroscopic material system there is an enormous number of degrees of freedom.
+If we are no longer allowing ourselves to exploit the perfectly periodic structure
 numbers of degrees of freedom in the system we will have to account for each one
 individually.In order to make progress certain quantities are required that effectively
 characterize the physics. One central quantity is the electronic density of states:
@@ -251,12 +268,14 @@ n(E) = \sum_{n}\delta(E-E_{n}).
 \end{eqnarray}
 %
 This function accounts for all the permissible eigenenergies for electrons 
-in a material system. In an atomic system, for example for an hydrogen atom, the density of
-states will have single delta functions located at all the permissible energy levels
-of the hydrogen atom. These can be computed to good accuracy fairly easily using analytic techniques. 
+in a material system. For example for an hydrogen atom the density of
+states will have a delta function located at each of the permissible energy levels
+of the hydrogen atom the discrete values for $E_{n}$ can then 
+be computed to good accuracy fairly easily using analytic techniques. 
 In a solid, as one might expect, involving many atoms arranged in complex patterns 
-the spectrum becomes more complicated; this ensures continuing work 
-for materials scientist who can calculate and interpret the distribution of permissible energies.
+the spectrum becomes more complicated; this complexity ensures continuing work 
+for materials scientist whose job it is 
+to calculate and interpret these distributions.
 
 Eq.~\ref{eq:dos} involves a sum over a macroscopic number $(10^{23})$ of permissible energies.
 Our objective is to restrict this quantity so we can reason about our system based on 
@@ -270,9 +289,11 @@ n(E,\r) = \sum_{n} |\psi_{n}(\r)|^{2}\delta(E-E_{n}).
 %
 The difference between Eq.~\ref{eq:dos} and Eq.~\ref{eq:ldos} 
 is we have introduced the electronic wave functions $\psi_{n}(\r)$.
-The sum over n is still over the macroscopic number of electrons but we have introduced
-a coordinate system with $\r$. If we can demonstrate that the sum evaluated at 
-the point $\r$ is insensitive to changes in the systems more than a few wavelengths 
+The sum over $n$ is still over the macroscopic number of electrons but we have introduced
+an additional spatial variable $\r$. 
+If we can demonstrate that the sum in Eq.~\ref{eq:ldos} evaluated at 
+the point $\r$ is insensitive to changes in the systems more than 
+a few wavelengths 
 away we will have obtained a huge reduction
 in the computational effort required. To accomplish 
 this we must exploit the analogy with blackbody radiation
@@ -284,38 +305,36 @@ The local density of modes for black-body radiation can be written\cite{annett94
 \rho(\omega,\r)= \sum_{i} |\bra \r| \psi_{i}\ket|^{2}\delta(\omega-\omega_{i}),
 \end{equation}
 %
-with $\psi_{i}$ the eigenfunction (of an electromagnetic wave or a wavefunction) 
-for an eigenvalue $\omega_{i}$.
-
+with $\psi_{i}$ the eigenfunction (of an electromagnetic wave) 
+for an eigenvalue (frequency) $\omega_{i}$.
 The demonstrations of the required invariance principle according to Weyl and Von
 Laue proceed along different lines. For our purposes we favour Von Laue's derivation
-but menation a few points in connection with Weyl's work.
+but menation a few points in connection with Weyl's work. 
 
 Weyl, who presented his results in 1912, 
-as a student of Hilbert's was extremely well versed in the 
-ideas of vector spaces and Green's functions. 
+was a student of Hilbert's and was extremely well versed in the 
+ideas of Hilbert spaces and Green's functions. 
 He demonstrated that the the total density
 of modes is independent of the shape of the cavity so long as the
 radiation is contained in a cavity with dimensions greater than the wavelengths
 under consideration\cite{weyl1912}. The mathematics he employs appear the more modern
 compared with Von Laue's classical demonstration.
-This frequently cited paper by Weyl
-translates as,`Asymptotic distribution law 
+Weyl's paper is also the more general. The title translates as,
+`Asymptotic distribution law 
 of the eigenvalues of linear partial differential equations with an application
-to the \textit{Holraumstrahlung}'. The germanic compound noun 
-translating literally as `radiation of a cavity with a small hole in it'. 
+to the \textit{Holraumstrahlung}'. The germanic compound noun \textit{holraumstrahlung}
+translating as `radiation of a cavity with a small hole in it'. 
 This is often, although more obliquely, called a `black body' in English. 
-
 The interested reader, unless they wish to tackle Weyl's German and
 Green's function tour de force is recommended to read Weyl's later reflection on 
 the work in Ref.~\cite{weyl50} where he sketches the derivation of the asymptotic
 behaviour of the eigenvalues using more familiar terms and notation 
 (as well as doing it in English).
-At this point we wish to stress only that Weyl's asymptotic relations 
+At this point we wish to stress that Weyl's asymptotic relations 
 \textit{ are not restricted to electromagnetic wave
-phenomenon, in fact, the asymptotic properties are valid in any
-situation where we
-have a linear wave equation leading to vibrations on an oscillating membrane:
+phenomenon. In fact, the asymptotic properties are valid in any
+situation where we have a linear wave equation leading to vibrations 
+on an oscillating membrane:
 electromagnetic, electronic, or elastic. }
 As we shall see many of the techniques described in this chapter can
 be applied without any significant modification anywhere we have a linearized
@@ -323,13 +342,45 @@ wave equation.
 
 Von Laue's derivation of the invariance principle originates 
 to a much greater degree in experiment and physical
-instituion then Weyl's approach which was of a purely mathematical character. 
+intuition. By making an analogy with the resolving power of a lens
+Von Laue considers the . He sets up the coordinate system pictured
+in Figs.~\ref{fig:vonlaue} modeled on a suggestion of Debye 
+(see Fig.~\ref{fig:debye} for the original \cite{debye1908}).
+%
+\begin{figure}
+\includegraphics{./invariance/VonLaueDiagram.png}
+\caption{Von Laue's geometric construction from Ref.~\cite{vonlaue14}.\label{fig:vonlaue}}
+\end{figure}
+%
+\begin{figure}
+\includegraphics[width=\columnwidth]{./invariance/DebyeCoordinates.png}
+\caption{Debye's geometric construction from Ref.~\cite{debye1908}.\label{fig:debye}}
+\end{figure}
 
-\textit{The essential point is that 
+We have considered it useful to include a more lengthy discussion of Von Laue's 
+derivation. This is partly to be more precise about what the invariance principle
+actually states. Frequently Weyl and Von Laue's papers are cited with the claim
+`they demonstrate an exponential insensitivity of the local behaviour of 
+wave equations to the boundary conditions'. In fact, in neither Von Laue nor Weyl's papers,
+does an explicit decaying exponential appear. The truth is more subtle. 
+
+What is demonstrated is that by carefully setting up equations 
+that described the behaviour of the wave 
+phenomena in a small region of space for a small spectral width, they
+are able to show that for large cavity sizes the cavity radiation intereferes 
+destructively outside these regions.
+The formulations resemble more closely what have come to be called
+windowed Fourier transforms and wavelets. These constructions obtain a better optimized
+description of a wave pattern in terms of the decay of the signal in both 
+real and reciprocal space.
+
+Whether one favours Weyl's approach or Von Laue's \textit{the essential point is that 
 while the normal modes of a system can be quite sensitive to disturbances the 
-local density of modes, when averaged over a small frequency interval, 
-is a stable quantity that is insensitive to disturbances more than a 
-few wavelengths away.}
+local density of modes, averaged over a small frequency interval, 
+is a stable quantity that is formally insensitive to disturbances more than a 
+few wavelengths away.} It is this point that will allow us to study the 
+properties of the electronic, elastic, and vibrational waves in materials
+in terms of the local atomic structure.
 
 \section{Green's Functions}
 \label{sec:matchinggreens}
@@ -489,7 +540,7 @@ L_{l}(\epsilon) \equiv \frac{u'_{l}(r_{0},\epsilon)}{u_{l}(r_{0},\epsilon)} = \f
 (\kappa r_{0}) - \tan \eta_{l} n'_{l}(\kappa r_{0})]} {j_{l}(\kappa r_{0}) - \tan \eta_{l} n_{l}'(\kappa r_{0})]},
 \end{equation}
 %
-wherer:
+where:
 %
 \begin{equation}
 \label{eq:phaseshift}
@@ -555,10 +606,12 @@ in a coordinate space representation reflect the long range order of the materia
 preservation of the phase of the electronic wave function as they move from atom to atom. See
 Chapter~\ref{chap:odlro} for further discussion of this and related points.
 
-The `best' approximations to the explicit formulas for $dd\sigma$, $dd\pi$ and $dd\delta$ and the phase
+The `best' approximations to the explicit 
+formulas for $dd\sigma$, $dd\pi$ and $dd\delta$ and the phase
 shift $d_{0}'$ of the diagonal tight-binding elements 
 These difficulty have been addressed in a number of works 
-\cite{hubbard67,mueller67}, \cite{hubbard68}, \cite{hubbard69} \footnote{Another computational
+\cite{hubbard67,mueller67}, \cite{hubbard68}, \cite{hubbard69} 
+\footnote{Another computational
 snapshot comes from Ref.~\cite{hubbard69}, "...smaller secular 
 equations are used, taking about one second per k point on an IBM  360/65." The
 main storage capacity of those machines was 524 kilobytes. See Fig.~\ref{fig:ibm360}
@@ -568,17 +621,22 @@ energy independent Hamiltonian, amenable to tight binding for the d electrons.
 
 Deriving an effective, tight binding, energy indepedent parameterization
 of d electron structure  culminated in the work of D. G. Pettifor's \cite{pettifor69}. 
-Pettifor's work produced a justifiable scheme for computing the two center tight binding integrals of Slater
-and Koster, $dd\sigma$, $dd\pi$, $dd\delta$ in terms of the position and halfwidth of the resonance:
-$\epsilon_0$ and $\Gamma$. It is worthwhile considering the achievement of these collected papers.
-With relatively limited computing power the workers determined 
+Pettifor's work produced a justifiable scheme for computing the 
+two center tight binding integrals of Slater
+and Koster, $dd\sigma$, $dd\pi$, $dd\delta$ in terms of the position and 
+halfwidth of the resonance:
+$\epsilon_0$ and $\Gamma$. 
+
+It is worthwhile considering the achievement of these collected papers.
+Using primarily analytic techniques the workers determined 
 the positions of atomic eigenvalues, band widths, and the effect 
-of atomic scattering potentials. In 
+of atomic scattering potentials for transition metals. In 
 the course of the work a great deal of algebraic manipulation of spherical 
 harmonics and plane waves is required, along with the determination
-of numerical values via graphical methods. All in all a laborious but fruitful task resulting
-in energy independent matrix elements localized to nearest (next nearest ) 
-neighbours real and reciprocal space.
+of numerical values via graphical methods. All in all 
+a laborious but fruitful task resulting
+in energy independent matrix elements localized to 
+nearest (next nearest) neighbours.
 
 The work of Pettifor and colleagues in determining justifiable tight 
 binding parameters for transitional metals, 
@@ -803,9 +861,8 @@ and when generalized to determinants for $|D_{n}|$, $|D_{n+1}|$, and $|D_{n+2}|$
 \frac{{\rm det}|D_{n}|}{{\rm det}|D_{n+1}|} = E-a_{n}-\frac{b^{2}_{n+1}}{\frac{{\rm det}|D_{n+1}|}{{\rm det}|D_{n+2}|}}
 \end{equation}
 
-\footnote{
-\index{C. Lanczos} J. Res. Natl. Bur. Stand. 45, 255 (1950) 
-used the chain model in numerical work as a way of diagonalizing matrices
+\footnote{\index{C. Lanczos}\cite{lanczos50}
+used the chain construction as a way of diagonalizing matrices
 that could be implemented efficiently in a computer.
 Chebyshev used chain models for approximating functions on an interval
 P. L. Chebyshev, Bull. Acad. Imp. Sci. St. Petersbourg 1, 193 (1859)}
@@ -2776,6 +2833,14 @@ toolkit for performing highly accurate calculations of material properties.
 
 \section{Questions}
 \begin{itemize}
+\item From Local to Bl\"oched. Use Bl\"och's theorem to obtain the density of states
+        for the constant chain. Let the atoms be spaced with a distance $L$
+        and the hopping energy by b. Bl\"och's theorem requires that the phase
+        increases with each step along the chain \psi_{k}(r) = e^{-i(n+1)x/L}. 
+        The permissible energies come from solving the secular equation for a  
+        $2\times2$ hamiltonian with off diagonal elements b.
+        
+
 \item (Kwidzinski: Continued Fractions and Classical Vibrations) 
       Let $x_{n}(t)$ be a time dependent function for the position of mass $m$.
       For a one sided infinite chain of coupled harmonic oscillators, with 
