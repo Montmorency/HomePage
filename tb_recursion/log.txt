@@ -253,4 +253,24 @@ ein Lehrbruch
 von
 Wilhelm H Westphal 
 
-Looks like a classic
+Looks like a classic german physics textbook.
+
+
+Wed 29 Apr 2020 21:23:29 IST
+------------------------------
+https://phys.libretexts.org/Bookshelves/Optics/Book%3A_Physical_Optics_(Tatum)/03%3A_The_Cornu_Spiral/3.01%3A_Cornu%27s_Spiral
+
+Definite connection between the asymptotic behaviour and Cornu spirals.
+This is mentioned by Heine, that is the equivalence, and Debye gives
+some expansions for (small/large values of $kr$).
+If we can associate these with van hove singularities that could be interesting
+and the recurrence coefficients.I suppose the situations is slightly complicated 
+but the spherical wave expansion should be a good one far enough away from
+the starting atom.
+
+Anyway once we finish translating Debye should have a clearer idea. 
+
+
+
+
+
