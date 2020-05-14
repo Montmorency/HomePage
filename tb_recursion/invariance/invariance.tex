@@ -415,18 +415,18 @@ We now turn to Von Laue. Von Laue's derivation of the invariance principle origi
 to a much greater degree in experimental and physical
 intuition. 
 Von Laue begins his derivation by making an analogy with the optical resolving power of a lens.
-The reader may notice that at this stage a proliferation of analogy:
-the first between the electron wavefunctions and electromagnetic radiation, and now 
+The reader may notice that we are starting to accumulate analogies:
+the first between the electronic wavefunctions and electromagnetic radiation, and now 
 between the study of electromagnetic waves and the resolutions of lenses, not to mention
 the connection between electromagnetic waves and elastic waves which was recognized by Weyl and Von Laue
-as well. The reader may consult the work of Weyl who examined the 
-underlying mathematical structure which connects all 
-these phenomena more closely. 
+as well. Arguably Weyl's work comes the closest 
+to examining the underlying mathematical structure which connects all 
+these phenomena.
 
 To proceed with the optical analogy Von Laue set up the spherical coordinate system pictured
-in Figs.~\ref{fig:vonlaue} modeled on Debye's study of Cornu spirals and the 
-interference patterns of diffraced electromagnetic waves
-(see Fig.~\ref{fig:debye} for the original Fig. from Debye's work\cite{debye1908}).
+in Fig.~\ref{fig:vonlaue}. Out of interest his discussion follows closely
+analysis modeled on Debye's study of Cornu spirals
+see Fig.~\ref{fig:debye} for the original Fig. from Debye's work\cite{debye1908}.
 %
 \begin{figure}
 \includegraphics{./invariance/VonLaueDiagram.png}
@@ -466,7 +466,7 @@ while the normal modes of a system can be quite sensitive to disturbances, the
 local density of modes, averaged over a small frequency interval, 
 is a stable quantity that is formally insensitive to disturbances more than a 
 few wavelengths away.} It is this point that will allow us to study the 
-properties of the electronic, elasto-mechanical waves in materials
+properties of the electronic and elasto-mechanical waves in materials
 in terms of the local atomic structure.
 
 \section{Bl\"och's Theorem and Slater-Koster Tight Binding}
@@ -481,14 +481,13 @@ Bl\"och's theorem encapsulates this idea by required the electronic
 eigenstates of the crystal be of the form:
 %
 \[
-  \psi_{k} = e^{ik\r}u_n{\r}  \quad {\rm where} u_{n}(\r) = u_{n}(\r+\R),
+  \psi_{k} = e^{ik\r}u_n{\r},  \quad {\rm where}, \quad u_{n}(\r) = u_{n}(\r+\R),
 \]
 %
-where $\R$ is a crystal lattice vector 
-preserving the periodicity of the crystalline system.
+where $\R$ is a crystal lattice vector (i.e. a periodic translation). 
 When a translation operator $\hat{T}$ acts 
-on a Bl\"och state sending $\r\rightarrow \r+\R$ 
-of a crystal then the wavefunction is multiplied by a scalar
+on a Bl\"och state, sending $\r\rightarrow \r+\R$, 
+then the wavefunction is multiplied by a scalar
 value $e^{i\k\cdot\R}$. This is precisely the condition for a vector to be an
 eigenvector.
 
@@ -498,22 +497,19 @@ written as $\sum_{\R_{i}} e^{i\k\cdot\R_{i}}\phi_{n}(\r-\R_{i})$. For
 a given $\k$ there will be off-diagonal elements between Bloch sums
 for different atomic orbitals.
 
-The matrix elements between Bloch sums (where L\"owdin orbitals $\psi_{n}$ 
-are used instead of LCAOs, \cite{lowdin62}) gives:
+The matrix elements between Bloch sums can be written: 
 %
 \begin{equation}
-\sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \psi^{*}_{n}(\r-\R_{i})H\psi_{m}(\r-\R_{j})dV
+        \sum_{\R_{j}} e^{i\k\cdot(\R_{j}-\R_{i})}\times\int \phi^{*}_{n}(\r-\R_{i})\hat{H}\phi_{m}(\r-\R_{j})dV
 \end{equation}
 %
-The development of computers means the secular equations can be solved 
-at arbitrary $\k$ points. In fact, Slater and Koster anticipated that the integrals 
-which arose and the Bl\"och 
-sums could be performed with the help of computers: ``The possibility is not excluded 
+\footnote{Slater and Koster anticipated that the integrals which arose and the Bl\"och 
+sums themselves could be performed with the help of computers: ``The possibility is not excluded 
 that eventually ways will be found to do this work by means of high-speed computers, but
-it will certainly be quite out of the question without such help." 
+it will certainly be quite out of the question without such help."}
 
 The work of Slater-Koster demonstrated how localized atomic
-states built out of the s,p, and d waves familiar from atomic physics, could, 
+states built out of the $s$,$p$, and $d$ waves familiar from atomic physics, could, 
 when modulated by a wave of the form $e^{i\k\cdot\R}$ interfere 
 (constructively or deconstructively) to allow charge to accumulate in different 
 spatial patterns between atoms, and how the variation in the eigenvalues of $H_{\k}$
@@ -531,18 +527,11 @@ wavevector $\k$ were available and Slater and Kosters worked through the diamond
 structures to produce band structures from their interpolation scheme. The mathematical
 details are discussed further in Appendix~\cite{app:appen2}.
 
-The great hope of these notes is that the better we understand how electrons move through crystals the better
-able we are to understand the properties of materials. Although it is 
-often presented as a crude approximation scheme or interpolationg scheme 
+Although it is often presented to undergraduates 
+as an early approximation scheme of historical interest 
 the Slater-Koster picture of electronic
-structure has proven to be a major step forward 
+structure deserves to be regarded as a major step forward 
 in our ability to understand the properties of materials.
-
-%Determining the coefficients involved in the 
-%tight binding energy integrals is somewhat involved. The Coordinate system needs
-%to be set up and the integrals performed for different combinations of spherical
-%harmonics on neighbouring atoms. Ref.~\cite{sharma79,podolsky04} both give explicit
-%expression for generating the coefficients programmatically.
 
 \subsection{Computational Implementation}
 Let us take a concrete example proposed by Kelly\cite{vol35}. 
@@ -550,7 +539,7 @@ This should make the operation of the tight binding scheme a litter clearer:
 %
 \begin{quote}
 As input data we require a convenient local representation of $H$. In simple crystals,
-this is most easily given in terms of interactions with a unit cell and between neighboring cells.
+this is most easily given in terms of interactions within a unit cell and between neighboring cells.
 For a FCC transition metal we have nine orbitals (1 s-orbital, 3 p-orbitals, and 5 d-orbitals) per site, 
 and a diagonal 9x9 matrix for the self-energies of these orbitals. Twelve 9x9 matrices 
 suffice to describe the interaction of any atom with its nearest neighbours.
@@ -716,36 +705,39 @@ and Koster, $dd\sigma$, $dd\pi$, $dd\delta$ in terms of the position and
 halfwidth of the resonance:
 $\epsilon_0$ and $\Gamma$. 
 
-It is worthwhile considering the achievement of these collected papers.
+The achievement of these collected papers is quite remarkable.
 Using primarily analytic techniques the workers determined 
 the positions of atomic eigenvalues, band widths, and the effect 
 of atomic scattering potentials for transition metals. In 
 the course of the work a great deal of algebraic manipulation of spherical 
 harmonics and plane waves is required, along with the determination
-of numerical values via graphical methods. All in all 
-a laborious but fruitful task resulting
-in energy independent matrix elements localized to 
-nearest (next nearest) neighbours.
+of numerical values via graphical methods. 
+%All in all 
+%a laborious but fruitful task resulting
+%in energy independent matrix elements localized to 
+%nearest (next nearest) neighbours.
 
 The work of Pettifor and colleagues in determining justifiable tight 
 binding parameters for transitional metals, 
 effectively completed by 1969, was an important prerequisite for the subsequent 
-development of the recursion method in the 1970s. Generalized tables for tightbinding parameters 
-across the transition metal series has been produced in Ref.~\cite{harrison80}. We have 
+development of the recursion method in the 1970s. By the 1980s 
+generalized tables for tight binding parameters 
+across the transition metal series had been produced in Ref.~\cite{harrison80}. We have 
 collected some numerical values for tight binding parameters 
-in \ref{appen:grouptheory}.
+in Appendix~\ref{appen:grouptheory}.
 
-\subsection{Mathematical Origin}
+\subsection{Mathematical Origin of the Recursion Method}
 The trick of the recursion method, if you like to think of things in terms of tricks, 
-or its generating feature, if you prefer, is that from the outset the `Greenian', the matrix element
-of the Green's function we are interested in, is restricted to a particular matrix element: 
+or its generating feature, if you prefer, is that from the outset 
+we restrict our inquiry to a single `Greenian', i.e., i.e. a single matrix element
+of the Green's function:
 %
 \begin{equation}
 \label{eq:greenian}
-G_{00}(E) = \bra u_{0}|[E-H]^{-1}|u_{0}\ket 
+G_{00}(E) = \bra u_{0}|[E-H]^{-1}|u_{0}\ket.
 \end{equation}
 %
-As Heine puts it in his chapter:
+As Heine describes it:
 %
 \begin{quote}
 Note that we do not want the whole of the inverse matrix $[E-H]^{-1}$, 
@@ -754,7 +746,7 @@ usually inquire about the whole of life, but about one particular matrix element
 $u_{0}$ so that Eq.~\ref{eq:greenian} gives us what, to put it crudely, we want.
 \end{quote}
 
-If we are given a tridiagonal matrix of the form:
+Now let us recall that if we are given a tridiagonal matrix of the form:
 %
 \begin{equation}
 H = \begin{bmatrix}
@@ -818,27 +810,32 @@ that could be implemented efficiently in a computer.
 Chebyshev used chain models for approximating functions on an interval
 P. L. Chebyshev, Bull. Acad. Imp. Sci. St. Petersbourg 1, 193 (1859)}
 
-The coefficients of the continued fraction can be obtained from
-a three term recurrence relation:
+What is then is required is a way for us to generate a tri-diagonal matrix
+in the form of Eq.~\ref{eq:} . Just such a method is given to us
+by the following three term recurrence relation:
 %
 \begin{equation}
 b_{n+1}|u_{n+1}\ket = H |u_{n}\ket - a_{n}|u_{n}\ket - b_{n}|u_{n-1}\ket
 \end{equation}
 
-where:
+where we can recognize a diagonal `on-site' contribution:
+%
 \begin{equation}
 a_{n} = \bra u_{n}|H|u_{n} \ket,
 \end{equation}
-and 
+%
+a projection on to the previous state in the chain: 
+%
 \begin{equation}
-b_{n} = \bra u_{n}|H|u_{n-1} \ket.
+b_{n} = \bra u_{n}|H|u_{n-1} \ket,
 \end{equation}
+%
+and a projection on to the next state of the chain $b_{n+1}u_{n+1}$.
 
-This at least is the rationale given in Vol.~35. In the appendix we pursue an
+This derivation is similar to that given in Vol.~35. In the appendix we pursue an
 alternative derivation of the recursion method that makes the connection
-with some different mathematical techniques a little more explicit. For the connection
-to tridiagonal matrices and expansions in terms of determinants the present derivation
-is good enough to satisfy our mathematical curiousity.
+with some different mathematical techniques a little more explicit. 
+However the present derivation is good enough to satisfy our mathematical curiousity.
 
 \section{Analytic Recursion}
 To get a flavour for what we can calculate with the recursion method we will look
@@ -901,9 +898,9 @@ fraction are known and the recursion relation can be solved exactly.
 %The function chosen to approximate the remaining coefficients is discussed in
 %Refs.~\cite{haydock84, haydock85}.
 
-A great deal of interesting physics can be obtained directly from the chain model. 
+As we mentioned a great deal of interesting physics can be obtained directly from the chain model. 
 For instance, to couple an impurity to a constant chain we allow the first two coefficients $a_{0}$ and $b_{1}$ to vary, 
-and the rest of the chain remains constant. This leads to the expression:
+and the rest of the chain to remain constant. This leads to the expression:
 %
 \begin{equation}
 \label{eq:defectchain}
@@ -914,7 +911,7 @@ There are a few different cases depending on the relative magnitude of $a_0$
 and $b_{1}$ and the chain parameters $a$ and $b$.
 We plot the behaviour of the function for a few different choices of coupling parameters
 $b_{1}$, and the relative position of the defect state $a_0$ in Fig.\ref{fig:gfdefect}. 
-We will return to the idea of coupling single particle states to bands in Chap.~\ref{chap:manybodyrec}. 
+%We will return to the idea of coupling single particle states to bands in Chap.~\ref{chap:manybodyrec}. 
 
 In Fig.~\ref{fig:inband} the defect state energy is placed inside the energy range of the band. The
 results for different couplings $b_{1}$ are plotted.
