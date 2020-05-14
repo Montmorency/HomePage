@@ -244,3 +244,57 @@ Alphonse magnus homepage:
 	https://perso.uclouvain.be/alphonse.magnus/
 
 
+Sat 25 Apr 2020 16:02:47 IST
+ The Debye, Von Laue, and Weyl papers are most fruitful. 
+ Instincts were good onrewriting the blackbody section it 
+ really sets up the rest of the analysis.
+ 
+ If I can get a natural Segue into Green's functions 
+ then we are going to be on a role!
+
+ Also found some papers by Wilman on Kikuchi-Lines. 
+ So it will be good for
+ a number of reasons to have 
+ those to hand.
+
+Tue 28 Apr 2020 19:50:40 IST
+------------------------------
+Bilby's FRSM sketch of Eshelby we have 3 refs one of which we already
+knew about:
+
+(5) The equilibrium of linear arrays of dislocations. 
+    Phil. Mag. 42 351-364
+    
+(6) The force on an elastic singularity 
+    Phil. Trans. R. Soc. Lond. A 244 87-111
+    pg. 131 'haunted by its past.'
+
+(28) The interaction of kinks and elastic waves. 
+     Proc. R. Soc. Lond. A 266 222-246 
+    
+Two additional ones of interest:    
+----------------------------------
+(18) The determination of the elastic field of an ellipsoidal inclusion
+     and related problems. 
+     Proc. R. Soc. Lond. A 241 376-396
+
+     Aspects of the Theory of Dislocations.
+
+He described his work as amusing applications of the theorem of Gauss.
+
+Tony also recommends looking up Bilby.
+  https://royalsocietypublishing.org/doi/10.1098/rsbm.2014.0015
+
+To Read
+ 1954
+ The formation of twins by a moving crack. Phil. Mag. 45, 631–646. 
+
+Hydrogen in Metals
+ 1962
+ (With J. Hewitt) Hydrogen in steel—the stability of microcracks. Acta Metall. 10, 587–600.
+
+ 1975
+ A numerical analysis of the diffusion equation resulting from 
+ the void theory of the trapping of hydrogen in iron and steel. Acta Met., 23, 371–376.
+
+Slip band earthquakes.
