@@ -243,7 +243,6 @@ on Knot Theory. This, I would argue, is not pure procrastination.
 Alphonse magnus homepage:
 	https://perso.uclouvain.be/alphonse.magnus/
 
-
 Sat 25 Apr 2020 16:02:47 IST
  The Debye, Von Laue, and Weyl papers are most fruitful. 
  Instincts were good onrewriting the blackbody section it 
@@ -298,3 +297,14 @@ Hydrogen in Metals
  the void theory of the trapping of hydrogen in iron and steel. Acta Met., 23, 371–376.
 
 Slip band earthquakes.
+
+Fri 24 Apr 2020 11:07:44 IST
+https://www.iucr.org/publ/50yearsofxraydiffraction/full-text/von-laue
+https://books.google.ie/books?id=s4iJBwAAQBAJ&pg=PA6&lpg=PA6&dq=r%C3%A4umliche+winkel&source=bl&ots=argtJ-R-Um&sig=ACfU3U2iMOvlCJfBxtRRI3x7fVybyQnfgQ&hl=ga&sa=X&ved=2ahUKEwiTqtbt6IDpAhU0QhUIHQaBDrIQ6AEwD3oECAkQAQ#v=onepage&q=r%C3%A4umliche%20winkel&f=false
+
+Physik 
+ein Lehrbruch
+von
+Wilhelm H Westphal 
+
+Looks like a classic
