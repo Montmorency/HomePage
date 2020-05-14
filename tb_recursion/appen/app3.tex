@@ -330,7 +330,94 @@ we can write:
 \frac{\partial f(l,m,n)}{\partial l}\frac{\partial l}{\partial alpha})
 \end{equation}
 
+\section{A Menagerie of Tight Binding Parameters}
+%The parameters used in Ref.~\cite{burke78} are appropriate to the BCC structure.
+%The tightbinding Hamiltonian only considers two center contributions, with the parameters 
+%coming from Pettifor\cite{pettifor69} and rescaled to produce the observed
+%bandwidth of tungsten. The parameters are given in Table~\ref{tab:dsurface}.
+For ease of reference we collect here d tight-binding coefficicents
+that have found there way into the literature. The choice of these parameters
+is very much an example of theoretical materials science constituting a 
+craft. In later chapters we will examine some of the developments that set
+tight-binding and the choice of coefficients on a more definite 
+theoretical framework. The Slater-Koster parameters used for FCC, BCC, 
+and HCP crystals in Ref.~\cite{haydock72} are given in Table \ref{tab:pettiparams}.
+%
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|} 
+\hline
+Structure & $dd\sigma$ & $dd\pi$  & $dd\delta$ &  Band-limits \\
+\hline
+FCC       & -0.027784  & 0.012535 & -0.001554  & -0.131 to 0.085 \\ 
+\hline
+HCP       & -0.027784  & 0.012535 & -0.001554  & -0.119 to 0.081 \\
+\hline
+BCC       & -0.03248   & 0.01538  & -0.00200   & -0.119 to 0.097 \\
+          & -0.01341   & 0.00487  & -0.00049   &              \\
+\hline
+\end{tabular}
+\caption{Slater-Koster parameters from Pettifor \cite{pettifor69}, 
+along with band edges in Ry. First and second nearest neighbour 
+parameters are given for BCC crystals. \label{tab:pettiparams}.}
+\end{center}
+\end{table}
+%
+%\begin{table}
+%\begin{tabular}{|c|c|c|}
+%\hline
+%SK Parameter & First Neighbour & Second Nearest Neighbour \\
+%\hline
+%$dd\sigma$ & -0.02992  & -0.05364 \\
+%$dd\pi$    &  0.06652  &  0.01943 \\
+%$dd\delta$ &  0.00800  &  0.00196 \\
+%\hline
+%\end{tabular}
+%\caption{These parameters are difficult to make out from the electronic version of Ref.
+%due to poor resolution of the scan. \label{tab:dsurface}.}
+%\end{table}
+%
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{3}{|c|} {FCC TB Parameters} \\
+\hline
+Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
+\hline
+$dd\sigma$ & -0.027784 & - \\
+$dd\pi$    &  0.012535 & - \\
+$dd\delta$ & -0.001554 & - \\
+\hline
+\multicolumn{3}{|c|} {BCC TB Parameters} \\
+\hline
+Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
+$dd\sigma$ & -0.06560  & -0.03195 \\
+$dd\pi$    &  0.04373  & 0.02130\\
+$dd\delta$ & -0.010934 & -0.00537\\
+\hline
+\end{tabular}
+\caption{The tight binding parameters used for the example recursion 
+calculations in this chapter, in the FCC lattice only nearest neighbours 
+are included.}
+\end{center}
+\end{table}
+
+Whether we are able to create a tight binding description of transition metals
+depends on whether a decent, energy independent, approximation to the electronic 
+structure in fcc/bcc metals can be achieved with 9x9 matrices describing 
+nearest neighbour interactions of spherical harmonics or Wannier functions 
+in the Slater-Koster form.
 
 
+
+The determination of the integration constants is a problem unto itself.
+Tight binding parameters for the transition metals can be extracted from 
+a number of places: tight binding parameters that span the transition
+metal range can be found in Refs. \cite{nieminen76}, \cite{pettifor77} 
+and \cite{jepsen75, andersen77, harrison80}.
+Harrison has also published a set of universal parameters for s-p bonded structures.
+In Chapters~\ref{chap:gw}~and~\ref{chap:wannier} we will show how 
+these parameters may be obtained from first principles. 
 
 

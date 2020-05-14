@@ -1,90 +1,58 @@
 \chapter{The Local Atomic Environment}
 \label{chap:invariance}
 \section{Introduction}
-If you travel in certain materials scientists circles there is a book 
+If you travel in certain materials scientist circles there is a book 
 that comes up for discussion and is  
 generally referred to only as \textit{Vol.~35}. 
 The full title of this remarkable book 
 is \textit{Solid State Physics: Advances in Research and Applications Volume 35}. 
 The editors of the series were Henry Ehrenreich, whom we met in the previous chapter,
 Frederick Seitz and David Turnbull.
-It appeared in 1980 and is dedicated to, `the exposition of real space methods.' 
+It appeared in 1980 and is dedicated to, `... the exposition of real space methods.' 
 
 What is meant by, `...the exposition of real space methods.'?
-Some skeptics may object to the term `real space'. After all, what other type of space is there? 
-To these skeptics `real space' may recall the `campaign for real time' in Douglas
-Adams' Hitchhiker's Guide to the Galaxy series. In that work time travel has become
+One may well ask what other type of space is there? 
+The exposition of `real space methods' may recall the `campaign for real time' in Douglas
+Adams' Hitchhiker's Guide to the Galaxy series. In that work time travel had become
 so prevalent that the continuity of history had become dangerously 
-fractured and reality was becoming intolerably improbable. As a result an organization
+fractured, with people hopping back and forth in time, 
+and reality was becoming intolerably improbable. As a result an organization
 was founded to campaign for restrictions on time travel. 
 
 A similar issue could be argued to have developed in materials science 
-with regards to the use of reciprocal space instead of real space.  
-Reciprocal spaces arises naturally in crystalline systems. 
+with regards to the corollary to real space; what is referred to as reciprocal space. 
+Reciprocal spaces arose as natural way of studying crystalline systems. 
+Let us remove any element of mystery about reciprocal space.
 The periodic structure of crystals means a natural mathematical representation of
-wavefunctions, electronic charge densities, and the lattices themeselves can be found 
+electronic wavefunctions, electronic charge densities, and the lattices themeselves can be found 
 as an expansion of those quantities by sets of sinusoidal waves. Each sinusoidal wave
-can be indexed by a wavenumber $\lambda_n$, e.g. $\sin\lambda_{n} x$. The index $\lambda_n$
-has units of inverse length, i.e. a reciprocal length, whence, reciprocal space. 
-Discussions of the periodic structure are simpler if we make reference directly
-to these wavenumbers.
+can be indexed by a wavenumber $k_n = 2\pi/\lambda_n$, e.g. $\sin k_{n} x$. The index $k_n$
+has units of inverse length (that is units of $1/\lambda$ so that the $\sin$ argument is dimensionless), 
+i.e. a reciprocal length reciprocal space. 
+Discussions of the periodic structure are simplified if we make reference directly
+to these wavenumbers. For three dimensional structure we can have a three dimensional
+real space vector coordinate system and can similarly construct a suitable three dimensional wavevector
+coordinate system; whence, reciprocal space. 
 
+The convenience of the reciprocal space representation meant 
+that from the earliest days of X-ray crystallography 
+researchers became accustomed to working in reciprocal space.
 In fact, one of the primary early expositors of the
 real space approach to electronic structure was Jacques Friedel who joked
 many materials scientists could only think about crystals in reciprocal space
 `owing to an overdose of X-ray scattering.' \cite{sutton15}.
-Similar to the campaign for real time these notes 
-are part of a manifesto for an organization which 
-advocates the use of `real space methods'.
 
-So from the earliest days of X-ray crystallography and Bragg reflections
-researchers became accustomed to working in reciprocal space.
-Reciprocal space techniques have proved essential in other branches of science
-like determination of protein structures. 
-In reciprocal space the characteristic diffraction spots give indications of the symmetry groups
-and the spacing of the atomic planes. Some honest detective work can then be done to 
-deduce the most likely structure. (See Ref.~\cite{dickinson23} for an  early example of the process
-of determining crystal structure from xray data in this example Molybdenite (MoS$_{2}$).
+The usefulness of reciprocal space is not limited to crystallography.
+The periodic crystalline structure means that the electrons traveling through
+a crystal also experience a periodic potential. 
+Felix Bl\"och's\cite{bloch29, schiff65} famous 
+theorem recognized that the character of the electronic wave function
+should reflect this periodicity and he made use of the reciprocal space wavevectors
+to index and obtain the electronic energies 
+in a crystalline system.
 
-The crystalline structure means that the electrons experience 
-a periodic potential. It is also useful to estimate the wavelengths
-associated with an electron and and some atomic nuclei. In thermal equilibrium
-we can partition the energy between the translational degrees of freedom of our
-particles and use De Broglie's relationship to estimate the wavelength 
-associated with the particle:
-%
-\begin{equation}
-\lambda = \frac{h}{\sqrt{mk_{B}T}}
-\end{equation}
-%
-\begin{table}[!h]
-\center
-\begin{tabular}{|c| c| c| c| c|}
-\hline
-Element & M (a.u.)   & $\lambda$ (150K) & $\lambda$ (330 K) & $\lambda$ (700K) \\
-\hline
-electron   &   0.0005     &      49.4        &   35.9    & 22.47           \\
-H          &   1.01       &      1.1         &   0.8     & 0.5             \\
-C          &   12.01      &      0.3         &   0.2     & 0.1(5)          \\
-Fe         &   55.85      &      0.1(5)      &   0.1     & 0.0(7)          \\
-\hline
-\end{tabular}
-\caption{The wave lengths of free quantum particles in a thermal bath
-at a given temperature. Figures chosen for particles of particular relevance
-to materials scientists and a representative set of 
-temperatures. (1 amu = $1.66(1)\times10^{-27}$ Kg).
-\label{tab:thermalquantumcorrections}}
-\end{table}
-%
-The significant difference in mass of the electron and the atomic nucleii
-dictates the change in the wavelength. 
-Which is essentially a three dimensional diffraction grating of atoms
-with spacing on the order of $10^{-10}m$ we can expect significant 
-interference effects. Bl\"ochs theorem allows us to enumerate and solve for the 
-eigenvalues of the crystalline electronic system in reciprocal space as well. 
-
-So, for perfectly periodic systems reciprocal space is a natural representation to work in. However
-what gains are made in mathematical convenience leads to costs in physical intuition. 
+So, at least for perfectly periodic systems, reciprocal space is a natural representation to work in. 
+However what gains are made in mathematical convenience leads to costs in physical intuition. 
 It is difficult to picture an electron delocalized across an entire crystal.
 We also frequently encounter situations where the periodicity of the lattice is 
 disrupted.
@@ -120,55 +88,13 @@ This chapter collects some of the ideas presented in that text as well as
 work, both theoretical and applied, that appeared afterwards.
 By the end of this chapter 
 the reader should have some sense of the philosophy, theory,
-and the technique for calculating materials properties in real space.
-The method is applicable in situations where Bl\"och's theorem no longer holds;
+and the technique for \textit{calculating materials properties in real space}.
+The method is applicable in situations where Bl\"och's theorem no longer applies;
 a situation which arises at surfaces, in glasses, in disordered structures, 
 in structures with impurities,vacancies, defects, and dislocations. 
-In short the method is applicable 
-to any realistic physical situation and in all cases of engineering relevance.
-
-%In this chapter we will assume we are given a 
-%Hamiltonian in a suitably localized format. 
-%That is it only involves terms between
-%an atom and its closest neighbours. 
-%In Chapter~\ref{chap:gw}
-%and Chapter~\ref{chap:wannier} we will look at ways of generating such a Hamiltonian.
-%Given such a Hamiltonian Haydock's Recursion method then gives a rapidly convergent 
-%scheme for computing quantities of interest. 
-%One of the primary quantities of interest 
-%is the density of states (DOS) and the partial density of states (PDOS). 
-%This data tabulates the permissible energies that electronic states can take in a solid
-%and is the condensed matter analogue of the hydrogen spectral lines. The way this quantity
-%is generated is also intrinsically local so we obtain information about the electronic
-%environment around an individual atom.
-%Topics that are often discussed at the beginning of introductory physics courses include:
-%the study of black body radiation, photoemission phenomenon, De Broghlie waves,
-%electron diffraction experiments and the structure of the hydrogen atom.
-%Examination of these topics constitute a suitable foundation 
-%for understanding the formalism and experimental justification for the theory.
-%It is natural to hope that from the understanding of the electronic states of hydrogen the
-%understanding of larger atomic systems, containing progressively more electrons, might emerge. 
-%However as the number of electrons in a system grows the wave function becomes 
-%somewhat unwieldly to work with and the accurate evaluation of the 
-%electron-electron repulsions becomes more difficult. Computers provide a route
-%to numerical solutions of the equations governing the behaviour of these systems.
-%Computer simulations are commonly performed these days in many branches of physics, 
-%chemistry, engineering, and biology. The use of computers to solve Schr\"odinger's 
-%equation for electrons in crystals has led to the proliferation of the 
-%many, many tribes of electronic structure theory. 
-%The tribes are well known to practitioners in the field. A non-exhaustive list
-%of some of these we can name here as: tight binding and linear combination of atomic orbitals (LCAO), 
-%linear muffing tin orbitals (LMTO), plane waves and pseudopotentials, Gaussian orbitals, and 
-%Kohn-Kuttinger-Rostiger theory.
-%While successful in a number of respects numerical work can be tedious 
-%and, more importantly, can obscure underlying
-%mechanisms. There is also a tendency for people working in numerical methods to become 
-%excessively obsessed with algorithmic details and, most importantly,
-%the results of a single calculation may not provide a framework that accounts for a range
-%of phenomenon in homologous series of materials where only slight adjustment of the physical
-%interaction parameters change. (This speaks to Ehrenreich third observation 
-%that results for homologous materials should be computed
-%wherever possible and the results should be compared). 
+In short the method described is applicable 
+to any realistic physical situation 
+and in all cases of engineering relevance.
 
 An additional goal of this chapter is to indicate where the computational 
 routines in the \texttt{CamRecLib} package can be employed in the service of
@@ -185,13 +111,14 @@ and more concrete applications will be made in later chapters.
 
 Before we start calculating though we discuss the physical and mathematical
 justification for a description of a materials 
-properties in terms of the local environment. This justification stems from
+properties in real space terms or what has been called 
+\textit{the local atomic environment}. This justification stems from
 what Volker Heine has called the `Invariance Principle'. Once we are satisfied
 with the statement of this principle we can then work through
 the derivation of the recursion method and the algebra underlying its application.
 
-Finally, it should be mentioned that the recursion method
-is closely connected to the theory of continued fractions and orthogonal polynomials.
+Finally, the reader of this chaper will quickly recognize that the recursion method
+is closely connected to the mathematical theory of continued fractions and orthogonal polynomials.
 The necessary mathematical exposition has been included in Appendix~\ref{app:mathsandalgs} 
 which the reader may wish to cross reference as required. 
 
@@ -203,45 +130,46 @@ is that there is a formal analogy between electrons considered as waves in a sol
 and the black body spectrum of electromagnetic radiation in a hollow cavity.
 The existence of this analogy, first recognized by Jacques Friedel\cite{friedel54},
 means we can make use of an important property
-of the blackbody spectrum determined by Weyl and Von Laue; i.e.,
-the local statistics of the radiation system, that is the 
+of the blackbody spectrum that was first demonstrated by Hermann Weyl and Max Von Laue.
 
+In the case of electromagnetic radiation Weyl and Von Laue
+demonstrated that the local electromagnetic properties of the radiation system 
 is formally insensitive to the boundary 
-conditions of the system so long as the boundary is more than a few
-wavelengths . This results from the destructive interference of the cavity modes 
-outside the small  region of space under consideration. 
-We shall present the gist of Von Laue's argument shortly.
-It is this theorem which will allow us to construct
-solutions to the Schr\"odinger equation for electrons in a solid built
-out of the local electronic environment.
+conditions of the system, so long as the boundary is more than a few
+wavelengths. We can state this informally as `what goes on in the middle
+of a reflecting box is not effected by the shape of the box as long as 
+the walls of the box are far away.' As we shall see we can make these terms
+quite precise.
 
 The origins of this result go back to the early days of quantum theory.
-In particular the work of Hermann Weyl, a student of Hilbert and his school 
-at G\"ottingen,and Max von Laue. 
-Historically these results were arrived at shortly after Plank and Einstein's 
-work in radiation theory and special relativity had been established.
-In Von Laue's case his work was contemporaneous with the 
+In particular the work of Hermann Weyl, a mathematical prodigy and a 
+student of Hilbert and his school 
+at G\"ottingen and, independently, Max von Laue , 
+whose work was contemporaneous with his 
 nobel winning discovery of X-ray diffraction
-by crystals. A little historical digression is merited here.
+by crystals. Historically these results were arrived at shortly after Planck 
+work in radiation theory and Einstein's theory of special relativity had been described.
 
-Ewald, who made important contributions to X-ray crystallography,
+A little historical digression is merited here.
+Ewald, who also made important contributions to X-ray crystallography,
 has authored a biographical sketch of Von Laue\cite{ewald60}. 
-In discussions with other physcists in Germany around 1910 there seemed to be a consensus
-that the thermal motion of atoms would obscure any clear diffraction resonances indicating
-crystalline structure. Von Laue was of the opinion that the experiment should be tried anyway, 
-and the experimental work was carried out by W. Fridrich and P Knipping.
-As it happened they were able to obtain clear diffraction patterns and
+As he writes, in the German physics community c.a. 1910 there seemed to be a consensus
+that the thermal motion of atoms would frustrate the production of any 
+clear X-ray diffraction patterns indicating
+crystalline structure. Von Laue was of the opinion that the experiment should be tried anyway. 
+He had the experimental work carried out by two of his assistant W. Friedrich and P. Knipping.
+As it happened, \textit{they were able} to obtain clear diffraction patterns and
 Von Laue was quickly able to provide a mathematical interpretation of the
-diffraction spots. No doubt the former basis for the theoretical objections 
-to the effect were altered to demonstrate that the diffraction must in fact occur. 
+diffraction spots. (No doubt the former basis for the theoretical objections 
+to the effect were altered to demonstrate that the diffraction must in fact occur.) 
 Von Laue's formulation in terms of a three dimensional 
-diffraction grating was quickly complimented by the interpretations of 
+diffraction grating was quickly complimented by the work of 
 W. H. and W.L. Bragg, which Von Laue viewed as essentially equivalent to his own, 
 of the radiation beams being scattering off of densely packed atomic planes.
 Ewald articulates the impact of Von Laue and the Braggs' work beautifully:
 %
 \begin{quote}
-Together, these two ideas (those of Von Laue and Bragg) led to the construction of the 
+Together, these two ideas (those of Von Laue and the Braggs) led to the construction of the 
 X-ray spectrometer by means of which plane after plane of a crystal
 structure could be investigated and measured out in terms of known wavelengths... 
 to unravel one crystal structure after the other and to a school of
@@ -255,25 +183,46 @@ formulations, and still intend to, we are happy to pay tribute to the fundamenta
 role it has played in diffraction phenomena 
 and the elucidation of the atomic structure of materials.
 
+Before we discuss Von Laue's derivation of what we have come to call 
+the `invariance principle' we shall introduce the local density of states. 
+
 \subsection{The Electronic Blackbody: Local Density of States}
-In any macroscopic material system there is an enormous number of degrees of freedom.
+\label{sec:matchinggreens}
+%\section{Green's Functions}
+In any macroscopic material system there is an enormous number of atomic degrees of freedom.
 If we are no longer allowing ourselves to exploit the perfectly periodic structure
-numbers of degrees of freedom in the system we will have to account for each one
-individually.In order to make progress certain quantities are required that effectively
-characterize the physics. One central quantity is the electronic density of states:
+to place restrictions on the independent degrees of freedom in the system 
+we will have to account for each one
+individually. In order to make progress we need to find some functional 
+distributions which help us account for all these degrees of freedom.
+In the case of the Blackbody we have Planck's distribution which describes
+the excitation of electromagentic waves as a function
+of temperature. 
+For reference the local density of modes for black-body radiation can be written\cite{annett94}:
+%
+\begin{equation}
+\rho(\omega,\r)= \sum_{i} |\bra \r| \psi_{i}\ket|^{2}\delta(\omega-\omega_{i}),
+\end{equation}
+%
+with $\psi_{i}$ the eigenfunction (of an electromagnetic wave) 
+for an eigenvalue (frequency) $\omega_{i}$.
+The analogous distribution we shall use 
+is the electronic density of states:
 %
 \begin{eqnarray}
 \label{eq:dos}
 n(E) = \sum_{n}\delta(E-E_{n}).
 \end{eqnarray}
 %
-This function accounts for all the permissible eigenenergies for electrons 
-in a material system. For example for an hydrogen atom the density of
+This function accounts for the distribution of the electrons 
+across a range of energies in a material system. 
+For example for a hydrogen atom the density of
 states will have a delta function located at each of the permissible energy levels
-of the hydrogen atom the discrete values for $E_{n}$ can then 
-be computed to good accuracy fairly easily using analytic techniques. 
-In a solid, as one might expect, involving many atoms arranged in complex patterns 
-the spectrum becomes more complicated; this complexity ensures continuing work 
+of the hydrogen atom. In the case of hydrogen we can compute the discrete values for $E_{n}$ 
+to good accuracy fairly easily using analytic techniques. 
+In a solid, as one might expect, involving many atoms arranged in complex patterns, 
+the spectrum becomes more complicated and this is reflected in the distribution of
+the electronic energy levels. This complexity ensures continuing work 
 for materials scientist whose job it is 
 to calculate and interpret these distributions.
 
@@ -290,14 +239,8 @@ n(E,\r) = \sum_{n} |\psi_{n}(\r)|^{2}\delta(E-E_{n}).
 The difference between Eq.~\ref{eq:dos} and Eq.~\ref{eq:ldos} 
 is we have introduced the electronic wave functions $\psi_{n}(\r)$.
 The sum over $n$ is still over the macroscopic number of electrons but we have introduced
-an additional spatial variable $\r$. 
-If we can demonstrate that the sum in Eq.~\ref{eq:ldos} evaluated at 
-the point $\r$ is insensitive to changes in the systems more than 
-a few wavelengths 
-away we will have obtained a huge reduction
-in the computational effort required. To accomplish 
-this we must exploit the analogy with blackbody radiation
-and enlist the help of Weyl and Von Laue.
+an additional spatial variable $\r$ which parameterizes the spatial dependence 
+of the electronic wavefunctions. 
 
 The local density of modes for black-body radiation can be written\cite{annett94}:
 %
@@ -307,45 +250,183 @@ The local density of modes for black-body radiation can be written\cite{annett94
 %
 with $\psi_{i}$ the eigenfunction (of an electromagnetic wave) 
 for an eigenvalue (frequency) $\omega_{i}$.
+
+At this stage we will introduce, somewhat abruptly, 
+the Green's function. In chapter~\ref{chap:gw} we will define the Green's function
+with a little more mathematical precision but for present purposes we will
+be a little more casual. We will define our Green's function as an energy dependent
+matrix element of the electronic wavefunctions of the system with the Hamiltonian:
+%
+\begin{equation}
+    G(\r,\r'; E) = \bra\phi_{i\alpha}(\r)|[E + i\delta -H]^{-1}|\phi_{i\alpha}(\r')\ket.
+\end{equation}
+%
+
+Friedel defined the connection between Green's 
+function and local density of states as\cite{friedel54}:
+%
+\begin{equation}
+        \label{eq:friedel}
+    n_{i\alpha}(E,\r) = -\frac{1}{\pi} {\rm Im}\bra \phi_{i\alpha}(\r) |[E + i\delta -H]^{-1}|\phi_{i\alpha}(\r)\ket,
+\end{equation}
+%
+where $\r$ and $\r'$ have been identified. 
+The state $\phi$ which we project on to can be anything we wish. It can be made up of some linear combination 
+of local spherically symmetric atom centered orbitals, bond orbitals, 
+Wannier functions, atomic diplacements, electron spin, or any localized quantity we wish to define. 
+The Green's function is thus a very useful way of encoding information about the spatial and energetic
+distribution of physical quantities. We are only constrained by how easily we can evaluate the matrix elements
+that arise. The work of evaluating matrix elements can become quite tedious and this is why we often resort
+to the use of computers. 
+
+Having introduced the local density of states and the Green's function 
+we now return to our original task which was to 
+demonstrate that the sum in Eq.~\ref{eq:ldos} evaluated at 
+the point $\r$ is insensitive to changes in the system more than 
+a few characteristic wavelengths away.
+
+We can be a little more precise about  
+what constitutes a characteristic wavelength.
+Let us take the elastic case as Von Laue did 
+in 1912; `we find $h\nu_{m}/k = 1860$ leading to a frequency of
+$v_{m}=3.97 10^{13}$sec$^{-1}$,
+with the speed of sound of the order of magnitude of
+$10^{6}$ cm sec$^{-1}$we can estimate the associated wavelength
+as being on the order of magnitude
+$10^{-7}$ cm.' So we can concludes for elastic waves 
+it would appear we can rely on invariance 
+for systems larger than a few nanometers. 
+%W. Nernst u. F. A. Lindemann, Berl. Ber. p.~1160. 1912.
+
+By demonstrating this invariance we will have obtained a huge reduction
+in the computational effort required. To accomplish 
+this we must exploit the analogy with blackbody radiation,
+and to do this we enlist the help of Weyl and Von Laue.
 The demonstrations of the required invariance principle according to Weyl and Von
 Laue proceed along different lines. For our purposes we favour Von Laue's derivation
-but menation a few points in connection with Weyl's work. 
+but we will mention a few points in connection with Weyl's work. 
 
 Weyl, who presented his results in 1912, 
-was a student of Hilbert's and was extremely well versed in the 
+was, as we have mentioned, a student of Hilbert's and was extremely well versed in the 
 ideas of Hilbert spaces and Green's functions. 
 He demonstrated that the the total density
 of modes is independent of the shape of the cavity so long as the
 radiation is contained in a cavity with dimensions greater than the wavelengths
 under consideration\cite{weyl1912}. The mathematics he employs appear the more modern
-compared with Von Laue's classical demonstration.
-Weyl's paper is also the more general. The title translates as,
-`Asymptotic distribution law 
+compared with Von Laue's classical demonstration. He organizes his arguments in
+terms of sets of eigenvalues of integral equations. 
+There is a distinct topological character to some of his arguments and
+it is interesting to note that he prepared an influential monograph on Riemann surfaces
+at the same time as this work on black body radiation\cite{weyl97}. As
+is the mathematicians wont his tendency seemed to be towards
+a mathematically abstract picture of oscillations on arbitrary manifolds; but he grounded
+his work in considerations of electromagnetics and elasticity and examined the consequence
+of Dirichlet's principle on wave equations.
+His paper is titled the,`Asymptotic distribution law 
 of the eigenvalues of linear partial differential equations with an application
 to the \textit{Holraumstrahlung}'. The germanic compound noun \textit{holraumstrahlung}
-translating as `radiation of a cavity with a small hole in it'. 
-This is often, although more obliquely, called a `black body' in English. 
+translating as `radiation in a cavity with a small hole in it'. 
+This is often, although more obliquely, called a `blackbody' in English. 
 The interested reader, unless they wish to tackle Weyl's German and
 Green's function tour de force is recommended to read Weyl's later reflection on 
 the work in Ref.~\cite{weyl50} where he sketches the derivation of the asymptotic
 behaviour of the eigenvalues using more familiar terms and notation 
 (as well as doing it in English).
-At this point we wish to stress that Weyl's asymptotic relations 
+At this point we only wish to stress that Weyl's asymptotic relations 
 \textit{ are not restricted to electromagnetic wave
 phenomenon. In fact, the asymptotic properties are valid in any
 situation where we have a linear wave equation leading to vibrations 
 on an oscillating membrane:
 electromagnetic, electronic, or elastic. }
-As we shall see many of the techniques described in this chapter can
+As we shall see many of the techniques described in these notes can
 be applied without any significant modification anywhere we have a linearized
-wave equation.
+wave equation. Haydock has been one of the prime expositors of this approach 
+exploiting the invariance property of wave equations to study electronic,
+electromagnetic, and elasto-mechanical phenomena. 
 
-Von Laue's derivation of the invariance principle originates 
-to a much greater degree in experiment and physical
-intuition. By making an analogy with the resolving power of a lens
-Von Laue considers the . He sets up the coordinate system pictured
-in Figs.~\ref{fig:vonlaue} modeled on a suggestion of Debye 
-(see Fig.~\ref{fig:debye} for the original \cite{debye1908}).
+Before moving to Von Laue's derivation we shall discuss that of 
+Volker Heine.
+His derivation summarized the lines of development 
+of Garcia-Moliner and Rubio, and, Velicky and Bartos, Refs.~\cite{garcia69, velicky71, garcia71},
+along with the work of Inglesfield in Refs.~\cite{inglesfield71,inglesfield81}.
+The end result of his analysis is he obtains an expression for the Green's function that can be
+written as the sum of two parts:
+%
+\begin{equation}
+G(\r,\r';E) = G_{A}(\r,\r';E) + {\rm boundary ~ corrections},
+\end{equation}
+%
+where he states;
+%
+\begin{quote}
+The importance of this approach would lie in the fact that
+one has a single entity $G_{A}$ to represent an element in anything 
+from a small molecule to a complex alloy.
+\end{quote}
+
+Let us take Fig.~\ref{fig:pseudo} as an example. 
+We have partitioned our system into regions $G_{A}$ 
+near the atoms and another region $G_{B}$ that is valid in the interstitial
+regions between atoms. 
+In the interstitial regions we wish to describe the electronic states in terms of plane waves.
+At the boundary between the two regions we must match the Green's function for the atomic system $G_{A}$, 
+(which we have worked out by some other means analytic or otherwise),
+at a particular radial cutoff and across a specific energy window. 
+%
+\begin{figure}
+\begin{center}
+\includegraphics{./invariance/pseudosplit.png}
+\caption{Schematic representation of decomposing the Green's function into a local atom centered
+Green's function, $G_{A}$, and the Green's function in the interstitial region $G_{B}$.
+A pseudopotential is a function that allows $G_{B}$ to be represented as a relatively
+smooth function of position capable of efficient description in terms of plane waves.
+The functions must match at the cutoff for $G_{A}$ to the solutions for 
+atomic wave functions. Another approach would involve matching the $G_{A}$ 
+and $G_{B}$ explicitly at each stage of the calculation until self-consistency is obtained.\label{fig:pseudo}}
+\end{center}
+\end{figure}
+%
+If we can construct a suitable way of pasting together the regions $G_A$ and $G_B$
+we will have obtained a representation of the local density of states, via Eq.~\ref{eq:friedel},
+and a host of other interesting properties that follows from this knowledge. The requirement is that the 
+we can effective partition the Green's functions that is that the "boundary corrections" remain 
+consistently small.
+
+In fact, an intuitive grasp of the theory of matching Green's functions is a key component of a material
+modellers outlook. The theme will be returned to time and again throughout these notes and in
+practical applications. Entire subfields of materials science which at first appear distinct 
+are in effect just different methods of solving the Schr\"odinger equation in a convenient
+basis for one region and matching it at the boundary to a convenient basis 
+for a solution in another region. Embedding one potential in another, treating impurities,
+the interaction between valence electrons and core electrons, dislocations, grain boundaries, all
+involve in one way or another matching Green's functions across a surface.
+
+While Heine's derivation is internally consistent we 
+do find it useful to pick out two statements he has made which suggest
+a useful complement. In Vol.~35 Heine points out that his derivation of the invariance principle,
+`is completely analogous to the theory of Fresnel half-period zones or the Cornu spiral,'
+however that, `he knows of no general discussion in the literature'. 
+As it turns out Von Laue's original work as it applies to electromagnetic radiation
+is perfectly suited as a general discussion. It also places a slightly different emphasis
+on certain aspects of the derivation and it is well worth revisiting some of the points
+developed in his original work. 
+
+We now turn to Von Laue. Von Laue's derivation of the invariance principle originates 
+to a much greater degree in experimental and physical
+intuition. 
+Von Laue begins his derivation by making an analogy with the optical resolving power of a lens.
+The reader may notice that at this stage a proliferation of analogy:
+the first between the electron wavefunctions and electromagnetic radiation, and now 
+between the study of electromagnetic waves and the resolutions of lenses, not to mention
+the connection between electromagnetic waves and elastic waves which was recognized by Weyl and Von Laue
+as well. The reader may consult the work of Weyl who examined the 
+underlying mathematical structure which connects all 
+these phenomena more closely. 
+
+To proceed with the optical analogy Von Laue set up the spherical coordinate system pictured
+in Figs.~\ref{fig:vonlaue} modeled on Debye's study of Cornu spirals and the 
+interference patterns of diffraced electromagnetic waves
+(see Fig.~\ref{fig:debye} for the original Fig. from Debye's work\cite{debye1908}).
 %
 \begin{figure}
 \includegraphics{./invariance/VonLaueDiagram.png}
@@ -357,106 +438,38 @@ in Figs.~\ref{fig:vonlaue} modeled on a suggestion of Debye
 \caption{Debye's geometric construction from Ref.~\cite{debye1908}.\label{fig:debye}}
 \end{figure}
 
+It is interesting that Von Laue's work predates the wave theory of electrons yet
+the fundamental character
+of these considerations to wave phenomenon in general 
+means that his analysis can be carried over directly with very little modification.
+
 We have considered it useful to include a more lengthy discussion of Von Laue's 
 derivation. This is partly to be more precise about what the invariance principle
 actually states. Frequently Weyl and Von Laue's papers are cited with the claim
 `they demonstrate an exponential insensitivity of the local behaviour of 
 wave equations to the boundary conditions'. In fact, in neither Von Laue nor Weyl's papers,
 does an explicit decaying exponential appear. The truth is more subtle. 
-
 What is demonstrated is that by carefully setting up equations 
 that described the behaviour of the wave 
-phenomena in a small region of space for a small spectral width, they
-are able to show that for large cavity sizes the cavity radiation intereferes 
-destructively outside these regions.
+phenomenon in a small region of space for a small spectral width, they
+are able to show that for large cavity sizes the statistical properties of the 
+cavity radiation are insensitive to the boundary conditions due to destructive intereference effects. 
 The formulations resemble more closely what have come to be called
-windowed Fourier transforms and wavelets. These constructions obtain a better optimized
-description of a wave pattern in terms of the decay of the signal in both 
+windowed Fourier transforms and wavelets; mathematical constructions which 
+obtain an optimized description of a wave pattern in terms of 
+the decay of the signal in both 
 real and reciprocal space.
 
-Whether one favours Weyl's approach or Von Laue's \textit{the essential point is that 
-while the normal modes of a system can be quite sensitive to disturbances the 
+Whether one favours Weyl's approach or Von Laue's or Heine's specialization of these results
+\textit{the essential point is that 
+while the normal modes of a system can be quite sensitive to disturbances, the 
 local density of modes, averaged over a small frequency interval, 
 is a stable quantity that is formally insensitive to disturbances more than a 
 few wavelengths away.} It is this point that will allow us to study the 
-properties of the electronic, elastic, and vibrational waves in materials
+properties of the electronic, elasto-mechanical waves in materials
 in terms of the local atomic structure.
 
-\section{Green's Functions}
-\label{sec:matchinggreens}
-The following treatment has been developed by Heine which in turn follows the 
-work of Garcia-Moliner and Rubio, and, Velicky and Bartos, Refs.~\cite{garcia69, velicky71, garcia71},
-along with the work of Inglesfield in Refs.~\cite{inglesfield71,inglesfield81}.
-
-An intuitive grasp of the theory of matching Green's functions is a key component of a material
-modellers outlook. The theme will be returned to time and again throughout these notes and in
-practical applications. Entire subfields of materials science which at first appear distinct 
-are in effect just different methods of solving the Schr\"odinger equation in a convenient
-basis for one region and matching it at the boundary to a convenient basis 
-for a solution in another region. Embedding one potential in another, treating impurities,
-the interaction between valence electrons and core electrons all
-involve in one way or another matching Green's functions across a surface.
-
-The perspective that Heine introduces in Vol. 35 of Solid State Physics and the derivation
-he presents there is worth working through in full. We will only outline the final form
-the solutions should take with an example.
-
-Let us consider the pseudopotential method.
-This approach is reliant on finding decent approximations to the Green's function in one
-region $G_{A}$ near the atoms and another $G_{B}$ that is valid in the interstitial
-regions between atoms. The plane waves
-in the interstitial regions must match the Green's function for the atomic system
-at a particular radial cutoff and energy. If a function can be found that 
-describes the scattering of these waves across a suitable energy range the approximation 
-is a good one and the matching of the two systems will be successful. This
-is represented schematically in Fig.~\ref{fig:pseudosplit}.
-%
-\begin{figure}
-\begin{center}
-\includegraphics{./invariance/pseudosplit.png}
-\caption{Schematic representation of decomposing the Green's function into a local atom centered
-Green's function, $G_{A}$, and the Green's function in the interstitial region $G_{B}$.
-A pseudopotential is a function that allows $G_{B}$ to be represented as a relatively
-smooth function of position capable of efficient description in terms of plane waves.
-The functions must match at the cutoff for $G_{A}$ to the solutions for 
-atomic wave functions. Another approach would involve matching the $G_{A}$ 
-and $G_{B}$ explicitly at each stage of the calculation until self-consistency is obtained.}
-\end{center}
-\end{figure}
-
-Equations written in the form of \ref{eq:green1a} are of the type required for the invariance theorem namely:
-%
-\begin{equation}
-G(\r,\r';E) = G_{A}(\r,\r';E) + {\rm boundary ~ corrections},
-\end{equation}
-%
-where we have restored the energy argument.
-
-These considerations provide a reasonable mathematical framework for 
-investigating electronic structure from the point of view of the local environment.
-Indeed, as Heine himself says: 
-
-\begin{quote}
-The importance of this approach would lie in the fact that
-one has a single entity $G_{A}$ to represent an element in anything 
-from a small molecule to a complex alloy.
-\end{quote}
-
-%
-Heine's ambition turns on this:
-%
-\begin{quote}
-We see now that the trick in the new formulation of quantum 
-mechanics is not just to express measurable quantities in terms of 
-G, {\it but in terms of some appropriate small parts of G that can be solved 
-for and computed separately from all the unwanted remainder of G.}
-\end{quote}
-%
-This relies, again in analogy with black bodies, on the Green's
-function in a certain region of space being independent of the size and shape
-of the container and the boundary conditions.
-
-\section{Slater-Koster Tight Binding}
+\section{Bl\"och's Theorem and Slater-Koster Tight Binding}
 Let us denote the translation operator $\hat{T}$
 as the operator which displaces all the coordinates of a vector 
 by a crystal lattice vector $\R_{i}$ we require 
@@ -464,10 +477,19 @@ firstly that $[\hat{T},\hat{H}]=0$, i.e. that the
 translation operator commutes with the Hamiltonian. This also
 has the consequence that the eigenvectors of the Hamiltonian
 must be eigenvectors of the translation operator. 
-
-Bloch's theorem encapsulates this idea. When a translation operator acts 
-on a Bloch state of a crystal the wavefunction is multiplied by a scalar
-value $e^{i\k\cdot\R}$: i.e. the condition for a vector to be an
+Bl\"och's theorem encapsulates this idea by required the electronic
+eigenstates of the crystal be of the form:
+%
+\[
+  \psi_{k} = e^{ik\r}u_n{\r}  \quad {\rm where} u_{n}(\r) = u_{n}(\r+\R),
+\]
+%
+where $\R$ is a crystal lattice vector 
+preserving the periodicity of the crystalline system.
+When a translation operator $\hat{T}$ acts 
+on a Bl\"och state sending $\r\rightarrow \r+\R$ 
+of a crystal then the wavefunction is multiplied by a scalar
+value $e^{i\k\cdot\R}$. This is precisely the condition for a vector to be an
 eigenvector.
 
 If a basis set of atomic orbitals $\phi_{n}(\r-\R_{i})$
@@ -484,32 +506,108 @@ are used instead of LCAOs, \cite{lowdin62}) gives:
 \end{equation}
 %
 The development of computers means the secular equations can be solved 
-at arbitrary $\k$ points. \footnote{The paper explicitly anticipates that the integrals and Bloch 
+at arbitrary $\k$ points. In fact, Slater and Koster anticipated that the integrals 
+which arose and the Bl\"och 
 sums could be performed with the help of computers: ``The possibility is not excluded 
 that eventually ways will be found to do this work by means of high-speed computers, but
-it will certainly be quite out of the question without such help."} 
+it will certainly be quite out of the question without such help." 
 
-The work of Slater-Koster demonstrates, in an intuitive fashion, how localized atomic
-states, when modulated by a wave of the form $e^{i\k\cdot\R}$ can interfere 
+The work of Slater-Koster demonstrated how localized atomic
+states built out of the s,p, and d waves familiar from atomic physics, could, 
+when modulated by a wave of the form $e^{i\k\cdot\R}$ interfere 
 (constructively or deconstructively) to allow charge to accumulate in different 
 spatial patterns between atoms, and how the variation in the eigenvalues of $H_{\k}$
-can give rise to band structures. Determining the coefficients involved in the 
-tight binding energy integrals is somewhat involved. The Coordinate system needs
-to be set up and the integrals performed for different combinations of spherical
-harmonics on neighbouring atoms. Ref.~\cite{sharma79,podolsky04} both give explicit
-expression for generating the coefficients programmatically.
+due to this modulation can give rise to band structures. 
 
-The determination of the integration constants is a problem unto itself.
-Tight binding parameters for the transition metals can be extracted from 
-a number of places: tight binding parameters that span the transition
-metal range can be found in Refs. \cite{nieminen76}, \cite{pettifor77} and \cite{jepsen75, andersen77, harrison80}.
-Harrison has also published a set of universal parameters for s-p bonded structures.
+The computational usefulness of approach comes in the two-center approximation. That is that the
+matrix elements between orbitals on neighbouring atoms can be written as sums of invariant scalars,
+which correspond to the radial integrals of the matrix elements, multiplied by numerical prefactors 
+determined by the relative angular position of two atoms. 
+Slater and Koster 
+tabulated the angular prefactors and then worked out the numerical value of the radial integrals
+via an interpolation method.
+Experimental data on the energy levels of electrons in crystals resolved by the 
+wavevector $\k$ were available and Slater and Kosters worked through the diamond, FCC, and BCC
+structures to produce band structures from their interpolation scheme. The mathematical
+details are discussed further in Appendix~\cite{app:appen2}.
 
-\section{Transition Metal Tight Binding}
+The great hope of these notes is that the better we understand how electrons move through crystals the better
+able we are to understand the properties of materials. Although it is 
+often presented as a crude approximation scheme or interpolationg scheme 
+the Slater-Koster picture of electronic
+structure has proven to be a major step forward 
+in our ability to understand the properties of materials.
+
+%Determining the coefficients involved in the 
+%tight binding energy integrals is somewhat involved. The Coordinate system needs
+%to be set up and the integrals performed for different combinations of spherical
+%harmonics on neighbouring atoms. Ref.~\cite{sharma79,podolsky04} both give explicit
+%expression for generating the coefficients programmatically.
+
+\subsection{Computational Implementation}
+Let us take a concrete example proposed by Kelly\cite{vol35}. 
+This should make the operation of the tight binding scheme a litter clearer:
+%
+\begin{quote}
+As input data we require a convenient local representation of $H$. In simple crystals,
+this is most easily given in terms of interactions with a unit cell and between neighboring cells.
+For a FCC transition metal we have nine orbitals (1 s-orbital, 3 p-orbitals, and 5 d-orbitals) per site, 
+and a diagonal 9x9 matrix for the self-energies of these orbitals. Twelve 9x9 matrices 
+suffice to describe the interaction of any atom with its nearest neighbours.
+\end{quote}
+%
+
+The operation by which $H|u_{n}\ket$ is computed can be written explicitly as:
+%
+\begin{equation}
+\label{eq:fullhamhop}
+H|u_{n}\ket = \sum_{i\alpha, j\beta}a_{n i\alpha }(\bra j\beta |H| i\alpha \ket)|j \beta \ket.
+\end{equation}
+%
+
+The essence of the recursion method is that the 
+summation in Eq.~\ref{eq:fullhamhop} does not run over every matrix element of the Hamiltonian.
+Instead we appeal to the local formulation of the interactions so that
+$H$ can be stored and manipulated as a sparse matrix. To make this explicit let us 
+introduce an index $z$ which runs over the nearest-neighbours of 
+site $i$ with which the orbitals, $\alpha$, interact:
+%
+\begin{equation}
+\label{eq:hop}
+H|u_{n}\ket = \sum_{i\alpha, j_{z}\beta_{z}}a_{n i\alpha}(\bra j_{z}\beta_{z}|H_{z}|i\alpha\ket)|j_{z}\beta_{z}\ket.
+\end{equation}
+%
+There are no restrictions on the number of orbitals per site, or on the range of interactions that can be
+incorporated, these only impact on the efficiency of the method and the validity of the original assumptions
+about the pre-dominance of the local atomic environment. 
+
+Computationally, and I suppose philosophically, Eq.~\ref{eq:hop} is at the
+heart of all recursion calculations and the interested reader could at this point inspect the subroutine
+\texttt{HOP} in \texttt{CamRecLib} to understand how the neighbour lists, matrix elements, and interaction
+vectors are handled. The idea is that if our operator can be represented by a discrete number of small 
+$m\times m$ matrices we can efficiently obtain numerical data describing the material properties
+\textit{and} an understanding of the underlying physics in terms of the local atomic environment.
+
+\section{Particles and Waves: Transition Metal Tight Binding}
 \label{sec:tmtb}
-Bullet discusses some of the problems with treating d electrons in a tight binding 
-formalism (Sec. IV 13 Solid State Physics Vol. 35). Fig.~\ref{fig:datoms} demonstrates
-one of the main issues arising with d electrons:
+In this section we would like to build up a little physical intuition for what
+the Slater-Koster integrals actually represent, that is a sense of what the physical 
+picture is describing and how different electronic states might `look' in a solid.
+
+We begin with the uncertainty principle. This allows for the estimation of the rest
+time for an electron on an atomic d state to be around $\hbar/W_{d}\approx 10^{-14}$s \cite{friedel73}.
+\footnote{Ref.~\cite{friedel73}, written in 1973, provides us with another example
+of the early impact electronic computers were making in the field. Friedel  compares 
+the relative merits of `muffin tin' type calculations and tight binding approximations.
+The former approach he describes as leading, ``to fairly exact if cumbersome
+computations, and has thus had the support of the `computers lobby'". The conclusion
+puts forward a number of points in favour of tight binding approaches as 
+being suitable for studying complex phases and lattice defects,
+latent heats of phase changes, elastic constants and electron-phonon couplings.}
+
+For $d$ electrons we can begin by consideration of Fig.~\ref{fig:datoms}.
+(Bullet discusses some of the problems with treating d electrons in a tight binding 
+formalism (Sec. IV 13 Solid State Physics Vol. 35).)
 %
 \begin{figure}
 \includegraphics{./invariance/resonant-datoms.pdf}
@@ -555,16 +653,6 @@ can be written:
 \tan \eta_{d} = \frac{\frac{1}{2}W(\epsilon)}{\epsilon_{d}-\epsilon}.
 \end{equation}
 %
-The uncertainty principle allows for the estimation of the rest
-time for an electron on an atomic d state to be around $\hbar/W_{d}\approx 10^{-14}$s \cite{friedel73}.
-\footnote{Ref.~\cite{friedel73}, written in 1973, provides us with another example
-of the early impact electronic computers were making in the field. Friedel  compares 
-the relative merits of `muffin tin' type calculations and tight binding approximations.
-The former approach he describes as leading, ``to fairly exact if cumbersome
-computations, and has thus had the support of the `computers lobby'". The conclusion
-puts forward a number of points in favour of tight binding approaches as 
-being suitable for studying complex phases and lattice defects,
-latent heats of phase changes, elastic constants and electron-phonon couplings.}
 
 The strong centrifugal contribution to the
 atomic scattering potential from higher angular moment channels means the effective potential
@@ -584,9 +672,8 @@ H =  d-d  |&  d-PW \\
 where d-d and PW-PW are of the tight-binding and plane-wave 
 pseudopotential form and hybridization occurring in the 
 off-diagonal elements. The dual characteristic of transition metals
-tightly bound d-electrons and diffuse s-p orbitals hybridizing 
+tightly bound d-electrons and relatively diffuse s-p orbitals hybridizing 
 accounts for the difficulties in describing their electronic properties.
-
 
 The $dd\sigma$ terms behave roughly as \cite{pettifor71}:
 %
@@ -600,11 +687,12 @@ Eq.~\ref{eq:pettifor} suggests our Hamiltonian matrix will be
 populated by a huge number of off-diagonal matrix elements which can't be neglected. If 
 the energy is equal to $k^{2}$ constructive interference occurs and the energy summation
 diverges with off-diagonal matrix elements between all d states on remote atoms becoming
-significant. This isn't entirely surprising. We are considering a periodic crystalline solid
-and the eigenfunctions of this crystal are extended throughout. The off-diagonal elements
-in a coordinate space representation reflect the long range order of the material and
-preservation of the phase of the electronic wave function as they move from atom to atom. See
-Chapter~\ref{chap:odlro} for further discussion of this and related points.
+significant. 
+%This isn't entirely surprising. We are considering a periodic crystalline solid
+%and the eigenfunctions of this crystal are extended throughout. The off-diagonal elements
+%in a coordinate space representation reflect the long range order of the material and
+%preservation of the phase of the electronic wave function as they move from atom to atom. See
+%Chapter~\ref{chap:odlro} for further discussion of this and related points.
 
 The `best' approximations to the explicit 
 formulas for $dd\sigma$, $dd\pi$ and $dd\delta$ and the phase
@@ -614,13 +702,14 @@ These difficulty have been addressed in a number of works
 \footnote{Another computational
 snapshot comes from Ref.~\cite{hubbard69}, "...smaller secular 
 equations are used, taking about one second per k point on an IBM  360/65." The
-main storage capacity of those machines was 524 kilobytes. See Fig.~\ref{fig:ibm360}
-for a (grainy) snapshot of what that computer looked like.},
-and J. Hubbard, ibid 2, 1222 (1969). The problem being to define an
+main storage capacity of those machines was 524 kilobytes.} 
+The problem being to define an
 energy independent Hamiltonian, amenable to tight binding for the d electrons.
+%See Fig.~\ref{fig:ibm360}%for a (grainy) snapshot of what that computer looked like.},
+%and J. Hubbard, ibid 2, 1222 (1969). 
 
 Deriving an effective, tight binding, energy indepedent parameterization
-of d electron structure  culminated in the work of D. G. Pettifor's \cite{pettifor69}. 
+of d electron structure culminated in the work of D. G. Pettifor's \cite{pettifor69}. 
 Pettifor's work produced a justifiable scheme for computing the 
 two center tight binding integrals of Slater
 and Koster, $dd\sigma$, $dd\pi$, $dd\delta$ in terms of the position and 
@@ -642,147 +731,9 @@ The work of Pettifor and colleagues in determining justifiable tight
 binding parameters for transitional metals, 
 effectively completed by 1969, was an important prerequisite for the subsequent 
 development of the recursion method in the 1970s. Generalized tables for tightbinding parameters 
-across the transition metal series has been produced in Ref.~\cite{harrison80}.
-
-%The parameters used in Ref.~\cite{burke78} are appropriate to the BCC structure.
-%The tightbinding Hamiltonian only considers two center contributions, with the parameters 
-%coming from Pettifor\cite{pettifor69} and rescaled to produce the observed
-%bandwidth of tungsten. The parameters are given in Table~\ref{tab:dsurface}.
-
-For ease of reference we collect here d tight-binding coefficicents
-that have found there way into the literature. The choice of these parameters
-is very much an example of theoretical materials science constituting a 
-craft. In later chapters we will examine some of the developments that set
-tight-binding and the choice of coefficients on a more definite 
-theoretical framework. The Slater-Koster parameters used for FCC, BCC, 
-and HCP crystals in Ref.~\cite{haydock72} are given in Table \ref{tab:pettiparams}.
-%
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|} 
-\hline
-Structure & $dd\sigma$ & $dd\pi$  & $dd\delta$ &  Band-limits \\
-\hline
-FCC       & -0.027784  & 0.012535 & -0.001554  & -0.131 to 0.085 \\ 
-\hline
-HCP       & -0.027784  & 0.012535 & -0.001554  & -0.119 to 0.081 \\
-\hline
-BCC       & -0.03248   & 0.01538  & -0.00200   & -0.119 to 0.097 \\
-          & -0.01341   & 0.00487  & -0.00049   &              \\
-\hline
-\end{tabular}
-\caption{Slater-Koster parameters from Pettifor \cite{pettifor69}, 
-along with band edges in Ry. First and second nearest neighbour 
-parameters are given for BCC crystals. \label{tab:pettiparams}.}
-\end{center}
-\end{table}
-%
-%\begin{table}
-%\begin{tabular}{|c|c|c|}
-%\hline
-%SK Parameter & First Neighbour & Second Nearest Neighbour \\
-%\hline
-%$dd\sigma$ & -0.02992  & -0.05364 \\
-%$dd\pi$    &  0.06652  &  0.01943 \\
-%$dd\delta$ &  0.00800  &  0.00196 \\
-%\hline
-%\end{tabular}
-%\caption{These parameters are difficult to make out from the electronic version of Ref.
-%due to poor resolution of the scan. \label{tab:dsurface}.}
-%\end{table}
-%
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-\multicolumn{3}{|c|} {FCC TB Parameters} \\
-\hline
-Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
-\hline
-$dd\sigma$ & -0.027784 & - \\
-$dd\pi$    &  0.012535 & - \\
-$dd\delta$ & -0.001554 & - \\
-\hline
-\multicolumn{3}{|c|} {BCC TB Parameters} \\
-\hline
-Integral & 1st Nearest Neighbour & 2nd Nearest Neighbours \\
-$dd\sigma$ & -0.06560  & -0.03195 \\
-$dd\pi$    &  0.04373  & 0.02130\\
-$dd\delta$ & -0.010934 & -0.00537\\
-\hline
-\end{tabular}
-\caption{The tight binding parameters used for the example recursion 
-calculations in this chapter, in the FCC lattice only nearest neighbours 
-are included.}
-\end{center}
-\end{table}
-
-Whether we are able to create a tight binding description of transition metals
-depends on whether a decent, energy independent, approximation to the electronic 
-structure in fcc/bcc metals can be achieved with 9x9 matrices describing 
-nearest neighbour interactions of the s, p and d states, in the Slater-Koster 
-form or derived from electronic states localized according to some 
-
-\subsection{Kelly Tight Binding}
-
-An example from Kelly helps to make the application of the tightbinding scheme clear:
-%
-\begin{quote}
-As input data we require a convenient local representation of $H$. In simple crystals,
-this is most easily given in terms of interactions with a unit cell and between neighboring cells.
-For a FCC transition metal we have nine orbitals (1 s-orbital, 3 p-orbitals, and 5 d-orbitals) per site, 
-and a diagonal 9x9 matrix for the self-energies of these orbitals. Twelve 9x9 matrices 
-suffice to describe the interaction of any atom with its nearest neighbours.
-\end{quote}
-%
-
-The actual operation of $H|u_{n}\ket$,which has been discussed in a general way so far, 
-can be written as:
-%
-\begin{equation}
-\label{eq:fullhamhop}
-H|u_{n}\ket = \sum_{i\alpha, j\beta}a_{n i\alpha }(\bra j\beta |H| i\alpha \ket)|j \beta \ket.
-\end{equation}
-%
-The summation in Eq.~\ref{eq:fullhamhop} does not run over every matrix element of the Hamiltonian.
-Instead we appeal to the local formulation of the interactions so that
-H can be stored and manipulated as a sparse matrix. To make this explicit let us 
-introduce an index $z$ which runs over the nearest-neighbours of 
-site $i$ with which the orbitals, $\alpha$, interact:
-%
-\begin{equation}
-\label{eq:hop}
-H|u_{n}\ket = \sum_{i\alpha, j_{z}\beta_{z}}a_{n i\alpha}(\bra j_{z}\beta_{z}|H_{z}|i\alpha\ket)|j_{z}\beta_{z}\ket.
-\end{equation}
-%
-There are no restrictions on the number of orbitals per site, or on the range of interactions that can be
-incorporated, these only impact on the efficiency of the method and the validity of the original assumptions
-about the pre-dominance of the local atomic environment. Computationally Eq.~\ref{eq:hop} is at the
-heart of all recursion calculations and the interested reader could at this point inspect the subroutine
-\texttt{HOP} in \texttt{CamRecLib} to understand how the neighbour lists, matrix elements, and interaction
-vectors are handled.
-
-\section{Recursion Method}
-The principle of the recursion method is to obtain a convergent expression 
-for an element of the Green's function:
-%
-\begin{equation}
-G(E) = \bra\phi_{i\alpha}|[E + i\delta -H]^{-1}|\phi_{i\alpha}\ket.
-\end{equation}
-%
-
-The Green's function can be immediately related to the local density of states as:
-%
-\begin{equation}
-n_{i\alpha}(E) = -\frac{1}{\pi} {\rm Im}\bra \phi_{i\alpha} |[E + i\delta -H]^{-1}|\phi_{i\alpha}\ket
-\end{equation}
-%
-
-The state $\chi$ which we project on to can be made up of some linear combination 
-of the local basis set $\phi_{\alpha l}$, which, in turn, could be local atom centered orbitals, bond orbitals, 
-Wannier functions, atomic diplacements, or any localized quantity we wish to define. The method is thus
-applicable to a wide range of problems in condensed matter. In short what we wish to examine
-is determined by the choice of $\chi$.
+across the transition metal series has been produced in Ref.~\cite{harrison80}. We have 
+collected some numerical values for tight binding parameters 
+in \ref{appen:grouptheory}.
 
 \subsection{Mathematical Origin}
 The trick of the recursion method, if you like to think of things in terms of tricks, 
@@ -886,13 +837,22 @@ b_{n} = \bra u_{n}|H|u_{n-1} \ket.
 This at least is the rationale given in Vol.~35. In the appendix we pursue an
 alternative derivation of the recursion method that makes the connection
 with some different mathematical techniques a little more explicit. For the connection
-to tridiagonal matrices and expansions in terms of determinants
+to tridiagonal matrices and expansions in terms of determinants the present derivation
 is good enough to satisfy our mathematical curiousity.
 
 \section{Analytic Recursion}
-\subsection{The Constant Chain}
-The simplest chain model that can be handled analytically is the constant chain and it
-serves as the paradigm of all the recursion calculations that will be undertaken. 
+To get a flavour for what we can calculate with the recursion method we will look
+at some simple physical situations which permit an analytic solution. These 
+are the cases where we have a simple geometry and a simple expression for the recursion
+coefficients. Although they are mainly pedagogical there is a lot 
+of physical content that can be gleaned from these simple models. 
+
+The first and simplest chain model that can be handled analytically is the constant chain.
+This serves as the paradigm of all the recursion calculations that will be undertaken. 
+It demonstrates how we can obtain energy bands from discrete hops. Subsequent models
+show the interesting effects that arise when an impurity interacts with a band of 
+electronic states and the types of resonances that may arise. 
+
 The constant chain corresponds to the general continued fraction written:
 %
 \begin{equation}
@@ -991,27 +951,33 @@ there is only a small renormalization of the pole from $a_{0}$ and redistributio
 This will be discussed more in Chap.\ref{chap:manybodyrec} in the context of single particle states
 interacting with plasmon bands and the continuum.
 
-\section{The Cambridge Recursion Library: \texttt {CamRecLib}}
-Moving from analytic chain models to material systems with different atoms requires specification
-of the Hamiltonian. The choice of the tight binding parameters was discussed in the first half of this
-chapter. For present purposes the Slater-Koster tight binding parameters for the interaction of 
-d-electrons should be sufficient to demonstrate the important features of typical recursion type calculation.
-In subsequent chapters we will prefer the use of tight binding parameters based on Wannier functions.
+\section{Asymptotics, Termination, and Integration}
+\label{sec:asymptotics}
+The asymptotic behaviour of the continued fraction coefficients 
+are determined by the presence, nature and position of singularities
+in the spectrum: band gaps, delta functions,
+band edges themselves, and Van Hove singularities.
 
-\subsection{Integrals of the Density of States}
-%
-As will be seen, and is perhaps already known to the reader, nothing is perfect. The
-recursion method for all its many strengths has an issue: the chain must be terminated
-somewhere. In an extended system only so many moments can be computed in practice.  
-This is not necessarily a defect of the method but a reflection of reality. Though
-this is disappointing there is a silver lining. Integrals over the density of states
 are very stable. As such any time we require an integral over the density of states
 we can be quite confident in the result, similarly integrals over differences
 are quite stable. This property of the recursion chains will be exploited again and again
-to compute the relative stability of different structures. The details of how
-integrals of continued fractions are performed is included in the appendix 
-but it is highly recommended that the reader refer to Ref.~\cite{nex78}
-for a formal description of the implemented techniques.
+to compute the relative stability of different structures. 
+
+There is considerable literature on the topic of termination schemes 
+and the analytic structure of the asymptotic coefficients:
+\cite{hodges77,bylander80,turchi82,haydock84,luchini87,glanville88,
+yoshino87,yoshino88,haydock89,haydock10,alhaidari18}.
+In certain cases expressions for the behaviour of the coefficients
+is given in terms of sinusoidal or elliptic functions. Linear prediction techniques
+have also been used to study the behaviour of the recursion coefficients in the
+asymptotic region \cite{allan84}. The problem of terminating the continued fraction
+is quite an involved one and the discussion is deffered to the appendix.
+Integrals over the density of states 
+
+See the routines \texttt{DENCRS} and \texttt{DENSQ} 
+for the square root and analytic terminator (TermDOS) schemes and \texttt{DENQD} 
+for the QuadDOS termination scheme in the Cambridge Recursion Library 
+\cite{nex84,haydock84,haydock85}.
 
 To compute the difference in energy between inequivalent structures 
 one begins with the electron occupancy of a specific orbital:
@@ -1064,8 +1030,8 @@ U_{A}-U_{B} = \int_{-\infty}^{E_{F}}(E-E_{F})[n_{A}(E) -n_{B}(E)]dE.
 \end{equation}
 %
 
-\subsection{Local Density of States}
-\label{sec:fccldos}
+\section{Local Density of States}
+\label{sec:ldos}
 The simplest demonstration of the Cambridge Recursion Library 
 is a computation of the local density of states for an atom located at the center of a small 
 Face Centered Cubic (FCC) cluster. 
@@ -1135,25 +1101,9 @@ The difference in the qualities, in terms of the structure revealed, in the DOS
 is determined by the size of the cluster, the number of iterations of the
 recurrence relations, the Hamiltonian, and the different termination 
 scheme employed. 
-\footnote{See the routines \texttt{DENCRS} and \texttt{DENSQ} 
-for the square root and analytic terminator (TermDOS) schemes and \texttt{DENQD} 
-for the QuadDOS termination scheme in the Cambridge Recursion Library 
-\cite{nex84,haydock84,haydock85}.
-The asymptotic behaviour of the continued fraction coefficients 
-are determined by the presence, nature and position of singularities
-in the spectrum: band gaps, delta functions,
-band edges themselves, and Van Hove singularities.
-There is considerable literature on the topic of termination schemes 
-and the analytic structure of the asymptotic coefficients:
-\cite{hodges77,bylander80,turchi82,haydock84,luchini87,glanville88,
-yoshino87,yoshino88,haydock89,haydock10,alhaidari18}.
-In certain cases expressions for the behaviour of the coefficients
-is given in terms of sinusoidal or elliptic functions. Linear prediction techniques
-have also been used to study the behaviour of the recursion coefficients in the
-asymptotic region \cite{allan84}. The problem of terminating the continued fraction
-is quite an involved one and the discussion is deffered to the appendix.}
 
-\subsection{\texttt{ORPEEL}: Orbital Peeling}
+\section{\texttt{ORPEEL}: Orbital Peeling}
+\label{sec:orpeel}
 Surface catalysis is a topic of immense interest in chemistry and chemical engineering.
 The rate at which reactions proceed is important in industrial and biomedical 
 applications. The presence of a surface disrupts the periodicity required to use Bloch's theorem,
@@ -1354,7 +1304,8 @@ see Refs.\cite{gibson93,gibson94}. However that work partially relies
 on the computation of off diagonal of the Green's function. A topic
 to which we turn now.
 
-\subsection{Off-Diagonal Elements of the Green's Function}
+\section{Off-Diagonal Elements of the Green's Function}
+\label{sec:offdiagelements}
 The off-diagonal elements of the Green's function can be written:
 %
 \begin{equation}
@@ -1527,6 +1478,7 @@ interprative value, and crucially, will remain valid
 in situations where Bloch's theorem does not.
 
 \section{The Bond Order}
+\label{sec:bondorder}
 \index{bond order}
 The concept of a bond order has a long history.
 It begins with Coulson's study of polyenes and aromatic 
@@ -1690,7 +1642,7 @@ and state on the lone atom, when placed in a solid, can
 take on a range of shapes across a range of energies distributed 
 throughout a crystal.
 
-\subsection{Non-Orthogonal Recursion}
+\section{Non-Orthogonal Recursion}
 \label{sec:tensornotation}
 The underlying assumption about the basis vectors
 used to describe the system up to this point have 
@@ -1915,7 +1867,7 @@ In effect these two approaches amount to the choice of working
 in the mixed representation or working with the inverse of the overlap
 matrix and the lower indiced Hamiltonian respectively.
 
-\subsubsection{Two-Sided Lanczos}
+\subsection{Two-Sided Lanczos}
 For the case where $H\neq H^{\dagger}$, i.e. for a non-Hermitian
 Hamiltonian, a two-sided Lanczos algorithm exists as discussed in
 Ref.\cite{haydockkelly75} following Wilkinson's description.
@@ -1946,7 +1898,8 @@ S. F. Boys has given a thorough treatment
 of the some of the properties of non-Hermitian operators in 
 electronic structure calculations in Ref.~\cite{boys69}.
 
-\subsubsection{\texttt{RECNO}: Recursion Non-Orthogonal Algorithm}
+\section{\texttt{RECNO}: Recursion Non-Orthogonal Algorithm}
+\label{sec:recno}
 We now describe one approach to non-orthogonal basis 
 vectors \index{non-orthogonal basis vectors} taken by
 \texttt{CamRecLib} and the routine \texttt{recno}.
@@ -2051,7 +2004,8 @@ It is like a small orthogonalizing hair-cut applied at each stage of the recurre
 to remove the double counting of components that would arise 
 as a consequence of the overlap of the basis set. 
 
-\subsection{\texttt{BLKRECLIB}: Block Recursion}
+\section{\texttt{BLKRECLIB}: Block Recursion}
+\label{sec:blkreclib}
 The block recursion method is a direct and intuitive extension of the scalar method.
 In this method a {\emph set of m} initial orbitals are chosen. The recursion
 coefficients then become matrices, and the continued fractions become
@@ -2243,7 +2197,7 @@ D\left[U_{0}U_{1}U_{2}...\right] = [U_{0}U_{1}U_{2}...]
 \end{align*}
 %
 
-\subsubsection{Matrix Continued Fractions}
+\subsection{Matrix Continued Fractions}
 The matrix recursion coefficients $A_{n}$ and $B_{n}$ are handled by
 analogy with their scalar counterparts $a_{n}$ and $b_{n}$. 
 In general the recursion library provides two 
@@ -2301,7 +2255,7 @@ The simplest choice of matrix terminator,$T(E)$,
 is a diagonal matrix with the corresponding 
 terminators for the scalar case along the diagonals.
 
-\subsection{Phonon Recursion}
+\section{Phonon Recursion}
 \label{sec:recphonon}
 With a simple modification phonon spectra can be computed directly 
 using the recursion technique. Instead of localized orbitals, localized 
@@ -2490,6 +2444,7 @@ The Classical Harmonic Chain: Solution via Laplace Transforms and Continued Frac
 (https://arxiv.org/pdf/1608.00616).}
 
 \section{Recursive Perturbation Theory:\texttt{RECPER}}
+\label{sec:recper}
 A measurement of a material property takes the form of some kind of probe. 
 The probe may be a photon or an electron that is launched in the direction of a sample. 
 The scattering of the probe by the material is observed and inferences about the material
@@ -2550,7 +2505,7 @@ we can rewrite this as a contour integral:
 %
 \begin{equation}
 \label{eq:contourpert}
-        \bra \hat{F}_{i} \ket = \int_{C_{f}} {\rm Tr} \{ \hat{F}^{i}\ _{j} \underbrace{\left[E-\hat{H}\right]^{-1j}\ _{i}}_{G^{j}\ _{i}(E)} \} \frac{dE}{2\pi i}.
+\bra\hat{F}_{i}\ket = \int_{C_{f}}{\rm Tr}\{ \hat{F}^{i}\ _{j} \underbrace{\left[E-\hat{H}\right]^{-1j}\ _{i}}_{G^{j}\ _{i}(E)} \} \frac{dE}{2\pi i}.
 \end{equation}
 %
 We have written the matrix elements in the mixed representation (cf. Sec.~\ref{sec:tensornotation}) so
@@ -2655,6 +2610,7 @@ and then taking care to collect terms to the same order in $\lambda$ together fo
 where the intermediate vector $x_{n}{^(l)}$ has been introduced to simplify the expressions
 
 \section{Chains and Moments}
+\label{sec:chainsandmoments}
 Before concluding this chapter we may make a few 
 comments on the relation of the recursion techniques 
 to other methods.
@@ -2723,6 +2679,7 @@ to a surface atom in an idealized cubic lattic is presented in Ref.~\cite{haydoc
 where a number of the various paths emanating from the starting atom are presented. 
 
 \section{Path Integrals}
+\label{sec:pathintegrals}
 There is another (surprisingly direct) connection between the Green's function and 
 the path integral formulation of Quantum Mechanics.
 This connection is developed in Feynman and Hibbs \cite{feynmanhibbs64}. It is worth
@@ -2784,6 +2741,7 @@ strategies we can develop for performing calculations: continued fraction expans
 path integrals would be a promising avenue of research.
 
 \section{Future Work}
+\label{sec:futurework}
 The references provided here and in Vol. 35 demonstrate the impact of
 the recursion method already achieved by 1980. Only a small subset of that
 work has been referenced here. 
