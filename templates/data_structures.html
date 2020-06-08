@@ -56,13 +56,21 @@ In short it is a highly recommended work.</p>
 <div id="heapsort">
 <p>
 The first sorting algorithm we'll look at is <a href="https://en.wikipedia.org/wiki/Heapsort"> Heapsort </a>. 
-This method involves modifying your array, of N values, so that it is organised as a <a
-href="https://en.wikipedia.org/wiki/Heap_(data_structure)"> heap </a>. Once the array has been "heaped" 
-then a single swap is performed, so that the largest (or smallest value is at the head of the array). 
-The next step is to "re-heap" an array of length N-1 (leaving out the recently swapped value). 
+This method involves repeatedly modifying an array, and subsequently its sub-arrays, so that it is organised as a <a
+href="https://en.wikipedia.org/wiki/Heap_(data_structure)"> heap </a>. A heap structure simply requires
+that a parent node is larger (max-heap), or smaller (min-heap), than its child nodes. If <samp>i</samp> 
+specifies the index of an element in an array its childrens' position will be 
+given by <samp>2*i+1</samp> and <samp>2*i+2</samp> (for a zero based index). In the animation below the different heaping phases
+are notified by the text and you can see the largest remaining element in the array percolate to the top.
+</p>
+
+<p>
+Once the array has been "heaped" then a single swap is performed, so that the largest (or smallest) 
+value is at the end of the array. The sort order will be determined by whether 
+you are building a max-heap or a min-heap after each swap.
+After a swap the next step is to "re-heap" an array of length N-1 (leaving out the recently swapped value). 
 This iterative process is continued until the array is sorted. In the heap sort animation on this page
-the data in the array is "heaped", then swapped, then heaped, then swapped, etc. The template
-for the d3 visualization can be found <a href="https://bl.ocks.org/mbostock/3885705"> here </a>.
+the data in the array is heaped, then swapped, then heaped, then swapped, etc. until it is sorted.
 </p>
 
 {#<label>
@@ -111,6 +119,8 @@ function reset(){
     .attr("width", x.bandwidth())
     .attr("y", function(d,i) { return y(d); })
     .attr("height", function(d) { return height - y(d); });
+  d3.select("#sort_phase")
+    .text("Heapsort")
   };
 
 var margin = {top: 20, right: 20, bottom: 70, left: 40},

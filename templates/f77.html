@@ -96,4 +96,22 @@ storage sequence.
 <p>
 <samp>EXTERNAL</samp> specifies external procedures so that their symbolic names can be used as arguments.
 </p>
+
+<h3> The Arithmetic IF </h3>
+<p>
+This one is fun. Instead of nesting IF statements F77 gives you the option of using 
+the Arithmetic IF.
+<pre>
+<code>
+IF (e) s1,s2,s3
+</pre>
+</code>
+<samp>e</samp> is an integer, real, double precision, or quadruple precision number.
+<samp>s1,s2,s3</samp> are the labels of executable statements. So based on the
+expression the program execution can move anywhere the labels tell it to go.
+This can involve a little more label chasing than the typical user may
+desire. You also have to remember the order: less than zero,
+equal to zero, and greater than zero.
+</p>
+
 {% endblock body %}
