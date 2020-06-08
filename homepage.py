@@ -69,6 +69,13 @@ def data_structures():
   """
   return render_template("data_structures.html")
 
+@app.route("/hoops_timemachine/")
+def hoops_timemachine():
+  """
+  The Basketball Diaries.
+  """
+  return render_template("hoops_timemachine.html")
+
 @app.route("/quaternions")
 def quaternions():
   """

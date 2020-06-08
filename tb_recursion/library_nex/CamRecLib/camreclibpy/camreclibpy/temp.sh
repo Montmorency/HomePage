@@ -1,1 +1,0 @@
-f2py --latex-doc -m coeffproc_tmp -h coeffproc_tmp.pyf recsum.f recqd.f recrts.f recwt.f cfgpgn.f cfgen.f denqd.f dencrs.f plyval.f termgn.f fenval.f bndcrd.f bndref.f bndest.f bndwt.f wtmin.f numd.f numc.f taban.f 
