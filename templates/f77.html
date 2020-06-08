@@ -10,6 +10,26 @@ Oracle also provides a docmentation of the Fortran 77 standard
 <a href="https://docs.oracle.com/cd/E19957-01/805-4939/index.html">Oracle Fortran 77</a> standard.
 </p>
 
+<h3> Types</h3>
+<p> Implicit typing is fun. The default is that if the first letter of the name is 
+I, J, K, L, M, or N it is an integer. Otherwise it is a real. Here straight from Oracle:
+The name determines the type; that is, the name of a datum or function determines its data type, explicitly or implicitly, according to the
+following rules of data typing;
+
+A symbolic name of a constant, variable, array, or function has only one data type for each program unit, except for generic functions.
+
+If you explicitly list a name in a type statement, then that determines the data type.
+
+If you do not explicitly list a name in a type statement, then the first letter of the name determines the data type implicitly.
+
+The default implicit typing rule is that if the first letter of the name is I, J, K, L, M, or N, then the data type is integer, otherwise it
+is real.
+
+You can change the default-implied types by using the IMPLICIT statement, even to the extent of turning off all implicit typing with the
+IMPLICIT NONE statement. You can also turn off all implicit typing by specifying the -u compiler flag on the command line; this is
+equivalent to beginning each program unit with the IMPLICIT NONE statement.
+</p>
+
 <h3> Formatting and Line Continuation </h3>
 <p>
 Fortran 77 source files are not free format. The column positions are reserved for different purposes.
@@ -83,6 +103,16 @@ be advisable to make sure they do). They must, however, be listed in the same or
 Typically in Fortan 77 arrays are dimensioned in the main program and then passed to the subprograms that need them.
 The subprograms have the address of the beginning of the array and can operate on the data without needing to copy all
 the data to a new set of locations.
+
+If a <samp>COMMON</samp> statement appears without a name the blank name is assumed. If a common block with the same name appears
+more than once in the same program unit the list-of-variables following it is treated as a continuation of the 
+same common block.
+</p>
+
+<h3> DIMENSION</h3>
+<p>
+<samp>DIMENSION</samp> specifies the number of dimensions and the number of elements in each dimension.
+You can, optionally, initialize values at the same time.
 </p>
 
 <h3>EQUIVALENCE</h3>
@@ -94,7 +124,40 @@ storage sequence.
 
 <h3>EXTERNAL</h3>
 <p>
-<samp>EXTERNAL</samp> specifies external procedures so that their symbolic names can be used as arguments.
+<samp>EXTERNAL</samp> specifies external procedures so that their symbolic names can be used as arguments to pass to
+subroutines.
+</p>
+
+<h3> Read/Write </h3>
+<p>
+A typical pattern for a <samp>READ</samp> statement takes a unit identifier, a format identifier as arguments,
+followed by a program variable to store the results of the read e.g.:
+<pre><code>
+      READ(5,21) IWK
+      21    FORMAT(15A4)
+
+</pre></code>
+
+
+The format identifier in the example, 21, is the label of the <samp>FORMAT</samp> statement in the same program unit.
+A <samp>FORMAT</samp> statement specifies the layout of input/output to be read or printed to the connected unit.
+</p>
+
+<h3> The Arithmetic IF</h3>
+<p>
+Finding documentation for this took a while. It brought me to this interesting <a href="https://www.obliquity.com/"> domain </a>.
+The idea here is that we can save time by exploiting the arithmetic IF:
+
+<pre><code>
+    IF (arithmetic-expression) label-1, label0, label1
+</pre></code>
+
+If the arithmetic-expression evaluates to less than 0 it will go to label-1, if it evaluates to 0,
+it goes to label0, and if it is greater than 0 it goes to label 1.
+
+This form of IF statement is obscure and its use is strongly discouraged. But are you going to let public 
+opinion makers tell you how to write your fortran 77? Isn't the only reason you are writing f77 code is
+because you are pretty much Skywalker?  
 </p>
 
 <h3> The Arithmetic IF </h3>

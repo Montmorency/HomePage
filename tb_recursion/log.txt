@@ -1,0 +1,330 @@
+Thu  8 Nov 2018 16:13:43 GMT
+Have a nice shape to the introduction now which will hopefully shape 
+the rest of the book. Adding Wannier's after DFT chapter which will mainly
+be the TB-NN work. The GW chapter should now be merged or followed by 
+a simple GW as recursive perturbation theory with hermitian Sigma chapter. 
+
+Need to tidy up the superconductivity discussion
+and add the integrations. The recursion sketch there will be computing
+$\lambda$ and $\mu$ using recursion theory maybe for Tungsten?
+
+Same with the metallurgy chapter I think elasticity, phonon anomalies 
+or defect calculations should be plenty in the way of examples.
+
+Then we can move on to decorating and finalizing: 
+
+I would like a figure of Avogadro.
+Some nice path hopping pictures for the recursion method.
+
+Some Nice TB/DFT images
+GW self-energy operator.
+
+References in the text with links to CamRecLibPy examples should also be made.
+
+
+Mon 19 Nov 2018 12:01:58 GMT
+Looking at installing textext package so that I can do some nice equation
+typesetting in Inkscape.
+
+https://github.com/textext/textext/issues/31
+https://github.com/textext/textext/wiki/Common-issues#preview-is-not-working-but-imagemagick-is-installed
+https://github.com/textext/textext
+https://github.com/seebk/LaTeXText
+
+However for now we are in a good position just using the render extension
+in the inkscape package. Had to append the path location for latex and dvips
+to the inkscape distribution but then everything worked fine.
+
+Hydrogen Vibrational Modes:
+http://www.nat.vu.nl/~wimu/Publications/Fund-Vibr-PhysRevLett.110.193601.pdf
+
+Added some Caltech bibmerge bibfilter tools to the system path: These might be useful.
+
+
+Tue 20 Nov 2018 17:59:12 GMT
+Important improvements to the figures. Looks much more consistent in the 
+presentation. Should probably pick a color scheme. Added a nice quote 
+from Heisenberg which really rounds off the discussion and motivates 
+the focus on the technique.
+
+There were improvements to the overall layout and, of course, 
+the text including the Avogadro picture. A few more 
+changes to the orbital peeling discussion, and complete the Block 
+recursion discussion and the Local Atomic Environment chapter 
+will be completed. The Block recursion is really important 
+for the superconductivity chapter.
+
+Nothing added to the Harris-Foulkes section will have 
+to complete that discussion tomorrow, for the different 
+stationary points along different co-ordinates.
+
+Superconductivity notes require Dan's integrations, 
+as well as the Metallurgy section for the strain fields of 
+dislocations. 
+
+Before starting on the final chapter though
+there is the Python/Julia-fication of the CamRecLib 
+so we can do the defects, orbital peeling of hydrogen and 
+elasticity calculations all as examples.
+
+So I can't see this being completed before the new year. Things
+will be going well if it is!
+
+Thu 22 Nov 2018 16:09:07 GMT
+Hope to do some work on the block recursion this evening. Lewis and Jones
+compute the charge density which is nice. So I'd like to put that discussion in.
+
+Also the perdew-zunger plot in the introduction it might be nice to change the scale
+because it only goes up to 0.36 for Fe in the examples of material densities that
+I give. Could also add a couple Crystal structures on to the plot if they look good.
+
+To make the Avogadro picture not completely insane we could have a triptych of 
+Atomists i.e. people who were in favour of atoms perhaps Dalton, Avogadro,
+and Thompson?
+
+For d superconductivity a 5x5 block recursion could be good!
+
+Thu  3 Jan 2019 17:54:31 GMT
+-----------------------------
+camreclibpy now a reality! Running the small fcc cluster example in a python notebook.
+I've broken off the CamRecLib into a new repository as well which is now self contained.
+Next steps are to create a notebook for each example and integrate an atom viewer as well
+along with possibly a visualization of the way the starting vector emanates. This should
+be possible with the c_api in debug mode returning the value of pmn/psi at each application
+of the Hamiltonian (HOP). Adam may be able to help with this.
+
+Also if python call backs can be written to pass in new nearest neighbour criterion, or
+a new slater koster parameter than we can couple to the tb_nn library in a fairly straight
+forward manner.
+
+Sat  5 Jan 2019 01:46:45 GMT
+Starting a Math appendix to contain the interesting math bits which would
+bog down the main flow of the text. Finding an interesting connection
+between orthogonal polynomials, euclidean division.
+https://jeremy9959.github.io/about/
+
+If we are going to look at molecules and polymers there are some 
+well developed tools here: 
+https://www.rdkit.org/docs/Overview.html#what-is-it
+
+
+‘First, it is related to the disposition of two electrons 
+(remember, no one has ever seen an electron!): next, these electrons 
+have their spins pointing in opposite directions (remember, no one 
+can ever measure the spin of a particular electron!): 
+then the spatial distribution of these electrons is described 
+analytically with some degree of precision (remember, there is no 
+way of distinguishing experimentally the density distribution of 
+one electron from another!): concepts like hybridization, covalent 
+and ionic structures, resonance, all appear, not one of which 
+corresponds to anything that is directly measurable. 
+These concepts make a chemical bond seem so real, so life-like, 
+that I can almost see it. Then I wake with a shock to the 
+realization that a chemical bond does not exist; it is 
+figment of the imagination that we have invented, and no 
+more real than the square root of —1. I will not say that 
+the known is explained in terms of the unknown, 
+for that is to misconstrue the sense of intellectual adventure. 
+There is no explanation: there is form: there is structure: 
+there is symmetry: there is growth; and there is therefore change and life.’
+
+C A Coulson
+
+Thu 28 Feb 2019 17:27:22 GMT
+
+Chemical Pseudopotential Theory
+---------------------------------
+Phys. Rev. Lett. 20, 413 1968
+J. Chem. Phys. 55, 5028 (1971)
+
+The locality of states in non-hermitian Hamiltonians:
+Weeks, Anderson, Davidson, J. Chem. Phys. 58, 1388 (1973)
+
+S.F. Boys, Rev. Mod. Phys. 32, 296 (1960)
+S.F. Boys and J. M. Foster ibid, p. 300
+
+Early Green's Function to LDOS
+
+S.F. Edwards Philos. Mag. [8] 6, 617 (1961)
+S.F. Edwards Proc. R. Soc.London, Ser. A 267, 518 (1962)
+
+J. Friedel The Physics of Metals: I. Electrons
+J. Friedel Adv. Phys 3, 446 (1954)
+
+How has the transmission of code changed?
+C. M. M. Nex, Cambridge Recursion Method Library of computor
+programs in FORTRAN, available from the Secretary, T.C.M. Group,
+Cavendish Laboratory, Madingley Road, Cambridge CB3 0HE, England,
+at a price of £5, $10, or the equivalent to cover handling costs.
+The library continues to be improved, the latest version 
+(November 1978) having been standardized to the same notation
+as in the present volume.
+
+G (in cell A in an AB alloy) = G (in pure metal A) + 
+(correction terms from nearby B atoms)
+
+D.J. Chadi, Phys. Rev. B 16 3572 (1977)
+
+Matrix Elements for interatomic distances from Bullett.
+  -Philos. Mag. [8] 32, 1063 (1975)
+
+https://doi.org/10.1080/14786437508221674
+
+From Van der Lage's and Bethe paper:
+In this connection the authors are indebted to Professor S. H. Caldwell of M.I.T. in making 
+available the use of the mechanical Bush Differential Analyzer; to Mr. P. O. Crawford who as a 
+graduate assistant (1940) made the work possible by operating
+the machine; to Dr. Martin Schwarzschild who ran an independent check on two of the functions at the 
+Thomas Watson Computing Bureau at Columbia University.
+
+From Altmann and Bradley A note on the calculation of the matrix elements of the
+rotation group. A program has been written for the Mercury computer to calculate the coefficients.
+
+Ferranti Mercury Computer see Altmann and Cracknells Rev. Mod. Phys artice 1965
+for obtaining normalized symmetry-adapted harmonics for the cubic groups.
+
+We are grateful to Professor L. Fox for the grant of computing time on the Oxford University Computer.
+
+Coulson again:
+Band Structure in Graphite
+"We should like to acknowledge the provision of a calculating machine by the 
+British Iron and Steel Research Association,"
+"We should like to acknowledge the provision of a calculating machine by the British 
+Iron and Steel Research Association,"
+@article{Coulson_1952}
+
+Tue  1 Oct 2019 15:17:46 IST
+Found some recent and very relevant papers on the fixed points of recurrence terms
+Moroz and... Alphonse! With an interesting reference to William of Orange at the beginning
+of his chat. Anyway the picture is become clearing of connecting fixed points/morse topology
+to the groups generating the recursion coefficients. I think the first port of call is
+band edges and internal van hove singularities. The latter could act as a sorting metric
+for the alloy design/Hume Rothery rules.
+
+ 986002 3.48723 H3_Relax   mmm0007      qw    11/22/2019 17:14:07                                   96
+ 986014 0.00000 H3_Relax   mmm0007      qw    11/22/2019 17:26:51                                   96
+
+
+
+Tue 21 Jan 2020 16:38:43 GMT
+-----------------------------
+Total melt head with socket calculator for the bit I 
+am trying to finish for Tony and Seb. That has never worked 
+for me really. Oh well. 
+
+Academia linked me to Turchi's volume on the tight-binding 
+method from the mid-90s. Selfconsistent TB from Tony and Mike, 
+as well as a paper on Grainboundaries and gap states in silicon. 
+
+
+Wed  1 Apr 2020 17:37:25 IST
+-----------------------------
+Working on font. Apparently the one i like from PRB 93-95 is
+called ansinew? 
+
+https://en.wikipedia.org/wiki/Picard–Fuchs_equation
+https://www.dpmms.cam.ac.uk/~stcs/courses/fcm/handouts/papperitz.pdf
+
+Alan Turing and His Contemporaries. Apparently JHC Whitehead was impressed
+by one of his unpublished results on Groups.
+https://blackwells.co.uk/bookshop/product/9781780171050
+
+Wed  8 Apr 2020 13:42:30 IST
+------------------------------
+Getting ready to write up perturbation theory results which reminds me
+why I started the Topology reading in the first place. I think 
+Perturbation theory should go with the appendix and some `light'
+topological demonstrations. The real topology comes in book number 2 
+anyway.
+
+So instead of doing the write up I've opend Milnor More Theory and Crowell and Fox
+on Knot Theory. This, I would argue, is not pure procrastination.
+
+Alphonse magnus homepage:
+	https://perso.uclouvain.be/alphonse.magnus/
+
+Sat 25 Apr 2020 16:02:47 IST
+ The Debye, Von Laue, and Weyl papers are most fruitful. 
+ Instincts were good onrewriting the blackbody section it 
+ really sets up the rest of the analysis.
+ 
+ If I can get a natural Segue into Green's functions 
+ then we are going to be on a role!
+
+ Also found some papers by Wilman on Kikuchi-Lines. 
+ So it will be good for
+ a number of reasons to have 
+ those to hand.
+
+Tue 28 Apr 2020 19:50:40 IST
+------------------------------
+Bilby's FRSM sketch of Eshelby we have 3 refs one of which we already
+knew about:
+
+(5) The equilibrium of linear arrays of dislocations. 
+    Phil. Mag. 42 351-364
+    
+(6) The force on an elastic singularity 
+    Phil. Trans. R. Soc. Lond. A 244 87-111
+    pg. 131 'haunted by its past.'
+
+(28) The interaction of kinks and elastic waves. 
+     Proc. R. Soc. Lond. A 266 222-246 
+    
+Two additional ones of interest:    
+----------------------------------
+(18) The determination of the elastic field of an ellipsoidal inclusion
+     and related problems. 
+     Proc. R. Soc. Lond. A 241 376-396
+
+     Aspects of the Theory of Dislocations.
+
+He described his work as amusing applications of the theorem of Gauss.
+
+Tony also recommends looking up Bilby.
+  https://royalsocietypublishing.org/doi/10.1098/rsbm.2014.0015
+
+To Read
+ 1954
+ The formation of twins by a moving crack. Phil. Mag. 45, 631–646. 
+
+Hydrogen in Metals
+ 1962
+ (With J. Hewitt) Hydrogen in steel—the stability of microcracks. Acta Metall. 10, 587–600.
+
+ 1975
+ A numerical analysis of the diffusion equation resulting from 
+ the void theory of the trapping of hydrogen in iron and steel. Acta Met., 23, 371–376.
+
+Slip band earthquakes.
+
+Fri 24 Apr 2020 11:07:44 IST
+https://www.iucr.org/publ/50yearsofxraydiffraction/full-text/von-laue
+https://books.google.ie/books?id=s4iJBwAAQBAJ&pg=PA6&lpg=PA6&dq=r%C3%A4umliche+winkel&source=bl&ots=argtJ-R-Um&sig=ACfU3U2iMOvlCJfBxtRRI3x7fVybyQnfgQ&hl=ga&sa=X&ved=2ahUKEwiTqtbt6IDpAhU0QhUIHQaBDrIQ6AEwD3oECAkQAQ#v=onepage&q=r%C3%A4umliche%20winkel&f=false
+
+Physik 
+ein Lehrbruch
+von
+Wilhelm H Westphal 
+
+Looks like a classic german physics textbook.
+
+
+Wed 29 Apr 2020 21:23:29 IST
+------------------------------
+https://phys.libretexts.org/Bookshelves/Optics/Book%3A_Physical_Optics_(Tatum)/03%3A_The_Cornu_Spiral/3.01%3A_Cornu%27s_Spiral
+
+Definite connection between the asymptotic behaviour and Cornu spirals.
+This is mentioned by Heine, that is the equivalence, and Debye gives
+some expansions for (small/large values of $kr$).
+If we can associate these with van hove singularities that could be interesting
+and the recurrence coefficients.I suppose the situations is slightly complicated 
+but the spherical wave expansion should be a good one far enough away from
+the starting atom.
+
+Anyway once we finish translating Debye should have a clearer idea. 
+
+
+
+
+

@@ -3,6 +3,7 @@
 \usepackage{epsf}
 \usepackage{tocbibind}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{color}
 \usepackage{titlesec}
 \usepackage{titletoc}
@@ -13,19 +14,48 @@
 \usepackage{setspace}
 \usepackage{subfigure}
 \usepackage{enumerate}
+\usepackage{makeidx}
+\usepackage{accents}
+\usepackage{mathrsfs}
+\usepackage[nofancy]{rcsinfo}
+\usepackage{hyperref}
+%\hypersetup{
+%    colorlinks,
+%    citecolor=black,
+%    filecolor=black,
+%    linkcolor=black,
+%    urlcolor=black
+%}
+
+
+\usepackage[all]{xy}       % Include XY-pic
+      \SelectTips{cm}{10}     % Use the nicer arrowheads
+      \everyxy={<2.5em,0em>:} % Sets the scale I like
+
 \include{tools/dimensions}
 \include{tools/defs}
 \include{tools/hmod}
+
+%\fontfamily{ansinew}\selectfont
+%\usepackage[ansinew]{inputenc}
+
 \usepackage[sort&compress]{natbib}
 \setlength{\bibsep}{0.0pt}
 \bibpunct{[}{]}{,}{n}{,}{,}
+\makeindex
 
 \begin{document}
 \frontmatter
-\title{Electronic Structure From the Perspective of the Local Environment}
+\title{A Material Modeller's Notebook}
 \author{Henry Lambert \\
-\vspace{0.2cm} \\
-King's College London
+\vspace{0.2cm} 
+King's College London \\
+\vspace{0.2cm}
+{\it with divers and entertaining contributions from}\\
+\vspace{0.2cm}
+Daniel Corbett\\
+\vspace{0.2cm}
+University of Manchester
 }
 
 \maketitle
@@ -39,12 +69,20 @@ King's College London
 \include{intro/intro}
 \include{invariance/invariance}
 \include{GW/gw}
-\include{ODLRO/odlro}
-\include{manybodyrec/manybodyrec}
-%\include{metallurgy}
-%\include{bayes}
-
+\include{Wannier/wannier}
+%\include{manybodyrec/manybodyrec}
+\include{metallurgy/metallurgy}
+\include{Superconductivity/superconductivity}
+\include{Bayes/bayes}
+\begin{appendices}
+%\singlespacing
+\include{appen/app2}   % Useful Maths
+\clearemptydoublepage
+\include{appen/app3}   % Group Theory
+%\clearemptydoublepage
+\end{appendices}
+\small
 \bibliographystyle{cj}
-\bibliography{./bibli/biblio.bib}
+\bibliography{./bibli/merged.bib}
 \end{document}
 

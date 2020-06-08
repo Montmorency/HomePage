@@ -1,0 +1,24 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module initialization ! in 
+    interface  ! in :initialization
+        subroutine mmcal(crd,ndim,nat,nn,nd,nm,ev,izp,nmat,mm,vec,iw) ! in :initialization:mmcal.f
+            integer dimension(ndim,nat) :: crd
+            integer, optional,check(shape(crd,0)==ndim),depend(crd) :: ndim=shape(crd,0)
+            integer, optional,check(shape(crd,1)==nat),depend(crd) :: nat=shape(crd,1)
+            integer dimension(nd,nm) :: nn
+            integer, optional,check(shape(nn,0)==nd),depend(nn) :: nd=shape(nn,0)
+            integer, optional,check(shape(nn,1)==nm),depend(nn) :: nm=shape(nn,1)
+            logical :: ev
+            integer dimension(nat),depend(nat) :: izp
+            integer, optional,check(shape(vec,1)==nmat),depend(vec) :: nmat=shape(vec,1)
+            integer dimension(nd,nm),depend(nd,nm) :: mm
+            integer dimension(ndim,nmat),depend(ndim) :: vec
+            integer dimension(2,nmat),depend(nmat) :: iw
+        end subroutine mmcal
+    end interface 
+end python module initialization
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/

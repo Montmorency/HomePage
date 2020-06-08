@@ -1,20 +1,36 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1> H. Lambert</h1>
+<h1> Henry Lambert</h1>
 <p>
-I am a Post-Doctoral Research Assistant at King's College London. 
-My current research focuses on fracture processes in <a href="https://www.hems.ox.ac.uk"> hydrogen embrittled steels </a>.
-In particular we are focusing on hydrogen occlusion and the effects of strain
-on <a href="https://en.wikipedia.org/wiki/Grain_boundary">grain  boundaries </a> in iron and steel.
+I am a materials scientist with a particular interest in applying 
+computational techniques to understanding how the composition of a material
+at its atomic scale leads to its observable properties at the macroscopic scale. 
+Essentially, I am interested in how particular arrangements of atoms 
+lead to the electronic or elastic properties of a semiconductor or a piece of steel.
 
-Previously I worked on the optical properties of materials in <a href="http://giustino.materials.ox.ac.uk"> Feliciano Giustino's group </a>.
+I most recently worked on an <a href="https://epsrc.ukri.org"> EPSRC </a> grant with 
+<a href="http://www.kcl.ac.uk/nms/depts/physics/people/academicstaff/devita.aspx"> Alessandro De Vita </a>. 
+We were part of a consortium (HEMS) which 
+focused on fracture processes in <a href="https://www.hems.ox.ac.uk"> hydrogen embrittled steels </a>:
+a phenomenon of substantial interest to materials engineers. I produced a short outreach video highlighting
+some aspects of our research:
+<div class="embeddedvideo">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/M7cb1I_FhaQ" 
+        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div> 
+
+Before joining the HEMS grant I developed computational techniques for calculating 
+the bandgaps of semiconducting materials in 
+<a href="http://giustino.materials.ox.ac.uk"> Feliciano Giustino's group </a>.
 </p>
 
 <p>
-My programming interests include studying the properties of materials from first principles. The
-<a href="http://www.sternheimergw.org"> SternheimerGW </a> and 
-<a href="http://imeall.co.uk"> Imeall Grain Boundary Database </a>
-are two of the projects I have worked on.
+My overarching interests in materials science are density functional theory, electronic correlation
+and Haydock's recursion method. The latter provides an interesting link to fundamental
+techniques in computer science which I am always interested in exploring further. 
+
+Most of the development work I have done is in Python, C, Fortran, and Haskell. Recently,
+If you are interested in any of these projects please don't hesitate to <a href="mailto:lamberh@tcd.ie">contact me</a>.
 </p>
 
 <div class=contacts>
@@ -31,6 +47,7 @@ are two of the projects I have worked on.
 <li><a href="{{url_for('notes')}}">Notes and Teaching</a></li>
 <li><a href="http://wolfdvd.harlambert.co.uk">Wolfson College DVD Library</a></li>
 <li><a href="{{url_for('interesting_stuff')}}">Interesting Stuff</a></li>
+<li><a href="{{url_for('hoops_timemachine')}}">Basketball Time Machine</a></li>
 </ul>
 </div>
 

@@ -25,7 +25,9 @@ def publications():
                   'Plasmonic polarons':'http://link.aps.org/doi/10.1103/PhysRevLett.114.146404',
                   'Electron-phonon interaction in CaC6':'http://www.nature.com/articles/srep21414',
                   'Combined GW and cumulant expansion':'http://dx.doi.org/10.1103/PhysRevB.94.035103',
-                  'Origin of Superconductivity and Latent Charge Density Wave in NbS2':'https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.119.087003'}
+                  'Origin of Superconductivity and Latent Charge Density Wave in NbS2':'https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.119.087003',
+                  'Ab initio calculation of spin fluctuation spectra using time-dependent density functional perturbation theory, plane waves, and pseudopotentials':'https://journals.aps.org/prb/abstract/10.1103/PhysRevB.97.024420'
+                  }
   hems_publications = {'Hydrogen embrittlement: future directions: discussion':'http://rsta.royalsocietypublishing.org/content/375/2098/20170029',
                        'Hydrogen transport and trapping: from quantum effects to alloy design: discussion':'http://rsta.royalsocietypublishing.org/content/375/2098/20170031'}
   return render_template("publications.html", publications=publications, hems_publications=hems_publications)
@@ -118,6 +120,7 @@ def interesting_stuff():
                           "Learn You a Haskell For Great Good":"http://learnyouahaskell.com",
                           "Racing Post": "http://www.racingpost.com",
                           "Sir David Mackay FRS":"http://www.inference.phy.cam.ac.uk/mackay/",
+                          "E. T. Jaynes: Physical Basis of Music":"http://bayes.wustl.edu/etj/music.html",
                           "Anno Urbis: Facts and Information About The Roman Empire": "http://www.annourbis.com/",
                           "Wolfson DVD Library":"http://wolfdvd.harlambert.co.uk",
                           "Money Is The Way":"http://moneyistheway.blogspot.co.uk"}

@@ -1,0 +1,98 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module nncal__user__routines 
+    interface nncal_user_interface 
+        function ngbr(iip,jjp,r2,dum) result (id) ! in :initialization:nncal.f:nncal:unknown_interface
+            integer :: iip
+            integer :: jjp
+            real*8 :: r2
+            integer dimension(13),intent(inout) :: dum
+            integer :: id
+        end function ngbr
+    end interface nncal_user_interface
+end python module nncal__user__routines
+
+python module mmcal__user__routines
+    interface mmcal_user_interface
+        logical function ev(v,w) result (id) ! in :initialization:equiv.f
+            integer dimension(3),intent(in) :: v
+            integer dimension(3),intent(in) :: w
+            logical, intent(out) :: id
+            logical, intent(out) :: ev
+        end function ev
+    end interface mmcal_user_interface
+end python module mmcal__user__routines
+
+python module initialization ! in 
+    interface  ! in :initialization
+        subroutine fcclat(crd,ndim,izp,nat,nx,ny,nz,ntype) ! in :initialization:fcclat.f
+            integer, intent(inout) :: nat
+            integer dimension(ndim,nat),intent(inout),depend(nat) :: crd
+            integer, optional,check(shape(crd,0)==ndim),depend(crd) :: ndim=shape(crd,0)
+            integer dimension(nat),intent(inout),depend(nat) :: izp
+            integer :: nx
+            integer :: ny
+            integer :: nz
+            integer :: ntype
+        end subroutine fcclat
+        subroutine bcclat(crd,ndim,izp,nat,nx,ny,nz,ntype) ! in :initialization:bcclat.f
+            integer, intent(inout) :: nat
+            integer dimension(ndim,nat),intent(inout),depend(nat) :: crd
+            integer, optional,check(shape(crd,0)==ndim),depend(crd) :: ndim=shape(crd,0)
+            integer dimension(nat),intent(inout),depend(nat) :: izp
+            integer :: nx
+            integer :: ny
+            integer :: nz
+            integer :: ntype
+        end subroutine bcclat
+        subroutine nncal(crd,ndim,nat,izp,nn,nd,nm,ngbr) ! in :initialization:nncal.f
+            use nncal__user__routines
+            integer dimension(ndim,nat),intent(in),depend(nat) :: crd
+            integer, intent(in) :: nat
+            integer, check(shape(nn,1)==nm),intent(inout) :: nm
+            integer, optional,check(shape(crd,0)==ndim),depend(crd) :: ndim=shape(crd,0)
+            integer dimension(nat),depend(nat),intent(in) :: izp
+            integer dimension(nd,nm), intent(inout) :: nn
+            integer, optional,check(shape(nn,0)==nd),depend(nn) :: nd=shape(nn,0)
+            external ngbr
+        end subroutine nncal
+        subroutine mmcal(crd,ndim,nat,nn,nd,nm,ev,izp,nmat,mm,vec,iw) ! in mmcal.f
+            use mmcal__user__routines
+            integer dimension(ndim,nat),intent(in) :: crd
+            integer, optional,check(shape(crd,0)==ndim),depend(crd) :: ndim=shape(crd,0)
+            integer, optional,check(shape(crd,1)==nat),depend(crd) :: nat=shape(crd,1)
+            integer dimension(nd,25), intent(in) :: nn
+            integer, optional,check(shape(nn,0)==nd),depend(nn) :: nd=shape(nn,0)
+            integer dimension(nat),depend(nat),intent(in) :: izp
+            integer, intent(inout) :: nm
+            integer, intent(inout) :: nmat
+            integer dimension(nd,25),depend(nd),intent(inout) :: mm
+            integer dimension(ndim,25),depend(ndim),intent(inout) :: vec
+            integer dimension(2,25),intent(inout) :: iw
+            external :: ev
+        end subroutine mmcal
+        function fccbnd(i,j,r2,dd) ! in :initialization:nncal.f
+            integer :: i
+            integer :: j
+            real*8 :: r2
+            real*8 dimension(13) :: dd
+            integer :: fccbnd
+        end function fccbnd
+        function bccbfe(i,j,r2,dd) ! in :initialization:nncal.f
+            integer :: i
+            integer :: j
+            real*8 :: r2
+            real*8 dimension(13), intent(inout) :: dd
+            integer :: bccbfe
+        end function bccbfe
+        function equiv(v,w) ! in :initialization:equiv.f
+            real*8 dimension(3),intent(in) :: v
+            real*8 dimension(3),intent(in) :: w
+            logical, intent(out) :: equiv
+        end function equiv
+    end interface 
+end python module initialization
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/

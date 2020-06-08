@@ -1,0 +1,58 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+python module selfd__user__routines 
+    interface selfd_user_interface 
+        function iovpar(i,j,r2,parm) result (id) ! in :slaterkoster:selfd.f:selfd:unknown_interface
+            integer :: i
+            integer :: j
+            real*8 :: r2
+            real*8 dimension(13),intent(inout) :: parm
+            integer :: id
+        end function iovpar
+    end interface selfd_user_interface
+end python module selfd__user__routines
+python module skdd__user__routines 
+    interface skdd_user_interface 
+        function iovpar(i,j,r2,parm) result (id) ! in :slaterkoster:skdd.f:skdd:unknown_interface
+            integer :: i
+            integer :: j
+            real*8 :: r2
+            real*8 dimension(13),intent(inout) :: parm
+            integer :: id
+        end function iovpar
+    end interface skdd_user_interface
+end python module skdd__user__routines
+python module slaterkoster ! in 
+    interface  ! in :slaterkoster
+        subroutine slkode(dum,i,j,em,iovpar) ! in :slaterkoster:slkode.f
+            use selfd__user__routines
+            real*8 dimension(3) :: dum
+            integer :: i
+            integer :: j
+            real*8 dimension(5,5), intent(inout) :: em
+            external :: iovpar
+        end subroutine slkode
+        subroutine selfd(i,j,r2,iovpar,em,ne) ! in :slaterkoster:selfd.f
+            use selfd__user__routines
+            integer :: i
+            integer :: j
+            real*8 :: r2
+            external iovpar
+            real*8 dimension(ne,5),intent(inout) :: em
+            integer, optional,check(shape(em,0)==ne),depend(em) :: ne=shape(em,0)
+        end subroutine selfd
+        subroutine skdd(x,x2,i,j,r2,iovpar,em,ne) ! in :slaterkoster:skdd.f
+            use skdd__user__routines
+            real*8 dimension(6) :: x
+            real*8 dimension(6) :: x2
+            integer :: i
+            integer :: j
+            real*8 :: r2
+            external iovpar
+            real*8 dimension(ne,5),intent(inout) :: em
+            integer, optional,check(shape(em,0)==ne),depend(em) :: ne=shape(em,0)
+        end subroutine skdd
+    end interface 
+end python module slaterkoster
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/

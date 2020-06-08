@@ -1,0 +1,69 @@
+Fri 26 Oct 2018 20:37:36 BST
+
+For introduction:
+
+https://docs.scipy.org/doc/numpy-1.15.0/f2py/getting-started.html#the-quick-and-smart-way
+
+From their example (the smart way) we take the following steps.
+
+
+First create a signature file from the .f file by running:
+
+  f2py fib1.f -m fib2 -h fib1.pyf
+
+
+The next step is to modify the signature file so that f2py knows the 
+intended 'in' and 'out' variables, and any size dependencies of the array.
+
+Finally the extension module is built using:
+
+  f2py -c fib2.pyf fib1.f
+
+In python:
+
+  import fib2
+  print fib2.fib.__doc__
+
+Important Options
+==================
+  -h <filename>  Write signatures of the fortran routines to file <filename>
+                 and exit. You can then edit <filename> and use it instead
+                 of <fortran files>. If <filename>==stdout then the
+                 signatures are printed to stdout.
+
+  -m <modulename>  Name of the module; f2py generates a Python/C API
+                   file <modulename>module.c or extension module <modulename>.
+                   Default is 'untitled'.
+
+
+Fri 14 Dec 2018 18:00:34 GMT
+------------------------------
+"When using Fortran or C, compilers naturally discover 
+any type mismatches during compile time but in Python 
+the types must be checked in runtime."
+
+The signature files can be edited to contain information about the intent.
+
+Tue  1 Jan 2019 18:40:29 GMT
+Getting to the end of the FCC example.
+The debug api lets me capture the output of the variables from HOP every time
+this could be very interesting for plotting purposes.
+
+The edge,width,weight functions are arrays to capture the situation where there is
+more than one band. For the moment we have a single d-band.
+
+Wed  2 Jan 2019 18:41:50 GMT
+----------------------------
+Good progress today. First example almost runs straight through.
+Final issue with Fermi energy to resolve. Now add a small plotting
+functionality. Layout of camreclibpy should look like:
+
+camreclibpy/
+   README.md
+   camreclibpy/*.so
+   notebooks/
+
+Can implement this in time. Need to think about the best design of 
+convenience functions and sizing the COMMON BLOCKS. Moving to float64 
+also finished.
+

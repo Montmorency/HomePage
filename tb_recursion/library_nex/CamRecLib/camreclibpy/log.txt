@@ -1,0 +1,73 @@
+Sun 16 Dec 2018 17:10:01 GMT
+
+Building up the initialization module. 
+I am going to keep the division of the original
+code into two parts: initialization, and coefficient
+processors.
+
+The initialization.pyf defines the python module for the initialization.
+
+Tue 18 Dec 2018 13:32:56 GMT
+
+Adding in turn: building lattice FCC/BCC.
+
+Nearest-Neighbour-Lists NNCAL.
+
+Interaction vectors mmcal.
+
+Some difficulties with array dimenstions.
+C  NNDIM IS THE SECOND DIMENSION OF ARRAYS NN & MM AND PSI,PMN & CRD
+   HL This doesn't seem to be correct it is second dimension of CRD
+      and PMN, PSI, but the first of NN and MM.
+
+C  NED IS THE DIMENSION OF ARRAYS IW,VEC AND EE
+
+Within MMCAL we have ND and NDIM
+
+Table of arguments passed.
+
+MMCAL       SETUP      EXRECAL
+-----     ----------   ---------
+NDIM     <-   ND      <-  3         (vector dimension)
+ND       <-   NND     <-  NNDIM (1st DIMENSION OF NN,MM 2nd of PSI, PMN, CRD)
+
+NMAT     <- NE=NED    <- NED (dimension of IW,VEC AND EE)   
+NM       <- NNCAL(NM) <- NM=NNMX
+ND       <- NND       <- NNDIM (max size of atoms)
+
+-fdefault-real-8
+
+python module mmcal__user__routines
+    interface mmcal_user_interface
+        logical function ev(v,w) result (id) ! in :initialization:equiv.f
+            integer dimension(3),intent(in) :: v
+            integer dimension(3),intent(in) :: w
+            logical, intent(out) :: id
+            logical, intent(out) :: ev
+        end function ev
+    end interface mmcal_user_interface
+end python module mmcal__user__routines
+
+Thu 20 Dec 2018 18:23:53 EST
+Seem to have resolved the type issues by the policy of inaction.
+Everything is defaulting to 32 bits (integers and reals) we
+may want to go beyond this and increase to 64 bits in the next 
+iteration.
+
+Segmenting into natural modules: initialization, slater-koster,
+then need a recal/hop module. If the recal can call hop through
+a callback function it would be possible to modify the Hamiltonian 
+application in a fairly straightforward fashion by allowing us to 
+write the hop function in python. So that could be convenient.
+
+From the docs:
+  F2PY generates wrappers to common blocks defined in a routine signature 
+  block. Common blocks are visible by all Fortran codes linked 
+  with the current extension module, but not 
+  to other extension modules.
+
+
+
+
+
+

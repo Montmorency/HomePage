@@ -1,0 +1,71 @@
+      SUBROUTINE TERMGN(A,B2,LL,EPS,ERR,ITMX,AA,RNG,WB,NBP1,AM,BM2,
+
+     1 IC,WK,NW,BWK,NBD,IWK)
+
+      DIMENSION A(LL),B2(LL),AA(NBP1),RNG(NBP1),WB(NBP1),AM(LL)
+
+     1 ,BM2(LL),IC(NW),WK(NW,2,NBP1),BWK(NBD,4),IWK(LL)
+
+     2 ,P(2,3)
+
+      KD=1
+
+      NB=NBP1-1
+
+      NET=NB*2
+
+      CALL BNDEST(A,B2,LL,EPS,AA,RNG,NB,BWK,BWK(1,2),IC,NET,DE,WK,NW)
+
+      DEL=DE*0.5
+
+      DO 4 ITE=1,ITMX,5
+
+      DO 1 I=1,NB
+
+      ID=I+I
+
+      BWK(ID-1,3)=DEL
+
+      BWK(ID,3)=DEL
+
+      BWK(ID-1,4)=AA(I)
+
+1     BWK(ID,4)=RNG(I)
+
+      CALL BNDWT(AA,RNG,WB,NB,A,B2,LL,EPS,WK,NW,IWK)
+
+      DO 2 ITER=1,5
+
+      CALL CFGPGN(AA,RNG,WB,NB+1,KD,EPS,AM,BM2,LL,WK,NW)
+
+      CALL BNDREF(DEL,AM,BM2,LL,EPS,AA,RNG,NB,BWK,NBD,IC,NET)
+
+      DEL=DEL*0.5
+
+2     CONTINUE
+
+      DEL=0.0
+
+      DO 3 I=1,NB
+
+      ID=I+I
+
+      DEL=AMAX1(DEL,ABS(AA(I)-BWK(ID-1,4)))
+
+3     DEL=AMAX1(DEL,ABS(RNG(I)-BWK(ID,4)))
+
+      IF(DEL.LT.ERR)GOTO 5
+
+      DEL=DEL*0.5
+
+4     CONTINUE
+
+5     NBP1=NB+1
+
+      CALL CFGPGN(AA,RNG,WB,NBP1,KD,EPS,AM,BM2,LL,WK,NW)
+
+      ERR=DEL
+
+      RETURN
+
+      END

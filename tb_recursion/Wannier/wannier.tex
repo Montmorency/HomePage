@@ -1,0 +1,316 @@
+\chapter{Whistlestop Tour of Wannier Functions}
+\label{chap:wannier}
+\section{A Brief History of Local and Extended Waves}
+Chemical intuition is built on a concept of local bonding. 
+Yet the mathematics of Bl\"och waves requires a picture of an 
+electronic state extended throughout a crystal.
+
+Pauling introduced the concept of linear combinations of atomic eigenfunctions
+as forming hybrid orbitals which are local and directional in nature and
+in many cases can be used to anticipate or explain the observed structure
+of molecular compounds \cite{pauling28}. Pauling's publication was contemporaneous
+with Felix Bl\"och's work on electrons in crystals \cite{bloch29}. The
+way these two perspectives, the local and extended picture of electronic wave functions, 
+are applied and rationalized is the distinguishing feature 
+of entire fields and sub-fields of physics and chemistry.
+
+A definite mathematical transformation between the local formulation
+and Bl\"och's formulation was obtained by Wannier. 
+Wannier succeeded in obtaining a set of functions
+from the set of Bl\"och waves which were localized in each unit cell
+of a crystal and orthogonal to the wavefunctions in each of its
+neighbouring cells \cite{wannier37, wannier62}.\index{Wannier,Bl\"och} 
+This work, Wannier noted, was initiated by Eugene Wigner's suggestion that, 
+``... there ought to be a way to reconcile the local and the band concept 
+for electrons, and that such a reconciliation would probably be useful in 
+understanding the spectra of insulators." 
+
+However Wannier's transformation amounted to a gauge transformation
+and did not result in a unique local description of the electronic states.
+Koster proposed a variational procedure for the determination 
+of Wannier functions \cite{koster53},
+alongside a number of other early treatments of the problem \cite{winston54}.
+This approach is similar to that made by Hall \cite{hall52} who uses symmetric  
+combinations of directed orbitals on adjacent pairs of atoms and constructs 
+the Bl\"och sums from these orbitals.
+
+One of the immediate practical consequence of Wannier's formalism was
+it allowed for an effective computational treatment of impurities 
+and donor and acceptor states in semiconductors \cite{slater49,kittel54} simply
+by appealing to the existence of localized wave packets rather than calculating
+them explicitly. This appeal to the existence of Wannier like orbitals is frequently made in
+tight-binding formulations where they are not explicitly calculated but
+matrix elements between them are inferred.
+
+Lennard-Jones evolved a concept of equivalent 
+orbitals \cite{lennardjones49a,lennardjones49b, hall50}
+to elucidate the relationships between the electron-pairing theory of valency, 
+the Pauling picture, and the molecular orbital theory, by treating each 
+electron as moving throughout the whole molecular 
+framework. Like much of the early work on localized wave functions in molecules 
+a great deal of group theory was employed.
+
+In Lennard-Jones' formulation a set of equivalent orbitals, 
+when such a set exists, has the property that the effect of a symmetry 
+operation only involves the interchange of equivalent orbitals.
+
+Kimball has written from a similar `chemical perspective' 
+on orbitals where combinations of spherical harmonics are taken to form
+directed bonds \cite{kimball41} with a number of molecular examples.
+
+L\"owdin introduced a set of symmetrically orthogonalized wavefunctions which 
+can be viewed as an intermediate formulation between hybrid orbitals 
+and Wannier functions \cite{lowdin56}.
+
+A unified treatment of each of these perspectives, molecular orbital,
+Bloch states, Wannier functions and L\"owdin orbitals based on group theory 
+has been made in Ref.~\cite{altmann58}. As well as a later review by Phillips\cite{phillips70}.
+
+\section{MLWF: Maximally Localized Wannier Functions}
+For an isolated set N of Bloch bands, in the Maximally Localised Wannier Function
+(MLWF) formalism, the Wannier function is defined as:
+%
+\begin{equation}
+|w_{n\R}\ket = \frac{V}{(2\pi)^{3}}\int_{\rm BZ} \left[ \sum_{m=1}^{N} U^{\k}_{mn}|\psi_{mk}\ket \right]e^{-i\k\cdot\R}d\k,
+\end{equation}
+%
+where $U_{mn}^{\k}$ rotates the Bloch states at each $\k$-point.
+
+The Maximally Localised Wannier Scheme proceeds by minimizing a spread functional:
+%
+\begin{equation}
+\Omega = \sum_{n}^{N} \left[ \bra r^{2} \ket_{n} - |\bar{\r}|^{2} \right],
+\end{equation}
+%
+a similar criterion for the determination of an optimal basis set for
+molecular orbitals was given by Boys and Foster in Ref.~\cite{boys60b}.
+
+Using Blount's relations it can be shown that 
+the spread functional can be minimized by rotations of the overlap matrices defined as: 
+%\cite{marzari97, mostofi08} 
+%
+\begin{equation}
+M_{mn}^{\k,\bf{b}} = \bra u_{m\k}|u_{n,\k+\bf{b}} \ket.
+\end{equation}
+%
+
+\subsection{Disentangling Bands}
+When we aren't dealing with an isolated set of bands, i.e.
+there are broad overlapping bands, e.g. an s-state that crosses in energy
+across a group of $d$-like orbitals the procedure of Ref.~\cite{souza02}.
+Two windows in energy are defined. An inner energy window of states are frozen 
+and a wider set of states in an outer energy window (which contains the smaller
+energy window) are projected down into a $N$ vector subspace:
+%
+\begin{equation}
+|u^{\rm opt}_{n\k}\ket = \sum_{m \in N_{\rm win}^{\k}} U_{mn}^{{\rm dis}(\k)}|u_{m\k}\ket
+\end{equation}
+%
+
+$U^{{\rm dis}(\k)}$ is a rectangular $N_{\rm win}^{\k} \times N$ matrix. 
+The subspace is selected by minimising the quantity $\Omega_{I}$ with respect to $U^{{\rm dis}(\k)}$.
+Where $\Omega_{I}$ is essentially the variation between neighbouring $\k$-points. 
+%
+\begin{equation}
+\Omega_{I} = \frac{1}{N_{kp}} \sum_{\k, \mathbf{b}} \omega_{b} {\rm tr} \left[\hat{P}_{\k}\hat{Q}_{\k+\mathbf{b}}\right]
+\end{equation}
+
+$\hat{P}$ and $\hat{Q}$ are the projection operators: 
+$\hat{P}_{\k}=\sum_{n=1}^{N}|u_{n\k}\ket \bra u_{n\k}|$ and $\hat{Q}_{\k} = 1-\hat{P}_{\k}$
+minimizing this quantity corresponds to maximizing the overlap between rotated Bloch
+states at neighbouring $\k$-points.
+
+Once the optimal subspace has been determined the N vectors are then rotated in the same
+was as an isolated set of bands to determine the Wannier function.
+
+\subsection{Hamiltonian in the Wannier Gauge}
+In the basis of Bloch wave vectors the Hamiltonian matrix is diagonal at each $\k$ point
+with the diagonal element corresponding to the eigenvalue. To rotate to the 
+Wannier gauge the optimal rotaion matrix can be used directly:
+
+\begin{equation}
+\label{eq:HWan}
+H^{W}(\k) = (U^{\k})^{\dagger}(U^{{\rm dis}(\k)})^{\dagger}H(\k)U^{({\rm dis}(\k))}U^{(\k)}.
+\end{equation}
+
+$H^{W}$ refers to the Hamiltonian in the Wannier gauge. Eq.~\ref{eq:HWan} can then be contracted
+over the $\k$ points to obtain:
+%
+\begin{equation}
+\label{eq:Htb}
+H_{nm}(\R) = \frac{1}{N_{\k}} \sum_{\k} e^{-i\k\cdot\R}H_{nm}^{W}(\k).
+\end{equation}
+%
+$H_{nm}(\R)$ corresponds to the matrix elements between Wannier functions at different centers $\R$. 
+The matrix elements are generated for the entire grid of supercell vectors $R$ that
+are dual to the chosen kpoint. The inverse transform of \ref{eq:Htb} can be used to obtain a
+dense $k$-point interpolation of the band structure Ref.~\cite{yates07}.
+
+It is the matrix elements of Eq.~\ref{eq:Htb} that we wish to approximate using a tight binding scheme.
+For a tight binding scheme to be valid these elements must decay relatively quickly 
+as a function of $\R$ and transform according to the same symmetry operations as spherical harmonics
+centered on the atomic sites. 
+
+\subsection{Wannier Practical Procedure}
+To carry out the procedure in practice an initial set of orbitals 
+${g_{i}(\r)}$ is chosen and the matrix elements:
+%
+\begin{equation}
+\label{eq:overlap}
+A^{(\k)}_{mn} = \bra u_{m\k}|g_{n} \ket,
+\end{equation}
+%
+are formed. $A^{\k}_{mn}$ is an $N^{(\k)}_{win} \times N$ matrix. 
+
+A set of N functions at each $\k$ point in the Brillouin zone is given:
+
+\begin{equation}
+|\phi_{n\k} \ket = \sum_{m=1}^{N^{(\k)}_{win}} A^{(\k)_{mn}} |u_{m\k}\ket.
+\end{equation}
+
+The N functions are then L\"owdin orthogonalized to form an 
+initial guess at the projected subspace:
+%
+\begin{equation}
+|u^{\rm opt}_{n\k} \ket = \sum_{m=1}^{N^{\k}_{win}}(AS^{-1/2})_{mn}|u_{m\k}\ket
+\end{equation}
+%
+The initial guess for $U^{\rm dis (\k)}$ is $\mathbf{A}\mathbf{S}^{-1/2}$ 
+where $S_{mn}=(A^{\dagger}A)_{mn}$.
+
+Though the minimization is robust a good guess at $g_{i}(\r)$ can speed the process.
+For instance for $\alpha$-Fe the appropriate combination of initial states is a combination of 
+$d_{xy}$, $d_{zx}$, and $d_{yz}$ orbitals along with 6 $sp^{3}d^{2}$ hybrid orbitals oriented along the 
+cubic axes of the crystal. The final MLWFs bear a strong resemblance to these initial states.
+
+The $U^{{\rm dis}(\k)}_{mn}$ matrix evolves from this guess in the course of the 
+minimization so that the final rotation matrices at different k-points will have no 
+obvious connection with the initial guess. Nor are the Wannier functions diagonal in the basis 
+of the trial orbitals. If they were the trial orbitals themselves would be the Wannier functions. 
+
+\section{Symmetry properties of the Wannier Functions}
+The appendix of the Slater-Koster paper deals with the issue of whether L\"owdin type
+orbitals, which are orthogonalized to their neighbours, transform according to the same
+symmetry operations as the spherical harmonics.
+
+\section{TB-NN}
+Starting from an orthonormal set
+of Bl\"och wave vectors a unitary matrix is formed such that it rotates the
+extended waves into an optimally localized state.
+Any gauge that can arrange Bl\"och orbitals which are spread 
+across a crystal into a localized
+packet of orthogonal orbitals will be of some considerable use in the local recursion techniques.
+The essential point is that the local Hamiltonians, which the recursion techniques require,
+must correspond formally to results obtained {\it ab initio}. 
+This correspondence must be quantitative and controllable and achieved in 
+a way based on rigorous physical reasoning. 
+Put simply it is essential that the houses are not built on sand! 
+It is for this reason Chapter~\ref{chap:gw} contained what it did. The discussion of 
+the previous work done on DFT, and the Harris-Foulkes functionals is required to formulate
+the local approach.
+
+If they were it would be too easy for another to come along and 
+tweak a few `parameters' to obtain new results. 
+
+\section{Example 1: Diamond Structure}
+The choice of appropriate basis for a diamond tight binding model requires a little thinking.
+The structure itself can be considered a Face Centered Cubic structure with two atoms per unit cell.
+The lattice then has atoms at $a(p\bf{i} + q\bf{j} + r\bf{k})$ wherever $p+q+r$ is an even number
+as well as at identical points shifted by $\frac{1}{2}a(i+j+k)$. Slater and Koster choose to proceed
+by setting up $s,p_{x},p_{y},p_{z}$ orbitals on each of the two sites in a unit cell resulting in 8 
+Bloch sums which need to be fit and including interactions between nearest and next nearest neighbours.
+The nearest neighbours of one atom consist of a tetrahedral arrangement of atoms belonging to the 
+second FCC lattice $a(1/2,1/2,1/2), a(1/2,-1/2,-1/2), a(-1/2,1/2,-1/2), a(-1/2,-1/2,1/2)$,
+and 12 second nearest neighbours all located at $a(110)$ positions.
+
+With the Wannier Functions we can choose a different basis. If we choose the origin of our coordinate
+system as the center of a nearest neighbour bond between two atoms and set up a face centered cubic lattice
+we can choose the eight sp3 wannier functions as a basis and infer the parameters
+of their interactions with the 12 nearest neighbour cells of the type a(110). Then instead
+of assigning the two center integrals $(ss\sigma)$ etc. to a particular atom, 
+i.e. $(ss\sigma)_1$, we assign the two groups to the valence manifold and low lying conduction manifold 
+$(ss\sigma)_{v}$. The fitting procedure then seek to fit the disposable constants to the 
+Wannierized Hamiltonian matrix elements. Again a two center approximation can be used in the first pass
+resulting in 8 neurons in the hidden layer, and then a second fit which makes use of 
+all the disposable constants. The hope is that the MLWF basis will provide an optimal one in the
+sense of the rapid spatial decay of the matrix elements between neighbouring unit cells 
+(which for sp3 semi-conductors is promising), and that the contributions of the three center
+integrals will be negligible in this basis. Slater-Koster found that the two center approximation in their
+basis was not a particularly good one and unable to interpolate the results obtained
+from an orthogonalized plane wave calculation, however the atom centered spherical harmonic orbitals is likely 
+to suffer from this deficiency, the requirement that neighbouring orbitals are orthogonal would lead to 
+the formation of actual orbitals with non-zero components on neighbouring shells of atoms. 
+
+The second nearest neighbour s-interaction is found to have the opposite sign.
+%\section{Oh, What Larks}
+%There is little need to motivate the theoretical investigations of semiconductors
+%their technological relevance is undisputed. Nor is there a shortage of interesting
+%problems to consider like; surface reconstructions, donor acceptor levels, 
+%disorder \cite{hass40}, inversion layers.
+
+\section{The Structural Energy Difference Theorem}
+\label{sec:structendiff}
+Before concluding this chapter it is high time we mention a theorem due to Pettifor
+that will help us connect the local formulation of electronic structure and
+a huge swathe of experimental data: the structural energy difference theorem. 
+
+The Wannier Formulation discussed here has given
+us a rigorous procedure for obtaining electron hopping integrals.
+The recursion method then allow us to calculate the band contribution to the total energy.
+Fascinating as this band contribution is, as we learned in Chapter.~\ref{chap:gw}, 
+it is only part of the contribution to the total energy. The repulsive contribution to the energy
+also plays an important role. 
+
+For theoretical purposes we sometimes wish to concentrate only on the band energy 
+contribution to the energy difference between two given structures. 
+Let us denote the structures $I$ and $II$. To focus on the band contribution we make
+the following manipulations. Let the total energy of a structure be:
+%
+\begin{equation}
+U = U_{\rm rep} + U_{\rm bond}
+\end{equation}
+%
+We then adjust the first nearest neighbour bondlength of structure $II$ from
+$R^{(II)}_{0}$ to $R^{(II)}$ (we follow Pettifor's notation, the difference in the two terms
+arises from dropping the nought in the subscript in case that was missed). 
+We then impose the requirement that $U_{\rm rep}(R^{(II)})$ is chosen 
+equal to the repulsive energy of structure $I$ at its equilibrium: $U^{(I)}_{\rm rep}(R^{(I)}_0)$.
+The theorem is then that the error in the energy difference is second order with respect to the 
+difference $(R^{II} - R^{II}_{0})$. The proof of the theorem follows from a Taylor expansion. 
+We write the energy difference as:
+%
+\begin{equation}
+\Delta U^{(1)} = U^{(II)}_{\rm bond}(R^{(II)} - U_{\rm bond}^{(I)}(R^{I}_{0}),
+\end{equation}
+%
+this is sometimes abbreviated to $\Delta U^{(1)} = [\Delta U_{\rm bond}]_{\Delta U_{\rm rep}=0}$.
+
+This theorem has been used extensively by Pettifor and his co-workers who were able to 
+rationalize the structural trends across the range of s-p\cite{cressoni91}, p-d\cite{pettifor86b}, 
+and stoichiometric AB alloys\cite{bieber81,pettifor86a}.
+
+The theorem is useful because we may wish to determine what topological configurations a given set of atoms
+will take. Depending on the geometry there will be small compensating changes in 
+the band contribution and the repulsive contribution that are hard to
+unravel. The choice of nearest neighbour distance would then become
+somewhat arbitrary. This would constitute a black mark against the predictive powers of
+the model. Pettifor's theorem is useful for ensuring we are comparing apples with apples.
+
+%We begin with David Pettifor's phenomenological structure maps \cite{pettifor84, pettifor86a},
+%reproduced in Fig.~\ref{fig:structuremap}. These maps represent a distinct success for 
+%theoretical materials science; each aspect of Ehrenreich's criteria are met.
+%The properties of entire homologous series can be predicted from a set of two dimensional
+%coordinates. The experimental comparisons are immediate.
+%The structure maps have found industrial application in addressing the technical challenges encountered 
+%when producing ductile alloys that could withstand the high temperatures in 
+%jet engines\cite{sutton19}. 
+%The alert reader will have recognized the similarity with the Lennard-Jones
+%potential, in some respects the first and simplest interatomic potential, 
+%but one that encapsulates the idea that atoms attract each other
+%when they are a certain distant apart and repel each 
+%other when they are squeezed together. Teasing out and quantifying this
+%atomic behaviour will be the work of the remainder of these notes. 
+
+\section{Conclusions}
+
+

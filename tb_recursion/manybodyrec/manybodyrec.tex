@@ -1,306 +1,56 @@
 \chapter{Many Body Recursion}
-\label{chap:manybodyrecursion}
-\section{Recursive GW}
-A many body Hamiltonian amenable to being written in a sparse format might look like this:
-%
-\begin{equation}
-H = [\frac{1}{2}\nabla^{2} + \tilde{v}_{\rm loc} + \hat{\Sigma}(\r,\r';\omega)]
-\end{equation}
-%
-	$\Sigma(\r,\r';\omega)$ is a self energy operator, it is not local and 
-has an additional argument that includes the energy.
-If we impose a requirement that spatial integrals over $\Sigma$ are performed in 
-well defined atom centered regions of space with localized Wannier functions. 
-The off diagonal elements of a tight binding Hamiltonian can be quantified as:
-%
-\begin{equation}
-\int_{\Omega_{j}}\bra w_{i}(r-R)|\Sigma(\R,\r';\omega)|w_{j}(r-R)\ket d\r'
-\end{equation}
-%
-	Subsequent neighbour interactions would take a similar form
-with the integration region, $\Omega_{j}$ being a Wigner cell around an 
-atom with its Wannier center at $\R_j$. In order for the scheme to be sensible the contributions from subsequent shells 
-must be negligible. This is likely to be the case so long as either the atomic orbitals $w$ and/or $\Sigma$ 
-fall off quickly enough. Which, as will become clear when we discuss
-the relationship of this scheme to the GW approximation, requires 
-the Green's function or the screened Coulomb interaction to be sufficiently localized.
+\section{Introduction}
+Whether one approaches the problem of electron correlation from the
+perspective of a chemist, physicist or a material scientist the 
+essential work of this chapter is to build a formalism for `turning on'
+the interactions between the electron wave packets as they have been 
+determined in the single particle picture. 
 
-The on-site self-interaction term can be computed as
-%
-\begin{equation}
-\int_{\Omega_{i}}\bra w_{i}(\r-\R_{i})|\sigma(\r,\r';\omega)|w_{i}(\r-\R_{i})\ket d\r'd\r
-\end{equation}
-%
-The self-consistency in the recursion method relies on the adjustment of the $\Sigma$ operator 
-and the fewer depths of recursion required to stabilize this quantity the more efficient the
-scheme can be considered.
+We may mention a parallel but distant line of thinking
+which sought to incorporate the effects of electron correlation
+into the choice of basis set via the overlap matrices the work
+of Adams, Anderson, and Boys is suggestive of this 
+line \cite{adams62, weeks73}. 
 
-In principle we can now compute any quantity we like that can be expressed
-as a density of states, or an integral over the density of states.
-The basis set may remain an issue. The localized functions will not have the 
-flexibility of planes waves so if we seek the green's function in the 
-region of the plasmon energies our basis set might not have the flexibility 
-to describe that solution? I'll have to think about this. Ultimately the 
-solution for the resolvent at those energies i.e. ${\rm Im} G_{nk}(\omega)$ should 
-reproduce what I'm looking for. The test for this would be with Si, if 
-I can reproduce spectral functions with TB recursion that is a legitimate 
-proof of concept and would clarify the extent to which collective excitations,
-plasmon, can be incorporated in TB recursion. 
+The types of problems one may want to treat are discussed in \cite{slater49, kittel54}
+and involve excitation energies and excitons. The interacting particles will also 
+form the basis of the states required to discuss superconductivity 
+in Chapter~\ref{chap:superconductivity}.
 
-Also Writing the equations in this way and the proposed method of solution
-yield some post hoc justification for parameterizations of plasmon
-pole models or the use of Pad\'e approximants to capture the frequency dependence
-of the key operators.
+The work of Kelly \cite{kelly76} on comparing the electronic structure for different
+topological configurations of Si demonstrate the importance of being able to combine
+the local approach to calculations with the enhanced accuracy provided by
+$GW$ type theories for describing electronic excitations. The extended nature
+of structural defects must be incorporated into the calculations. The structures
+in silicon i.e. the Polk-Boudreaux CRN is composed of 519 sites, the Connell-Temkin
+model is composed of 238 sites.
 
-Similarly the contributions of neighbours to the self-energy 
-operator yields some physical insight.
+\section{Recursive Many Body Formulations}
+As mentioned at the close of Chapter.~\ref{chap:invariance} one of the potential
+lines of extension for the recursion method is to move from a single particle 
+description of the electronic structure of materials to a many body formalism.
+We are also interested in carrying out tractable tight binding like calculations
+which might incorporate more information about the local environment so that we
+can compute our band gaps and cohesive energies as accurately as we may choose.
 
-\section{The Self-Energy From Multiple Greenian Elements}
-  A good first order approximation to $\Sigma$ comes from the GW approximation.
-We will write matrix elements of this to see the connection between the
-recursion method and the calculation of $\Sigma$. It should be come apparent that computing
-the self-energy requires a large table of Greenian matrix elements between states localized
-on nearby atoms, far away atoms, and the entire valence and conduction band spectrums. 
-This table of Greenian elements could become excessively large very quickly and requires some
-rigorous procedure to map it back into a manageable scale.
-%
-\begin{equation}
-\label{eq:sigma}
-\Sigma_{ij}(\omega) = \bra\phi_{i}|\int G(\omega-\omega')W(\omega')d\omega'|\phi_{j}\ket
-\end{equation}
-%
-We now insert the identity operator into Eq.$\sigma$ strategically and at a number of places:
-%
-\begin{equation}
-\label{eq:sigma}
-\Sigma_{ij}(\omega) = \bra\phi_{i}|\int G(\omega')\sum_{n}|\phi_{n}\ket\bra\phi_{n}|(G(\omega')|\phi_{n}\ket\bra\phi_{n}|G(-\omega')v)d\omega'|\phi_{j}\ket
-\end{equation}
-%
-\begin{equation}
-\label{eq:sigma_onsite}%need to check the frequency polarization expression
-\Sigma_{ii}(\omega) = \bra\phi_{i}|\int G(\omega')\sum_{n}|\phi_{n}\ket\bra\phi_{n}|(G(\omega')|\phi_{n}\ket\bra\phi_{n}|G(-\omega')v)d\omega'|\phi_{i}\ket
-\end{equation}
-%
-The insertion of multiple identity operators makes what we need clear. What is required 
-is to tabulate the Greenian's, $G_{ij}(\omega)$, between eigenstates of the system
-the non-interacting system. In {\it ab initio} calculations this requirement 
-gives rise to the "sum over states" problem. Although in principle the valence
-and conduction states, at every wave vector, are known their calculation and storage
-is tedious, and justified truncation of the sum is problematic.
+The most direct extension of the recursion approach to many body Hamiltonians 
+was undertaken In Ref.~\cite{annett94}. The concept of the local density of states (LDOS)
+is extended to the projected density of transitions (PDOT) and it is argued singularities
+in the PDoT correspond to thresholds for creating long lived elementary excitations 
+in the many body system. In this chapter we demonstrate how to map a GW type calculation
+on to a chain model. 
 
-For this scheme to be workable we again stress that the system interaction
-must be sufficiently local such that $Sigma_{ij}$ matrix elements can be
-calculated. This corresponds to the mutual interaction of the electrons being 
-short ranged. For a single particle tight binding model these off diagonal hopping
-elements can be calculated and are fixed. It is this interaction we wish
-to generalize slightly to allow for a component of dynamical interaction.
-\section{The Project Density of Transitions}
-The PDOT\cite{annett93, haydock00, haydock16} method is 
-appropriate for calculating the polarizability and provides a direct physical
-interpretation in a many electron system. 
+The analogy between an impurity or adsorbed atom interacting with
+a constant chain and single particle states interacting via plasmon excitations is 
+also pointed out the plasmon band serving to renormalize the single particle state.
+The important calculations are then the position and bandwidth of the interaction
+bands and the coupling of the single particle states to the interaction bands.
+Efficient schemes for computing the positions of the interactions bands and 
+their coupling to the single particle states (represented as Wannier functions)
+are discussed.
 
-Written in Hedin's scheme the polarizability 
-takes the form of a term: $iGG$, in Feynman diagrams this is a bubble diagram. We need to calculate the propagator
-of an electron from 1 to 2, and a hole from 2 to 1. Dimensionally, after a Fourier transform,
-the polarizability has units of transition probability per unit energy. Where there are discrete
-states there are discrete transitions, this would be the case for systems
-that could be considered molecules, where there are continuous bands there are continuous
-bands of transitions, in metallic crystals this would be the case.
-
-Where the recursion method for the PDOS computes the final energy distribution
-for a stationary state in the syste
-
-
-I think Umari's operator for $|\phi\ket\bra\phi|$ would be a natural way of
-approximating the necessary sums that are complimentary to the chosen
-localized single particle states (both valence and low lying conduction).
-We then have the continuum states as $|\phi\ket=e^{i\G\cdot\r}-<\G|w_{i}(\r-\R)>$,
-with the occupied and low lying conduction manifold represented as Wannier 
-functions and the $|\phi>$ states as orthogonalized plane waves.
-
-	Although this is essentially just a rewriting of Hedin's equations
-it has practical consequences. The present method eliminates
-burdensome storage of what are in practice gigantic Green's function, 
-screened Coulomb, and self-energy matrices. It also 
-stabilizes the necessary numerical integrations and convolutions in frequency space. 
-The quadrature methods used in the standard recursion theory remain applicable.
-
-These savings are obtained at the price of a nested call stack of recursions which 
-in principle must be infinite. This may seem troubling but we do intend to truncate
-the level of recursion at some point and the depth of the recursive call stack should
-equate to the number of terms in the self energy expansion that are required.
-
-	Careful, justified, selection of the initial wave functions and tight binding parameters
-is also required and these quantities (if they are not chosen to be analytic and approximate)
-must be computed and stored. However work done on Wannier functions makes this a very
-practical route. We will now embark on some numerical work in the hope that satisfactory 
-results can be obtained by truncation of the recursive call stack at a manageable level. 
-
-Finally the method requires computation of the initial stationary states of the system.
-
-The electron addition operator:
-%
-\begin{equation}
-[H, c^{\dagger}(t)] = -i\hbar \frac{d}{dt} c^{\dagger}(t).
-\end{equation}
-%
-The operator will evolve into a superposition of a fraction of the 
-possible transitions of the system. If a complete set of orthonormal $\{P_{\zeta}\}$ 
-states is introduced the projected transitions can be written:
-%
-\begin{equation}
-\psi_{\alpha} = \sum_{\zeta\eta} P_{\zeta}c^{\dagger}P_{\eta} \qquad \epsilon_{\alpha} = E_{\zeta} - E_{\eta}
-\end{equation}
-%
-The PDOT is then:
-%
-\begin{equation}
-\label{eq:ehpairs}
-\mu(\epsilon) = \sum_{\alpha} \bra\psi_{\alpha}^{\dagger}|\psi_{\alpha}\ket \delta(\epsilon-\epsilon_{\alpha})
-\end{equation}
-%
-The stationary states all have infinite lifetimes, and according to Haydock, \ref{eq:ehpairs} can
-be interpreted as the probability distribution in energy for the decay of a bare electron into one dressed
-with electron-hole pairs.
-
-It is possible to formulate this in terms of discrete transitions for low energies, for high energies
-the initial state is clearly going to diffuse outwards very far and result in the excitation of 
-many oscillators throughout the crystal. Where the complete set of orthonormal states
-hasn't been computed already (this refers to the sum over states problem) it is required to directly
-calculate the PDOT. Haydock gives a prescription for this the time dependent behaviour of
-an operator is given:
-%
-\begin{equation}
-\label{eq:creationt}
-c^{\dagger}(t) = e^{i\mathbf{L}t/\hbar} c^{\dagger}
-\end{equation}
-%
-
-$\mathbf{L}$, the Liouvillian, is defined as a superoperator which
-acts on an operator $\mathbf{x}$ as:
-%
-\begin{equation}
-\mathbf{L} \mathbf{x} = [\mathbf{H}, \mathbf{x}]
-\end{equation}
-%
-Eq.~\ref{eq:creationt} will only converge if the interactions are expanded in terms
-of the screened interaction. The mechanics discussed in the the project density of 
-transitions is equivalent to the Hedin's GW approximation, and provides a framework
-for computing the renormalization in terms of local orbitals and an 
-effective energy band correponding to the plasmons.
-
-With the choices $u_{0}=c^{\dagger}/<c c^{dagger}>^{\frac{1}{2}}$, $u_{-1}=0$,
-subsequent operators are:
-%
-\begin{equation}
-\label{eq:pdotvectors}
-\mathbf{u}_{n+1} = (\mathbf{L} \mathbf{u}_{n} - a_{n}-b_{n}\mathbf{u}_{n-1})/b_{n+1}
-\end{equation}
-%
-\begin{equation}
-a_{n} = \bra u^{\dagger}_{n} \mathbf{L} \mathbf{u}_{n} \ket
-\end{equation}
-%
-\begin{equation}
-b_{n+1} = \bra 
-(\mathbf{L} \mathbf{u}_{n} - a_{n} \mathbf{u}_{n} - b_{n}u_{n-1})^{\dagger} 
-(\mathbf{L} \mathbf{u}_{n} - a_{n} \mathbf{u}_{n} - b_{n}u_{n-1})
-\ket^{\frac{1}{2}}
-\end{equation}
-%
-
-This recursion rarely terminates in practice due to loss of orthogonality of
-the vectors or because the subspace is too large to compute.
-
-If the PDoT consists of a single band of transitions with a known width 
-and energy,then the recurrence can be continued with constant matrix elements, $a_{n}$ and $b_{n}=b$
-for $n>N$ where a and b are fit to the known band. 
-
-For interacting bands it becomes more difficult to approximate a 
-single effective energy band.
-
-The termination of the recurrence is a very important point. 
-We are interested in the excited state properties of a system (N+1, N-1) electrons
-from a local perspective. In Chapter.~\ref{chap:invariance} we worked hard to collect work
-justifying this perspective. A plasmon is the collective variable of the electronic system.
-In a continued fraction expansion of the the PDoT more and more distance transitions are coupled
-to the starting transition. In a real system the continued fraction will terminate at the surface,
-however if the surface atom is changed by a small number of atomic positions it would
-be very surprising if the collective plasmon modes of the cavity changed. 
-Picking a value of anywhere from 30-60 moments away should help the reader to visualize this.
-The contribution of successive transistion are finite, in reality there are not an infinite number
-of hops, and the effect of these remote transitions can be mapped onto collective variables.
-
-For silicon, the plasmon energy band occurs around 16 eV. This is very high compared
-to the single particle excitations which occur around 1 eV. The long range $1/\r$ nature of the Coulomb
-interaction means electrons are coupled over large distance.
-This coupling accounts for the high excitation energy: to get the
-electron cloud moving collectively requires a relatively large amount of energy.
-
-Experience with the GW approximation indicates an effective band model works very well
-for sp semiconductors \cite{godbyneeds, hybertsenlouie, bergstressen}. 
-A single plasmon mode approximates the long range density of transitions, and the local
-atomic environment contributions to the PDoT can then be captured directly with the standard nearest
-neighbour hopping and the inclusion of the lowest energy single particle transitions.
-
-The situation for transition metals will be more complicated but again the local approach should yield 
-a tractable framework. The important low energy transitions can all be included 
-as explicit single particle states in the Hamiltonian (spin resolved states). 
-The remaining particle-hole renormalization would then be accounted for 
-via a set of effective plasmon energy bands. It would be of interest to
-see how the number and position of these effective bands can change between systems.
-
-The projected transitions can be written:
-%
-\begin{equation}
-\mathbf{\psi}_{\alpha} = \sum_{n} \psi_{n}(\epsilon_{\alpha})\mathbf{u}_{n}
-\end{equation}
-%
-the sum is over the basis ${\mathbf{u}_{n}}$ generated by Eq.~\ref{eq:pdotvectors}
-with coefficients generated by:
-
-\begin{equation}
-\label{eq:pdotcoeff}
-\psi_{n+1}(\epsilon) = ((\epsilon-a_{n})\psi_{n}(\epsilon) - b_{n}\psi_{n-1}(\epsilon))/b_{n+1}
-\end{equation}
-
-In his paper Haydock says equation \ref{eq:pdotcoeff} has two linearly independent solutions
-which can be combined to satisfy the boundary conditions on $\psi_{N+1}$ or $\psi_{-1}$ or both.
-Physically I understand this as choosing where the recurrence begins and ends not completely
-clear on what it implies mathematically.
-
-The $\mathbf{u}_{0}-\mathbf{u}_{0}$ element of the resolvent is
-%
-\begin{eqnarray}
-R(\epsilon)& = & 1/\epsilon-a_{0}-b_{1}\psi_{1}(\epsilon)/\psi_{0}(\epsilon) \\
-  & = & 1/\epsilon-a_{0}-b^{2}_{1}\epsilon-a_{1}-b^{2}_{2}\epsilon ... b_{n^{2}}/epsilon-a_{n}
-\end{eqnarray}
-%
-and finally the PDoT:
-%
-\begin{equation}
-\mu(\epsilon) = -\bra \mathbf{c} \mathbf{c}^{\dagger}\ket {\rm Sing} \frac{R(\epsilon)}{2\pi i}
-\end{equation}
-%
-The PDoT is the residue of the resolvent which contributes to integrals enclosing the 
-real $\epsilon$-line and it is normalized to the projecting operator.
-
-Calculating how much of the sum rule is exhausted will give a good indication
-of the effectiveness of a single band approximation, or what is equivalent,
-the truncation of the recursion at a suitable number of moments.
-
-Finally a note from the perspective of plane waves and pseudopotentials. For
-highly excited conduction band states. The Bloch periodic wave function is
-essentially a plane wave or free electron state. This is equivalent to saying for
-sufficiently high energy states the kinetic energy is the dominant term in the Hamiltonian.
-For these plane wave states the Wannier transformation is a psinc function. These psincs
-give a local representation of high energy plasmon modes.
-
-
-
-
-\section{Appeal of A Local Formulation of Many Body Quantum Systems}
- A resonance or transition in k-space corresponds to an excitation 
+\section{Appeal of A Local Formulation of The Exchange-Correlation Functional}
+A resonance or transition in k-space corresponds to an excitation 
 of a crystalline eigenstate but the physical meaning of this is hard to access. Highly
 localized states in $\k$-space correspond to relatively diffuse regions in real space. Where
 transitions are formulated in terms of the local atomic environment the process becomes slightly
@@ -317,77 +67,50 @@ experiment the chain of vectors in the excitation will correspond to creating a 
 in the electron system. An electronic wave packet interacts with its neighbours becoming
 ``dressed" by the nearby excitations of electron hole pairs. 
 
-In a photoemission experiment real electric currents will be moving through the crystal as well.
-Only the $\k$-component of the localized wave packet, at a given energy, will move through the crystal as 
-an approximate eigenstate and can pass through without scattering so much that it can't be detected.
+In a photoemission experiment real electric currents will be moving through 
+the crystal as well. Only the $\k$-component of the localized wave packet, 
+at a given energy, will move through the crystal as 
+an approximate eigenstate and can pass through without scattering 
+so much that it can't be detected.
 When the wave packet reaches the surface it can continue propagating
-or be scattered back into the crystal, if it is to continue propagating the appropriate matrix element
-is between the plane wave of the appropriate wave vector and the localized wave packet along with some
-surface potential.
+or be scattered back into the crystal, if it is to continue 
+propagating the appropriate matrix element
+is between the plane wave of the appropriate wave vector and 
+the localized wave packet along with some surface potential.
 
-Other processes mean the excited state can hop 
-to its nearest neighbour leaving behind a hole. The recursive formula means
-the coefficients of the continued fraction and the vectors are generated at
-each step and the energy dependence of the interaction can be calculated 
-in a closed form. The trade off is the recursion depth must be sufficient to
-pick up all the relevant poles of the interaction. For collective modes
-the recursion depth would have to proceed to an impracticable depth which
-is why we must map these contributions onto effective energy bands, collective
-variables, or plasmon modes (depending on how you prefer to call them). 
-The technique demonstrates the mathematical and physical justification 
-of the plasmon as a mathematical transformation or collective excitation.
+The considerats at the close of Chap.~\ref{eq:}. Following the error 
+analysis of the Harris-Foulkes functionals discussed in Chap.~\ref{chap:gw} 
+we have good reason to hope that if our guess at the densities are very good, 
+from the LDA, we can improve the $V_{\rm eff}$ term to include new physics.
 
-The hole state and the excited state will also interact according 
-to the Coulomb interaction, these are excitons, the radius of their (potentially) 
-bound state being determined by the strength of the screened coulomb interaction 
-and the shapes of the electron and hole wave function. 
-However the PDoT we are considering at the moment is just a single electron creation operator.
-To calculate the PDoT for the electron hole system would require a 
-two particle Green's function operator with a new pole in the spectrum forming
-at the energy of the electron hole bound state.
+\section{Fitting a GW-TB Model}
+To begin we write down Eq.~\ref{eq:qpeq2} from Chap.~\ref{chap:gw}.
+This is the Kohn-Sham Hamiltonian but with the many body contributions
+encoded in the $\hat{Sigma}$ operator:
+%
+\begin{equation}
+\hat{H} = [-\frac{1}{2}\nabla^{2} + \tilde{V}_{\rm loc} + \hat{\Sigma}(\r,\r';\omega)]
+\end{equation}
+%
+$\Sigma(\r,\r';\omega)$ is a self energy operator. It has a few properties
+that make it unwieldly to use. It is not local, so its operation requires an integral over
+$\r'$ when it acts on a single particle state, and it has an additional argument 
+energy argument $\omega$. 
 
-\section{Mori Memory Function}
-\label{sec:morimemory}
-  As noted in Ref.~\cite{annett94} there is a close connection between the PDOT
-formalism and Mori's memory function. 
+To sidestep this we will seek to map the $\hat{Sigma}$ operator 
+rigorously onto a local screening model with all the rotational and
+three-center terms built in to it just as we did for the local Wannier 
+tight binding model.
 
-Interestingly when working on the diffusion
-of hydrogen in a lattice I realised I would require a way of computing the
-inverse Laplace transform of the continued fraction generated 
-using Haydock's method. A quick search later and one of the first items to come up
-was a paper titled "A Continued-Fraction Representation of the Time-Correlation
-Functions" the first line of the abstract was, "A continued-fraction expansion of the Laplace
-transform of the time-correlation functions is obtained...". It is very nice when a problem
-arises where all you have to do is go to the shop and grab the solution off the shelf.
-
-Like many store bought items some element of self-assembly is required. In this
-section we wish to simplify Mori's analysis as much as possible so that we can directly 
-apply the mathematical machinery of translating a continued fraction representation of
-a diffusion problem into the time domain and extract measurable quantities.
-
-The inner product, or matrix elements required to generate the coefficients 
-$a_{n}$ and $b_{n}$ in Mori's approach are generalized to include a thermal averaging:
-%\begin{equation}
-%\label{eq:moriinner}
-%(F, G^{*})= \frac{1}{\beta} \int_{0}^{\beta} \bra e^{\lambda H)Fe^{-\lambda H}G^{*}\ket d\lambda
-%\end{equation}
-There is a further computational advantage here. Though the inner product in Eq.\ref{eq:moriinner}
-looks complicated, in fact, it only has the effect of altering the coefficients entering
-the hopping matrix. This means the laplace transform computed from the continued fraction,
-and the quantum mechanical hopping parameters can be computed separately.
-
-Mori's formula allows us to interpret the spectral function in two ways. The first is as
-a purely phenomenological one of an electron in a material being excited and as it passes through
-a crystal on the way to a detector being scattered by the characteristic scattering modes of the
-system. The electron from its initial bound state can interact with the many body system via
-the plasmon modes available to it.
-
-The second is to interpret the probe as measuring a statistical distribution of the 
-renormalized many-body electron states which have spectral weight across the full
-interacting energy spectrum. 
-
-The former, via the Mori picture, is similar to the treatment of a free particle path
-being modified by its interaction with atoms in what is termed Brownian motion. In the
-case of a fermion in a crystal we are looking at its `brownian motion' as it interacts
-with bosons on its way to a detector.
-
+\section{Projections on to Local States}
+The on-site self-interaction term can be computed as:
+%
+\begin{equation}
+a_{0}(\omega) = \int\int\bra w_{i}(\r-\R_{i})|-\frac{1}{2}\nabla^{2} + \tilde{V}_{\rm loc} + \hat{\Sigma}(\r,\r';\omega)|w_{i}(\r'-\R_{i})\ket d\r'd\r.
+\end{equation}
+%
+The off diagonal elements of the tight binding Hamiltonian can be written as:
+%
+\begin{equation}
+b_{ij}(w) = \int\int\bra w_{i}(\r-\R)|\hat{\Sigma}(\r,\r';\omega)|w_{j}(\r'-\R_{j})\ket d\r d\r'
+\end{equation}

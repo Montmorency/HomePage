@@ -1,0 +1,3786 @@
+./ ADD NAME=BNDCRD
+
+      SUBROUTINE BNDCRD(ET,IC,WTT,NET,NB,AA,RNG)
+
+      DIMENSION ET(NET),IC(NET),WTT(NET),AA(NB),RNG(NB)
+
+      DIMENSION NC(9)
+
+      DO 31 I=1,9
+
+31    NC(I)=0
+
+      WMX=0.0
+
+      DO 32 I=1,NET
+
+      IF(IC(I).EQ.4)WMX=AMAX1(WMX,WTT(I))
+
+      ICC=IC(I)+5
+
+32    NC(ICC)=NC(ICC)+1
+
+      NL=NC(6)+NC(8)
+
+      NR=NC(2)+NC(4)
+
+      IF(NL.NE.NR)GOTO 51
+
+      IF(NL.GT.NB)GOTO 52
+
+      IF(NL.EQ.NB)GOTO 37
+
+      NM=NB-NL
+
+      IF(NM.LT.NC(9))GOTO 34
+
+      DO 33 I=1,NET
+
+      IF(IC(I).EQ.4)IC(I)=0
+
+33    CONTINUE
+
+      GOTO 37
+
+34    DO 36 I=1,NM
+
+      WM=WMX
+
+      DO 35 J=1,NET
+
+      IF(IC(J).NE.4)GOTO 35
+
+      IF(WTT(J).GT.WM)GOTO 35
+
+      WM=WTT(J)
+
+      JJ=J
+
+35    CONTINUE
+
+36    IC(JJ)=0
+
+37    NB=0
+
+      DO 41 II=1,NET
+
+      ICC=IC(II)+5
+
+      GOTO(41,39,41,39,40,38,41,38,41),ICC
+
+38    NB=NB+1
+
+      AA(NB)=ET(II)
+
+      GOTO 41
+
+39    RNG(NB)=ET(II)-AA(NB)
+
+      GOTO 41
+
+40    RNG(NB)=(ET(II)+ET(II-1))*0.5-AA(NB)
+
+      NB=NB+1
+
+      AA(NB)=(ET(II+1)+ET(II))*0.5
+
+41    CONTINUE
+
+      RETURN
+
+51    NB=0
+
+      RETURN
+
+52    NB=-NL
+
+      RETURN
+
+      END
+
+./ ADD NAME=BNDEST
+
+      SUBROUTINE BNDEST(A,B2,LL,EPS,AA,RNG,NB,EV,FEV,IC,NET,DE,WK,NW)
+
+      DIMENSION A(LL),B2(LL),AA(NB),RNG(NB),EV(NET),FEV(NET),IC(NET)
+
+     1 ,WK(NW,4),P(2,3)
+
+      NPTS=NW
+
+      ALP=1.0
+
+      LM1=LL-1
+
+      EMN=AMIN1(A(1)-B2(2),A(LM1)-1.0)
+
+      EMX=AMAX1(A(1)+B2(2),A(LM1)+1.0)
+
+      NID=LM1-1
+
+      IF(NID.LT.2)GOTO 2
+
+      DO 1 I=2,NID
+
+      EMN=AMIN1(EMN,A(I)-1.0-B2(I+1))
+
+1     EMX=AMAX1(EMX,A(I)+1.0+B2(I+1))
+
+2     DE=EMX-EMN
+
+      EMN=EMN-DE/FLOAT(LL)
+
+      EMX=EMX+DE/FLOAT(LL)
+
+      DE=(EMX-EMN)/FLOAT(NPTS-1)
+
+      E0=EMN
+
+      DO 3 NE=1,NPTS
+
+      WK(NE,1)=E0+FLOAT(NE-1)*DE
+
+3     WK(NE,2)=RECWT(WK(NE,1),A,B2,LL,EPS,1,P,1)
+
+      THU=ALP*B2(1)/FLOAT(LL)
+
+      THL=B2(1)/(6.0*FLOAT(LL)**3)
+
+      DO 4 I=1,5
+
+      NET=NW
+
+      CALL TABAN(WK,WK(1,2),NPTS,THU,THL,WK(1,3),IC,WK(1,4),NET)
+
+      IF(NET.GT.0)GOTO 5
+
+4     THU=(THU+THL)*0.5
+
+      RETURN
+
+5     CALL BNDCRD(WK(1,3),IC,WK(1,4),NET,NB,AA,RNG)
+
+      IF(NB.LE.0)RETURN
+
+      IB=0
+
+      J=0
+
+      DO 7 I=1,NET
+
+      IF(IABS(IC(I)).GT.1)GOTO 7
+
+      J=J+1
+
+      IF(IC(I).EQ.0)GOTO 6
+
+      IC(J)=-IC(I)
+
+      EV(J)=WK(I,3)
+
+      FEV(J)=RECWT(EV(J),A,B2,LL,EPS,1,P,1)
+
+      GOTO 7
+
+6     IC(J)=0
+
+      E=WK(I,3)
+
+      IT=30
+
+      CALL WTMIN(E-DE,E+DE,A,B2,LL,EPS,EPS*10.0,IT,EV(J),FEV(J))
+
+7     CONTINUE
+
+      NET=J
+
+      RETURN
+
+      END
+
+./ ADD NAME=BNDREF
+
+      SUBROUTINE BNDREF(DEL,AM,BM2,LL,EPS,AA,RNG,NB,BWK,NBD,IC,NET)
+
+      DIMENSION AM(LL),BM2(LL),AA(NB),RNG(NB),BWK(NBD,3),IC(NBD)
+
+     1 ,P(2,3)
+
+      J=0
+
+      DO 33 I=1,NET
+
+      J=J+1
+
+      IF(IC(I).EQ.0)GOTO 32
+
+      VAL=RECWT(BWK(I,1),AM,BM2,LL,EPS,1,P,1)
+
+      BWK(J,3)=(BWK(I,2)-VAL)*FLOAT(IC(I))
+
+      GOTO 33
+
+32    IT=30
+
+      ERR=ABS(BWK(J,3))
+
+      AE=BWK(I,1)-ERR
+
+      BE=BWK(I,1)+ERR
+
+      ERR=ERR*0.01
+
+      CALL WTMIN(AE,BE,AM,BM2,LL,EPS,ERR,IT,EM,FEM)
+
+      BWK(J,3)=BWK(I,1)-EM
+
+      J=J+1
+
+      BWK(J,3)=FEM-BWK(I,2)
+
+33    CONTINUE
+
+      IB=0
+
+      J=0
+
+      DO 44 I=1,NET
+
+      J=J+1
+
+      IF(IC(I))41,43,42
+
+41    IB=IB+1
+
+      DA=SIGN(DEL,BWK(J,3))
+
+      AA(IB)=AA(IB)+DA
+
+      GOTO 44
+
+42    RNG(IB)=RNG(IB)+SIGN(DEL,BWK(J,3))-DA
+
+      GOTO 44
+
+43    D1=SIGN(DEL,BWK(J,3))
+
+      J=J+1
+
+      D2=SIGN(DEL,BWK(J,3))*0.5
+
+      RNG(IB)=RNG(IB)+D1-D2-DA
+
+      IB=IB+1
+
+      DA=D1+D2
+
+      AA(IB)=AA(IB)+DA
+
+44    CONTINUE
+
+      RETURN
+
+      END
+
+./ ADD NAME=BNDWT
+
+      SUBROUTINE BNDWT(AA,RNG,WB,NB,A,B2,LL,EPS,WK,NW,IWK)
+
+      DIMENSION AA(NB),RNG(NB),WB(NB),A(LL),B2(LL),WK(NW,4),IWK(NW)
+
+      IF(NB.LT.2)GOTO 23
+
+      DO 22 I=2,NB
+
+      E=AA(I-1)+RNG(I-1)
+
+      ID=0
+
+      WB(I-1)=0.0
+
+      DO 22 K=1,2
+
+      DUM=DENQD(E,E,A,B2,LL,0.5,EPS,WK,NW,NQ,NE,IWK)
+
+      IF(NE.LE.0)GOTO 35
+
+      JL=NE-ID
+
+      IF(JL.LT.1)GOTO 21
+
+      DO 9 J=1,JL
+
+9     WB(I-1)=WB(I-1)+WK(J,2)
+
+21    ID=1
+
+      E=AA(I)
+
+22    CONTINUE
+
+23    WB(NB)=B2(1)
+
+      IF(NB.LT.2)RETURN
+
+      DO 24 II=2,NB
+
+      I=NB-II+2
+
+      WB(I-1)=WB(I-1)*0.5
+
+24    WB(I)=WB(I)-WB(I-1)
+
+      RETURN
+
+35    NB=0
+
+      RETURN
+
+      END
+
+./ ADD NAME=CFGEN
+
+      SUBROUTINE CFGEN(X,W,N,EPS,A,B2,LM1,WK)
+
+      DIMENSION X(N),W(N),A(LM1),B2(LM1),WK(N,2)
+
+      DOUBLE PRECISION SA,SB,DSQRT,DUM
+
+      SA=0.0D0
+
+      SB=0.0D0
+
+      DO 1 I=1,N
+
+      SB=SB+W(I)
+
+      SA=SA+X(I)*W(I)
+
+      WK(I,1)=0.0
+
+1     WK(I,2)=1.0
+
+      B2(1)=SB
+
+      A(1)=SA/SB
+
+      IF(LM1.LT.2)RETURN
+
+      DO 3 L=2,LM1
+
+      ANRM=DSQRT(SB)
+
+      SA=0.0D0
+
+      SB=0.0D0
+
+      DO 2 I=1,N
+
+      DUM=WK(I,2)
+
+      WK(I,2)=((X(I)-A(L-1))*WK(I,2)-B2(L-1)*WK(I,1))/ANRM
+
+      WK(I,1)=DUM/ANRM
+
+      DUM=WK(I,2)*WK(I,2)*W(I)
+
+      SB=SB+DUM
+
+2     SA=SA+X(I)*DUM
+
+      B2(L)=SB
+
+      IF(SB.LT.EPS)GOTO 4
+
+3     A(L)=SA/SB
+
+      L=LM1+1
+
+4     LM1=L-1
+
+      RETURN
+
+      END
+
+./ ADD NAME=CFGPGN
+
+      SUBROUTINE CFGPGN(AA,RNG,WB,NBP1,IC,EPS,A,B2,LM1,WK,NW)
+
+      DIMENSION AA(NBP1),RNG(NBP1),WB(NBP1),A(LM1),B2(LM1)
+
+      DIMENSION WK(NW,2,NBP1)
+
+      DOUBLE PRECISION SA,SB,SAJ,SBJ,DSQRT,DUM
+
+      PI=3.14159265359
+
+      NB=NBP1-1
+
+      IF(IC-2)10,20,1
+
+10    DO 11 I=1,LM1
+
+      TH=FLOAT(LM1-I+1)*PI/FLOAT(LM1+1)
+
+      WK(I,1,1)=COS(TH)
+
+      WK(I,2,1)=2.0*(1.0-WK(I,1,1)*WK(I,1,1))/FLOAT(LM1+1)
+
+11    WK(I,1,1)=(WK(I,1,1)+1.0)*0.5
+
+      GOTO 1
+
+20    DO 21 L=1,LM1
+
+      A(L)=0.5
+
+      AL2=FLOAT((L-1)*(L-1))
+
+21    B2(L)=AL2/(16.0*AL2-4.0)
+
+      B2(1)=1.0
+
+      CALL RECQD(A,B2,LM1,WK,WK(1,2,1),LO,EPS,WK(1,1,2),WK(1,2,2))
+
+      IF(LO.EQ.LM1)GOTO 1
+
+      IC=0
+
+      RETURN
+
+1     SA=0.0D0
+
+      SB=0.0D0
+
+      DO 3 J=1,NB
+
+      SAJ=0.0D0
+
+      JP=J+1
+
+      DO 2 I=1,LM1
+
+      SAJ=SAJ+(WK(I,1,1)*RNG(J)+AA(J))*WK(I,2,1)
+
+      WK(I,1,JP)=0.0
+
+2     WK(I,2,JP)=1.0
+
+      SB=SB+WB(J)
+
+3     SA=SA+SAJ*WB(J)
+
+      B2(1)=SB
+
+      A(1)=SA/SB
+
+      IF(LM1.LE.1)RETURN
+
+      DO 6 L=2,LM1
+
+      ANRM=DSQRT(SB)
+
+      SA=0.0D0
+
+      SB=0.0D0
+
+      DO 5 J=1,NB
+
+      JP=J+1
+
+      SAJ=0.0D0
+
+      SBJ=0.0D0
+
+      DO 4 I=1,LM1
+
+      XX=WK(I,1,1)*RNG(J)+AA(J)
+
+      DUM=WK(I,2,JP)
+
+      WK(I,2,JP)=((XX-A(L-1))*WK(I,2,JP)-B2(L-1)*WK(I,1,JP))/ANRM
+
+      WK(I,1,JP)=DUM/ANRM
+
+      DUM=WK(I,2,JP)*WK(I,2,JP)*WK(I,2,1)
+
+      SBJ=SBJ+DUM
+
+4     SAJ=SAJ+XX*DUM
+
+      SA=SA+SAJ*WB(J)
+
+5     SB=SB+SBJ*WB(J)
+
+      B2(L)=SB
+
+      IF(SB.LT.EPS)GOTO 7
+
+6     A(L)=SA/SB
+
+      L=LM1+1
+
+7     LM1=L-1
+
+      RETURN
+
+      END
+
+./ ADD NAME=CRECAL
+
+      SUBROUTINE CRECAL(HOP,PSI,PMN,M,A,B2,N)
+
+      COMPLEX PSI,PMN,CONJG,DUM
+
+      DIMENSION PSI(M),PMN(M),A(N),B2(N)
+
+      DOUBLE PRECISION SUM,DSQRT
+
+      SUM=B2(1)
+
+      NM1=N-1
+
+      DO 2 J=1,NM1
+
+      B2(J)=SUM
+
+      S=1.0/DSQRT(SUM)
+
+      CALL HOP(PSI,PMN,A(J))
+
+      A(J)=A(J)/B2(J)
+
+      SUM=0.0D0
+
+      DO 1 I=1,M
+
+      DUM=PSI(I)
+
+      PSI(I)=(PMN(I)-A(J)*PSI(I))*S
+
+      PMN(I)=DUM
+
+1     SUM=SUM+REAL(CONJG(PSI(I))*PSI(I))
+
+      S=S*SUM
+
+      DO 2 I=1,M
+
+2     PMN(I)=-PMN(I)*S
+
+      B2(N)=SUM
+
+      RETURN
+
+      END
+
+./ ADD NAME=DENCRQ
+
+      COMPLEX FUNCTION DENCRQ(E,A,B2,LL,AA,RNG,WB,NB,AM,BM2)
+
+      DIMENSION A(LL),B2(LL),AA(NB),RNG(NB),WB(NB),AM(LL),BM2(LL)
+
+      DIMENSION P(2),Q(2)
+
+      DENCRQ=(0.0,0.0)
+
+      DO 2 I=1,NB
+
+      DISC=(E-AA(I))*(E-AA(I)-RNG(I))
+
+      WT=8.0*WB(I)/(RNG(I)*RNG(I))
+
+      IF (DISC.LT.0.0)GOTO 1
+
+      DISC=SQRT(DISC)
+
+      IF(E.LT.AA(I))DISC=-DISC
+
+      DENCRQ=DENCRQ+WT*(E-AA(I)-RNG(I)*0.5-DISC)
+
+      GOTO 2
+
+1     DISC=SQRT(-DISC)
+
+      DENCRQ=DENCRQ+CMPLX(WT*(E-AA(I)-RNG(I)*0.5),-WT*DISC)
+
+2     CONTINUE
+
+      CALL PLYVAL(E,AM,BM2,LL-1,P,Q)
+
+      DENCRQ=(Q(2)-DENCRQ*P(2))/(BM2(LL)*(Q(1)-DENCRQ*P(1)))
+
+      CALL PLYVAL(E,A,B2,LL-1,P,Q)
+
+      DENCRQ=(Q(2)-B2(LL)*DENCRQ*Q(1))/(P(2)-B2(LL)*DENCRQ*P(1))
+
+      RETURN
+
+      END
+
+./ ADD NAME=DENCRS
+
+      FUNCTION DENCRS(E,A,B2,LL,AA,RNG,WB,NB,AM,BM2)
+
+      DIMENSION A(LL),B2(LL),AA(NB),RNG(NB),WB(NB),AM(LL),BM2(LL)
+
+      DIMENSION P(2),Q(2)
+
+      PI=3.14159265359
+
+      AIF=0.0
+
+      RF=0.0
+
+      DENCRS=0.0
+
+      DO 2 I=1,NB
+
+      DISC=(E-AA(I))*(E-AA(I)-RNG(I))
+
+      WT=8.0*WB(I)/(RNG(I)*RNG(I))
+
+      IF (DISC.LT.0.0)GOTO 1
+
+      DISC=SQRT(DISC)
+
+      IF(E.LT.AA(I))DISC=-DISC
+
+      RF=RF+WT*(E-AA(I)-RNG(I)*0.5-DISC)
+
+      GOTO 2
+
+1     DISC=SQRT(-DISC)
+
+      RF=RF+WT*(E-AA(I)-RNG(I)*0.5)
+
+      AIF=AIF-WT*DISC
+
+2     CONTINUE
+
+      IF(AIF.GE.0.0)RETURN
+
+      CALL PLYVAL(E,AM,BM2,LL-1,P,Q)
+
+      RD=Q(1)-RF*P(1)
+
+      AID=-AIF*P(1)
+
+      DENOM=BM2(LL)*(RD*RD+AID*AID)
+
+      RT=((Q(2)-RF*P(2))*RD-AIF*P(2)*AID)/DENOM
+
+      AIT=(-RD*AIF*P(2)-(Q(2)-RF*P(2))*AID)/DENOM
+
+      CALL PLYVAL(E,A,B2,LL-1,P,Q)
+
+      T1=P(2)-RT*P(1)*B2(LL)
+
+      T2=AIT*P(1)*B2(LL)
+
+      DENCRS=-AIT*B2(LL)*(Q(2)*P(1)-Q(1)*P(2))/((T1*T1+T2*T2)*PI)
+
+      RETURN
+
+      END
+
+./ ADD NAME=DENINT
+
+      FUNCTION DENINT(E,A,B2,NA,NP,LL,ALP,EPS,WK,IWK,ICODE)
+
+      DIMENSION A(NA,NP),B2(NA,NP),WK(LL,4),IWK(LL)
+
+      SUM=0.0
+
+      DO 2 II=1,NP
+
+      DUM=DENQD(E,E,A(1,II),B2(1,II),LL,ALP,EPS,WK,LL,NQ,NE,IWK)
+
+      IF(NE.LT.1) GOTO 3
+
+      SUM=SUM+(ALP-1.0)*WK(NE,2)
+
+      DO 1 I=1,NE
+
+1     SUM=SUM+WK(I,2)
+
+2     CONTINUE
+
+      ICODE=0
+
+      DENINT=SUM
+
+      RETURN
+
+3     ICODE=-1
+
+      RETURN
+
+      END
+
+./ ADD NAME=DENQD
+
+      FUNCTION DENQD(E,EMX,A,B2,LL,ALP,EPS,TB,NT,NQ,NE,IWK)
+
+      DIMENSION A(LL),B2(LL),TB(NT,4),IWK(LL)
+
+      DOUBLE PRECISION P(2),PP(2),PPP(2),FI(2),FIP(2),XW,SC,DABS
+
+      DOUBLE PRECISION P1,P0,DUM,AN
+
+      N=-1
+
+      DUM=RECWT(E,A,B2,LL,EPS,N,TB,1)
+
+      NN=LL+N
+
+      NR=0
+
+      CALL RECRTS(A,B2,NN,EPS,EMX+EPS,NR,TB,IWK,TB(1,2),TB(1,3))
+
+      IC=1
+
+      NE=0
+
+      DO 5 NQ=1,NR
+
+      IF(IWK(NQ).NE.1)RETURN
+
+      IF(TB(NQ,1).GT.EMX+EPS)GOTO 6
+
+      XV=TB(NQ,1)
+
+      P(1)=1.0D0
+
+      P(2)=XV-A(1)
+
+      PP(1)=0.0D0
+
+      PP(2)=1.0D0
+
+      PPP(1)=0.0D0
+
+      PPP(2)=0.0D0
+
+      FI(1)=0.0D0
+
+      FI(2)=B2(1)
+
+      FIP(1)=0.0D0
+
+      FIP(2)=0.0D0
+
+      I=2
+
+      DO 4 J=2,NN
+
+      XW=XV-A(J)
+
+      I1=3-I
+
+      P(I1)=XW*P(I)-B2(J)*P(I1)
+
+      PP(I1)=XW*PP(I)-B2(J)*PP(I1)+P(I)
+
+      PPP(I1)=XW*PPP(I)-B2(J)*PPP(I1)+2.0*PP(I)
+
+      FI(I1)=XW*FI(I)-B2(J)*FI(I1)
+
+      FIP(I1)=XW*FIP(I)-B2(J)*FIP(I1)+FI(I)
+
+      SC=DABS(P(I1))+DABS(PP(I1))+DABS(PPP(I1))+DABS(FI(I1))
+
+     1 +DABS(FIP(I1))
+
+      DO 3 K=1,2
+
+      P(K)=P(K)/SC
+
+      PP(K)=PP(K)/SC
+
+      PPP(K)=PPP(K)/SC
+
+      FI(K)=FI(K)/SC
+
+3     FIP(K)=FIP(K)/SC
+
+4     I=I1
+
+      I2=3-I
+
+      TB(NQ,2)=FI(I)/PP(I)
+
+      P2=PP(I)*PP(I)
+
+      TB(NQ,4)=P(I2)/PP(I)
+
+5     TB(NQ,3)=(FI(I)*PP(I2)-PP(I)*FI(I2)+TB(NQ,4)
+
+     1 *(PP(I)*FIP(I)-FI(I)*PPP(I)))/P2
+
+      NQ=NR+1
+
+6     NQ=NQ-1
+
+      DEV=ABS(TB(1,1)-E)
+
+      DEN=0.0
+
+      I=2
+
+      IF(NQ.EQ.1)GOTO 8
+
+      DO 7 I=2,NQ
+
+      WD=ABS(TB(I,1)-E)
+
+      IF(DEV.LT.WD)GOTO 8
+
+      DEV=WD
+
+7     DEN=DEN+TB(I-1,3)
+
+      I=NQ+1
+
+8     NE=I-1
+
+      DENQD=(DEN+TB(NE,3)*ALP)/TB(NE,4)
+
+      IF(DEV.GT.10.0*EPS)NE=-NE
+
+      RETURN
+
+      END
+
+./ ADD NAME=DENSQ
+
+      FUNCTION DENSQ(E,A,B2,LL,EI)
+
+      DIMENSION A(LL),B2(LL),EI(2),P(2),Q(2)
+
+      PI=3.14159265359
+
+      DENSQ=0.0
+
+      DISC=(E-EI(1))*(E-EI(2))
+
+      IF(DISC.GT.0.0)RETURN
+
+      BI2=(EI(2)-EI(1))*0.25
+
+      BI2=BI2*BI2*2.0
+
+      AIT=-SQRT(-DISC)/BI2
+
+      RT=(E-(EI(1)+EI(2))*0.5)/BI2
+
+      CALL PLYVAL(E,A,B2,LL-1,P,Q)
+
+      T1=P(2)-RT*P(1)*B2(LL)
+
+      T2=AIT*P(1)*B2(LL)
+
+      DENSQ=-AIT*B2(LL)*(Q(2)*P(1)-Q(1)*P(2))/((T1*T1+T2*T2)*PI)
+
+      RETURN
+
+      END
+
+./ ADD NAME=EDIFF
+
+      FUNCTION EDIFF(EF,A,B2,LL,EPS,WK,MU)
+
+      DIMENSION A(LL),B2(LL),WK(LL,4),MU(LL,2)
+
+      DIMENSION P(2),PP(2),PPP(2),FI(2),FIP(2)
+
+      DOUBLE PRECISION P,PP,PPP,FI,FIP,XW,SC,DABS
+
+      DOUBLE PRECISION P1,P0,DUM,AN
+
+      NN=LL-1
+
+      P1=1.0D0
+
+      P0=0.0D0
+
+      DO 1 I=2,NN
+
+      DUM=(EF-A(I))*P1-B2(I)*P0
+
+      AN=DABS(DUM)+DABS(P1)
+
+      P0=P1/AN
+
+1     P1=DUM/AN
+
+      IF(DABS(P1).LT.EPS*DABS(P0))GOTO 2
+
+      A(LL)=EF-B2(LL)*P0/P1
+
+      NN=LL
+
+2     CONTINUE
+
+      NR=0
+
+      XLIM=EF+EPS
+
+      CALL RECRTS(A(2),B2(2),NN-1,EPS,XLIM,NR,WK,MU,WK(1,2),WK(1,3))
+
+      DO 5 I=1,NR
+
+      IF(MU(I,1).NE.1)WRITE(6,98)WK(I,1),MU(I,1),EF
+
+98    FORMAT(' ***  WARNING ROOT AT ',E16.8,' IS OF MULTIPLICITY',
+
+     1 I6,' IN THE CALL OF EDIFF AT EF=',E16.8/,
+
+     2 ' INCREASING THE ACCURACY IN THE CALL TO EDIFF MAY CURE THIS')
+
+5     CONTINUE
+
+      IC=0
+
+      CALL RECRTS(A,B2,NN,EPS,EF-EPS,IC,WK(1,2),MU(1,2),WK(1,3),WK(1,4))
+
+      DO 6 I=1,IC
+
+      IF(MU(I,2).NE.1)WRITE(6,98)WK(I,2),MU(I,2),EF
+
+6     CONTINUE
+
+      IF(IC.EQ.NR)GOTO 7
+
+      WRITE(6,44)NR,IC
+
+44    FORMAT(' TROUBLE IN EDIFF ',I4,' ZEROS AND',I4,' POLES - TRY',
+
+     1 ' INCREASING THE ACCURACY . EIGENVALUES AS FOLLOWS')
+
+      WRITE(6,45)(WK(I,1),I=1,NR)
+
+      WRITE(6,46)(WK(I,2),I=1,IC)
+
+45    FORMAT(4E26.5)
+
+46    FORMAT(E13.5,3E26.5)
+
+      STOP
+
+7     EDIFF=0.0
+
+      DO 8 J=1,NR
+
+8     EDIFF=EDIFF-WK(J,1)+WK(J,2)
+
+      RETURN
+
+      END
+
+./ ADD NAME=FENVAL
+
+      FUNCTION FENVAL(AN,A,B2,ND,LL,NC,ERR,EPS,EB,WK,NW,IW,IFT)
+
+      DIMENSION A(ND,NC),B2(ND,NC),EB(2),WK(NW,4),IW(NW),FEB(2)
+
+      ALP=0.5
+
+      ITMX=IFT
+
+      IFT=0
+
+      DO 1 I=1,2
+
+      FEB(I)=-AN
+
+      DO 1 J=1,NC
+
+      ANT=DENQD(EB(I),EB(I),A(1,J),B2(1,J),LL,ALP,EPS,WK,NW,NQ,NE,IW)
+
+      IF(NE.LE.0)RETURN
+
+      FEB(I)=FEB(I)-WK(NE,2)*(1.0-ALP)
+
+      DO 1 K=1,NE
+
+1     FEB(I)=FEB(I)+WK(K,2)
+
+      IFT=-1
+
+      IF(FEB(1)*FEB(2).GT.0)RETURN
+
+      IFT=0
+
+      EF=(EB(1)+EB(2))*0.5
+
+      DO 6 IT=1,ITMX
+
+      IF(ABS(EB(2)-EB(1)).LT.ERR)GOTO 7
+
+      ANTL=-AN
+
+      DANTL=0.0
+
+      DO 3 J=1,NC
+
+      ANT=DENQD(EF,EF,A(1,J),B2(1,J),LL,ALP,EPS,WK,NW,NQ,NE,IW)
+
+      IF(NE.LT.0)RETURN
+
+      DANTL=DANTL+ANT
+
+      ANTL=ANTL-WK(NE,2)*(1.0-ALP)
+
+      DO 3 K=1,NE
+
+3     ANTL=ANTL+WK(K,2)
+
+      IF(ANTL*FEB(1).GT.0.0)GOTO 4
+
+      EB(2)=EF
+
+      FEB(2)=ANTL
+
+      GOTO 5
+
+4     EB(1)=EF
+
+      FEB(1)=ANTL
+
+5     IF(ABS(DANTL).LT.EPS*ABS(ANTL))DANTL=EPS*ANTL
+
+      DE=ANTL/DANTL
+
+      EF=EF-DE
+
+      IF(ABS(DE).LT.ERR)GOTO 7
+
+      IF(EF.LT.EB(1))EF=(EB(1)+EB(2))*0.5
+
+      IF(EF.GT.EB(2))EF=(EB(1)+EB(2))*0.5
+
+6     CONTINUE
+
+      IT=ITMX+1
+
+7     IFT=IT
+
+      FENVAL=EF
+
+      RETURN
+
+      END
+
+./ ADD NAME=NUMC
+
+      FUNCTION NUMC(A,B2,ALAM,LM1)
+
+      DIMENSION A(LM1),B2(LM1)
+
+7     NU=0
+
+      P0=0.0
+
+      P1=1.0
+
+      DO 6 I=1,LM1
+
+      P2=(A(I)-ALAM)*P1-B2(I)*P0
+
+      SC=ABS(P1)+ABS(P2)
+
+      IF(P2*P1)5,14,4
+
+14    IF(P0*P2)4,5,5
+
+4     NU=NU+1
+
+5     P0=P1/SC
+
+6     P1=P2/SC
+
+      NUMC=NU
+
+      RETURN
+
+      END
+
+./ ADD NAME=NUMD
+
+      SUBROUTINE NUMD(A,B2,ALAM,LM1,DE)
+
+      DIMENSION A(LM1),B2(LM1)
+
+      P0=0.0
+
+      PP0=0.0
+
+      P1=1.0
+
+      PP1=0.0
+
+      DO 6 I=1,LM1
+
+      P2=(A(I)-ALAM)*P1-B2(I)*P0
+
+      PP2=(A(I)-ALAM)*PP1-B2(I)*PP0-P1
+
+      SC=ABS(P1)+ABS(P2)
+
+      P0=P1/SC
+
+      PP0=PP1/SC
+
+      PP1=PP2/SC
+
+6     P1=P2/SC
+
+      DE=P1/PP1
+
+      RETURN
+
+      END
+
+./ ADD NAME=PLYVAL
+
+      SUBROUTINE PLYVAL(E,A,B2,LM1,P,Q)
+
+      DIMENSION A(LM1),B2(LM1),P(2),Q(2)
+
+      P(1)=1.0
+
+      P(2)=E-A(1)
+
+      Q(1)=0.0
+
+      Q(2)=B2(1)
+
+      IF(LM1.LT.2)RETURN
+
+      DO 1 L=2,LM1
+
+      SC=1.0/(ABS(P(2))+ABS(Q(2)))
+
+      DUM=P(2)
+
+      P(2)=((E-A(L))*P(2)-B2(L)*P(1))*SC
+
+      P(1)=DUM*SC
+
+      DUM=Q(2)
+
+      Q(2)=((E-A(L))*Q(2)-B2(L)*Q(1))*SC
+
+1     Q(1)=DUM*SC
+
+      RETURN
+
+      END
+
+./ ADD NAME=RECAL
+
+      SUBROUTINE RECAL(HOP,PSI,PMN,M,A,B2,N)
+
+      DIMENSION PSI(M),PMN(M),A(N),B2(N)
+
+      DOUBLE PRECISION SUM,DSQRT
+
+      SUM=B2(1)
+
+      NM1=N-1
+
+      DO 2 J=1,NM1
+
+      B2(J)=SUM
+
+      S=1.0/DSQRT(SUM)
+
+      CALL HOP(PSI,PMN,A(J))
+
+      A(J)=A(J)/B2(J)
+
+      SUM=0.0D0
+
+      DO 1 I=1,M
+
+      DUM=PSI(I)
+
+      PSI(I)=(PMN(I)-A(J)*PSI(I))*S
+
+      PMN(I)=DUM
+
+1     SUM=SUM+PSI(I)*PSI(I)
+
+      S=S*SUM
+
+      DO 2 I=1,M
+
+2     PMN(I)=-PMN(I)*S
+
+      B2(N)=SUM
+
+      RETURN
+
+      END
+
+./ ADD NAME=RECNO
+
+      SUBROUTINE RECNO(HOP,SOP,U,M,NIT,LS,LL,A,B2,PSI,PMN,EMACH)
+
+      DIMENSION U(M),PSI(M),PMN(M),A(LL),B2(LL)
+
+      DOUBLE PRECISION SUM
+
+      COMMON /BLKNNN/SUM
+
+      NNIT=IABS(NIT)
+
+      LM1=LL-1
+
+      IF(LS.GT.1)GOTO 3
+
+      DO 1 I=1,M
+
+1     PMN(I)=0.0
+
+      IF (NIT) 11,17,15
+
+11    DO 12 I=1,M
+
+12    U(I)=PSI(I)
+
+      DO 13 IT=1,NNIT
+
+13    CALL SOP(U,PSI,U)
+
+      GOTO 17
+
+15    CALL SOP(U,PMN,PSI)
+
+      DO 16 I=1,M
+
+16    PSI(I)=U(I)-PSI(I)
+
+17    SUM=0.0D0
+
+      DO 2 I=1,M
+
+2     SUM=SUM+U(I)*PSI(I)
+
+      B2(1)=SUM
+
+      LS=1
+
+3     DO 8 L=LS,LM1
+
+      DO 4 I=1,M
+
+4     PMN(I)=-B2(L)*PMN(I)
+
+      CALL HOP(U,PMN,A(L))
+
+      A(L)=A(L)/SUM
+
+      ANORM=1.0/DSQRT(SUM)
+
+      DO 5 I=1,M
+
+      DUM=PMN(I)*ANORM
+
+      PMN(I)=PSI(I)*ANORM
+
+5     PSI(I)=DUM-A(L)*PMN(I)
+
+      IF(NNIT.EQ.0)GOTO 10
+
+      DO 6 J=1,NNIT
+
+6     CALL SOP(U,PSI,U)
+
+10    SUM=0.0D0
+
+      DO 7 I=1,M
+
+7     SUM=SUM+U(I)*PSI(I)
+
+      IF(SUM.LT.EMACH) GOTO 9
+
+8     B2(L+1)=SUM
+
+      RETURN
+
+9     LL=-L
+
+      RETURN
+
+      END
+
+./ ADD NAME=RECPER
+
+      SUBROUTINE RECPER(HOP,VOP,W1,W0,A,B,NW,LLIM,NA,NL,AMAT)
+
+      DIMENSION W1(NW,LLIM),W0(NW,LLIM),A(NA,LLIM),B(NA,LLIM)
+
+     1,AMAT(LLIM,LLIM)
+
+      DOUBLE PRECISION SUM,DSQRT
+
+      NLM1=NL-1
+
+      FAC=1.0/SQRT(B(1,1))
+
+      DO 16 N=1,NLM1
+
+      DO 2 LL=1,LLIM
+
+      L=LLIM-LL+1
+
+      DO 2 I=1,NW
+
+      SUM=0.0
+
+      DO 1 M=1,L
+
+1     SUM=SUM+B(N,M)*W0(I,L-M+1)
+
+2     W0(I,L)=SUM
+
+      CALL HOP(W1,W0,AMAT,NW,LLIM,LLIM)
+
+      A(N,1)=AMAT(1,1)
+
+      IF(LLIM.LE.1)GOTO 6
+
+      DO 3 L=2,LLIM
+
+      A(N,L)=AMAT(1,L)
+
+      DO 3 M=2,L
+
+3     A(N,L)=A(N,L)+AMAT(M,L-M+1)
+
+      CALL VOP(W1,W0(1,2),AMAT,NW,LLIM,LLIM-1)
+
+      DO 5 L=2,LLIM
+
+      LL=L-1
+
+      DO 4 M=1,LL
+
+4     A(N,L)=A(N,L)+AMAT(M,L-M)
+
+5     A(N,L)=A(N,L)/B(N,1)
+
+6     A(N,1)=A(N,1)/B(N,1)
+
+      DO 7 L=1,LLIM
+
+      DO 7 M=1,L
+
+      DUM=A(N,M)
+
+      LL=L-M+1
+
+      DO 7 I=1,NW
+
+7     W0(I,L)=W0(I,L)-DUM*W1(I,LL)
+
+      DO 17 L=1,LLIM
+
+      DO 17 I=1,NW
+
+      DUM=W0(I,L)*FAC
+
+      W0(I,L)=-W1(I,L)*FAC
+
+17    W1(I,L)=DUM
+
+      DO 9 L=1,LLIM
+
+      SUM=0.0D0
+
+      DO 8 M=1,L
+
+      LL=L-M+1
+
+      DO 8 I=1,NW
+
+8     SUM=SUM+W1(I,M)*W1(I,LL)
+
+      IF(L.EQ.1)FAC=1.0/DSQRT(SUM)
+
+9     B(N+1,L)=SUM
+
+      IF(LLIM.LE.1)GOTO 16
+
+      DO 11 L=2,LLIM
+
+      LL=L-1
+
+      IF(LL.LT.2)GOTO 11
+
+      DO 10 M=2,LL
+
+10    B(N+1,L)=B(N+1,L)-B(N+1,M)*B(N+1,L-M+1)/B(N+1,1)
+
+11    B(N+1,L)=B(N+1,L)*0.5
+
+      DO 14 L=2,LLIM
+
+      LL=L-1
+
+      DO 14 M=1,LL
+
+      DUM=B(N+1,L-M+1)/B(N+1,1)
+
+      DO 14 I=1,NW
+
+14    W1(I,L)=W1(I,L)-DUM*W1(I,M)
+
+16    CONTINUE
+
+      RETURN
+
+      END
+
+./ ADD NAME=RECQD
+
+      SUBROUTINE RECQD(A,B2,LM1,X,WT,M,EPS,WK,MU)
+
+      DIMENSIONA(LM1),B2(LM1),X(LM1),WT(LM1),WK(LM1),MU(LM1)
+
+      DIMENSION P(2,3)
+
+      M=1
+
+      CALL RECRTS(A,B2,LM1,EPS,XLIM,M,X,MU,WK,WT)
+
+      DO 7 II=1,M
+
+      WT(II)=RECWT(X(II),A,B2,LM1,EPS,0,P,1)
+
+7     CONTINUE
+
+      RETURN
+
+      END
+
+./ ADD NAME=RECRTS
+
+      SUBROUTINE RECRTS(A,B2,LM1,EPS,XLIM,N,X,MULT,BI,NI)
+
+      DIMENSION A(LM1),B2(LM1),X(LM1),MULT(LM1),BI(LM1),NI(LM1)
+
+      IF(LM1.GT.1)GOTO 1
+
+      IF(N.EQ.0.AND.A(1).GT.XLIM)RETURN
+
+      X(1)=A(1)
+
+      MULT(1)=1
+
+      N=1
+
+      RETURN
+
+1     MULT(1)=0
+
+C
+
+C ESTIMATE LIMITS OF ROOTS
+
+C
+
+      CN=AMIN1(A(1)-B2(2),A(LM1)-1.0)
+
+      NID=LM1-1
+
+      IF(NID.LT.2)GOTO 20
+
+      DO 2 I=2,NID
+
+2     CN=AMIN1(CN,A(I)-1.0-B2(I+1))
+
+20    AA=CN
+
+      IF(N.EQ.0)GOTO 4
+
+      CN=AMAX1(A(1)+B2(2),A(LM1)+1.0)
+
+      IF(NID.LT.2)GOTO 21
+
+      DO 3 I=2,NID
+
+3     CN=AMAX1(CN,A(I)+1.0+B2(I+1))
+
+21    B=CN
+
+4     IF(N.EQ.0) B=XLIM
+
+      NMAX=AMAX1(ALOG(EPS/(B-AA))/ALOG(0.5)*10,70.0)
+
+      NA=NUMC(A,B2,AA,LM1)
+
+      NB=NUMC(A,B2,B,LM1)
+
+5     NL=NA
+
+      NM=NB
+
+      N=0
+
+      IF (NL.LE.NM) GOTO 19
+
+      NE=NL-NM
+
+      DO 22 I=1,NE
+
+      X(I)=0.0
+
+22    MULT(I)=0
+
+      I=1
+
+      NI(1)=NB
+
+      BI(1)=B
+
+      NCOUNT=0
+
+C
+
+C START BISECTION SEARCH
+
+C
+
+9     C=(AA+B)*0.5
+
+      NC=NUMC(A,B2,C,LM1)
+
+      NCOUNT=NCOUNT+1
+
+      IF(NCOUNT.GE.NMAX)GOTO 16
+
+      IF(NC.LT.NL) GOTO 11
+
+      AA=C
+
+      NA=NC
+
+      GOTO 15
+
+11    IF(NC.LE.NM)GOTO 14
+
+      IF(NI(I).EQ.NC) GOTO 14
+
+      I=I+1
+
+      BI(I)=C
+
+      NI(I)=NC
+
+14    B=C
+
+      NB=NC
+
+15    IF( (NA-NB).GT.1 ) GOTO 36
+
+C DO A FEW NEWTON-RAPHSON STEPS
+
+      C=(AA+B)*0.5
+
+      DO 34 ITR=1,10
+
+      CALL NUMD(A,B2,C,LM1,DE)
+
+      C=C-DE
+
+      IF(C.GT.B .OR. C.LT.AA) GOTO 9
+
+      IF( ABS(DE).LE.EPS) GOTO 35
+
+34    CONTINUE
+
+      GOTO 9
+
+35    XX=AMAX1(C-EPS,AA)
+
+      NXX=NUMC(A,B2,XX,LM1)
+
+      IF( NXX.NE.NA) GOTO 9
+
+      XX=AMIN1(C+EPS,B)
+
+      NXX=NUMC(A,B2,XX,LM1)
+
+      IF( NXX.NE.NB) GOTO 9
+
+      N=N+1
+
+      X(N)=C
+
+      MULT(N)=1
+
+      GOTO 37
+
+36    IF(ABS(AA-B).GT.EPS)GOTO 9
+
+16    N=N+1
+
+      X(N)=(AA+B)*0.5
+
+      MULT(N)=NA-NB
+
+      IF(NCOUNT.GE.NMAX)MULT(N)=-MULT(N)
+
+37    IF(NB.LE.NM)RETURN
+
+      IF(I.LE.1)GOTO 19
+
+18    AA=BI(I)
+
+      NA=NI(I)
+
+      I=I-1
+
+      B=BI(I)
+
+      NB=NI(I)
+
+      NL=NL-IABS(MULT(N))
+
+      NCOUNT=0
+
+      GOTO 9
+
+19    MULT(1)=-MULT(1)
+
+      RETURN
+
+      END
+
+./ ADD NAME=RECSUM
+
+      SUBROUTINE RECSUM(AC,BC,NA,NN,NC,A,B,EPS,WK,NW)
+
+      DIMENSION AC(NA,NC),BC(NA,NC),WK(NW),A(NA),B(NA)
+
+      N=IABS(NN)
+
+      IF(NN.LT.0)GOTO 12
+
+      DO 11 I=1,NC
+
+11    AC(N,I)=AC(N-1,I)
+
+12    L1=NC*N
+
+      L2=2*L1
+
+      L3=L2+N
+
+      NL=0
+
+      IC=0
+
+      DO 2 I=1,NC
+
+      CALL RECQD(AC(1,I),BC(1,I),N,WK(IC+1),WK(L1+IC+1),M,
+
+     1EPS,WK(L2+1),WK(L3+1))
+
+      IF(M.NE.N)GOTO 5
+
+      NN=0
+
+      DO 1 J=1,N
+
+      IF(WK(L1+IC+J).GT.0.0)GOTO 1
+
+      WK(L1+IC+J)=0.0
+
+      NN=NN+1
+
+1     CONTINUE
+
+      IC=IC+N
+
+2     NL=MAX0(NL,NN)
+
+      NN=N-NL
+
+      CALL CFGEN(WK,WK(L1+1),IC,EPS,A,B,NN,WK(L2+1))
+
+      RETURN
+
+5     NN=-M
+
+      RETURN
+
+      END
+
+./ ADD NAME=RECWT
+
+      FUNCTION RECWT(E,A,B2,LL,EPS,N,P,NS)
+
+      DIMENSION A(LL),B2(LL),P(2,3)
+
+      RECWT=B2(1)
+
+      IF(LL.EQ.1)RETURN
+
+      K=NS
+
+      IF(K.GE.2)GOTO 1
+
+      P(1,1)=1.0
+
+      P(2,1)=E-A(1)
+
+      P(1,2)=0.0
+
+      P(2,2)=1.0
+
+      P(1,3)=0.0
+
+      P(2,3)=B2(1)
+
+      K=2
+
+1     LLIM=LL-IABS(N)
+
+      IF(LLIM.LT.K)GOTO 4
+
+      DO 3 L=K,LLIM
+
+      SC=ABS(P(1,1))+ABS(P(1,3))
+
+      DO 2 J=1,3
+
+      DUM=P(2,J)
+
+      P(2,J)=((E-A(L))*DUM-B2(L)*P(1,J))/SC
+
+2     P(1,J)=DUM/SC
+
+3     P(2,2)=P(2,2)+P(1,1)
+
+4     IF(N)6,5,6
+
+5     RECWT=P(2,3)/P(2,2)
+
+      GOTO 7
+
+6     RECWT=(P(1,1)*P(2,3)-P(2,1)*P(1,3))/(P(1,1)*P(2,2)-P(1,2)
+
+     1 *P(2,1)+P(2,1)*P(2,1)/B2(LL))
+
+7     IF(RECWT.LT.0.0)RECWT=0.0
+
+      IF(N.GE.0)RETURN
+
+      IF(ABS(P(2,1)).LE.EPS*ABS(P(1,1)))RETURN
+
+      N=0
+
+      A(LL)=E-B2(LL)*P(1,1)/P(2,1)
+
+      RETURN
+
+      END
+
+./ ADD NAME=TABAN
+
+      SUBROUTINE TABAN(E,WT,NPTS,THU,THL,ET,IC,WTT,NET)
+
+      DIMENSION E(NPTS),WT(NPTS),ET(NET),IC(NET),WTT(NET)
+
+C
+
+C CONTROL IS MODERATED THROUGHOUT BY THE VARIABLE IREG WHICH
+
+C INDICATES IN WHICH REGION THE PREVIOUS POINT LIES.
+
+C    IREG=1   FUNCTION VALUE LESS THAN LOWER THRESHOLD, THL
+
+C    IREG=2   FUNCTION VALUE LIES BETWEEN THL AND THU (IN WINDOW)
+
+C    IREG=3   FUNCTION VALUE LIES ABOVE UPPER THRESHOLD, THU
+
+C
+
+      I=0
+
+      IREG=2
+
+      IF(WT(1).GT.THU)IREG=3
+
+      IF(WT(1).LT.THL)IREG=1
+
+      INCR=0
+
+      W0=2.0*WT(1)-WT(2)
+
+      IF(WT(1).GT.W0)INCR=4
+
+      IF(WT(1).LT.W0)INCR=-4
+
+      IF(INCR.EQ.0)EFL=E(1)
+
+      DO 10 II=1,NPTS
+
+      GOTO(1,3,7),IREG
+
+1     IF(WT(II).LT.THL)GOTO 9
+
+      IF(WT(II).LT.THU)GOTO 2
+
+      IREG=3
+
+      I=I+1
+
+      ET(I)=(E(II)+E0)*0.5
+
+      IC(I)=3
+
+      GOTO 9
+
+2     IREG=2
+
+      I=I+1
+
+      ET(I)=(E(II)+E0)*0.5
+
+      IC(I)=1
+
+      INCR=4
+
+      GOTO 85
+
+3     NCR=0
+
+      IF(WT(II).LT.W0)NCR=-4
+
+      IF(WT(II).GT.W0)NCR=4
+
+      IF(NCR.EQ.0)GOTO 9
+
+      IF(NCR.EQ.INCR)GOTO 4
+
+      I=I+1
+
+      ET(I)=(E0+EFL)*0.5
+
+      WTT(I)=W0
+
+      IC(I)=NCR
+
+      IF(I.GE.NET)GOTO 11
+
+4     INCR=NCR
+
+      IF(WT(II).LT.THU)GOTO 5
+
+      IREG=3
+
+      I=I+1
+
+      ET(I)=(E(II)+E0)*0.5
+
+      IC(I)=2
+
+      GOTO 9
+
+5     IF(WT(II).GT.THL)GOTO 85
+
+      IREG=1
+
+      I=I+1
+
+      ET(I)=(E(II)+E0)*0.5
+
+      IC(I)=-1
+
+      GOTO 9
+
+7     IF(WT(II).GT.THU)GOTO 9
+
+      IF(WT(II).GT.THL)GOTO 8
+
+      IREG=1
+
+      I=I+1
+
+      ET(I)=(E(II)+E0)*0.5
+
+      IC(I)=-3
+
+      GOTO 9
+
+8     IREG=2
+
+      I=I+1
+
+      ET(I)=(E(II)+E0)*0.5
+
+      IC(I)=-2
+
+      INCR=-4
+
+85    W0=WT(II)
+
+      EFL=E(II)
+
+9     IF(I.GE.NET)GOTO 11
+
+      E0=E(II)
+
+10    CONTINUE
+
+      II=-I
+
+11    NET=-II
+
+      RETURN
+
+      END
+
+./ ADD NAME=TERMGN
+
+      SUBROUTINE TERMGN(A,B2,LL,EPS,ERR,ITMX,AA,RNG,WB,NBP1,AM,BM2,
+
+     1 IC,WK,NW,BWK,NBD,IWK)
+
+      DIMENSION A(LL),B2(LL),AA(NBP1),RNG(NBP1),WB(NBP1),AM(LL)
+
+     1 ,BM2(LL),IC(NW),WK(NW,2,NBP1),BWK(NBD,4),IWK(LL)
+
+     2 ,P(2,3)
+
+      KD=1
+
+      NB=NBP1-1
+
+      NET=NB*2
+
+      CALL BNDEST(A,B2,LL,EPS,AA,RNG,NB,BWK,BWK(1,2),IC,NET,DE,WK,NW)
+
+      DEL=DE*0.5
+
+      DO 4 ITE=1,ITMX,5
+
+      DO 1 I=1,NB
+
+      ID=I+I
+
+      BWK(ID-1,3)=DEL
+
+      BWK(ID,3)=DEL
+
+      BWK(ID-1,4)=AA(I)
+
+1     BWK(ID,4)=RNG(I)
+
+      CALL BNDWT(AA,RNG,WB,NB,A,B2,LL,EPS,WK,NW,IWK)
+
+      DO 2 ITER=1,5
+
+      CALL CFGPGN(AA,RNG,WB,NB+1,KD,EPS,AM,BM2,LL,WK,NW)
+
+      CALL BNDREF(DEL,AM,BM2,LL,EPS,AA,RNG,NB,BWK,NBD,IC,NET)
+
+      DEL=DEL*0.5
+
+2     CONTINUE
+
+      DEL=0.0
+
+      DO 3 I=1,NB
+
+      ID=I+I
+
+      DEL=AMAX1(DEL,ABS(AA(I)-BWK(ID-1,4)))
+
+3     DEL=AMAX1(DEL,ABS(RNG(I)-BWK(ID,4)))
+
+      IF(DEL.LT.ERR)GOTO 5
+
+      DEL=DEL*0.5
+
+4     CONTINUE
+
+5     NBP1=NB+1
+
+      CALL CFGPGN(AA,RNG,WB,NBP1,KD,EPS,AM,BM2,LL,WK,NW)
+
+      ERR=DEL
+
+      RETURN
+
+      END
+
+./ ADD NAME=WTMIN
+
+      SUBROUTINE WTMIN(AA,BB,A,B2,LL,EPS,ACC,ITMX,EM,FEM)
+
+      DIMENSION A(LL),B2(LL),P(2,3),E(4),FE(4)
+
+      E(1)=AA
+
+      E(4)=BB
+
+      FE(1)=RECWT(AA,A,B2,LL,EPS,1,P,1)
+
+      FE(4)=RECWT(BB,A,B2,LL,EPS,1,P,1)
+
+      E(2)=(AA+BB)*0.5
+
+      FE(2)=RECWT(E(2),A,B2,LL,EPS,1,P,1)
+
+      IF(FE(2).GT.FE(1))GOTO 6
+
+      IF(FE(2).GT.FE(4))GOTO 6
+
+      IC=3
+
+      DO 4 I=1,ITMX
+
+      E(IC)=(E(IC+1)+E(IC-1))*0.5
+
+      FE(IC)=RECWT(E(IC),A,B2,LL,EPS,1,P,1)
+
+      IF(FE(2).GT.FE(3))GOTO 2
+
+      E(4)=E(3)
+
+      FE(4)=FE(3)
+
+      IF(IC.EQ.2)GOTO 3
+
+      E(3)=E(2)
+
+      FE(3)=FE(2)
+
+      GOTO 3
+
+2     E(1)=E(2)
+
+      FE(1)=FE(2)
+
+      IF(IC.EQ.3)GOTO 3
+
+      E(2)=E(3)
+
+      FE(2)=FE(3)
+
+3     ERR=ABS(E(4)-E(1))
+
+      IF(ERR.LT.ACC)GOTO 5
+
+4     IC=5-IC
+
+      IT=0
+
+5     EM=(E(4)+E(1))*0.5
+
+      FEM=RECWT(EM,A,B2,LL,EPS,1,P,1)
+
+      ITMX=IT
+
+      RETURN
+
+6     IT=1
+
+      IF(FE(1).GT.FE(4))IT=4
+
+      EM=E(IT)
+
+      FEM=FE(IT)
+
+      ITMX=-2+IT/4
+
+      RETURN
+
+      END
+
+./ ENDUP
+
+./ ADD NAME=ADDAT
+
+      SUBROUTINE ADDAT(CRD,ND,NAT,EV,IZP,MM,NN,NND,NM,NGBR,NE,EE,NP
+
+     1,VEC,IW,NED,OVPAR,HCAL)
+
+      DIMENSION CRD(ND,NAT),VEC(3,NED),V(3),EE(NP,NP,NED)
+
+     1 ,IZP(NAT),NN(NND,NM),IW(2,NED),MM(NND,NM)
+
+      INTEGER*2 IZP,NN,IW,MM
+
+      LOGICAL EV
+
+      EXTERNAL EV,NGBR,OVPAR
+
+      CALL NNCAL(CRD,ND,NAT,IZP,NN,NND,NM,NGBR)
+
+      NE1=1+NE
+
+      CALL MMCAL(CRD,ND,NAT,NN,NND,NM,EV,IZP,NE,MM,VEC,IW)
+
+      IF(NE1.GT.NE)RETURN
+
+      DO 1 K=NE1,NE
+
+      II=IW(1,K)
+
+      IJ=IW(2,K)
+
+1     CALL HCAL(VEC(1,K),II,IJ,EE(1,1,K),OVPAR)
+
+      DO 2 I=1,3
+
+2     V(I)=0.0
+
+      DO 5 I=1,NAT
+
+      IF(IZP(I).GT.0)GOTO 5
+
+      IT=-IZP(I)
+
+      DO 3 K=1,NE
+
+      IF(.NOT.EV(V,VEC(1,K)))GOTO 3
+
+      IF(IT.EQ.IW(1,K))GOTO 4
+
+3     CONTINUE
+
+      NE=NE+1
+
+      K=NE
+
+      DO 6 J=1,3
+
+6     VEC(J,K)=0.0
+
+      IW(1,K)=IT
+
+      IW(2,K)=IT
+
+      CALL HCAL(VEC(1,K),IT,IT,EE(1,1,K),OVPAR)
+
+4     MM(I,1)=K
+
+5     CONTINUE
+
+      RETURN
+
+      END
+
+./ ADD NAME=BCCBFE
+
+      INTEGER FUNCTION BCCBFE(I,J,R2,DD)
+
+C
+
+C  MICHAEL YOU'S IBONDS FOR A BCC LATTICE
+
+C  FIRST AND SECOND NEAREST NEIGHBOUR DISTANCES
+
+C  AND THE PETTIFOR PARAMETERS DD.
+
+C
+
+      DIMENSION DD(13)
+
+      IF(R2-4.5)1,3,3
+
+3     BCCBFE=0
+
+      RETURN
+
+1     BCCBFE=1
+
+      IF(R2-3.5)2,4,4
+
+4     DD(1)=-0.03195
+
+      DD(2)=0.02130
+
+      DD(3)=-0.00537
+
+      RETURN
+
+2     IF(R2.LT.1.0E-4)GOTO 5
+
+      DD(1)=-0.06560
+
+      DD(2)=0.04373
+
+      DD(3)=-0.01093
+
+      RETURN
+
+5     DD(11)=0.0
+
+      RETURN
+
+      END
+
+./ ADD NAME=BCCLAT
+
+      SUBROUTINE BCCLAT(CRD,NDIM,IZP,NAT,NX,NY,NZ,NTYPE)
+
+      DIMENSION CRD(NDIM,NAT),IZP(NAT)
+
+      INTEGER*2 IZP
+
+      NA=NAT/2
+
+      N=0
+
+      DO 1 I=2,NX,2
+
+      DO 1 J=2,NY,2
+
+      DO 1 K=2,NZ,2
+
+      N=N+1
+
+      IF(N.GT.NA)GOTO 2
+
+      IZP(N)=NTYPE
+
+      CRD(1,N)=FLOAT(I)-1.0
+
+      CRD(2,N)=FLOAT(J)-1.0
+
+      CRD(3,N)=FLOAT(K)-1.0
+
+1     CONTINUE
+
+      NAT=N+N
+
+      GOTO 4
+
+2     WRITE(6,3)I,J,K
+
+      NAT=0
+
+3     FORMAT(' INCREASE NAT IN THE CALL TO BCCLAT - LATTICE GENERATED'
+
+     1 ,' AS FAR AS ',3I4)
+
+4     DO 5 I=1,N
+
+      K=I+N
+
+      IZP(K)=NTYPE
+
+      DO 5 J=1,3
+
+5     CRD(J,K)=CRD(J,I)+1.0
+
+      RETURN
+
+      END
+
+./ ADD NAME=EQUIV
+
+      LOGICAL FUNCTION EQUIV(V,W)
+
+      DIMENSION V(3),W(3)
+
+      EQUIV=.FALSE.
+
+      DO 1 I=1,3
+
+      IF(ABS(V(I)-W(I)).GT.1.0E-4)RETURN
+
+1     CONTINUE
+
+      EQUIV=.TRUE.
+
+      RETURN
+
+      END
+
+./ ADD NAME=FCCBND
+
+      INTEGER FUNCTION FCCBND(I,J,R2,DD)
+
+      DIMENSION DD(13)
+
+      IF(R2-3.0)1,3,3
+
+3     FCCBND=0
+
+      RETURN
+
+1     FCCBND=1
+
+      IF(R2.LT.1.0E-4)GOTO 2
+
+      DD(1)=-0.027784
+
+      DD(2)=0.012535
+
+      DD(3)=-0.001554
+
+      RETURN
+
+2     DD(11)=0.0
+
+      RETURN
+
+      END
+
+./ ADD NAME=FCCLAT
+
+      SUBROUTINE FCCLAT(CRD,NDIM,IZP,NAT,NX,NY,NZ,NTYPE)
+
+      DIMENSION CRD(NDIM,NAT),IZP(NAT)
+
+      INTEGER*2 IZP
+
+      N=0
+
+      KK=2
+
+      DO 5 K=1,NZ
+
+      II=KK
+
+      RK=FLOAT(K)
+
+      DO 2 J=1,NY
+
+      RJ=FLOAT(J)
+
+      DO 1 I=II,NX,2
+
+      RI=FLOAT(I)
+
+      N=N+1
+
+      IF(N.GT.NAT)GOTO 3
+
+      IZP(N)=NTYPE
+
+      CRD(1,N)=RI
+
+      CRD(2,N)=RJ
+
+1     CRD(3,N)=RK
+
+2     II=3-II
+
+5     KK=3-KK
+
+      NAT=N
+
+      RETURN
+
+3     NAT=0
+
+      WRITE(6,4)I,J,K
+
+4     FORMAT(' NAT TOO SMALL IN FCCLAT- LATTICE GENERATED UP TO',3I4)
+
+      RETURN
+
+      END
+
+./ ADD NAME=MMCAL
+
+      SUBROUTINE MMCAL(CRD,NDIM,NAT,NN,ND,NM,EV,IZP,NMAT,MM,VEC,IW)
+
+      INTEGER*2 NN,MM,IZP,IW
+
+      DIMENSION CRD(NDIM,NAT),VEC(NDIM,NMAT)
+
+     1 ,NN(ND,NM),MM(ND,NM),IZP(NAT),IW(2,NMAT)
+
+      LOGICAL EV
+
+      COMMON /BLKNNM/NNMAT
+
+      IFD=NMAT
+
+      IADD=1
+
+      DO 1 II=1,NAT
+
+      IF(IZP(II).LT.0)GOTO 2
+
+1     CONTINUE
+
+      IADD=0
+
+      NNMAT=NMAT
+
+      JL=NN(1,1)
+
+      DO 13 JJ=2,JL
+
+      J=NN(1,JJ)
+
+      DO 11 I=1,NDIM
+
+      VEC(I,NNMAT)=CRD(I,J)-CRD(I,1)
+
+11    VEC(I,JJ-1)=VEC(I,NNMAT)
+
+      MM(1,JJ)=JJ-1
+
+      IW(1,JJ-1)=IZP(1)
+
+13    IW(2,JJ-1)=IZP(J)
+
+      IFD=JL-1
+
+2     ISTRT=2-IADD
+
+      DO 30 I=ISTRT,NAT
+
+      IAZ=IZP(I)
+
+      IAZ=IABS(IAZ)
+
+      JL=NN(I,1)
+
+      IF(JL.LT.2)GOTO 30
+
+      DO 20 JJ=2,JL
+
+      J=NN(I,JJ)
+
+      IF(IADD.EQ.0)GOTO 3
+
+      IF(IZP(I).GT.0.AND.IZP(J).GT.0)GOTO 20
+
+3     JAZ=IZP(J)
+
+      JAZ=IABS(JAZ)
+
+      DO 14 K=1,NDIM
+
+14    VEC(K,NNMAT)=CRD(K,J)-CRD(K,I)
+
+      DO 16 L=1,IFD
+
+      IF(IW(1,L).NE.IAZ)GOTO 16
+
+      IF(IW(2,L).NE.JAZ)GOTO 16
+
+      IF(EV(VEC(1,NNMAT),VEC(1,L)))GOTO 19
+
+16    CONTINUE
+
+      IFD=IFD+1
+
+      IF(IFD.GE.NNMAT)GOTO 34
+
+18    FORMAT(' TOO MANY DIFFERENT VECTORS - INCREASE NMAT')
+
+      DO 29 M=1,NDIM
+
+29    VEC(M,IFD)=VEC(M,NNMAT)
+
+      IW(1,IFD)=IAZ
+
+      IW(2,IFD)=JAZ
+
+      L=IFD
+
+19    MM(I,JJ)=L
+
+20    CONTINUE
+
+30    CONTINUE
+
+      NMAT=IFD
+
+      RETURN
+
+34    WRITE(6,18)
+
+      WRITE(6,41)I
+
+41    FORMAT(26H HAMILTONIAN MAP AS FAR AS,I6,7HTH SITE)
+
+      NMAT=0
+
+      RETURN
+
+      END
+
+./ ADD NAME=NNCAL
+
+      SUBROUTINE NNCAL(CRD,NDIM,NAT,IZP,NN,ND,NM,NGBR)
+
+      INTEGER*2 IZP,NN
+
+      DIMENSION CRD(NDIM,NAT),DUM(13),IZP(NAT),NN(ND,NM)
+
+      NNMAX=0
+
+      IADD=1
+
+      IF(IZP(1).LT.0)NN(1,1)=1
+
+      DO 11 II=1,NAT
+
+      IF(IZP(II).LT.0)GOTO 12
+
+11    CONTINUE
+
+      NN(1,1)=1
+
+      DO 1 I=1,NAT
+
+      DO 1 J=2,NM
+
+1     NN(I,J)=0
+
+      IADD=0
+
+      II=2
+
+12    IF(II.LE.1)II=2
+
+50    FORMAT(' FROM NNCAL')
+
+      DO 5 I=II,NAT
+
+      IF(IZP(I)*IADD.GT.0)GOTO 5
+
+      NN(I,1)=1
+
+      IIP=IZP(I)
+
+      IIP=IABS(IIP)
+
+      ILJ=I-1
+
+      DO 4 J=1,ILJ
+
+      JJP=IZP(J)
+
+      JJP=IABS(JJP)
+
+      R2=0.0
+
+      DO 2 L=1,3
+
+      DUM(L)=CRD(L,I)-CRD(L,J)
+
+2     R2=R2+DUM(L)*DUM(L)
+
+      ID=NGBR(IIP,JJP,R2,DUM)
+
+      IF(ID.EQ.0)GOTO 4
+
+      ID=NN(I,1)+1
+
+      NN(I,1)=ID
+
+      NN(I,ID)=J
+
+      NNMAX=MAX0(NNMAX,ID)
+
+      ID=NN(J,1)+1
+
+      NN(J,1)=ID
+
+      NN(J,ID)=I
+
+      NNMAX=MAX0(NNMAX,ID)
+
+      IF(NNMAX.GT.NM)GOTO 33
+
+3     FORMAT(20H TOO MANY NEIGHBOURS)
+
+4     CONTINUE
+
+5     CONTINUE
+
+      NM=NNMAX
+
+      RETURN
+
+33    WRITE(6,3)
+
+      WRITE(6,38)I
+
+38    FORMAT(24H NEIGHBOUR MAP AS FAR AS,I6,7HTH SITE)
+
+      DO 39 L=1,NAT
+
+      MMM=NN(L,1)
+
+39    WRITE(6,40)L,(NN(L,M),M=1,MMM)
+
+40    FORMAT(21I4)
+
+      STOP
+
+      END
+
+./ ADD NAME=ONION
+
+      SUBROUTINE ONION(NN,ND,NM,IZERO,NAT,IST,NNS,IW)
+
+      INTEGER*2 NN,IZERO,IST,IW
+
+      DIMENSION NN(ND,NM),IZERO(NAT),IST(NNS),IW(NAT)
+
+      NS=NNS
+
+      DO 1 I=1,NAT
+
+1     IZERO(I)=0
+
+      DO 2 I=1,NS
+
+      II=IST(I)
+
+      IW(I)=II
+
+2     IZERO(II)=1
+
+      NF=1
+
+      ISH=2
+
+      NCD=NS
+
+3     DO 4 I=NF,NS
+
+      II=IW(I)
+
+      JL=NN(II,1)
+
+      DO 4 J=2,JL
+
+      JJ=NN(II,J)
+
+      IF(IZERO(JJ).NE.0)GOTO 4
+
+      IZERO(JJ)=ISH
+
+      NCD=NCD+1
+
+      IW(NCD)=JJ
+
+      IF(NCD.EQ.NAT)GOTO 5
+
+4     CONTINUE
+
+      ISH=ISH+1
+
+      NF=NS+1
+
+      NS=NCD
+
+      GOTO 3
+
+5     CONTINUE
+
+      RETURN
+
+      END
+
+./ ADD NAME=ORPEEL
+
+      SUBROUTINE ORPEEL(NSTRT,NORB,NO,MM,NN,ND,ID,EE,NP,NE,NED,MEM)
+
+      INTEBGER*2 MM,NN,MEM
+
+      DIMENSION EE(NP,NP,NED),MM(ND,ID),NN(ND,ID),MEM(3,ID)
+
+      I=NN(NSTRT,1)
+
+      IF(NO.EQ.NP)GOTO 8
+
+      IF(NO.NE.1)GOTO 5
+
+      MEM(2,1)=NE
+
+      DO 1 L=1,I
+
+      II=MM(NSTRT,L)
+
+      NE=NE+1
+
+      IF(NE.GT.NED)GOTO 11
+
+      MEM(1,L)=II
+
+      MM(NSTRT,L)=NE
+
+      DO 1 M=1,NP
+
+      DO 1 N=1,NP
+
+1     EE(M,N,NE)=EE(M,N,II)
+
+      DO 4 L=2,I
+
+      J=NN(NSTRT,L)
+
+      KK=NN(J,1)
+
+      DO 2 K=2,KK
+
+      JJ=NN(J,K)
+
+      IF(JJ.EQ.NSTRT)GOTO 3
+
+2     CONTINUE
+
+      GOTO 13
+
+3     II=MM(J,K)
+
+      NE=NE+1
+
+      IF(NE.GT.NED)GOTO 11
+
+      MEM(2,L)=II
+
+      MEM(3,L)=K
+
+      MM(J,K)=NE
+
+      DO 4 M=1,NP
+
+      DO 4 N=1,NP
+
+4     EE(M,N,NE)=EE(M,N,II)
+
+5     II=MEM(2,1)+1
+
+      DO 55 M=1,NP
+
+55    EE(M,NORB,II)=0.0
+
+      DO 6 L=1,I
+
+      II=MEM(2,1)+L
+
+      DO 6 M=1,NP
+
+6     EE(NORB,M,II)=0.0
+
+      DO 7 L=2,I
+
+      II=II+1
+
+      DO 7 M=1,NP
+
+7     EE(M,NORB,II)=0.0
+
+      RETURN
+
+8     DO 9 L=1,I
+
+9     MM(NSTRT,L)=MEM(1,L)
+
+      DO 10 L=2,I
+
+      J=NN(NSTRT,L)
+
+      K=MEM(3,L)
+
+10    MM(J,K)=MEM(2,L)
+
+      NE=MEM(2,1)
+
+      RETURN
+
+11    WRITE(6,12)
+
+12    FORMAT(' TOO MANY INTERACTION MATRICES FOR STORE IN ORPEEL :
+
+     1 INCREASE DIMENSION AND NED IN CALLING ROUTINE')
+
+      STOP
+
+13    WRITE(6,14)NSTRT,J,NSTRT
+
+14    FORMAT(' INCONSISTENCY IN NEIGHBOUR MAP : ATOM',I6,
+
+     1' IS NOT A NGBR OF ATOM',I6,' WHICH IS A NGBR OF ATOM',I6)
+
+      STOP
+
+      END
+
+./ ADD NAME=OUT
+
+      SUBROUTINE OUT(IO,IA,IE,IZP,IW,VEC,NED,NE,NAT,MM,NN,ND,NM,EE,NP)
+
+      INTEGER*2 MM,NN,IZP,IW
+
+      DIMENSION MM(ND,NM),NN(ND,NM),IZP(NAT),IW(2,NED),VEC(3,NED)
+
+     1 ,EE(NP,NP,NED)
+
+      WRITE(IO,11)
+
+11    FORMAT(' NEAREST NEIGHBOUR MAP'/,
+
+     1' ATOM TYPE CONNECTIVITY',5X,'NEIGHBOURS')
+
+12    FORMAT(I5,2I3,16I5)
+
+      DO 13 I=IA,NAT
+
+      ID=NN(I,1)
+
+      ID=MIN0(ID,17)
+
+      WRITE(IO,12)I,IZP(I),ID,(NN(I,J),J=2,ID)
+
+      IF(ID.EQ.NN(I,1))GOTO 13
+
+      ID=NN(I,1)
+
+      WRITE(IO,125)(NN(I,J),J=18,ID)
+
+125   FORMAT(12X,16I5)
+
+13    CONTINUE
+
+      WRITE(IO,14)NE
+
+14    FORMAT(I6,' NON-EQUIVALENT VECTORS FOUND',/6X,'ATOM',5X
+
+     1,'INDEX OF INTERACTION VECTORS')
+
+      DO 15 I=IA,NAT
+
+      ID=NN(I,1)
+
+      ID=MIN0(ID,16)
+
+      WRITE(IO,16)I,(MM(I,J),J=1,ID)
+
+      IF(ID.EQ.NN(I,1))GOTO 15
+
+      ID=NN(I,1)
+
+      WRITE(IO,145)(MM(I,J),J=17,ID)
+
+145   FORMAT(5X,15I5)
+
+15    CONTINUE
+
+16    FORMAT(17I5)
+
+      IF(IE.EQ.0)RETURN
+
+      WRITE(IO,19)
+
+      DO 17 I=IE,NE
+
+      WRITE(IO,18)I,IW(1,I),IW(2,I),(VEC(K,I),K=1,3)
+
+     1,(EE(1,L,I),L=1,NP)
+
+      IF(NP.EQ.1)GOTO 17
+
+      DO 7 K=2,NP
+
+7     WRITE(IO,21)(EE(K,L,I),L=1,NP)
+
+17    CONTINUE
+
+18    FORMAT(/I8,3X,2I3,3X,3F6.2,9F7.3)
+
+19    FORMAT(/4X,' INDEX LATTICE TYPES   VECTOR',30X,'MATRIX')
+
+21    FORMAT(38X,9F7.3)
+
+      RETURN
+
+      END
+
+./ ADD NAME=PEEL
+
+      SUBROUTINE PEEL(CRD,NDIM,NAT,NN,ND,NM,IST,NS,IZP,IZERO,NSH,IW)
+
+      INTEGER*2 NN,IST,IZP,IZERO,IW
+
+      DIMENSION NN(ND,NM),IST(NS),IZP(NAT),IZERO(NAT),IW(NAT)
+
+     1 ,CRD(NDIM,NAT)
+
+      NA=0
+
+      DO 1 I=1,NAT
+
+      IW(I)=0
+
+      IF(IZERO(I).GT.NSH)GOTO 1
+
+      NA=NA+1
+
+      IW(I)=NA
+
+1     CONTINUE
+
+      DO 4 I=1,NAT
+
+      II=IW(I)
+
+      IF(II.EQ.0)GOTO 4
+
+      DO 2 J=1,3
+
+2     CRD(J,II)=CRD(J,I)
+
+      IZERO(II)=IZERO(I)
+
+      IZP(II)=IZP(I)
+
+      JJ=NN(I,1)
+
+      KV=1
+
+      IF(JJ.GE.2) GOTO 38
+
+      JJ=2
+
+      GOTO 37
+
+38    DO 3 J=2,JJ
+
+      K=NN(I,J)
+
+      KK=IW(K)
+
+      IF(KK.EQ.0)GOTO 3
+
+      KV=KV+1
+
+      NN(II,KV)=KK
+
+3     CONTINUE
+
+      JJ=KV+1
+
+      IF(JJ.GT.NM)GOTO 36
+
+37    DO 35 J=JJ,NM
+
+35    NN(II,J)=0
+
+36    NN(II,1)=KV
+
+4     CONTINUE
+
+      NAT=NA
+
+      DO 5 I=1,NS
+
+      J=IST(I)
+
+5     IST(I)=IW(J)
+
+      RETURN
+
+      END
+
+./ ADD NAME=SCAN
+
+      SUBROUTINE SCAN(NN,ND,NNMX,N0,NAT,NON,SUB)
+
+      INTEGER*2 NN
+
+      DIMENSION NN(ND,NNMX),IA(3),NA(3)
+
+      DO 2 I=N0,NAT
+
+      NA(1)=1
+
+      IA(1)=I
+
+      CALL SUB(IA,NA,1)
+
+      NJ=NN(I,1)
+
+      DO 2 JJ=2,NJ
+
+      NA(2)=JJ
+
+      J=NN(I,JJ)
+
+      IA(2)=J
+
+      CALL SUB(IA,NA,2)
+
+      IF(NON.EQ.1)GOTO 2
+
+      NK=NN(J,1)
+
+      DO 1 KK=2,NK
+
+      NA(3)=KK
+
+      K=NN(J,KK)
+
+      IA(3)=K
+
+      IF(K.EQ.I)GOTO 1
+
+      CALL SUB(IA,NA,3)
+
+1     CONTINUE
+
+2     CONTINUE
+
+      RETURN
+
+      END
+
+./ ADD NAME=SCAN1
+
+      SUBROUTINE SCAN1(NN,ND,NNMX,N0,NAT,NON,SUB)
+
+      INTEGER*2 NN
+
+      DIMENSION NN(ND,NNMX),IA(3),NA(3)
+
+      DO 2 I=N0,NAT
+
+      NA(1)=1
+
+      IA(1)=I
+
+      CALL SUB(IA,NA,1)
+
+      NJ=NN(I,1)
+
+      DO 2 JJ=2,NJ
+
+      NA(2)=JJ
+
+      J=NN(I,JJ)
+
+      IA(2)=J
+
+      CALL SUB(IA,NA,2)
+
+      IF(NON.EQ.1)GOTO 2
+
+      NK=NN(J,1)
+
+      DO 1 KK=2,NK
+
+      NA(3)=KK
+
+      K=NN(J,KK)
+
+      IA(3)=K
+
+      IF(K.EQ.I)GOTO 1
+
+      CALL SUB(IA,NA,3)
+
+1     CONTINUE
+
+2     CONTINUE
+
+      RETURN
+
+      END
+
+./ ADD NAME=SELFD
+
+      SUBROUTINE SELFD(I,J,R2,IOVPAR,EM,NE)
+
+      DIMENSION PARM(13),EM(NE,5)
+
+      ID=IOVPAR(I,J,R2,PARM)
+
+      DO 11 L=1,5
+
+      DO 10 M=1,5
+
+10    EM(L,M)=0.0
+
+11    EM(L,L)=PARM(11)
+
+      RETURN
+
+      END
+
+./ ADD NAME=SELFP
+
+      SUBROUTINE SELFP(I,J,R2,IOVPAR,EM,NE)
+
+      DIMENSION PARM(13),EM(NE,3)
+
+      ID=IOVPAR(I,J,R2,PARM)
+
+      DO 11 L=1,3
+
+      DO 10 M=1,3
+
+10    EM(L,M)=0.0
+
+11    EM(L,L)=PARM(12)
+
+      RETURN
+
+      END
+
+./ ADD NAME=SELFS
+
+      SUBROUTINE SELFS(I,J,R2,IOVPAR,EM,NE)
+
+      DIMENSION PARM(13),EM(NE,1)
+
+      ID=IOVPAR(I,J,R2,PARM)
+
+      EM(1,1)=PARM(13)
+
+      RETURN
+
+      END
+
+./ ADD NAME=SETUP
+
+      SUBROUTINE SETUP(CRD,ND,NAT,EV,NTYPE,IZP,MM,NN,NND,NM,HCAL,NGBR
+
+     1,IOVPAR,EE,NP,NED,NE,VEC,IW)
+
+      INTEGER*2 MM(NND,NM),NN(NND,NM),IZP(NAT),IW(2,NED)
+
+      LOGICAL EV
+
+      DIMENSION CRD(ND,NAT),VEC(3,NED),EE(NP,NP,NED)
+
+      EXTERNAL NGBR,IOVPAR,EV
+
+C
+
+C COMPUTE NEIGHBOUR MAP
+
+C
+
+      CALL NNCAL(CRD,ND,NAT,IZP,NN,NND,NM,NGBR)
+
+C
+
+C CONSTRUCT HAMILTONIAN MAP MM AND EE
+
+C
+
+      NE=NED
+
+      CALL MMCAL(CRD,ND,NAT,NN,NND,NM,EV,IZP,NE,MM,VEC,IW)
+
+      IF(NE.EQ.0)GOTO 4
+
+      DO 1 I=1,NAT
+
+      II=IZP(I)+NE
+
+1     MM(I,1)=II
+
+C
+
+C  LOAD HAMILTONIAN MATRICES GENERATED BY EACH DISTINCT VECTOR
+
+C
+
+      DO 2 K=1,NE
+
+      II=IW(1,K)
+
+      IJ=IW(2,K)
+
+2     CALL HCAL(VEC(1,K),II,IJ,EE(1,1,K),IOVPAR)
+
+      IF(NE+NTYPE.GT.NED)GOTO 4
+
+      DO 3 KK=1,NTYPE
+
+      K=NE+KK
+
+C
+
+C COPY 'SELF ENERGY' MATRICES
+
+C
+
+      DO 8 I=1,3
+
+8     VEC(I,K)=0.0
+
+      IW(1,K)=KK
+
+      IW(2,K)=KK
+
+      CALL HCAL(VEC(1,K),KK,KK,EE(1,1,K),IOVPAR)
+
+3     CONTINUE
+
+      NE=NE+NTYPE
+
+      RETURN
+
+4     WRITE(6,5)NE,KK
+
+5     FORMAT(' INCREASE DIMENSONS OF EE ETC. AS',I4,'+',I4,
+
+     1' INTERATION MATRICES ARE REQUIRED')
+
+      STOP
+
+      END
+
+./ ADD NAME=SKDD
+
+      SUBROUTINE SKDD(X,X2,I,J,R2,IOVPAR,EM,NE)
+
+      DIMENSION X(6),X2(6),PARM(13),EM(NE,5),E(15,3),DM(15),DD(3)
+
+      R3=SQRT(3.0)
+
+      D3=X2(1)+X2(2)
+
+      D4=X2(3)-0.5*D3
+
+      D5=X2(1)-X2(2)
+
+      ID=IOVPAR(I,J,R2,PARM)
+
+      DO 3 L=1,3
+
+      E(L,1)=X2(L)*X2(L+1)
+
+      E(L,2)=X2(L)+X2(L+1)-4.0*E(L,1)
+
+      E(L,3)=X2(L+2)+E(L,1)
+
+3     E(L,1)=3.0*E(L,1)
+
+      E(4,1)=D5*D5
+
+      E(4,2)=D3-E(4,1)
+
+      E(4,3)=X2(3)+0.25*E(4,1)
+
+      E(4,1)=0.75*E(4,1)
+
+      E(5,1)=D4*D4
+
+      E(5,2)=3.0*X2(3)*D3
+
+      E(5,3)=D3*D3*0.75
+
+      DD(1)=X(1)*X(3)
+
+      DD(2)=X(2)*X(1)
+
+      DD(3)=X(3)*X(2)
+
+      DO 4 L=1,2
+
+      E(L+5,1)=3.0*X2(L+1)*DD(L)
+
+      E(L+5,2)=DD(L)*(1.0-4.0*X2(L+1))
+
+4     E(L+5,3)=DD(L)*(X2(L+1)-1.0)
+
+      E(8,1)=DD(1)*D5*1.5
+
+      E(8,2)=DD(1)*(1.0-2.0*D5)
+
+      E(8,3)=DD(1)*(0.5*D5-1.0)
+
+      E(9,1)=D5*0.5*D4*R3
+
+      E(9,2)=-D5*X2(3)*R3
+
+      E(9,3)=D5*0.25*(1.0+X2(3))*R3
+
+      E(10,1)=X2(1)*DD(3)*3.0
+
+      E(10,2)=(0.25-X2(1))*DD(3)*4.0
+
+      E(10,3)=DD(3)*(X2(1)-1.0)
+
+      E(11,1)=1.5*DD(3)*D5
+
+      E(11,2)=-DD(3)*(1.0+2.0*D5)
+
+      E(11,3)=DD(3)*(1.0+0.5*D5)
+
+      E(13,3)=0.5*D5*DD(2)
+
+      E(13,2)=-2.0*DD(2)*D5
+
+      E(13,1)=E(13,3)*3.0
+
+      E(12,1)=D4*DD(1)*R3
+
+      E(14,1)=D4*DD(3)*R3
+
+      E(15,1)=D4*DD(2)*R3
+
+      E(15,2)=-2.0*R3*DD(2)*X2(3)
+
+      E(15,3)=0.5*R3*(1.0+X2(3))*DD(2)
+
+      E(14,2)=R3*DD(3)*(D3-X2(3))
+
+      E(14,3)=-R3*0.5*DD(3)*D3
+
+      E(12,2)=R3*DD(1)*(D3-X2(3))
+
+      E(12,3)=-R3*0.5*DD(1)*D3
+
+      DO 11 L=1,15
+
+      DM(L)=0.0
+
+      DO 11 M=1,3
+
+   11 DM(L)=DM(L)+E(L,M)*PARM(M)
+
+      DO 12 IR=1,5
+
+      DO 12 IS=1,IR
+
+      II=IR-IS
+
+      K=5*II-(II*(II-1))/2+IS
+
+      EM(IR,IS)=DM(K)
+
+   12 EM(IS,IR)=DM(K)
+
+      RETURN
+
+      END
+
+./ ADD NAME=SKPD
+
+      SUBROUTINE SKPD(X,X2,I,J,R2,IOVPAR,EM,EMT,NE)
+
+      DIMENSION X(6),X2(6),PARM(13),EM(NE,5),EMT(NE,5),EPD(13,2),DM(15)
+
+C
+
+      R3=SQRT(3.0)
+
+      D3=X2(1)+X2(2)
+
+      D4=X2(3)-0.5*D3
+
+      D5=X2(1)-X2(2)
+
+      D6=X(1)*X(2)*X(3)
+
+      ID=IOVPAR(I,J,R2,PARM)
+
+      DO 10 L=1,3
+
+      EPD(L,1)=R3*X2(L)*X(L+1)
+
+      EPD(L,2)=X(L+1)*(1.0-2.0*X2(L))
+
+      EPD(L+4,1)=R3*X2(L)*X(L+2)
+
+      EPD(L+4,2)=X(L+2)*(1.0-2.0*X2(L))
+
+      EPD(L+7,1)=0.5*R3*X(L)*D5
+
+   10 EPD(L+10,1)=X(L)*D4
+
+      EPD(4,1)=R3*D6
+
+      EPD(4,2)=-2.0*D6
+
+      EPD(8,2)=X(1)*(1.0-D5)
+
+      EPD(9,2)=-X(2)*(1.0+D5)
+
+      EPD(10,2)=-X(3)*D5
+
+      EPD(11,2)=-R3*X(1)*X2(3)
+
+      EPD(12,2)=-R3*X(2)*X2(3)
+
+      EPD(13,2)=R3*X(3)*D3
+
+      DO 11 L=1,15
+
+   11 DM(L)=0.0
+
+      DO 12 M=1,2
+
+      DM(1)=DM(1)+EPD(1,M)*PARM(M+3)
+
+      DM(2)=DM(2)+EPD(6,M)*PARM(M+3)
+
+      DM(3)=DM(3)+EPD(4,M)*PARM(M+3)
+
+      DM(5)=DM(5)+EPD(2,M)*PARM(M+3)
+
+      DM(6)=DM(6)+EPD(7,M)*PARM(M+3)
+
+      DM(7)=DM(7)+EPD(5,M)*PARM(M+3)
+
+      DM(9)=DM(9)+EPD(3,M)*PARM(M+3)
+
+      DO 12 L=8,13
+
+   12 DM(L+2)=DM(L+2)+EPD(L,M)*PARM(M+3)
+
+      DM(4)=DM(3)
+
+      DM(8)=DM(3)
+
+      DO 13 IR=1,5
+
+      DO 13 IS=1,3
+
+      K=3*(IR-1)+IS
+
+      EMT(IR,IS)=-DM(K)
+
+   13 EM(IS,IR)=DM(K)
+
+      RETURN
+
+      END
+
+./ ADD NAME=SKPP
+
+      SUBROUTINE SKPP(X,X2,I,J,R2,IOVPAR,EM,NE)
+
+      DIMENSION X(6),DM(6),X2(6),PARM(13),EM(NE,3),EPP(6)
+
+C
+
+      ID=IOVPAR(I,J,R2,PARM)
+
+      DO 10 L=1,3
+
+      EPP(L)=X2(L)
+
+   10 EPP(L+3)=X(L)*X(L+1)
+
+      DO 11 L=1,3
+
+      HP=EPP(L)
+
+   11 DM(L)=HP*PARM(6)+(1.0-HP)*PARM(7)
+
+      DO 12 L=4,6
+
+   12 DM(L)=EPP(L)*(PARM(6)-PARM(7))
+
+      DO 13 IR=1,3
+
+      DO 13 IS=1,IR
+
+      II=IR-IS
+
+      K=3*II-(II*(II-1))/2+IS
+
+      EM(IS,IR)=DM(K)
+
+   13 EM(IR,IS)=DM(K)
+
+      RETURN
+
+      END
+
+./ ADD NAME=SKSD
+
+      SUBROUTINE SKSD(X,X2,I,J,R2,IOVPAR,EM,EMT,NE)
+
+      DIMENSION X(6),X2(6),PARM(13),EM(NE,5),EMT(NE,5),ES(5)
+
+C
+
+      R3=SQRT(3.0)
+
+      D4=X2(3)-0.5*(X2(1)+X2(2))
+
+      D5=X2(1)-X2(2)
+
+      ID=IOVPAR(I,J,R2,PARM)
+
+C
+
+      DO 10 L=1,3
+
+   10 ES(L)=R3*X(L)*X(L+1)
+
+      ES(4)=0.5*R3*D5
+
+      ES(5)=D4
+
+      DO 11 L=1,5
+
+      EM(1,L)=ES(L)*PARM(8)
+
+   11 EMT(L,1)=EM(1,L)
+
+      RETURN
+
+      END
+
+./ ADD NAME=SKSP
+
+      SUBROUTINE SKSP(X,X2,I,J,R2,IOVPAR,EM,EMT,NE)
+
+      DIMENSION X(6),X2(6),PARM(13),EM(NE,3),EMT(NE,3)
+
+C
+
+      ID=IOVPAR(I,J,R2,PARM)
+
+      DO 10 L=1,3
+
+      EM(1,L)=X(L)*PARM(9)
+
+   10 EMT(L,1)=-EM(1,L)
+
+      RETURN
+
+      END
+
+./ ADD NAME=SKSS
+
+      SUBROUTINE SKSS(X,X2,I,J,R2,IOVPAR,EM,NE)
+
+      DIMENSION X(6),X2(6),PARM(13),EM(1,1)
+
+C
+
+      ID=IOVPAR(I,J,R2,PARM)
+
+      EM(1,1)=PARM(10)
+
+      RETURN
+
+      END
+
+./ ADD NAME=SLKODE
+
+      SUBROUTINE SLKODE(DUM,I,J,EM,NGBR)
+
+      DIMENSION DUM(3),EM(5,5)
+
+      DIMENSION DD(3),X(6),X2(6),DM(15),E(15,3)
+
+COMMENT D ELECTRON HAMILTONIAN CALCULATION
+
+      R2=0.0
+
+      DO 1 L=1,3
+
+      X(L)=DUM(L)
+
+      X2(L)=X(L)*X(L)
+
+1     R2=R2+X2(L)
+
+      IF(R2.LT.1.0E-4)GOTO 3
+
+      R2I=1.0/R2
+
+      RI=SQRT(R2I)
+
+      DO 2 L=1,3
+
+      X(L)=X(L)*RI
+
+      X(L+3)=X(L)
+
+      X2(L)=X2(L)*R2I
+
+2     X2(L+3)=X2(L)
+
+      CALL SKDD(X,X2,I,J,R2,NGBR,EM,5)
+
+      RETURN
+
+3     CALL SELFD(I,J,R2,NGBR,EM,5)
+
+      RETURN
+
+      END
+
+./ ADD NAME=STORE
+
+      SUBROUTINE STORE(ISTR,CRD,NC,IZP,NAT,MM,NN,NND,NM,VEC,IW,NE,EE,NP)
+
+      INTEGER*2 IZP(NAT),MM(NND,NM),NN(NND,NM),IW(2,NE)
+
+      DIMENSION CRD(NC,NAT),VEC(3,NE),EE(NP,NP,NE)
+
+      IF(ISTR.EQ.0)RETURN
+
+      IO=-ISTR
+
+      IF(ISTR.GT.0)GOTO 71
+
+      READ(IO,1)NNC,NNAT
+
+1    FORMAT(2I5)
+
+      IF(NC-NNC)11,51,31
+
+11    WRITE(6,21)NC,NNC
+
+21    FORMAT(' NC ARGUMENT(',I4,') IS LESS THAN NC INPUT(',I4,')')
+
+      STOP
+
+31    WRITE(6,41)NC,NNC
+
+41    FORMAT(' WARNING NC INPUT (',I4,' NOT EQUAL TO ARGUMENT (',I4,')')
+
+51    IF(NNAT.LE.NAT)GOTO 81
+
+      WRITE(6,61)NAT,NNAT
+
+61    FORMAT(' NAT ARGUMENT(',I4,') LESS THAN NAT INPUT(',I4,')')
+
+      STOP
+
+71    WRITE(ISTR,1)NC,NAT
+
+      NNC=NC
+
+      NNAT=NAT
+
+81    NAT=NNAT
+
+      CALL RS4(ISTR,CRD,NNC*NAT)
+
+      CALL IS2(ISTR,IZP,NAT)
+
+      IF(ISTR.GT.0)GOTO 42
+
+      READ(IO,1)NNM
+
+      IF(NND.GE.NAT)GOTO 22
+
+      WRITE(6,12)NND,NAT
+
+12    FORMAT(' ND ARGUMENT(',I4,') IS LESS THAN NO. OF ATOMS(',I4,')')
+
+      STOP
+
+22    IF(NNM.LE.NM)GOTO 52
+
+      WRITE(6,32)NM,NNM
+
+32    FORMAT(' NM ARGUMENT(',I4,') LESS THAN NM INPUT(',I4,')')
+
+      STOP
+
+42    WRITE(ISTR,1)NM
+
+      NNM=NM
+
+52    NM=NNM
+
+      DO 62 I=1,NNM
+
+      CALL IS2(ISTR,MM(1,I),NAT)
+
+62    CALL IS2(ISTR,NN(1,I),NAT)
+
+      IF(NE.EQ.0)RETURN
+
+      IF(ISTR.GT.0)GOTO 43
+
+      READ(IO,1)NNP,NNE
+
+      IF(NNP.EQ.NP)GOTO 23
+
+      WRITE(6,13)NP,NNP
+
+13    FORMAT(' NP ARGUMENT(',I4,') IS NOT EQUAL TO NP INPUT(',I4,')')
+
+      STOP
+
+23    IF(NNE.LE.NE)GOTO 53
+
+      WRITE(6,33)NE,NNE
+
+33    FORMAT(' NE ARGUMENT(',I4,') LESS THAN NE INPUT(',I4,')')
+
+      STOP
+
+43    WRITE(ISTR,1)NP,NE
+
+      NNE=NE
+
+53    NE=NNE
+
+      CALL RS4(ISTR,EE,NP*NP*NNE)
+
+      CALL IS2(ISTR,IW,2*NNE)
+
+      CALL RS4(ISTR,VEC,3*NNE)
+
+      RETURN
+
+      END
+
+      SUBROUTINE IS2(IO,I2,NI2)
+
+      INTEGER*2 I2(NI2)
+
+      IF(IO.GT.0)GOTO 2
+
+      IIO=-IO
+
+      READ(IIO,1)I2
+
+1     FORMAT(40A2)
+
+      RETURN
+
+2     WRITE(IO,1)I2
+
+      RETURN
+
+      END
+
+      SUBROUTINE RS4(IO,R4,NR4)
+
+      DIMENSION R4(NR4)
+
+      IF(IO.GT.0)GOTO 2
+
+      IIO=-IO
+
+      READ(IIO,1)R4
+
+1     FORMAT(20A4)
+
+      RETURN
+
+2     WRITE(IO,1)R4
+
+      RETURN
+
+      END
+
+./ ENDUP
+

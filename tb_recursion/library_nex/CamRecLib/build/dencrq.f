@@ -1,0 +1,41 @@
+      COMPLEX FUNCTION DENCRQ(E,A,B2,LL,AA,RNG,WB,NB,AM,BM2)
+
+      DIMENSION A(LL),B2(LL),AA(NB),RNG(NB),WB(NB),AM(LL),BM2(LL)
+
+      DIMENSION P(2),Q(2)
+
+      DENCRQ=(0.0,0.0)
+
+      DO 2 I=1,NB
+
+      DISC=(E-AA(I))*(E-AA(I)-RNG(I))
+
+      WT=8.0*WB(I)/(RNG(I)*RNG(I))
+
+      IF (DISC.LT.0.0)GOTO 1
+
+      DISC=SQRT(DISC)
+
+      IF(E.LT.AA(I))DISC=-DISC
+
+      DENCRQ=DENCRQ+WT*(E-AA(I)-RNG(I)*0.5-DISC)
+
+      GOTO 2
+
+1     DISC=SQRT(-DISC)
+
+      DENCRQ=DENCRQ+CMPLX(WT*(E-AA(I)-RNG(I)*0.5),-WT*DISC)
+
+2     CONTINUE
+
+      CALL PLYVAL(E,AM,BM2,LL-1,P,Q)
+
+      DENCRQ=(Q(2)-DENCRQ*P(2))/(BM2(LL)*(Q(1)-DENCRQ*P(1)))
+
+      CALL PLYVAL(E,A,B2,LL-1,P,Q)
+
+      DENCRQ=(Q(2)-B2(LL)*DENCRQ*Q(1))/(P(2)-B2(LL)*DENCRQ*P(1))
+
+      RETURN
+
+      END

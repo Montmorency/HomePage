@@ -35,19 +35,23 @@ Here are the core lines I like to add to <samp> ~/.vimrc </samp> whenever I'm on
 <pre><code>
 syntax on
 au BufNewFile, BufRead *.py
-  set tabstop=2
-  set softtabstop=2
-  set shiftwidth=2
-  set textwidth=140
-  set expandtab
-  set autoindent
-  set fileformat=unix
-  set ruler
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set textwidth=140
+set expandtab
+set autoindent
+set fileformat=unix
+set ruler
+
+if has("autocmd")
+  autocmd FileType make set noexpandtab
+endif
 </code></pre>
 </p>
 <h3> SSH </h3>
-<p> In your <code>~/.ssh/config</code> file it is a good idea to set up Host aliases. 
-This makes using rsync and scp between machines a lot simpler. The typical pattern is below. </p>
+<p> It is a good idea to set up Host aliases in your <code>~/.ssh/config</code> file. 
+This makes using rsync and scp between machines a lot more efficient. The typical pattern is below.</p>
 <pre><code>
 Host *
 ServerAliveInterval 240
@@ -59,8 +63,8 @@ Port 22
 </code></pre>
 <p>
 General configurations can use pattern matching i.e. <code>Host *</code> to set
-configurations across every server we plan on connecting to. Here we 
-are specifying how often to ping the remote server, <code> ServerAliveInterval 240 </code>,
+configurations across every server where a connection is established. The present example
+specifies how often to ping the remote server, <code> ServerAliveInterval 240 </code>,
 so that the connection stays alive (every 4 minutes in this case).
 By default ssh processes listen on port 22. On OS X El Capitan (v 10.11.6) 
 my ssh_config is located in <samp>/etc/ssh/ssh_config</samp>. If you want to change the default port that
@@ -69,13 +73,14 @@ file as described <a href="https://davidroessli.com/logs/2012/10/how_to_change_t
 you then unload and load the plist with <samp>launchctl</samp> or restart the machine.
 </p>
 <p>
-Should you be consistently accessing a server and getting a message like "WARNING: REMOTE HOSE IDENTIFICATION HAS CHANGED!",
-and you are growing weary of that message, you can append the line:
+Should you be consistently accessing a server and getting a message 
+like "WARNING: REMOTE HOSE IDENTIFICATION HAS CHANGED!", and you are growing 
+weary of that message, you can append the line:
 <pre><code>
 StrictHostKeyChecking no
 </pre></code> to the relevant Host configuration block in your ~/.ssh/config file.
 </p>
-
+<h3> X11 and XQuartz </h3>
 <p>
 If you install Xquartz via Homebrew on Mac Os Sierra the plist file is located here:
 <code>
@@ -105,7 +110,7 @@ $reboot
 </pre>
 </code>
 
-<h3> Git </h3>
+<h3> Common Git Requirements </h3>
 <p> I typically use Git for all revision/versioning needs.
 There are a couple key patterns I repeat with Git and are useful to 
 remember. The <a href="https://help.github.com"> git documentation </a> is very good,
@@ -172,5 +177,15 @@ $git branch -d NewBranch
 
 <p> If you have forked a branch from another repository you can set upstream and rebase your fork following
 the instructions <a href="https://help.github.com/articles/syncing-a-fork/"> here </a>.</p>
+
+<h4> Creating New Repository from Aubfolder </h4>
+<p> 
+If part of a project you are working on takes on a life of its own
+it may be worth while to <a href https://help.github.com/articles/splitting-a-subfolder-out-into-a-new-repository/> 
+split off the relevant subdirectories into a new repository </a>. The process consists
+of creating a new clone of the original repository, and using <samp>git filter-branch</samp>
+to filter the subfolder from the rest of the files in the repo. You can then set up a new
+remote URL to track the changes in the new repo.
+</p>
 
 {% endblock body %}
