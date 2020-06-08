@@ -136,7 +136,7 @@ def interesting_stuff():
   return render_template("interesting_stuff.html", interesting_websites=interesting_websites, superconductivity=superconductivity,
                          code_documentation=code_documentation)
 
-app.config['DEBUG'] = False
+app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = '123412sdfalkjasflksqejvnoryyclzpiej'
 app.config['DOWNLOAD_FOLDER'] = os.environ['DOWNLOAD_FOLDER']
 app.config['ALLOWED_EXTENSIONS'] = set(['pdf'])

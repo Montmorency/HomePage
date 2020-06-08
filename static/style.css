@@ -42,6 +42,16 @@ ul { list-style-type: none;
 
 .togglebutton {font-size: 10px;}
 
+.game{ 
+       margin-top: 25px;
+       margin-bottom: 25px;}
+
+.embed{ margin: auto;}
+
+.taster{ font-style: oblique;
+         margin-top: 25px;
+         margin-bottom: 25px;}
+
 @media only screen and (max-device-width: 480px) 
 {
   .btn-primary {width: 100%; font-size: 4.25em;}
