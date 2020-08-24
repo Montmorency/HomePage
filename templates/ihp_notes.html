@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h3>IHP: Integrated Haskell Platform</h3>
+<p>
+<a href="https://ihp.digitallyinduced.com/Guide/index.html"> IHP </a> 
+is an exciting new Web Framework written in Haskell.
+This is just a quick note detailing one quick way of 
+getting the server up and running. It looks as if there will soon
+be a standard way of 
+<a href="https://twitter.com/digitallyinduce/status/1295405965861322752"> 
+launching IHP projects on the web
+</a>.
+
+The deployment scheme I used followed the recipe from this
+<a href=https://github.com/digitallyinduced/ihp/issues/240> IHP github issue </a>. 
+I deployed on a t2.large Amazon EC2 instance.
+
+The amazon machine instance required: git, nginx, cachix, and nixos.
+The <a href="https://ihp.digitallyinduced.com/Guide/installation.html">IHP installation docs </a>
+details all of this.
+
+Check out your IHP project and from that directory run:
+
+<pre><code>
+    cachix use digitally induced 
+    nix-shell
+    make -B build/Generated/Types.hs
+    make -B build/bin/RunUnoptimizedProdServer
+</code></pre>
+
+Then to set the server running:
+<pre><code>
+    sudo nginx
+    postgres -D build/db/state -k $PWD/build/db -c "listen_addresses="&
+    make run-production
+</code></pre>
+
+Note this configuration is to be run from command line.
+If you wish to persist your service start postgres with
+pg_ctl and use systemd, or a process monitoring system of your choice, 
+to run your IHP process.
+
+I set the application to run on a high port number
+(<samp>export PORT=5000</samp> in .bashrc). 
+Any (non-protected) port
+will do; just make sure the nginx.conf file corresponds
+to the correct number.
+
+Then add something like 
+<pre><code>
+    server {
+        listen 80; # Incoming port for Nginx
+        server_name *.amazonaws.com;
+        location / {
+            proxy_pass http://127.0.0.1:5000; # Reverse proxy to your app
+        }
+    }
+</pre></code>
+</p>
+to the http/server block of the nginx.conf file. Depending on 
+installation this may be found in /etc/nginx/.
+
+{% endblock body %}
