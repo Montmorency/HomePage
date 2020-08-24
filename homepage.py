@@ -109,6 +109,13 @@ def fortran_77():
   """
   return render_template('f77.html')
 
+@app.route('/ihp_notes/')
+def ihp_notes():
+    """
+    IHP Notes
+    """
+    return render_template('ihp_notes.html')
+
 @app.route('/interesting_stuff/')
 def interesting_stuff():
   """
